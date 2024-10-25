@@ -18,3 +18,8 @@ export interface ISiteConf {
 export interface StringMap {
   [key: string]: string | number;
 }
+
+export type Language = {
+  code: string;
+  name: string;
+};

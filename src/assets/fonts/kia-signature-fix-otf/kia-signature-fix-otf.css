@@ -1,0 +1,22 @@
+/* kia-signature-fix-otf-regular */
+@font-face {
+	font-family: Kia Signature Fix OTF;
+	font-style: normal;
+	font-weight: 400;
+	src: local("Kia Signature Fix OTF Regular"), local("KiaSignatureFixOTFRegular"), url(kia-signature-fix-otf-regular.woff2) format("woff2");
+}
+/* kia-signature-fix-otf-light */
+@font-face {
+	font-family: Kia Signature Fix OTF;
+	font-style: normal;
+	font-weight: 300;
+	src: local("Kia Signature Fix OTF Light"), local("KiaSignatureFixOTFLight"), url(kia-signature-fix-otf-light.woff2) format("woff2");
+}
+/* kia-signature-fix-otf-bold */
+@font-face {
+	font-family: Kia Signature Fix OTF;
+	font-style: normal;
+	font-weight: 700;
+	src: local("Kia Signature Fix OTF Bold"), local("KiaSignatureFixOTFBold"), url(kia-signature-fix-otf-bold.woff2) format("woff2");
+}
+

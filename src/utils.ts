@@ -1,7 +1,7 @@
 import { SITE_CONF } from "./api/config";
 import { StringMap } from "./types";
 
-export const getImageUrl = (path: string) => {
+export const getImageUrl = (path: string)=> {
   return new URL(`./assets/${path}`, import.meta.url).href;
 };
 

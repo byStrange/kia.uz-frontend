@@ -11,13 +11,13 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@primevue/themes": "^4.1.1",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
     "@vue/shared": "^3.5.12",
     "axios": "^1.7.7",
     "pinia": "^2.2.4",
-    "primevue": "^4.1.1",
-    "vue": "^3.5.12"
+    "tailwind-variants": "^0.2.1",
+    "vue": "^3.5.12",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
