@@ -8,6 +8,7 @@ export default {
           center: true,
           padding: {
             DEFAULT: theme("spacing.page-padding"),
+            sm: "57px",
             "2xl": "0px",
           },
           screens: {
@@ -26,6 +27,8 @@ export default {
       colors: () => {
         const primitives = {
           protection: "#CDD0D2",
+          description: "#37434C",
+          "disabled-elements": "#9BA1A5",
           "city-gray": "#9EA1A2",
           "midnight-black": "#05141F",
           caption: "#697279",
@@ -49,6 +52,7 @@ export default {
         "page-padding": "1rem",
         7.5: "1.875rem",
         4.5: "1.125rem",
+        15: "3.75rem",
       },
     },
   },

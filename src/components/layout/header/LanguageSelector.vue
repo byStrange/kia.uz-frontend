@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import TickToBottom from "@/components/icons/20x20/TickToBottom.vue";
 import { Language } from "@/types";
+import GlobeIcon from "@/components/icons/GlobeIcon.vue";
 
 const languages = defineModel<Language[]>("languages", {
   required: true,
@@ -56,11 +57,14 @@ onUnmounted(() => {
 <template>
   <div class="language-selector relative">
     <button @click="toggleDropdown" class="flex items-center">
-      <span>{{ selectedLanguage?.code }}</span>
-      <TickToBottom
-        class="transition-transform"
-        :class="{ 'rotate-180': isOpen }"
-      />
+      <div class="hidden lg:block">
+        <span>{{ selectedLanguage?.code }}</span>
+        <TickToBottom
+          class="transition-transform"
+          :class="{ 'rotate-180': isOpen }"
+        />
+      </div>
+      <GlobeIcon />
     </button>
 
     <Transition

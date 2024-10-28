@@ -7,7 +7,7 @@
     xmlns="http://www.w3.org/2000/svg"
     class="text-semantic-primary"
   >
-    <circle cx="15" cy="15" r="14" stroke="#05141F" stroke-width="2" />
+    <circle cx="15" cy="15" r="14" stroke="currentColor" stroke-width="2" />
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"

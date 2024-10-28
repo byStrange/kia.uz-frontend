@@ -18,6 +18,36 @@ const headerItems = ref<HeaderItem[]>([
   {
     label: "Спецпредложения",
     to: "#",
+    children: [
+      {
+        label: "Авто в наличии",
+        to: "#",
+      },
+      {
+        label: "Конфигуратор",
+        to: "#",
+      },
+      {
+        label: "Тест-драйв",
+        to: "#",
+      },
+      {
+        label: "Запрос предложения",
+        to: "#",
+      },
+      {
+        label: "Трейд-ин",
+        to: "#",
+      },
+      {
+        label: "Корпоративные продажи",
+        to: "#",
+      },
+      {
+        label: "Сравнение авто",
+        to: "#",
+      },
+    ],
   },
   {
     label: "Выбор и покупка",
@@ -119,6 +149,7 @@ type headerServiceType = {
   routes: HeaderItem[] | Ref<HeaderItem[]>;
   phoneLine1: string;
   phoneLine2: string;
+  phoneLine3: string;
   socials: Social[];
 };
 
@@ -128,6 +159,7 @@ const headerService = ref<headerServiceType>({
   routes: headerItems,
   phoneLine1: "1333",
   phoneLine2: "+998 71 215-70-07",
+  phoneLine3: "+998 71 209-15-24",
   socials: [
     {
       icon: h(YoutubeIcon),

@@ -8,7 +8,7 @@ const button = tv({
       primary:
         "bg-white focus:ring ring-primary-300 ring-offset-2 ring-offset-white text-semantic-text",
       secondary:
-        "border border-stroke-primary bg-[#F2F3F6] bg-opacity-60 hover:bg-opacity-100 text-font-color-primary",
+        "bg-transparent text-white bg-opacity-60 hover:bg-opacity-100 border border-city-gray",
       danger:
         "bg-secondary text-white focus:ring focus:ring-secondary-300 ring-offset-2 ring-offset-white",
     },

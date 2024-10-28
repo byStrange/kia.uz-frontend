@@ -3,6 +3,7 @@ import BurgerMenuIcon from "@/components/icons/BurgerMenuIcon.vue";
 import PhoneIcon from "../icons/PhoneIcon.vue";
 import UserIcon from "../icons/UserIcon.vue";
 import LenseIcon from "../icons/LenseIcon.vue";
+import Button from "../common/Button.vue";
 
 import HeaderMenu from "./header/HeaderMenu.vue";
 
@@ -64,9 +65,9 @@ watch(language, () => {
     id="header"
   >
     <div class="container flex items-center justify-between relative">
-      <button class="text-semantic-primary lg:hidden" @click="toggleMenu">
+      <Button class="text-semantic-primary lg:hidden !p-0" @click="toggleMenu">
         <BurgerMenuIcon />
-      </button>
+      </Button>
 
       <div class="hidden lg:block">
         <ul class="flex items-center gap-5">
