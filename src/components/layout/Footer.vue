@@ -198,14 +198,19 @@ const MenuFooter = (
         <div class="hidden md:block md:mt-12">
           <MenuFooterSocials />
         </div>
-        <div class="space-y-7.5 md:mt-12">
-          <Button
-            label="Обратная связь"
-            mode="full"
-            color="secondary"
-            size="md"
-          />
-          <p class="text-caption text-xs">
+        <div
+          class="space-y-7.5 lg:space-y-0 md:mt-12 lg:grid lg:grid-cols-12 grid-rows-1"
+        >
+          <div class="lg:col-span-3 order-2 lg:col-start-10">
+            <Button
+              label="Обратная связь"
+              mode="full"
+              color="secondary"
+              size="md"
+            />
+          </div>
+
+          <p class="text-caption text-xs lg:col-span-8 order-1">
             ООО «Roodell» ведет деятельность на территории Республики Узбекистан
             в соответствии с законодательством Республики Узбекистан.
             Реализуемые товары доступны к получению на территории Республики
