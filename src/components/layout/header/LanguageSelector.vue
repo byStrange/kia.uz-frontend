@@ -57,14 +57,14 @@ onUnmounted(() => {
 <template>
   <div class="language-selector relative">
     <button @click="toggleDropdown" class="flex items-center">
-      <div class="hidden lg:block">
+      <div class="hidden lg:flex items-center">
         <span>{{ selectedLanguage?.code }}</span>
         <TickToBottom
           class="transition-transform"
           :class="{ 'rotate-180': isOpen }"
         />
       </div>
-      <GlobeIcon />
+      <GlobeIcon class="lg:hidden"/>
     </button>
 
     <Transition

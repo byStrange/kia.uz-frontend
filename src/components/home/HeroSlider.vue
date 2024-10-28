@@ -58,7 +58,7 @@ const activeSlideBackground = computed(() => {
       backgroundImage: `url(${activeSlideBackground})`,
       backgroundSize: '100% auto',
     }"
-    class="w-full bg-black hero-slider-shade h-screen md:hidden bg-no-repeat"
+    class="w-full bg-black hero-slider-shade h-[600px] md:hidden bg-no-repeat relative"
   >
     <div
       class="container h-full flex items-end relative z-20 pb-12 justify-center"
