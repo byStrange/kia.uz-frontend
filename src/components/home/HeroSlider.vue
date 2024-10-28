@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { useDynamicHeight } from "@/composables/useDynamicHeight";
 import Button from "../common/Button.vue";
 import { computed, ref } from "vue";
 import { getImageUrl } from "@/utils";
 import { onMounted } from "vue";
 
-import HeroImage from "@/assets/test/kia-test-hero-img.png";
 const activeSlideIndex = ref(0);
 
 const slides = ref([
