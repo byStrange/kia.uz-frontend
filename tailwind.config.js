@@ -3,21 +3,18 @@ export default {
   content: ["index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      container: ({ theme }) => {
-        return {
-          center: true,
-          padding: {
-            DEFAULT: theme("spacing.page-padding"),
-            sm: "57px",
-            "2xl": "0px",
-          },
-          screens: {
-            "2xl": "1440px",
-          },
-        };
-      },
+      container: ({ theme }) => ({
+        center: true,
+        padding: {
+          DEFAULT: theme("spacing.page-padding"),
+        },
+        screens: {},
+      }),
       fontSize: {
         "sm+": ["15px", "20px"],
+        xs: ["12px", "14px"],
+        lg: ["18px", "24px"],
+        sm: ["14px", "18px"],
       },
 
       screens: {
@@ -27,6 +24,7 @@ export default {
       colors: () => {
         const primitives = {
           protection: "#CDD0D2",
+          background: "#F7F8F8",
           description: "#37434C",
           "disabled-elements": "#9BA1A5",
           "city-gray": "#9EA1A2",
@@ -35,7 +33,7 @@ export default {
         };
 
         const semantic = {
-          "header-bg": "white",
+          "header-bg": "transparent",
           primary: primitives["midnight-black"],
           secondary: primitives["city-gray"],
         };
@@ -49,12 +47,20 @@ export default {
       },
 
       spacing: {
-        "page-padding": "1rem",
+        "page-padding": "31px",
         7.5: "1.875rem",
         4.5: "1.125rem",
         15: "3.75rem",
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addBase, theme }) {
+      addBase({
+        ":root": {
+          "--page-padding": theme("spacing.page-padding"),
+        },
+      });
+    },
+  ],
 };

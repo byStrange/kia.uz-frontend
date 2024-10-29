@@ -10,6 +10,34 @@
 
 @layer components {
   .hero-slider-shade {
-    @apply after:content-[''] after:w-full after:h-[301px] after:absolute after:bottom-[0] after:bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,#000000_23.74%)] after:z-10;
+    @apply bg-[linear-gradient(0deg,#05141F_72.81%,rgba(5,20,31,0)100%)] 2xl:bg-[linear-gradient(0deg,rgba(5,20,31,0.5)24.47%,rgba(5,20,31,0)100%)];
+  }
+
+  #header a,
+  #header button {
+    @apply text-white transition-colors;
+  }
+
+  #header.hover {
+    @apply bg-white;
+  }
+
+  #header.hover a,
+  #header.hover button {
+    @apply text-semantic-primary;
+  }
+}
+
+@layer utilities {
+  @media screen(md) {
+    .container {
+      @apply px-[57px];
+    }
+  }
+
+  @media screen(2xl) {
+    .container {
+      @apply px-[80px];
+    }
   }
 }

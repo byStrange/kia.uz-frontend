@@ -19,7 +19,7 @@ const show = ref(true);
       >
         <XIcon width="8" height="8" />
       </Button>
-      <Button class="py-4.5 px-4.5 shadow" corner="full">
+      <Button class="!py-4.5 !px-4.5 shadow" corner="full">
         <PhoneIcon width="24" height="24" />
       </Button>
     </div>

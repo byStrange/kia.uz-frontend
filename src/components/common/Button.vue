@@ -8,13 +8,15 @@ const button = tv({
       primary:
         "bg-white focus:ring ring-primary-300 ring-offset-2 ring-offset-white text-semantic-text",
       secondary:
+        "bg-semantic-primary text-white bg-opacity-40 hover:bg-opacity-100",
+      transparent:
         "bg-transparent text-white bg-opacity-60 hover:bg-opacity-100 border border-city-gray",
       danger:
         "bg-secondary text-white focus:ring focus:ring-secondary-300 ring-offset-2 ring-offset-white",
     },
     size: {
       sm: "px-2 py-2 text-sm md:py-3",
-      md: "px-3  py-2.5 text-base md:py-4",
+      md: "px-3  py-2.5 text-base md:py-4.5 md:px-10",
       "md+": "px-3  py-3 text-base md:py-4",
     },
     mode: {
