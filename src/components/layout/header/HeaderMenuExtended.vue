@@ -7,13 +7,13 @@ const { headerService } = useHeaderService();
 <template>
   <div
     v-if="headerService.extendedMenu"
-    class="w-full z-30 border lg:bg-white"
+    class="w-full z-30 border 2xl:bg-white"
     :key="headerService.extendedMenu.label"
   >
     <div class="container">
       <div
         aria-label="Header"
-        class="bg-white z-10 flex items-center py-4.5 h-[60px] sticky top-0 lg:hidden"
+        class="bg-white z-10 flex items-center py-4.5 h-[60px] sticky top-0 2xl:hidden"
       >
         <Button class="!p-0" @click="headerService.extendedMenu = null">
           <TickToLeft />
@@ -25,9 +25,9 @@ const { headerService } = useHeaderService();
         </h1>
       </div>
       <div
-        class="space-y-4.5 py-4.5 lg:py-10 md:flex md:justify-between md:space-y-0"
+        class="space-y-4.5 py-4.5 2xl:py-10 md:flex md:justify-between md:space-y-0"
       >
-        <div v-if="headerService.extendedMenu.children" class="lg:w-1/2">
+        <div v-if="headerService.extendedMenu.children" class="2xl:w-1/2">
           <div class="flex flex-col">
             <div
               v-for="item in headerService.extendedMenu.children"
@@ -40,7 +40,7 @@ const { headerService } = useHeaderService();
           </div>
         </div>
 
-        <div class="lg:flex lg:w-1/2 lg:gap-10">
+        <div class="2xl:flex 2xl:w-1/2 2xl:gap-10">
           <div
             :style="{
               backgroundImage: `url(${headerService.extendedMenu.meta?.sideImage})`,
@@ -60,7 +60,7 @@ const { headerService } = useHeaderService();
           </div>
           <slot
             name="menuFooter"
-            rootClass="hidden lg:block !border-none !py-0"
+            rootClass="hidden 2xl:block !border-none !py-0"
           />
         </div>
       </div>

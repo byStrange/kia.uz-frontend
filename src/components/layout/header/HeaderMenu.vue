@@ -1,11 +1,11 @@
 <script setup lang="tsx">
 import TickToRight from "@/components/icons/20x20/TickToRight.vue";
 import { useHeaderService } from "@/services/headerService";
-const { headerService } = useHeaderService();
 import HeaderMenuExtended from "./HeaderMenuExtended.vue";
 import { useDynamicHeight } from "@/composables/useDynamicHeight";
 import { h } from "vue";
 
+const { headerService, closeExtendedMenu } = useHeaderService();
 let commonClasses =
   "menu-item py-4.5 text-lg font-semibold text-semantic-primary block w-full text-start";
 
@@ -92,13 +92,13 @@ const MenuFooter = () => {
 <template>
   <transition name="slide-fade" mode="out-in">
     <div
-      @click.self="headerService.isMenuOpen = false"
+      @click.self="closeExtendedMenu"
       :style="{ height: `${height}px` }"
       class="absolute top-[65px] w-full z-40 overflow-auto"
       v-if="headerService.isMenuOpen"
       :key="headerService.extendedMenu?.label"
     >
-      <div class="bg-white lg:flex lg:bg-transparent">
+      <div class="bg-white 2xl:flex 2xl:bg-transparent">
         <HeaderMenuItems v-if="!headerService.extendedMenu" />
 
         <HeaderMenuExtended>
@@ -107,7 +107,7 @@ const MenuFooter = () => {
           </template>
         </HeaderMenuExtended>
 
-        <MenuFooter class="lg:hidden" />
+        <MenuFooter class="2xl:hidden" />
       </div>
     </div>
   </transition>

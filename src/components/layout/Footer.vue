@@ -165,11 +165,11 @@ const MenuFooter = (
         </div>
 
         <div
-          class="md:md:mt-12 md:gap-9 md:grid md:grid-cols-6 lg:grid-cols-12"
+          class="md:md:mt-12 md:gap-9 md:grid md:grid-cols-6 2xl:grid-cols-12"
         >
-          <div class="md:flex md:col-span-4 lg:col-span-8">
+          <div class="md:flex md:col-span-4 2xl:col-span-8">
             <div
-              class="mt-5 divide-y divide-description md:grid md:mt-0 md:grid-cols-2 lg:grid-cols-4 md:gap-9 md:divide-y-0 md:items-start flex-wrap md:w-full"
+              class="mt-5 divide-y divide-description md:grid md:mt-0 md:grid-cols-2 2xl:grid-cols-4 md:gap-9 md:divide-y-0 md:items-start flex-wrap md:w-full"
               aria-label="Footer menu links"
             >
               <div class="hidden md:flex flex-col md:gap-5">
@@ -192,16 +192,16 @@ const MenuFooter = (
 
           <MenuFooter
             :includeSocials="false"
-            class="md:col-span-2 lg:col-start-10"
+            class="md:col-span-2 2xl:col-start-10"
           />
         </div>
         <div class="hidden md:block md:mt-12">
           <MenuFooterSocials />
         </div>
         <div
-          class="space-y-7.5 lg:space-y-0 md:mt-12 lg:grid lg:grid-cols-12 grid-rows-1"
+          class="space-y-7.5 2xl:space-y-0 md:mt-12 2xl:grid 2xl:grid-cols-12 grid-rows-1"
         >
-          <div class="lg:col-span-3 order-2 lg:col-start-10">
+          <div class="2xl:col-span-3 order-2 2xl:col-start-10">
             <Button
               label="Обратная связь"
               mode="full"
@@ -210,7 +210,7 @@ const MenuFooter = (
             />
           </div>
 
-          <p class="text-caption text-xs lg:col-span-8 order-1">
+          <p class="text-caption text-xs 2xl:col-span-8 order-1">
             ООО «Roodell» ведет деятельность на территории Республики Узбекистан
             в соответствии с законодательством Республики Узбекистан.
             Реализуемые товары доступны к получению на территории Республики

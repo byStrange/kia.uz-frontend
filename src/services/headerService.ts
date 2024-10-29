@@ -3,7 +3,7 @@ import InstagramIcon from "@/components/icons/socials/InstagramIcon.vue";
 import TelegramIcon from "@/components/icons/socials/TelegramIcon.vue";
 import YoutubeIcon from "@/components/icons/socials/YoutubeIcon.vue";
 import VueComponent from "@/types";
-import { h, Ref } from "vue";
+import { h, Ref, watch } from "vue";
 import { ref } from "vue";
 import { RouteLocationRaw } from "vue-router";
 
@@ -145,6 +145,7 @@ export type Social = {
 
 type headerServiceType = {
   isMenuOpen: boolean;
+  isHover: boolean;
   extendedMenu: HeaderItem | null;
   routes: HeaderItem[] | Ref<HeaderItem[]>;
   phoneLine1: string;
@@ -155,6 +156,7 @@ type headerServiceType = {
 
 const headerService = ref<headerServiceType>({
   isMenuOpen: false,
+  isHover: false,
   extendedMenu: null,
   routes: headerItems,
   phoneLine1: "1333",
@@ -184,9 +186,24 @@ const toggleMenu = () => {
   headerService.value.isMenuOpen = !headerService.value.isMenuOpen;
 };
 
+const closeExtendedMenu = () => {
+  headerService.value.extendedMenu = null;
+  headerService.value.isMenuOpen = false;
+  headerService.value.isHover = false;
+};
+
+watch(
+  headerService,
+  () => {
+    console.log(headerService.value);
+  },
+  { deep: true }
+);
+
 export const useHeaderService = () => {
   return {
     headerService,
     toggleMenu,
+    closeExtendedMenu,
   };
 };

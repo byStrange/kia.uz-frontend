@@ -3,6 +3,9 @@ import { ref, onMounted, onUnmounted } from "vue";
 import TickToBottom from "@/components/icons/20x20/TickToBottom.vue";
 import { Language } from "@/types";
 import GlobeIcon from "@/components/icons/GlobeIcon.vue";
+import { useHeaderService } from "@/services/headerService";
+
+const { headerService } = useHeaderService();
 
 const languages = defineModel<Language[]>("languages", {
   required: true,
@@ -57,14 +60,18 @@ onUnmounted(() => {
 <template>
   <div class="language-selector relative">
     <button @click="toggleDropdown" class="flex items-center">
-      <div class="hidden lg:flex items-center">
+      <div class="hidden 2xl:flex items-center">
         <span>{{ selectedLanguage?.code }}</span>
         <TickToBottom
-          class="transition-transform"
-          :class="{ 'rotate-180': isOpen }"
+          class="transition-all"
+          :class="{
+            'rotate-180': isOpen,
+            '!text-semantic-primary': headerService.isHover,
+            '!text-white': !headerService.isHover,
+          }"
         />
       </div>
-      <GlobeIcon class="lg:hidden"/>
+      <GlobeIcon class="text-white 2xl:hidden" />
     </button>
 
     <Transition
