@@ -94,7 +94,7 @@ const MenuFooter = () => {
     <div
       @click.self="closeExtendedMenu"
       :style="{ height: `${height}px` }"
-      class="absolute top-[65px] w-full z-40 overflow-auto"
+      class="fixed top-[65px] w-full z-40 overflow-auto bg-black bg-opacity-20"
       v-if="headerService.isMenuOpen"
       :key="headerService.extendedMenu?.label"
     >

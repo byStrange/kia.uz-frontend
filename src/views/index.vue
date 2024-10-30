@@ -1,149 +1,100 @@
 <script setup lang="ts">
-import HeroSlider from "@/components/home/HeroSlider.vue";
+import HeroSliders from "./(index)/HeroSliders.vue";
 import FloatingContactButton from "@/components/home/FloatingContactButton.vue";
-import Section from "@/components/home/Section.vue";
-import { SwiperSlide, Swiper } from "swiper/vue";
-import { useCssVar } from "@vueuse/core";
-import { ref } from "vue";
-import { SwiperClass } from "swiper/react";
-import { Controller } from "swiper/modules";
-import InfoIcon from "@/components/icons/20x20/InfoIcon.vue";
+import SpecialOffers from "./(index)/SpecialOffers.vue";
+import Models from "./(index)/Models.vue";
+import Courses from "./(index)/Courses.vue";
 import Button from "@/components/common/Button.vue";
 
-const modelsThumbSwiper = ref<SwiperClass | null>(null);
-const modelsSwiper = ref<SwiperClass | null>(null);
+import { useContainer } from "@/composables/useContainer";
 
-const models = ref([
-  {
-    title: "Sonet",
-    electric: true,
-    images: {
-      small:
-        "https://ucarecdn.com/548a3e08-011b-41b5-a074-a0b06917d3e9/-/preview/336x160/",
-      medium:
-        "https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/",
-    },
-  },
-  {
-    title: "K5",
-    electric: false,
-    images: {
-      small:
-        "https://ucarecdn.com/0573bd47-db16-48a2-b4df-ced019edc53c/-/preview/336x160/",
-      medium:
-        "https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/",
-    },
-  },
-  {
-    title: "Sportage",
-    electric: false,
-    images: {
-      small:
-        "https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/",
-      medium:
-        "https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/",
-    },
-  },
-  {
-    title: "Sportage",
-    electric: false,
-    images: {
-      small:
-        "https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/",
-      medium:
-        "https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/",
-    },
-  },
-  {
-    title: "Sportage",
-    electric: false,
-    images: {
-      small:
-        "https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/",
-      medium:
-        "https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/",
-    },
-  },
-]);
+const { bounding } = useContainer();
 
-const activeModelIndex = ref(0);
-
-const pagePadding = useCssVar("--page-padding");
+const extraLinksCard = [
+  {
+    title: "Бренд",
+    href: "#",
+    image:
+      "https://ucarecdn.com/8701cf69-f335-45be-b0d7-2c939d629d0f/-/preview/1000x664/",
+  },
+  {
+    title: "Kia в Узбекистане",
+    href: "#",
+    image:
+      "https://ucarecdn.com/907872e6-383c-4eee-8d95-4779a60485ca/-/preview/1000x664/",
+  },
+  {
+    title: "Технологии",
+    href: "#",
+    image:
+      "https://ucarecdn.com/b3436484-91af-4e8c-9678-d36a564a1a3f/-/preview/1000x664/",
+  },
+];
 </script>
 
 <template>
   <FloatingContactButton />
-  <HeroSlider />
+  <HeroSliders />
+  <Models />
+  <SpecialOffers />
+  <Courses />
 
-  <Section sectionTitle="Модели Kia" class="bg-background">
-    <Swiper
-      :modules="[Controller]"
-      :controller="{ control: modelsSwiper }"
-      @swiper="modelsThumbSwiper = $event"
-      @slideChange="(e) => (activeModelIndex = e.activeIndex)"
-      :slides-per-view="3"
-      :centered-slides="true"
-      :slides-offset-before="parseInt(pagePadding + '')"
-      :slides-offset-after="parseInt(pagePadding + '')"
-      :space-between="8"
-    >
-      <template #container-start>
-        <div
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-[94px] h-[76px] rounded-xl border border-semantic-primary hidden"
-        ></div>
-      </template>
-      <SwiperSlide v-for="model in models" class="">
-        <div
-          class="py-2 px-1 rounded-xl border space-y-1 w-fit border-transparent transition-colors"
-          :class="{
-            '!border-semantic-primary':
-              activeModelIndex === models.indexOf(model),
-          }"
-        >
-          <img :src="model.images.small" class="w-[84px] h-[40px]" />
-          <p class="text-xs text-semantic-primary text-center">
-            {{ model.title }}
-          </p>
-        </div>
-      </SwiperSlide>
-    </Swiper>
-    <div class="mt-4">
-      <Swiper
-        :modules="[Controller]"
-        :controller="{ control: modelsThumbSwiper }"
-        @swiper="modelsSwiper = $event"
-        :slides-per-view="1"
-        :centered-slides="true"
-        :space-between="16"
-        :slides-offset-after="parseInt(pagePadding + '')"
-      >
-        <SwiperSlide v-for="model in models" class="px-[var(--page-padding)]">
-          <div data-label="card">
-            <div data-label="image wrapper">
-              <img :src="model.images.medium" class="w-full" />
-            </div>
-            <div class="text-center">
-              <h2 class="text-semantic-primary text-lg">{{ model.title }}</h2>
-              <div class="mt-2">
-                <p
-                  class="text-semantic-primary text-sm flex justify-center gap-x-1"
-                >
-                  от  199 900 000 сум
-                  <InfoIcon class="text-disabled-elements" />
-                </p>
-                <p class="text-caption text-sm">выгода: 50 000 сум</p>
-              </div>
-            </div>
-            <Button
-              label="Подробнее"
-              color="secondary"
-              size="md"
-              mode="full"
-              class="mt-4"
-            />
-          </div>
-        </SwiperSlide>
-      </Swiper>
+  <div class="container pb-12 md:pb-15">
+    <div class="bg-caption h-full relative max-w-[420px] mx-auto md:max-w-none">
+      <picture>
+        <source
+          media="(min-width: 1024px)"
+          srcset="
+            https://ucarecdn.com/47fd9450-1106-44ba-b977-dfe1795a0f05/-/preview/1000x720/
+          "
+        />
+        <source
+          srcset="
+            https://ucarecdn.com/32d3bffb-f001-4406-a6c0-517ca367af7f/-/preview/827x999/
+          "
+          media="(min-width: 768px)"
+        />
+        <img
+          src="https://ucarecdn.com/9ae43504-1cfc-4d2b-9137-b40a5473ffce/-/preview/1000x597/"
+          class="img w-full h-[187px] bg-gray-200 md:absolute md:right-0 md:h-full md:w-1/2 max-w-[640px]"
+        />
+      </picture>
+      <div class="px-4 py-8 md:w-1/2 md:px-6 2xl:px-12 2xl:py-14">
+        <h2 class="text-white font-semibold text-lg md:text-2xl 2xl:text-5xl">
+          Беспроцентная рассрочка на автомобили Kia
+        </h2>
+        <p class="text-white text-base mt-2 md:leading-[24px] md:mt-4">
+          Успейте воспользоваться уникальным предложением от официального
+          дистрибьютора Kia в Узбекистане — любой доступный автомобиль
+          в рассрочку без переплат.
+        </p>
+        <Button
+          color="primary"
+          mode="full"
+          label="Подробнее"
+          class="mt-6 md:leading-[24px] md:mt-14"
+        />
+      </div>
     </div>
-  </Section>
+  </div>
+
+  <div class="pb-12 md:pb-15">
+    <h2 class="text-semantic-primary text-lg font-semibold container">
+      Подробнее о Kia
+    </h2>
+    <div
+      class="space-y-9 mt-6 md:flex md:space-y-0 md:gap-x-10 overflow-auto snap-x no-scrollbar 2xl:container 2xl:snap-none"
+      :style="{ padding: `0 ${bounding.x.value}px` }"
+    >
+      <div
+        class="h-[208px] max-w-[310px] mx-auto md:max-w-none md:w-[310px] md:shrink-0 relative snap-center 2xl:snap-none 2xl:flex-1 flex justify-center"
+        v-for="slide in extraLinksCard"
+      >
+        <img :src="slide.image" class="h-full" />
+        <div class="p-4 absolute bottom-0 z-10">
+          <p class="text-base text-white">{{ slide.title }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>

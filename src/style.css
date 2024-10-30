@@ -29,6 +29,14 @@
 }
 
 @layer utilities {
+  .dark-pagination .swiper-pagination-bullet {
+    @apply border-city-gray;
+  }
+
+  .dark-pagination .swiper-pagination-bullet-active {
+    @apply bg-white border-white;
+  }
+
   @media screen(md) {
     .container {
       @apply px-[57px];
@@ -37,7 +45,16 @@
 
   @media screen(2xl) {
     .container {
-      @apply px-[80px];
+      @apply px-[80px] max-w-[1920px];
     }
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }

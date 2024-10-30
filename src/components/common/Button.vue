@@ -2,26 +2,28 @@
 import { tv, type VariantProps } from "tailwind-variants";
 
 const button = tv({
-  base: "flex items-center justify-center whitespace-nowrap transition-colors outline-none font-semibold",
+  base: "flex items-center justify-center whitespace-nowrap transition-all outline-none font-semibold",
   variants: {
     color: {
+      unstyled: "",
       primary:
         "bg-white focus:ring ring-primary-300 ring-offset-2 ring-offset-white text-semantic-text",
       secondary:
-        "bg-semantic-primary text-white bg-opacity-40 hover:bg-opacity-100",
+        "bg-semantic-primary text-white hover:bg-[#434E56] active:bg-[#2D3A43] active:text-[#CDD0D2] disabled:bg-opacity-40 disabled:text-[#CDD0D2]",
       transparent:
         "bg-transparent text-white bg-opacity-60 hover:bg-opacity-100 border border-city-gray",
       danger:
         "bg-secondary text-white focus:ring focus:ring-secondary-300 ring-offset-2 ring-offset-white",
     },
     size: {
+      unstyled: "",
       sm: "px-2 py-2 text-sm md:py-3",
-      md: "px-3  py-2.5 text-base md:py-4.5 md:px-10",
+      md: "px-3  py-[14.5px] text-base md:py-4.5 md:px-10",
       "md+": "px-3  py-3 text-base md:py-4",
     },
     mode: {
-      full: "w-full",
-      normal: "w-auto",
+      full: "w-full md:w-auto",
+      normal: "",
     },
     corner: {
       normal: "",
