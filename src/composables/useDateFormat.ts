@@ -1,3 +1,3 @@
-import { createDateTimeObject } from "../utils";
+import { createDateTimeObject } from '../utils';
 export const useDateFormat = (dateTimeString: string) =>
   createDateTimeObject(dateTimeString);

@@ -1,6 +1,6 @@
-import axios from "axios";
-import { SITE_CONF } from "@/api/config";
-import { getToken } from "@/utils";
+import axios from 'axios';
+import { SITE_CONF } from '@/api/config';
+import { getToken } from '@/utils';
 interface IAxiosArgs {
   hasAuthHeaders?: boolean;
   hasOrigin?: boolean;
@@ -16,7 +16,7 @@ export const axe = (
   const instance = axios.create(options);
 
   if (opt.hasAuthHeaders)
-    instance.defaults.headers.common["Authorization"] = `Bearer ${
+    instance.defaults.headers.common['Authorization'] = `Bearer ${
       getToken().access
     }`;
 

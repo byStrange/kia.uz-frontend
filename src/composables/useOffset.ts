@@ -1,5 +1,5 @@
 // useOffset.js
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 export function useOffset(element: HTMLElement) {
   const offsetLeft = ref(0);
@@ -22,11 +22,11 @@ export function useOffset(element: HTMLElement) {
       subtree: true,
     });
 
-    window.addEventListener("resize", updateOffsetLeft);
+    window.addEventListener('resize', updateOffsetLeft);
 
     onBeforeUnmount(() => {
       observer.disconnect();
-      window.removeEventListener("resize", updateOffsetLeft);
+      window.removeEventListener('resize', updateOffsetLeft);
     });
   });
 

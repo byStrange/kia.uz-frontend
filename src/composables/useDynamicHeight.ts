@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref } from 'vue';
 
 export const useDynamicHeight = (
   excludedElements: HTMLElement[] | string[]
@@ -12,7 +12,7 @@ export const useDynamicHeight = (
   const excludedElementsHeight = excludedElements
     .map((el) => {
       let offset;
-      if (typeof el === "string") {
+      if (typeof el === 'string') {
         // @ts-ignore
         offset = document.querySelector(el)?.offsetHeight;
       } else {
@@ -24,7 +24,7 @@ export const useDynamicHeight = (
 
   height.value = window.innerHeight - excludedElementsHeight;
 
-  window.addEventListener("resize", () => {
+  window.addEventListener('resize', () => {
     height.value = window.innerHeight - excludedElementsHeight;
   });
 

@@ -1,9 +1,9 @@
-import { ref, onMounted, onUnmounted } from "vue";
-import { useHeaderService } from "@/services/headerService";
+import { ref, onMounted, onUnmounted } from 'vue';
+import { useHeaderService } from '@/services/headerService';
 const { headerService } = useHeaderService();
 
 export function useScroll() {
-  const scrollDirection = ref<null | "up" | "down">(null);
+  const scrollDirection = ref<null | 'up' | 'down'>(null);
   const scrollSpeed = ref(0);
   let lastScrollY = window.scrollY;
   let lastScrollTime = Date.now();
@@ -22,9 +22,9 @@ export function useScroll() {
 
     // Determine scroll direction
     if (distance > 0) {
-      scrollDirection.value = "down";
+      scrollDirection.value = 'down';
     } else if (distance < 0) {
-      scrollDirection.value = "up";
+      scrollDirection.value = 'up';
     } else {
       scrollDirection.value = null; // No scroll
     }
@@ -35,9 +35,9 @@ export function useScroll() {
     // Determine if the header should be fixed
     if (currentScrollY === 0) {
       headerService.value.isHeaderFixed = false;
-    } else if (scrollDirection.value === "up" && speed > speedThreshold) {
+    } else if (scrollDirection.value === 'up' && speed > speedThreshold) {
       headerService.value.isHeaderFixed = true;
-    } else if (scrollDirection.value === "down") {
+    } else if (scrollDirection.value === 'down') {
       headerService.value.isHeaderFixed = false;
     }
 
@@ -47,11 +47,11 @@ export function useScroll() {
   };
 
   onMounted(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
   });
 
   onUnmounted(() => {
-    window.removeEventListener("scroll", handleScroll);
+    window.removeEventListener('scroll', handleScroll);
   });
 
   return {

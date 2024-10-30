@@ -1,10 +1,10 @@
-import { RouteRecordRaw } from "vue-router";
-import index from "@/views/index.vue";
+import { RouteRecordRaw } from 'vue-router';
+import index from '@/views/index.vue';
 
 export const mainRoutes: RouteRecordRaw[] = [
   {
-    path: "",
-    name: "home",
+    path: '',
+    name: 'home',
     component: index,
   },
 ];
