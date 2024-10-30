@@ -126,7 +126,7 @@ const MenuFooter = () => {
             {headerService.value.phoneLine3}
           </p>
         </div>
-        {h(MenuFooterSocials, { class: "mt-12" })}
+        {h(MenuFooterSocials, { class: "mt-12 md:hidden" })}
       </div>
     </div>
   );
