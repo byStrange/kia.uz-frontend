@@ -10,7 +10,7 @@
 
 @layer components {
   .hero-slider-shade {
-    @apply bg-[linear-gradient(0deg,#05141F_72.81%,rgba(5,20,31,0)100%)] 2xl:bg-[linear-gradient(0deg,rgba(5,20,31,0.5)24.47%,rgba(5,20,31,0)100%)];
+    @apply bg-[linear-gradient(0deg,#05141F_72.81%,rgba(5,20,31,0)100%)] 2xl:bg-[linear-gradient(0deg,rgba(5,20,31,0.5)_24.47%,rgba(5,20,31,0)100%)];
   }
 
   #header a,
