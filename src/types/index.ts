@@ -1,4 +1,4 @@
-import { extend } from "@vue/shared";
+import { extend } from '@vue/shared';
 
 const component = extend({});
 type VueComponent = InstanceType<typeof component>;

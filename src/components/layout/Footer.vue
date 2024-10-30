@@ -165,7 +165,7 @@ const MenuFooter = () => {
         <div
           class="md:md:mt-12 md:gap-9 md:grid md:grid-cols-6 2xl:grid-cols-12"
         >
-          <div class="md:flex md:col-span-4 2xl:col-span-8">
+          <div class="md:col-span-4 2xl:col-span-8">
             <div
               class="mt-5 divide-y divide-description md:grid md:mt-0 md:grid-cols-2 2xl:grid-cols-4 md:gap-9 md:divide-y-0 md:items-start flex-wrap md:w-full"
               aria-label="Footer menu links"

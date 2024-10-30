@@ -1,4 +1,4 @@
-import { useI18n } from "@/composables/useI18n";
+import { useI18n } from '@/composables/useI18n';
 
 const { i18n } = useI18n();
 
@@ -8,7 +8,7 @@ export function useT($t?: any) {
   }
 
   function t(category: string, key: string, params?: object) {
-    return $t(category + "." + key, params);
+    return $t(category + '.' + key, params);
   }
 
   return { T: t };
