@@ -5,8 +5,8 @@ import "swiper/css/pagination";
 import { computed, ref } from "vue";
 import { SwiperSlide, Swiper } from "swiper/vue";
 import { Pagination } from "swiper/modules";
-import Button from "../common/Button.vue";
-import ButtonCarousel from "../common/ButtonCarousel.vue";
+import Button from "@/components/common/Button.vue";
+import ButtonCarousel from "@/components/common/ButtonCarousel.vue";
 import { SwiperClass } from "swiper/react";
 
 const slides = ref([

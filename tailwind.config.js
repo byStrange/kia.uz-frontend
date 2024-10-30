@@ -15,6 +15,10 @@ export default {
         xs: ["12px", "14px"],
         lg: ["18px", "24px"],
         sm: ["14px", "18px"],
+        base: ["16px", "21px"],
+        "3xl": ["32px", "40px"],
+        "4xl": ["36px", "42px"],
+        "5xl": ["42px", "48px"],
       },
 
       screens: {
@@ -23,6 +27,7 @@ export default {
 
       colors: () => {
         const primitives = {
+          "forest-green": "#5D7D2B",
           protection: "#CDD0D2",
           background: "#F7F8F8",
           description: "#37434C",
@@ -56,9 +61,15 @@ export default {
   },
   plugins: [
     function ({ addBase, theme }) {
+      const screens = theme("screens");
+      const screenProperties = {};
+      for (const key in screens) {
+        screenProperties["--screen-" + key] = screens[key];
+      }
       addBase({
         ":root": {
           "--page-padding": theme("spacing.page-padding"),
+          ...screenProperties,
         },
       });
     },

@@ -9,7 +9,7 @@ const show = ref(true);
 <template>
   <Transition name="slide-down">
     <div
-      class="fixed bottom-6 right-4 z-30 size-[70px] flex items-end"
+      class="fixed bottom-5 right-5 z-30 size-[70px] flex items-end md:bottom-24 md:right-14 2xl:right-20"
       v-if="show"
     >
       <Button
