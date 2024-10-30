@@ -34,7 +34,7 @@ onUnmounted(() => {
   <div class="language-selector relative text-semantic-primary">
     <button @click="toggleDropdown" class="flex items-center">
       <div class="hidden 2xl:flex items-center">
-        <span>{{ $i18n.locale }}</span>
+        <span>{{ $i18n.locale.toUpperCase() }}</span>
         <TickToBottom
           class="transition-all"
           :class="{

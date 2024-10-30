@@ -125,6 +125,71 @@ const specialsSwiperBreakpoints = ref({});
         </div>
       </template>
 
+      <template #2>
+        <div>
+          <Swiper
+            :breakpoints="specialsSwiperBreakpoints"
+            slides-per-view="auto"
+            pagination
+            :modules="[Pagination]"
+            class="specials-swiper"
+            @swiper="specialsSwiper = $event"
+            :key="bounding.x.value"
+          >
+            <template #container-start>
+              <div
+                class="absolute left-0 top-1/2 -translate-y-1/2 z-30 hidden 2xl:block"
+                :style="{
+                  left: bounding.x.value + 'px',
+                }"
+              >
+                <ButtonCarousel
+                  position="left"
+                  :hide="specialsSwiperActiveIndex === 0"
+                  @click="specialsSwiper?.slidePrev()"
+                />
+              </div>
+              <div
+                :style="{
+                  right: bounding.x.value + 'px',
+                }"
+                class="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden 2xl:block"
+              >
+                <ButtonCarousel
+                  position="right"
+                  :hide="specialsSwiperActiveIndex === specialsSwiperLength - 1"
+                  @click="specialsSwiper?.slideNext()"
+                />
+              </div>
+            </template>
+            <SwiperSlide class="md:!w-fit" v-for="course in courses">
+              <div
+                :style="{ padding: `0 ${bounding.x.value}px` }"
+                class="md:!px-0 md:w-[310px]"
+              >
+                <div class="bg-background max-w-[310px] mx-auto">
+                  <div
+                    class="w-full h-[222px] bg-gray-200 relative flex justify-center items-center"
+                  >
+                    <img
+                      :src="course.thumbnail"
+                      class="w-full h-full object-cover"
+                    />
+                    <PlayIcon2 class="absolute" />
+                  </div>
+
+                  <div class="p-7.5">
+                    <p class="text-base text-semantic-primary font-semibold">
+                      {{ course.title }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </SwiperSlide>
+          </Swiper>
+        </div>
+      </template>
+
       <template #default>
         <button
           class="text-semantic-primary flex gap-2.5 items-center mt-4 container md:absolute md:top-0 md:right-0 md:w-auto md:px-0 md:mt-0"

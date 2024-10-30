@@ -205,6 +205,7 @@ const MenuFooter = (
             <Button
               label="Обратная связь"
               mode="full"
+              class="md:!w-full border border-city-gray"
               color="secondary"
               size="md"
             />
