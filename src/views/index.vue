@@ -87,7 +87,7 @@ const extraLinksCard = [
       :style="{ padding: `0 ${bounding.x.value}px` }"
     >
       <div
-        class="h-[208px] max-w-[310px] mx-auto md:max-w-none md:w-[310px] md:shrink-0 relative snap-center 2xl:snap-none 2xl:flex-1 flex justify-center"
+        class="h-[208px] max-w-[310px] mx-auto md:max-w-none md:w-[310px] md:shrink-0 relative snap-center md:mx-0 2xl:snap-none flex justify-center 2xl:h-[265px] 2xl:w-[400px]"
         v-for="slide in extraLinksCard"
       >
         <img :src="slide.image" class="h-full" />

@@ -146,7 +146,9 @@ const specialsSwiperBreakpoints = ref({});
         <div>
           <Swiper
             :breakpoints="specialsSwiperBreakpoints"
-            :slides-per-view="1"
+            slides-per-view="auto"
+            :modules="[Pagination]"
+            pagination
             class="specials-swiper"
             @swiper="specialsSwiper = $event"
             :key="bounding.x.value"
@@ -177,17 +179,12 @@ const specialsSwiperBreakpoints = ref({});
                 />
               </div>
             </template>
-            <SwiperSlide
-              class="md:!w-fit"
-              v-for="speciaility in specials
-                .slice()
-                .sort((a, b) => (a.title > b.title ? 1 : -1))"
-            >
+            <SwiperSlide class="md:!w-fit" v-for="speciaility in specials">
               <div
                 :style="{ padding: `0 ${bounding.x.value}px` }"
-                class="md:!px-0 md:w-[310px]"
+                class="md:!px-0 md:w-[310px] h-[408px]"
               >
-                <div class="bg-background max-w-[310px] mx-auto">
+                <div class="bg-background h-full max-w-[310px] mx-auto">
                   <img :src="speciaility.thumbnail" class="w-full h-[222px]" />
 
                   <div class="p-4">
