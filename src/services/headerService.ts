@@ -6,6 +6,7 @@ import VueComponent from "@/types";
 import { h, Ref, watch } from "vue";
 import { ref } from "vue";
 import { RouteLocationRaw } from "vue-router";
+import { useScrollLock } from "@vueuse/core";
 
 export type HeaderItem = {
   label: string;
@@ -146,7 +147,9 @@ export type Social = {
 type headerServiceType = {
   isMenuOpen: boolean;
   isHover: boolean;
+  isHeaderFixed: boolean;
   extendedMenu: HeaderItem | null;
+
   routes: HeaderItem[] | Ref<HeaderItem[]>;
   phoneLine1: string;
   phoneLine2: string;
@@ -157,6 +160,7 @@ type headerServiceType = {
 const headerService = ref<headerServiceType>({
   isMenuOpen: false,
   isHover: false,
+  isHeaderFixed: false,
   extendedMenu: null,
   routes: headerItems,
   phoneLine1: "1333",
@@ -182,14 +186,30 @@ const headerService = ref<headerServiceType>({
   ],
 });
 
+const isLocked = useScrollLock(document.body);
+
 const toggleMenu = () => {
   headerService.value.isMenuOpen = !headerService.value.isMenuOpen;
+  console.log(
+    "header menu ",
+    headerService.value.isMenuOpen,
+    " header fixed",
+    headerService.value.isHeaderFixed
+  );
+  console.log(
+    headerService.value.isMenuOpen || headerService.value.isHeaderFixed
+  );
+  headerService.value.isHover =
+    headerService.value.isMenuOpen || headerService.value.isHeaderFixed;
+  console.log(headerService.value.isHover);
+  isLocked.value = headerService.value.isMenuOpen;
 };
 
 const closeExtendedMenu = () => {
   headerService.value.extendedMenu = null;
   headerService.value.isMenuOpen = false;
-  headerService.value.isHover = false;
+  headerService.value.isHover = headerService.value.isHeaderFixed;
+  isLocked.value = false;
 };
 
 watch(

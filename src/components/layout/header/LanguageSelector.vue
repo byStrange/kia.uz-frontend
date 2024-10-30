@@ -1,44 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
 import TickToBottom from "@/components/icons/20x20/TickToBottom.vue";
-import { Language } from "@/types";
 import GlobeIcon from "@/components/icons/GlobeIcon.vue";
 import { useHeaderService } from "@/services/headerService";
 
 const { headerService } = useHeaderService();
 
-const languages = defineModel<Language[]>("languages", {
-  required: true,
-  default: () => [
-    { code: "en", name: "English" },
-    { code: "ru", name: "Русский" },
-  ],
-});
-
-const defaultLanguage = defineModel<string>("defaultLanguage", {
-  required: true,
-  default: "en",
-});
-
-const language = defineModel<Language>("language");
-
 const emit = defineEmits(["language-change"]);
 
 const isOpen = ref(false);
 
-const selectedLanguage = ref(
-  languages.value.find((lang) => lang.code === defaultLanguage.value)
-);
-
 const toggleDropdown = () => {
   isOpen.value = !isOpen.value;
-};
-
-const selectLanguage = (ln: Language) => {
-  selectedLanguage.value = ln;
-  language.value = ln;
-  isOpen.value = false;
-  emit("language-change", ln.code);
 };
 
 const handleClickOutside = (event: any) => {
@@ -58,10 +31,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="language-selector relative">
+  <div class="language-selector relative text-semantic-primary">
     <button @click="toggleDropdown" class="flex items-center">
       <div class="hidden 2xl:flex items-center">
-        <span>{{ selectedLanguage?.code }}</span>
+        <span>{{ $i18n.locale }}</span>
         <TickToBottom
           class="transition-all"
           :class="{
@@ -71,7 +44,10 @@ onUnmounted(() => {
           }"
         />
       </div>
-      <GlobeIcon class="text-white 2xl:hidden" />
+      <GlobeIcon
+        class="text-white 2xl:hidden"
+        :class="{ '!text-semantic-primary': headerService.isHover }"
+      />
     </button>
 
     <Transition
@@ -84,17 +60,20 @@ onUnmounted(() => {
     >
       <div
         v-if="isOpen"
-        class="absolute min-w-fit right-0 z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg"
+        class="absolute min-w-fit right-0 z-10 w-full mt-1 bg-white border border-gray-300 rounded-[8px] shadow-lg overflow-hidden"
       >
-        <ul class="py-1">
+        <ul>
           <li
-            v-for="language in languages"
-            :key="language.code"
-            @click="selectLanguage(language)"
-            class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-            :class="{ 'bg-blue-50': selectedLanguage?.code === language.code }"
+            v-for="ln in $i18n.availableLocales"
+            :key="ln"
+            @click="
+              $i18n.locale = ln;
+              isOpen = false;
+              headerService.isHover = false;
+            "
+            class="px-6 py-4 hover:bg-gray-100 cursor-pointer text-base"
           >
-            {{ language.name }}
+            {{ ln.toUpperCase() }}
           </li>
         </ul>
       </div>

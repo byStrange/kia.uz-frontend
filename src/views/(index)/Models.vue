@@ -102,66 +102,17 @@ const ModelCard = ({ model }: { model: Model }) => {
 };
 </script>
 <template>
-  <Section sectionTitle="Модели Kia" class="bg-background 2xl:container">
-    <Swiper
-      :modules="[Controller]"
-      :controller="{ control: modelsSwiper }"
-      :breakpoints="thumbSlidersBreakpoints"
-      @swiper="modelsThumbSwiper = $event"
-      @slideChange="(e) => (activeModelIndex = e.activeIndex)"
-      :slides-per-view="3"
-      :centered-slides="true"
-      :space-between="8"
-    >
-      <template #container-start>
-        <div
-          class="absolute left-0 top-1/2 -translate-y-1/2 z-20 hidden 2xl:block"
-        >
-          <ButtonCarousel
-            position="left"
-            :hide="activeModelIndex === 0"
-            size="sm"
-            @click="slidePrev"
-          />
-        </div>
-        <div
-          class="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden 2xl:block"
-        >
-          <ButtonCarousel
-            position="right"
-            :hide="activeModelIndex === slidesLength - 1"
-            size="sm"
-            @click="slideNext"
-          />
-        </div>
-        <div
-          :style="{
-            background:
-              'linear-gradient(-90deg, rgba(248, 248, 248, 0) 0%, #F8F8F8 100%)',
-          }"
-          class="absolute left-0 h-full z-10 w-[94px]"
-        ></div>
-        <div
-          :style="{
-            background:
-              'linear-gradient(90deg, rgba(248, 248, 248, 0) 0%, #F8F8F8 100%)',
-          }"
-          class="absolute right-0 h-full z-10 w-[94px]"
-        ></div>
-      </template>
-      <SwiperSlide v-for="model in models">
-        <MiniThumbCard :model="model" />
-      </SwiperSlide>
-    </Swiper>
-    <div class="mt-4 md:mt-8">
+  <Section sectionTitle="Модели Kia" class="bg-background">
+    <div class="2xl:container">
       <Swiper
         :modules="[Controller]"
-        :controller="{ control: modelsThumbSwiper }"
-        @swiper="modelsSwiper = $event"
-        :slides-per-view="1"
+        :controller="{ control: modelsSwiper }"
+        :breakpoints="thumbSlidersBreakpoints"
+        @swiper="modelsThumbSwiper = $event"
+        @slideChange="(e) => (activeModelIndex = e.activeIndex)"
+        :slides-per-view="3"
         :centered-slides="true"
-        :space-between="16"
-        :slides-offset-after="parseInt(pagePadding + '')"
+        :space-between="8"
       >
         <template #container-start>
           <div
@@ -170,6 +121,7 @@ const ModelCard = ({ model }: { model: Model }) => {
             <ButtonCarousel
               position="left"
               :hide="activeModelIndex === 0"
+              size="sm"
               @click="slidePrev"
             />
           </div>
@@ -179,14 +131,64 @@ const ModelCard = ({ model }: { model: Model }) => {
             <ButtonCarousel
               position="right"
               :hide="activeModelIndex === slidesLength - 1"
+              size="sm"
               @click="slideNext"
             />
           </div>
+          <div
+            :style="{
+              background:
+                'linear-gradient(-90deg, rgba(248, 248, 248, 0) 0%, #F8F8F8 100%)',
+            }"
+            class="absolute left-0 h-full z-10 w-[94px]"
+          ></div>
+          <div
+            :style="{
+              background:
+                'linear-gradient(90deg, rgba(248, 248, 248, 0) 0%, #F8F8F8 100%)',
+            }"
+            class="absolute right-0 h-full z-10 w-[94px]"
+          ></div>
         </template>
-        <SwiperSlide v-for="model in models" class="px-[var(--page-padding)]">
-          <ModelCard :model="model" />
+        <SwiperSlide v-for="model in models">
+          <MiniThumbCard :model="model" />
         </SwiperSlide>
       </Swiper>
+      <div class="mt-4 md:mt-8">
+        <Swiper
+          :modules="[Controller]"
+          :controller="{ control: modelsThumbSwiper }"
+          @swiper="modelsSwiper = $event"
+          :slides-per-view="1"
+          :centered-slides="true"
+          :space-between="16"
+          :slides-offset-after="parseInt(pagePadding + '')"
+        >
+          <template #container-start>
+            <div
+              class="absolute left-0 top-1/2 -translate-y-1/2 z-20 hidden 2xl:block"
+            >
+              <ButtonCarousel
+                position="left"
+                :hide="activeModelIndex === 0"
+                @click="slidePrev"
+              />
+            </div>
+            <div
+              class="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden 2xl:block"
+            >
+              <ButtonCarousel
+                position="right"
+                :hide="activeModelIndex === slidesLength - 1"
+                @click="slideNext"
+              />
+            </div>
+          </template>
+          <SwiperSlide v-for="model in models" class="px-[var(--page-padding)]">
+            <ModelCard :model="model" />
+          </SwiperSlide>
+        </Swiper>
+      </div>
     </div>
   </Section>
 </template>

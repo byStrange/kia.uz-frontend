@@ -19,6 +19,23 @@
   transform: translateY(0);
 }
 
+.slide-fade_bottom-enter-active,
+.slide-fade_bottom-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-fade_bottom-enter-from,
+.slide-fade_bottom-leave-to {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.slide-fade_bottom-enter-to,
+.slide-fade_bottom-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .slide-down-enter-active,
 .slide-down-leave-active {
   transition: all 0.3s ease;
