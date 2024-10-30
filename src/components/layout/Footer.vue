@@ -84,7 +84,7 @@ const FooterMenuItem = ({ item }: { item: HeaderItem }) => {
 
 const MenuFooterSocials = () => {
   return (
-    <div class="space-y-2.5 !mt-12">
+    <div class="space-y-2.5 mt-12">
       <h3 class="text-sm+ text-disabled-elements">Kia в соцсетях</h3>
       <div class="flex gap-2">
         {headerService.value.socials.map((item) => (
@@ -102,9 +102,7 @@ const MenuFooterSocials = () => {
   );
 };
 
-const MenuFooter = (
-  { includeSocials }: { includeSocials: boolean } = { includeSocials: true }
-) => {
+const MenuFooter = () => {
   return (
     <div class={["py-12 border-t border-t-description md:border-t-0 md:py-0"]}>
       <div class="space-y-6 ">
@@ -128,7 +126,7 @@ const MenuFooter = (
             {headerService.value.phoneLine3}
           </p>
         </div>
-        {includeSocials && MenuFooterSocials()}
+        {h(MenuFooterSocials, { class: "mt-12" })}
       </div>
     </div>
   );
@@ -190,10 +188,7 @@ const MenuFooter = (
             </div>
           </div>
 
-          <MenuFooter
-            :includeSocials="false"
-            class="md:col-span-2 2xl:col-start-10"
-          />
+          <MenuFooter class="md:col-span-2 2xl:col-start-10" />
         </div>
         <div class="hidden md:block md:mt-12">
           <MenuFooterSocials />
