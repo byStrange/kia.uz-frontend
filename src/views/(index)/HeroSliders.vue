@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { SwiperSlide, Swiper } from "swiper/vue";
-import { Pagination } from "swiper/modules";
-import Button from "@/components/common/Button.vue";
-import ButtonCarousel from "@/components/common/ButtonCarousel.vue";
-import { SwiperClass } from "swiper/react";
-import { useContainer } from "@/composables/useContainer";
+import { computed, ref } from 'vue';
+import { SwiperSlide, Swiper } from 'swiper/vue';
+import { Pagination } from 'swiper/modules';
+import Button from '@/components/common/Button.vue';
+import ButtonCarousel from '@/components/common/ButtonCarousel.vue';
+import { SwiperClass } from 'swiper/react';
+import { useContainer } from '@/composables/useContainer';
 
 const slides = ref([
   {
-    title: "Надежный атмосферный двигатель",
-    description: "Ежемесячный платеж от 2 965 000 сум",
-    image: "test/kia-test-hero-img.png",
+    title: 'Надежный атмосферный двигатель',
+    description: 'Ежемесячный платеж от 2 965 000 сум',
+    image: 'test/kia-test-hero-img.png',
   },
   {
-    title: "Надежный атмосферный двигатель",
-    description: "Ежемесячный платеж от 2 965 000 сум",
-    image: "test/kia-test-hero-img.png",
+    title: 'Надежный атмосферный двигатель',
+    description: 'Ежемесячный платеж от 2 965 000 сум',
+    image: 'test/kia-test-hero-img.png',
   },
 ]);
 
@@ -48,11 +48,11 @@ const slidesLength = computed(() => {
 </script>
 
 <template>
-  <div class="w-full bg-no-repeat relative">
+  <div class="relative w-full bg-no-repeat">
     <div
       data-label="Hero shadow top"
       aria-hidden="true"
-      class="absolute top-0 w-full h-[140px] z-10"
+      class="absolute top-0 z-10 h-[140px] w-full"
       :style="{
         background:
           'linear-gradient(180deg, rgba(5, 20, 31, 0.5) 24.47%, rgba(5, 20, 31, 0) 100%)',
@@ -62,14 +62,14 @@ const slidesLength = computed(() => {
     <Swiper
       @swiper="onSwiper"
       :slides-per-view="1"
-      class="h-screen dark-pagination"
+      class="dark-pagination h-screen"
       :modules="[Pagination]"
       :freeMode="true"
       :pagination="{ clickable: true }"
     >
       <template #container-start>
         <div
-          class="absolute left-0 top-1/2 -translate-y-1/2 z-30 hidden 2xl:block"
+          class="absolute left-0 top-1/2 z-30 hidden -translate-y-1/2 2xl:block"
           :style="{
             left: bounding.x.value + 'px',
           }"
@@ -84,7 +84,7 @@ const slidesLength = computed(() => {
           :style="{
             right: bounding.x.value + 'px',
           }"
-          class="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden 2xl:block"
+          class="absolute right-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
         >
           <ButtonCarousel
             position="right"
@@ -98,9 +98,9 @@ const slidesLength = computed(() => {
           <div
             data-label="Hero shadow bottom"
             aria-hidden="true"
-            class="absolute bottom-0 w-full h-[356px] z-10 hero-slider-shade"
+            class="hero-slider-shade absolute bottom-0 z-10 h-[356px] w-full"
           ></div>
-          <picture class="w-full h-full">
+          <picture class="h-full w-full">
             <source
               srcset="@/assets/test/kia-test-hero-img.png"
               media="(min-width: 1024px)"
@@ -112,16 +112,16 @@ const slidesLength = computed(() => {
             />
             <img
               src="@/assets/test/kia-test-hero-img-mobile.png"
-              class="w-full h-full object-cover"
+              class="h-full w-full object-cover"
             />
           </picture>
           <div
-            class="flex items-end z-40 justify-center md:justify-start md:pb-0 absolute bottom-[88px] md:bottom-[100px]"
+            class="absolute bottom-[88px] z-40 flex items-end justify-center md:bottom-[100px] md:justify-start md:pb-0"
             :style="{ left: offset.offsetLeft.value + 'px' }"
           >
-            <div class="flex md:max-w-[540px] w-full">
+            <div class="flex w-full md:max-w-[540px]">
               <div class="min-w-full md:px-0">
-                <div class="text-white space-y-2.5 md:space-y-2">
+                <div class="space-y-2.5 text-white md:space-y-2">
                   <p class="text-white md:text-lg">
                     {{ slides[0].title }}
                   </p>
@@ -131,7 +131,7 @@ const slidesLength = computed(() => {
                   >
                     Kia Sonet
                   </h1>
-                  <p class="w-[20ch] md:text-lg md:w-auto">
+                  <p class="w-[20ch] md:w-auto md:text-lg">
                     {{ slides[0].description }}
                   </p>
                 </div>
@@ -153,6 +153,6 @@ const slidesLength = computed(() => {
 
 <style>
 .swiper-pagination {
-  @apply !bottom-10 md:!bottom-12 flex justify-center;
+  @apply !bottom-10 flex justify-center md:!bottom-12;
 }
 </style>

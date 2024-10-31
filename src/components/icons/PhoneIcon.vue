@@ -4,7 +4,7 @@
     height="24"
     viewBox="0 0 24 24"
     fill="none"
-    class="text-semantic-primary"
+    class="text-primary"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path

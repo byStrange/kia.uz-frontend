@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    font-family: "Kia Signature";
+    font-family: 'Kia Signature';
   }
 }
 
@@ -19,12 +19,12 @@
   }
 
   #header.hover {
-    @apply bg-white;
+    @apply bg-white border-b-protection;
   }
 
   #header.hover a,
   #header.hover button {
-    @apply text-semantic-primary;
+    @apply text-primary;
   }
 }
 
@@ -34,7 +34,7 @@
   }
 
   .dark-pagination .swiper-pagination-bullet-active {
-    @apply bg-white border-white;
+    @apply border-white bg-white;
   }
 
   @media screen(md) {
@@ -45,7 +45,7 @@
 
   @media screen(2xl) {
     .container {
-      @apply px-[80px] max-w-[1920px];
+      @apply max-w-[1920px] px-[80px];
     }
   }
 

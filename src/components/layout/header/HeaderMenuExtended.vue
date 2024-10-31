@@ -1,31 +1,31 @@
 <script setup lang="ts">
-import Button from "@/components/common/Button.vue";
-import TickToLeft from "@/components/icons/20x20/TickToLeft.vue";
-import { useHeaderService } from "@/services/headerService";
+import Button from '@/components/common/Button.vue';
+import TickToLeft from '@/components/icons/20x20/TickToLeft.vue';
+import { useHeaderService } from '@/services/headerService';
 const { headerService } = useHeaderService();
 </script>
 <template>
   <div
     v-if="headerService.extendedMenu"
-    class="w-full z-30 border 2xl:bg-white"
+    class="z-30 w-full border 2xl:bg-white"
     :key="headerService.extendedMenu.label"
   >
     <div class="container">
       <div
         aria-label="Header"
-        class="bg-white z-10 flex items-center py-4.5 h-[60px] sticky top-0 2xl:hidden"
+        class="sticky top-0 z-10 flex h-[60px] items-center bg-white py-4.5 2xl:hidden"
       >
         <Button class="!p-0" @click="headerService.extendedMenu = null">
           <TickToLeft />
         </Button>
         <h1
-          class="text-lg font-semibold absolute left-1/2 -translate-x-1/2 text-center"
+          class="absolute left-1/2 -translate-x-1/2 text-center text-lg font-semibold"
         >
           {{ headerService.extendedMenu.label }}
         </h1>
       </div>
       <div
-        class="space-y-4.5 py-4.5 2xl:py-10 md:flex md:justify-between md:space-y-0"
+        class="space-y-4.5 py-4.5 md:flex md:justify-between md:space-y-0 2xl:py-10"
       >
         <div v-if="headerService.extendedMenu.children" class="2xl:w-1/2">
           <div class="flex flex-col">
@@ -33,7 +33,7 @@ const { headerService } = useHeaderService();
               v-for="item in headerService.extendedMenu.children"
               :key="item.label"
             >
-              <router-link :to="item.to" class="py-[5px] shrink-0">
+              <router-link :to="item.to" class="shrink-0 py-[5px]">
                 {{ item.label }}
               </router-link>
             </div>
@@ -45,16 +45,16 @@ const { headerService } = useHeaderService();
             :style="{
               backgroundImage: `url(${headerService.extendedMenu.meta?.sideImage})`,
             }"
-            class="p-7.5 bg-cover h-[228px] w-full flex items-end relative md:w-[290px]"
+            class="relative flex h-[228px] w-full items-end bg-cover p-7.5 md:w-[290px]"
           >
             <div
-              class="absolute h-[159px] w-full bottom-0 left-0 z-0"
+              class="absolute bottom-0 left-0 z-0 h-[159px] w-full"
               :style="{
                 background:
                   'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.75) 100%)',
               }"
             ></div>
-            <p class="text-white relative z-10">
+            <p class="relative z-10 text-white">
               {{ headerService.extendedMenu.meta?.sideText }}
             </p>
           </div>

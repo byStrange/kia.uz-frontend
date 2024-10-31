@@ -1,6 +1,6 @@
 <script setup lang="ts">
 let sectionTitleClass =
-  "text-center text-2xl text-semantic-primary font-semibold mb-4 md:mb-8 md:text-4xl 2xl:text-5xl";
+  'text-center text-2xl text-primary font-semibold mb-4 md:mb-8 md:text-4xl 2xl:text-5xl';
 defineProps<{ sectionTitle: string }>();
 </script>
 <template>

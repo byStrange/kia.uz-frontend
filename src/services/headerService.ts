@@ -3,7 +3,7 @@ import InstagramIcon from '@/components/icons/socials/InstagramIcon.vue';
 import TelegramIcon from '@/components/icons/socials/TelegramIcon.vue';
 import YoutubeIcon from '@/components/icons/socials/YoutubeIcon.vue';
 import VueComponent from '@/types';
-import { h, Ref, watch } from 'vue';
+import { h, Ref } from 'vue';
 import { ref } from 'vue';
 import { RouteLocationRaw } from 'vue-router';
 import { useScrollLock } from '@vueuse/core';
@@ -145,6 +145,7 @@ export type Social = {
 };
 
 type headerServiceType = {
+  lockHover: boolean;
   isMenuOpen: boolean;
   isHover: boolean;
   isHeaderFixed: boolean;
@@ -158,6 +159,7 @@ type headerServiceType = {
 };
 
 const headerService = ref<headerServiceType>({
+  lockHover: false,
   isMenuOpen: false,
   isHover: false,
   isHeaderFixed: false,
@@ -190,35 +192,29 @@ const isLocked = useScrollLock(document.body);
 
 const toggleMenu = () => {
   headerService.value.isMenuOpen = !headerService.value.isMenuOpen;
-  console.log(
-    'header menu ',
-    headerService.value.isMenuOpen,
-    ' header fixed',
-    headerService.value.isHeaderFixed
-  );
-  console.log(
-    headerService.value.isMenuOpen || headerService.value.isHeaderFixed
-  );
-  headerService.value.isHover =
-    headerService.value.isMenuOpen || headerService.value.isHeaderFixed;
-  console.log(headerService.value.isHover);
+
+  if (!headerService.value.lockHover) {
+    headerService.value.isHover =
+      headerService.value.isMenuOpen || headerService.value.isHeaderFixed;
+  } else {
+    headerService.value.isHover = headerService.value.lockHover;
+  }
+
   isLocked.value = headerService.value.isMenuOpen;
 };
 
 const closeExtendedMenu = () => {
   headerService.value.extendedMenu = null;
   headerService.value.isMenuOpen = false;
-  headerService.value.isHover = headerService.value.isHeaderFixed;
+
+  if (!headerService.value.lockHover) {
+    headerService.value.isHover = headerService.value.isHeaderFixed;
+  } else {
+    headerService.value.isHover = headerService.value.lockHover;
+  }
+
   isLocked.value = false;
 };
-
-watch(
-  headerService,
-  () => {
-    console.log(headerService.value);
-  },
-  { deep: true }
-);
 
 export const useHeaderService = () => {
   return {

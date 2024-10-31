@@ -58,10 +58,7 @@ const FooterMenuItem = ({ item }: { item: HeaderItem }) => {
               {item.children?.length
                 ? item.children.map((i) => {
                     return (
-                      <router-link
-                        to={i.to}
-                        class="font-normal text-disabled-elements"
-                      >
+                      <router-link to={i.to} class="font-normal text-disabled">
                         {i.label}
                       </router-link>
                     );
@@ -85,7 +82,7 @@ const FooterMenuItem = ({ item }: { item: HeaderItem }) => {
 const MenuFooterSocials = () => {
   return (
     <div class="mt-12 space-y-2.5">
-      <h3 class="text-sm+ text-disabled-elements">Kia в соцсетях</h3>
+      <h3 class="text-sm+ text-disabled">Kia в соцсетях</h3>
       <div class="flex gap-2">
         {headerService.value.socials.map((item) => (
           <a
@@ -107,21 +104,19 @@ const MenuFooter = () => {
     <div class={['border-t border-t-description py-12 md:border-t-0 md:py-0']}>
       <div class="space-y-6">
         <div class="space-y-2.5">
-          <h3 class="text-sm+ text-disabled-elements">Горячая линия Kia</h3>
+          <h3 class="text-sm+ text-disabled">Горячая линия Kia</h3>
           <p class="font-semibold text-white">
             {headerService.value.phoneLine1}
           </p>
         </div>
         <div class="space-y-2.5">
-          <h3 class="text-sm+ text-disabled-elements">
-            Информационная линия Kia
-          </h3>
+          <h3 class="text-sm+ text-disabled">Информационная линия Kia</h3>
           <p class="font-semibold text-white">
             {headerService.value.phoneLine2}
           </p>
         </div>
         <div class="space-y-2.5">
-          <h3 class="text-sm+ text-disabled-elements">Телефон доверия</h3>
+          <h3 class="text-sm+ text-disabled">Телефон доверия</h3>
           <p class="font-semibold text-white">
             {headerService.value.phoneLine3}
           </p>
@@ -133,10 +128,10 @@ const MenuFooter = () => {
 };
 </script>
 <template>
-  <footer class="bg-semantic-primary py-[60px]">
+  <footer class="bg-primary py-[60px]">
     <div class="container">
       <div class="space-y-2">
-        <p class="text-xs text-disabled-elements" aria-label="Footer text">
+        <p class="text-xs text-disabled" aria-label="Footer text">
           Сведения о ценах на продукцию бренда Kia, содержащиеся на сайте, носят
           исключительно информационный характер. Указанные цены могут отличаться
           от действительных цен дилеров Kia. Для получения подробной информации

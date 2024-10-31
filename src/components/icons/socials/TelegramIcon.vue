@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="text-semantic-primary"
+    class="text-primary"
     width="30"
     height="30"
     viewBox="0 0 30 30"

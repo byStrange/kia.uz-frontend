@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import TabsContainer from "@/components/common/TabsContainer.vue";
-import Section from "@/components/home/Section.vue";
+import TabsContainer from '@/components/common/TabsContainer.vue';
+import Section from '@/components/home/Section.vue';
 
-import { Swiper, SwiperSlide } from "swiper/vue";
+import { Swiper, SwiperSlide } from 'swiper/vue';
 
-import { useContainer } from "@/composables/useContainer";
-import { SwiperClass } from "swiper/react";
-import { computed, ref } from "vue";
-import TickToRight from "@/components/icons/20x20/TickToRight.vue";
-import { useCssVar } from "@vueuse/core";
-import { watch } from "vue";
-import ButtonCarousel from "@/components/common/ButtonCarousel.vue";
-import PlayIcon from "@/components/icons/PlayIcon.vue";
-import PlayIcon2 from "@/components/icons/PlayIcon2.vue";
-import { useCoursesService } from "@/services/coursesService";
-import { Pagination } from "swiper/modules";
+import { useContainer } from '@/composables/useContainer';
+import { SwiperClass } from 'swiper/react';
+import { computed, ref } from 'vue';
+import TickToRight from '@/components/icons/20x20/TickToRight.vue';
+import { useCssVar } from '@vueuse/core';
+import { watch } from 'vue';
+import ButtonCarousel from '@/components/common/ButtonCarousel.vue';
+import PlayIcon from '@/components/icons/PlayIcon.vue';
+import PlayIcon2 from '@/components/icons/PlayIcon2.vue';
+import { useCoursesService } from '@/services/coursesService';
+import { Pagination } from 'swiper/modules';
 
 const { bounding } = useContainer();
 const { courses } = useCoursesService();
@@ -26,11 +26,15 @@ const specialsSwiperActiveIndex = computed(() => {
 });
 
 const specialsSwiperLength = computed(() => {
-  return specialsSwiper.value ? specialsSwiper.value.slides?.length : 0;
+  if (!specialsSwiper.value || !specialsSwiper.value.pagination) return 0;
+
+  return specialsSwiper.value
+    ? specialsSwiper.value.pagination?.bullets.length
+    : 0;
 });
 
-const md = useCssVar("--screen-md");
-const lg = useCssVar("--screen-2xl");
+const md = useCssVar('--screen-md');
+const lg = useCssVar('--screen-2xl');
 
 watch(bounding.x, () => {
   specialsSwiperBreakpoints.value = {
@@ -73,7 +77,7 @@ const specialsSwiperBreakpoints = ref({});
           >
             <template #container-start>
               <div
-                class="absolute left-0 top-1/2 -translate-y-1/2 z-30 hidden 2xl:block"
+                class="absolute left-0 top-1/2 z-30 hidden -translate-y-1/2 2xl:block"
                 :style="{
                   left: bounding.x.value + 'px',
                 }"
@@ -88,7 +92,7 @@ const specialsSwiperBreakpoints = ref({});
                 :style="{
                   right: bounding.x.value + 'px',
                 }"
-                class="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden 2xl:block"
+                class="absolute right-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
               >
                 <ButtonCarousel
                   position="right"
@@ -100,21 +104,21 @@ const specialsSwiperBreakpoints = ref({});
             <SwiperSlide class="md:!w-fit" v-for="course in courses">
               <div
                 :style="{ padding: `0 ${bounding.x.value}px` }"
-                class="md:!px-0 md:w-[310px]"
+                class="h-[408px] md:w-[310px] md:!px-0"
               >
-                <div class="bg-background max-w-[310px] mx-auto">
+                <div class="mx-auto h-full max-w-[310px] bg-background">
                   <div
-                    class="w-full h-[222px] bg-gray-200 relative flex justify-center items-center"
+                    class="relative flex h-[222px] w-full items-center justify-center bg-gray-200"
                   >
                     <img
                       :src="course.thumbnail"
-                      class="w-full h-full object-cover"
+                      class="h-full w-full object-cover"
                     />
                     <PlayIcon2 class="absolute" />
                   </div>
 
                   <div class="p-7.5">
-                    <p class="text-base text-semantic-primary font-semibold">
+                    <p class="text-base font-semibold text-primary">
                       {{ course.title }}
                     </p>
                   </div>
@@ -138,7 +142,7 @@ const specialsSwiperBreakpoints = ref({});
           >
             <template #container-start>
               <div
-                class="absolute left-0 top-1/2 -translate-y-1/2 z-30 hidden 2xl:block"
+                class="absolute left-0 top-1/2 z-30 hidden -translate-y-1/2 2xl:block"
                 :style="{
                   left: bounding.x.value + 'px',
                 }"
@@ -153,7 +157,7 @@ const specialsSwiperBreakpoints = ref({});
                 :style="{
                   right: bounding.x.value + 'px',
                 }"
-                class="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden 2xl:block"
+                class="absolute right-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
               >
                 <ButtonCarousel
                   position="right"
@@ -165,21 +169,21 @@ const specialsSwiperBreakpoints = ref({});
             <SwiperSlide class="md:!w-fit" v-for="course in courses">
               <div
                 :style="{ padding: `0 ${bounding.x.value}px` }"
-                class="md:!px-0 md:w-[310px]"
+                class="h-[408px] md:w-[310px] md:!px-0"
               >
-                <div class="bg-background max-w-[310px] mx-auto">
+                <div class="mx-auto h-full max-w-[310px] bg-background">
                   <div
-                    class="w-full h-[222px] bg-gray-200 relative flex justify-center items-center"
+                    class="relative flex h-[222px] w-full items-center justify-center bg-gray-200"
                   >
                     <img
                       :src="course.thumbnail"
-                      class="w-full h-full object-cover"
+                      class="h-full w-full object-cover"
                     />
                     <PlayIcon2 class="absolute" />
                   </div>
 
                   <div class="p-7.5">
-                    <p class="text-base text-semantic-primary font-semibold">
+                    <p class="text-base font-semibold text-primary">
                       {{ course.title }}
                     </p>
                   </div>
@@ -192,7 +196,7 @@ const specialsSwiperBreakpoints = ref({});
 
       <template #default>
         <button
-          class="text-semantic-primary flex gap-2.5 items-center mt-4 container md:absolute md:top-0 md:right-0 md:w-auto md:px-0 md:mt-0"
+          class="container mt-4 flex items-center gap-2.5 text-primary md:absolute md:right-0 md:top-0 md:mt-0 md:w-auto md:px-0"
           :style="{ right: bounding.x.value + 'px' }"
         >
           <PlayIcon class="md:hidden" />

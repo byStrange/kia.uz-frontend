@@ -34,7 +34,9 @@ export function useScroll() {
 
     // Determine if the header should be fixed
     if (currentScrollY === 0) {
-      headerService.value.isHeaderFixed = false;
+      if (!headerService.value.lockHover) {
+        headerService.value.isHeaderFixed = false;
+      }
     } else if (scrollDirection.value === 'up' && speed > speedThreshold) {
       headerService.value.isHeaderFixed = true;
     } else if (scrollDirection.value === 'down') {

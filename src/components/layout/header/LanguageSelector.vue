@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
-import TickToBottom from "@/components/icons/20x20/TickToBottom.vue";
-import GlobeIcon from "@/components/icons/GlobeIcon.vue";
-import { useHeaderService } from "@/services/headerService";
+import { ref, onMounted, onUnmounted } from 'vue';
+import TickToBottom from '@/components/icons/20x20/TickToBottom.vue';
+import GlobeIcon from '@/components/icons/GlobeIcon.vue';
+import { useHeaderService } from '@/services/headerService';
 
 const { headerService } = useHeaderService();
 
-const emit = defineEmits(["language-change"]);
+const emit = defineEmits(['language-change']);
 
 const isOpen = ref(false);
 
@@ -15,38 +15,38 @@ const toggleDropdown = () => {
 };
 
 const handleClickOutside = (event: any) => {
-  const dropdown = document.querySelector(".language-selector");
+  const dropdown = document.querySelector('.language-selector');
   if (dropdown && !dropdown.contains(event.target)) {
     isOpen.value = false;
   }
 };
 
 onMounted(() => {
-  document.addEventListener("click", handleClickOutside);
+  document.addEventListener('click', handleClickOutside);
 });
 
 onUnmounted(() => {
-  document.removeEventListener("click", handleClickOutside);
+  document.removeEventListener('click', handleClickOutside);
 });
 </script>
 
 <template>
-  <div class="language-selector relative text-semantic-primary">
+  <div class="language-selector relative text-primary">
     <button @click="toggleDropdown" class="flex items-center">
-      <div class="hidden 2xl:flex items-center">
+      <div class="hidden items-center 2xl:flex">
         <span>{{ $i18n.locale.toUpperCase() }}</span>
         <TickToBottom
           class="transition-all"
           :class="{
             'rotate-180': isOpen,
-            '!text-semantic-primary': headerService.isHover,
+            '!text-primary': headerService.isHover,
             '!text-white': !headerService.isHover,
           }"
         />
       </div>
       <GlobeIcon
         class="text-white 2xl:hidden"
-        :class="{ '!text-semantic-primary': headerService.isHover }"
+        :class="{ '!text-primary': headerService.isHover }"
       />
     </button>
 
@@ -60,7 +60,7 @@ onUnmounted(() => {
     >
       <div
         v-if="isOpen"
-        class="absolute min-w-fit right-0 z-10 w-full mt-1 bg-white border border-gray-300 rounded-[8px] shadow-lg overflow-hidden"
+        class="absolute right-0 z-10 mt-1 w-full min-w-fit overflow-hidden rounded-[8px] border border-gray-300 bg-white shadow-lg"
       >
         <ul>
           <li
@@ -71,7 +71,7 @@ onUnmounted(() => {
               isOpen = false;
               headerService.isHover = false;
             "
-            class="px-6 py-4 hover:bg-gray-100 cursor-pointer text-base"
+            class="cursor-pointer px-6 py-4 text-base hover:bg-gray-100"
           >
             {{ ln.toUpperCase() }}
           </li>
