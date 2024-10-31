@@ -1,15 +1,16 @@
 <script setup lang="tsx">
-import InfoIcon from "@/components/icons/20x20/InfoIcon.vue";
-import Button from "@/components/common/Button.vue";
-import Section from "@/components/home/Section.vue";
-import { SwiperSlide, Swiper } from "swiper/vue";
-import { useCssVar } from "@vueuse/core";
-import { computed, ref } from "vue";
-import { SwiperClass } from "swiper/react";
-import { Controller } from "swiper/modules";
-import { useModelsService, Model } from "@/services/modelsService";
-import ElectroCarIcon from "@/components/icons/ElectroCarIcon.vue";
-import ButtonCarousel from "@/components/common/ButtonCarousel.vue";
+import InfoIcon from '@/components/icons/20x20/InfoIcon.vue';
+import Button from '@/components/common/Button.vue';
+import Section from '@/components/home/Section.vue';
+import { SwiperSlide, Swiper } from 'swiper/vue';
+import { useCssVar } from '@vueuse/core';
+import { computed, ref } from 'vue';
+import { SwiperClass } from 'swiper/react';
+import { Controller } from 'swiper/modules';
+import { useModelsService, Model } from '@/services/modelsService';
+import ElectroCarIcon from '@/components/icons/ElectroCarIcon.vue';
+import ButtonCarousel from '@/components/common/ButtonCarousel.vue';
+import { onMounted } from 'vue';
 
 const modelsThumbSwiper = ref<SwiperClass | null>(null);
 const modelsSwiper = ref<SwiperClass | null>(null);
@@ -30,39 +31,33 @@ const { models } = useModelsService();
 
 const activeModelIndex = ref(0);
 
-const pagePadding = useCssVar("--page-padding");
+const pagePadding = useCssVar('--page-padding');
 
-const thumbSlidersBreakpoints = computed(() => {
-  const md = useCssVar("--screen-md");
-  const largeDesktop = useCssVar("--screen-lg");
-  return {
-    [md.value ? parseInt(md.value) : 0]: {
-      slidesPerView: 5,
-    },
-    [largeDesktop.value ? parseInt(largeDesktop.value) : 0]: {
-      slidesPerView: 10,
-    },
-  };
+onMounted(() => {
+  modelsThumbSwiper.value?.on('click', (swiper) => {
+    const index = swiper.clickedIndex;
+    swiper.slideTo(index);
+  });
 });
 
 const MiniThumbCard = ({ model }: { model: Model }) => {
   return (
     <div
       class={[
-        "py-2 px-1 rounded-xl border w-fit border-transparent transition-colors relative md:py-3 md:px-1.5",
+        'relative w-fit rounded-xl border border-transparent px-1 py-2 transition-colors md:px-1.5 md:py-3',
         {
-          "!border-semantic-primary":
+          '!border-primary':
             activeModelIndex.value === models.value.indexOf(model),
         },
       ]}
     >
-      {model.electric && <ElectroCarIcon class="absolute top-2 right-1" />}
+      {model.electric && <ElectroCarIcon class="absolute right-1 top-2" />}
 
       <img
         src={model.images.small}
-        class="w-[84px] h-[40px] md:w-[108px] md:h-[52px]"
+        class="h-[40px] w-[84px] md:h-[52px] md:w-[108px]"
       />
-      <p class="text-xs text-semantic-primary text-center md:text-base mt-1 md:mt-3">
+      <p class="mt-1 text-center text-xs text-primary md:mt-3 md:text-base">
         {model.title}
       </p>
     </div>
@@ -75,19 +70,19 @@ const ModelCard = ({ model }: { model: Model }) => {
       <div data-label="image wrapper">
         <img
           src={model.images.medium}
-          class="w-full md:max-w-[500px] md:mx-auto 2xl:max-w-[742px]"
+          class="w-full md:mx-auto md:max-w-[500px] 2xl:max-w-[742px]"
         />
       </div>
       <div class="text-center">
-        <h2 class="text-semantic-primary text-lg md:font-semibold md:text-2xl 2xl:text-3xl">
+        <h2 class="text-lg text-primary md:text-2xl md:font-semibold 2xl:text-3xl">
           {model.title}
         </h2>
         <div class="mt-2">
-          <p class="text-semantic-primary text-sm flex justify-center gap-x-1 md:text-base">
+          <p class="flex justify-center gap-x-1 text-sm text-primary md:text-base">
             от  199 900 000 сум
-            <InfoIcon class="text-disabled-elements" />
+            <InfoIcon class="text-disabled" />
           </p>
-          <p class="text-caption text-sm md:text-base">выгода: 50 000 сум</p>
+          <p class="text-sm text-caption md:text-base">выгода: 50 000 сум</p>
         </div>
       </div>
       <Button
@@ -95,7 +90,7 @@ const ModelCard = ({ model }: { model: Model }) => {
         color="secondary"
         size="md"
         mode="full"
-        class="mt-4 mx-auto md:mt-8"
+        class="mx-auto mt-4 md:mt-8"
       />
     </div>
   );
@@ -107,16 +102,15 @@ const ModelCard = ({ model }: { model: Model }) => {
       <Swiper
         :modules="[Controller]"
         :controller="{ control: modelsSwiper }"
-        :breakpoints="thumbSlidersBreakpoints"
         @swiper="modelsThumbSwiper = $event"
         @slideChange="(e) => (activeModelIndex = e.activeIndex)"
-        :slides-per-view="3"
+        slides-per-view="auto"
         :centered-slides="true"
         :space-between="8"
       >
         <template #container-start>
           <div
-            class="absolute left-0 top-1/2 -translate-y-1/2 z-20 hidden 2xl:block"
+            class="absolute left-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
           >
             <ButtonCarousel
               position="left"
@@ -126,7 +120,7 @@ const ModelCard = ({ model }: { model: Model }) => {
             />
           </div>
           <div
-            class="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden 2xl:block"
+            class="absolute right-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
           >
             <ButtonCarousel
               position="right"
@@ -140,17 +134,17 @@ const ModelCard = ({ model }: { model: Model }) => {
               background:
                 'linear-gradient(-90deg, rgba(248, 248, 248, 0) 0%, #F8F8F8 100%)',
             }"
-            class="absolute left-0 h-full z-10 w-[94px]"
+            class="absolute left-0 z-10 h-full w-[94px]"
           ></div>
           <div
             :style="{
               background:
                 'linear-gradient(90deg, rgba(248, 248, 248, 0) 0%, #F8F8F8 100%)',
             }"
-            class="absolute right-0 h-full z-10 w-[94px]"
+            class="absolute right-0 z-10 h-full w-[94px]"
           ></div>
         </template>
-        <SwiperSlide v-for="model in models">
+        <SwiperSlide v-for="model in models" class="!w-fit">
           <MiniThumbCard :model="model" />
         </SwiperSlide>
       </Swiper>
@@ -166,7 +160,7 @@ const ModelCard = ({ model }: { model: Model }) => {
         >
           <template #container-start>
             <div
-              class="absolute left-0 top-1/2 -translate-y-1/2 z-20 hidden 2xl:block"
+              class="absolute left-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
             >
               <ButtonCarousel
                 position="left"
@@ -175,7 +169,7 @@ const ModelCard = ({ model }: { model: Model }) => {
               />
             </div>
             <div
-              class="absolute right-0 top-1/2 -translate-y-1/2 z-20 hidden 2xl:block"
+              class="absolute right-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
             >
               <ButtonCarousel
                 position="right"

@@ -79,7 +79,9 @@ const extraLinksCard = [
   </div>
 
   <div class="pb-12 md:pb-15">
-    <h2 class="container text-lg font-semibold text-semantic-primary">
+    <h2
+      class="container text-lg font-semibold text-primary md:text-2xl 2xl:text-3xl"
+    >
       Подробнее о Kia
     </h2>
     <div
@@ -91,8 +93,10 @@ const extraLinksCard = [
         v-for="slide in extraLinksCard"
       >
         <img :src="slide.image" class="h-full" />
-        <div class="absolute bottom-0 z-10 p-4">
-          <p class="text-base text-white">{{ slide.title }}</p>
+        <div class="absolute bottom-0 z-10 w-full p-4 md:px-7.5 md:py-5">
+          <p class="text-base font-semibold text-white md:text-2xl">
+            {{ slide.title }}
+          </p>
         </div>
       </div>
     </div>

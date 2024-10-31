@@ -1,17 +1,18 @@
 <script setup lang="tsx">
-import PhoneIcon from "../icons/PhoneIcon.vue";
-import UserIcon from "../icons/UserIcon.vue";
-import LenseIcon from "../icons/LenseIcon.vue";
+import PhoneIcon from '../icons/PhoneIcon.vue';
+import UserIcon from '../icons/UserIcon.vue';
+import LenseIcon from '../icons/LenseIcon.vue';
 
-import HeaderMenu from "./header/HeaderMenu.vue";
+import HeaderMenu from './header/HeaderMenu.vue';
 
-import { HeaderItem, useHeaderService } from "@/services/headerService";
-import LanguageSelector from "./header/LanguageSelector.vue";
-import { watch } from "vue";
-import { useScroll } from "@/composables/useScroll";
-import AnimatedBurgerMenuIcon from "../icons/AnimatedBurgerMenuIcon.vue";
+import { HeaderItem, useHeaderService } from '@/services/headerService';
+import LanguageSelector from './header/LanguageSelector.vue';
+import { watch } from 'vue';
+import { useScroll } from '@/composables/useScroll';
+import AnimatedBurgerMenuIcon from '../icons/AnimatedBurgerMenuIcon.vue';
 
 const { toggleMenu, headerService } = useHeaderService();
+
 useScroll();
 
 const openMenu = (item: HeaderItem) => {
@@ -33,14 +34,11 @@ const HeaderLink = ({ item }: { item: HeaderItem }) => {
   return (
     <>
       {item.children?.length ? (
-        <button
-          class="text-semantic-primary text-sm+"
-          onClick={() => openMenu(item)}
-        >
+        <button class="text-sm+ text-primary" onClick={() => openMenu(item)}>
           {item.label}
         </button>
       ) : (
-        <router-link to={item.to} class="text-semantic-primary text-sm+">
+        <router-link to={item.to} class="text-sm+ text-primary">
           {item.label}
         </router-link>
       )}
@@ -49,12 +47,20 @@ const HeaderLink = ({ item }: { item: HeaderItem }) => {
 };
 
 watch(
-  headerService,
+  () => headerService.value.isHeaderFixed,
   () => {
-    headerService.value.isHover =
-      headerService.value.isHeaderFixed || headerService.value.isMenuOpen;
-  },
-  { deep: true }
+    if (!headerService.value.lockHover) {
+      headerService.value.isHover =
+        headerService.value.isHeaderFixed || headerService.value.isMenuOpen;
+    }
+  }
+);
+
+watch(
+  () => headerService.value.lockHover,
+  () => {
+    headerService.value.isHover = headerService.value.lockHover;
+  }
 );
 </script>
 <template>
@@ -62,18 +68,33 @@ watch(
     <header
       :data-isHover="headerService.isHover"
       :key="headerService.isHeaderFixed + ''"
-      class="py-5 bg-semantic-header-bg border-b border-b-white border-opacity-20 absolute top-0 w-full z-40"
+      class="bg-semantic-header-bg absolute top-0 z-40 w-full border-b border-b-white border-opacity-20 py-5"
       id="header"
       :class="{
-        hover: headerService.isHover,
+        hover:
+          headerService.isHover ||
+          headerService.isMenuOpen ||
+          headerService.isHeaderFixed,
         '!fixed shadow': headerService.isHeaderFixed,
       }"
-      @mouseenter="headerService.isHover = true"
-      @mouseleave="headerService.isHover = headerService.isMenuOpen"
+      @mouseenter="
+        () => {
+          if (!headerService.lockHover) {
+            headerService.isHover = true;
+          } else headerService.isHover = true;
+        }
+      "
+      @mouseleave="
+        () => {
+          if (!headerService.lockHover) {
+            headerService.isHover = headerService.isMenuOpen;
+          } else headerService.isHover = headerService.lockHover;
+        }
+      "
     >
-      <div class="container flex items-center justify-between relative">
+      <div class="container relative flex items-center justify-between">
         <button
-          class="!text-white !bg-transparent 2xl:hidden !p-0"
+          class="!bg-transparent !p-0 !text-white 2xl:hidden"
           @click="
             () => {
               toggleMenu();
@@ -136,7 +157,7 @@ watch(
         </div>
 
         <div class="flex items-center gap-2 md:gap-5">
-          <ul class="items-center gap-5 hidden 2xl:flex">
+          <ul class="hidden items-center gap-5 2xl:flex">
             <li v-for="item in headerService.routes.slice(4)" :key="item.label">
               <HeaderLink :item="item" />
             </li>
@@ -145,7 +166,7 @@ watch(
             <PhoneIcon
               class="transition-colors"
               :class="{
-                'text-semantic-primary': headerService.isHover,
+                'text-primary': headerService.isHover,
                 'text-white': !headerService.isHover,
               }"
             />
@@ -155,7 +176,7 @@ watch(
               class="transition-colors"
               :class="{
                 'text-white': !headerService.isHover,
-                'text-semantic-primary': headerService.isHover,
+                'text-primary': headerService.isHover,
               }"
             />
           </button>
@@ -164,7 +185,7 @@ watch(
               class="transition-colors"
               :class="{
                 'text-white': !headerService.isHover,
-                'text-semantic-primary': headerService.isHover,
+                'text-primary': headerService.isHover,
               }"
             />
           </button>

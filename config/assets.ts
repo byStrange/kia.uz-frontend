@@ -1,10 +1,10 @@
-import { PreRenderedAsset } from "rollup";
+import { PreRenderedAsset } from 'rollup';
 type AssetOutputEntry = {
   output: string;
   regex: RegExp;
 };
 
-export const assetDir = "assets";
+export const assetDir = 'assets';
 export const entryFileNames = `${assetDir}/js/[name]-[hash].js`;
 export const chunkFileNames = `${assetDir}/js/[name]-[hash]-chunk.js`;
 

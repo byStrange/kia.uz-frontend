@@ -8,6 +8,9 @@ const routes: RouteRecordRaw[] = [
     name: 'MainLayout',
     component: mainLayout,
     children: [...mainRoutes],
+    meta: {
+      breadcrumb: 'Главная',
+    },
   },
 ];
 

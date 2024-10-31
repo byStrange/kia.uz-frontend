@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import CarouselPrevIcon from "../icons/CarouselPrevIcon.vue";
-import CarouselNextIcon from "../icons/CarouselNextIcon.vue";
-import Button from "./Button.vue";
-import { tv, VariantProps } from "tailwind-variants";
+import CarouselPrevIcon from '../icons/CarouselPrevIcon.vue';
+import CarouselNextIcon from '../icons/CarouselNextIcon.vue';
+import Button from './Button.vue';
+import { tv, VariantProps } from 'tailwind-variants';
 
 const cButton = tv({
-  base: "bg-semantic-primary p-0 bg-opacity-40 hover:bg-opacity-100",
+  base: 'bg-primary p-0 bg-opacity-40 hover:bg-opacity-100',
   variants: {
     size: {
-      lg: "w-16 h-16",
-      sm: "w-10 h-10",
+      lg: 'w-16 h-16',
+      sm: 'w-10 h-10',
     },
   },
   defaultVariants: {
-    size: "lg",
+    size: 'lg',
   },
 });
 
 type ButtonCarouselVariants = VariantProps<typeof cButton>;
 
 defineProps<{
-  position: "left" | "right";
+  position: 'left' | 'right';
   hide?: boolean;
-  size?: ButtonCarouselVariants["size"];
+  size?: ButtonCarouselVariants['size'];
 }>();
 </script>
 <template>

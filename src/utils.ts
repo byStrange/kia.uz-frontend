@@ -1,16 +1,16 @@
-import { SITE_CONF } from "./api/config";
-import { StringMap } from "./types";
+import { SITE_CONF } from './api/config';
+import { StringMap } from './types';
 
-export const getImageUrl = (path: string)=> {
+export const getImageUrl = (path: string) => {
   return new URL(`./assets/${path}`, import.meta.url).href;
 };
 
 export function getToken(): { access: string | null; refresh: string | null } {
   const access = localStorage.getItem(
-    SITE_CONF.LOCALSTORAGE_ACCESS_TOKEN_KEY || "access_token"
+    SITE_CONF.LOCALSTORAGE_ACCESS_TOKEN_KEY || 'access_token'
   );
   const refresh = localStorage.getItem(
-    SITE_CONF.LOCALSTORAGE_REFRESH_TOKEN_KEY || "refresh_token"
+    SITE_CONF.LOCALSTORAGE_REFRESH_TOKEN_KEY || 'refresh_token'
   );
 
   return {
@@ -34,7 +34,7 @@ export function toQueryString(
       parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`);
     }
   }
-  return parts.length > 0 ? `?${parts.join("&")}` : "";
+  return parts.length > 0 ? `?${parts.join('&')}` : '';
 }
 
 interface DateTimeObject {
@@ -52,28 +52,28 @@ export function createDateTimeObject(dateTimeString: string): DateTimeObject {
   return {
     date: () => {
       const options: Intl.DateTimeFormatOptions = {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
       };
       return dateObject.toLocaleDateString(undefined, options);
     },
     time: () => {
       const options: Intl.DateTimeFormatOptions = {
-        hour: "numeric",
-        minute: "2-digit",
-        second: "2-digit",
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
       };
       return dateObject.toLocaleTimeString(undefined, options);
     },
     datetime: () => {
       const options: Intl.DateTimeFormatOptions = {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-        second: "2-digit",
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
       };
       return dateObject.toLocaleString(undefined, options);
     },
@@ -92,13 +92,13 @@ export function createDateTimeObject(dateTimeString: string): DateTimeObject {
       const diffInDays = Math.floor(diffInHours / 24);
 
       if (diffInSeconds < 60 && level >= 0) {
-        return "just now";
+        return 'just now';
       } else if (diffInMinutes < 60 && level >= 1) {
-        return `${diffInMinutes} minute${diffInMinutes !== 1 ? "s" : ""} ago`;
+        return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''} ago`;
       } else if (diffInHours < 24 && level >= 2) {
-        return `${diffInHours} hour${diffInHours !== 1 ? "s" : ""} ago`;
+        return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
       } else if (diffInDays < 31 && level >= 3) {
-        return `${diffInDays} day${diffInDays !== 1 ? "s" : ""} ago`;
+        return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
       } else {
         // Return full date and time if level is exceeded or not specified
         return this.date();

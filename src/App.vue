@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import I18nProvider from "./components/I18nProvider.vue";
+import I18nProvider from './components/I18nProvider.vue';
 </script>
 <template>
   <I18nProvider>

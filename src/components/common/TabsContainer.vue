@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 
 const props = withDefaults(
   defineProps<{
@@ -18,7 +18,7 @@ const props = withDefaults(
 const activeTab = ref(props.defaultTab);
 
 const emit = defineEmits<{
-  (e: "tab-change", tab: string): void;
+  (e: 'tab-change', tab: string): void;
 }>();
 </script>
 <template>
@@ -31,7 +31,7 @@ const emit = defineEmits<{
             :tab="{ tab: tab, isActive: index === activeTab }"
           >
             <button
-              class="pb-5 text-semantic-primary text-opacity-60 relative transition-colors font-semibold"
+              class="relative pb-5 font-semibold text-primary text-opacity-60 transition-colors"
               :class="{
                 '!text-opacity-100': index === activeTab,
               }"
@@ -45,7 +45,7 @@ const emit = defineEmits<{
                 :class="{
                   'scale-x-100': index === activeTab,
                 }"
-                class="absolute scale-x-0 transition-transform left-0 -bottom-[1px] w-full h-0.5 duration-300 bg-semantic-primary"
+                class="absolute -bottom-[1px] left-0 h-0.5 w-full scale-x-0 bg-primary transition-transform duration-300"
               ></span>
             </button>
           </slot>

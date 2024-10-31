@@ -1,16 +1,16 @@
 <script setup lang="tsx">
-import TickToRight from "@/components/icons/20x20/TickToRight.vue";
-import { useHeaderService } from "@/services/headerService";
-import HeaderMenuExtended from "./HeaderMenuExtended.vue";
-import { useDynamicHeight } from "@/composables/useDynamicHeight";
-import { h } from "vue";
+import TickToRight from '@/components/icons/20x20/TickToRight.vue';
+import { useHeaderService } from '@/services/headerService';
+import HeaderMenuExtended from './HeaderMenuExtended.vue';
+import { useDynamicHeight } from '@/composables/useDynamicHeight';
+import { h } from 'vue';
 
 const { headerService, closeExtendedMenu } = useHeaderService();
 let commonClasses =
-  "menu-item py-4.5 text-lg font-semibold text-semantic-primary block w-full text-start";
+  'menu-item py-4.5 text-lg font-semibold text-primary block w-full text-start';
 
 // Calculates the overall height of the menu excluding the #header height
-const { height } = useDynamicHeight(["#header"]);
+const { height } = useDynamicHeight(['#header']);
 
 // Renders a menu item
 const MenuItem = (props: any) => {
@@ -21,14 +21,14 @@ const MenuItem = (props: any) => {
           class={commonClasses}
           onClick={() => (headerService.value.extendedMenu = props.item)}
         >
-          <div class="container flex justify-between items-center">
+          <div class="container flex items-center justify-between">
             {props.item.label}
             <TickToRight />
           </div>
         </button>
       ) : (
         <router-link class={commonClasses} to={props.item.to}>
-          <span class="block container">{props.item.label}</span>
+          <span class="container block">{props.item.label}</span>
         </router-link>
       )}
     </>
@@ -51,20 +51,20 @@ const MenuFooter = () => {
   return (
     <div
       class={[
-        "py-4.5 border-t border-t-protection border-opacity-60",
-        { "2xl:hidden": !headerService.value.extendedMenu },
+        'border-t border-t-protection border-opacity-60 py-4.5',
+        { '2xl:hidden': !headerService.value.extendedMenu },
       ]}
     >
-      <div class="container space-y-7.5 ">
+      <div class="container space-y-7.5">
         <div class="space-y-2.5">
           <h3 class="text-sm+ text-caption">Горячая линия Kia</h3>
-          <p class="text-semantic-primary font-semibold">
+          <p class="font-semibold text-primary">
             {headerService.value.phoneLine1}
           </p>
         </div>
         <div class="space-y-2.5">
           <h3 class="text-sm+ text-caption">Информационная линия Kia</h3>
-          <p class="text-semantic-primary font-semibold">
+          <p class="font-semibold text-primary">
             {headerService.value.phoneLine2}
           </p>
         </div>
@@ -75,10 +75,10 @@ const MenuFooter = () => {
               <a
                 href={item.link}
                 target="_blank"
-                class="text-semantic-primary"
+                class="text-primary"
                 key={item.link}
               >
-                {h(item.icon, { class: "w-7.5 h-7.5" })}
+                {h(item.icon, { class: 'w-7.5 h-7.5' })}
               </a>
             ))}
           </div>
@@ -94,7 +94,7 @@ const MenuFooter = () => {
     <div
       @click.self="closeExtendedMenu"
       :style="{ height: `${height}px` }"
-      class="fixed top-[65px] w-full z-40 overflow-auto bg-black bg-opacity-20"
+      class="fixed top-[65px] z-40 w-full overflow-auto bg-black bg-opacity-20"
       v-if="headerService.isMenuOpen"
       :key="headerService.extendedMenu?.label"
     >
