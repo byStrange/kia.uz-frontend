@@ -6,6 +6,7 @@ import SafeAreaView from '@/components/layout/SafeAreaView.vue';
 import BreadCrumbs from '@/components/common/BreadCrumbs.vue';
 import DropdownInput from '@/components/common/DropdownInput.vue';
 import InfoIcon from '@/components/icons/20x20/InfoIcon.vue';
+import TickToRight from '@/components/icons/20x20/TickToRight.vue';
 const { headerService } = useHeaderService();
 
 const availableOptions = ref([
@@ -33,9 +34,88 @@ const modelGroups = ref([
     models: [
       {
         name: 'K5',
-        image: '',
+        image:
+          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
         from: '379 900 000 сум',
         benefitUpto: '90 000 000 сум',
+      },
+    ],
+  },
+  {
+    label: 'Компактные',
+    models: [
+      {
+        name: 'Cerato',
+        image:
+          'https://ucarecdn.com/b0ea31c9-923e-4bd3-93e0-0c80746b371a/-/preview/1000x479/',
+        from: '292 468 000 сум',
+        benefitUpto: '64 000 000 сум',
+      },
+    ],
+  },
+  {
+    label: 'Бизнес-класс и представительский класс',
+
+    models: [
+      {
+        name: 'K5',
+        from: '379 900 000 сум',
+        image:
+          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
+      },
+      {
+        name: 'K8',
+        from: '675 157 000 сум',
+        image:
+          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
+      },
+      {
+        name: 'K9',
+        from: '869 900 000 сум',
+        image:
+          'https://ucarecdn.com/0bdd809b-c71e-4eda-b2fd-ecbc18a63eb6/-/preview/1000x479/',
+      },
+    ],
+  },
+  {
+    label: 'Кроссоверы и внедорожники',
+    models: [
+      {
+        name: 'K5',
+        from: '379 900 000 сум',
+        image:
+          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
+      },
+      {
+        name: 'K8',
+        from: '675 157 000 сум',
+        image:
+          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
+      },
+      {
+        name: 'K9',
+        from: '869 900 000 сум',
+        image:
+          'https://ucarecdn.com/0bdd809b-c71e-4eda-b2fd-ecbc18a63eb6/-/preview/1000x479/',
+      },
+
+      {
+        name: 'K5',
+        from: '379 900 000 сум',
+        image:
+          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
+      },
+      {
+        name: 'K8',
+        from: '675 157 000 сум',
+        image:
+          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
+      },
+      {
+        name: 'K9',
+        from: '869 900 000 сум',
+        image:
+          'https://ucarecdn.com/0bdd809b-c71e-4eda-b2fd-ecbc18a63eb6/-/preview/1000x479/',
       },
     ],
   },
@@ -43,16 +123,22 @@ const modelGroups = ref([
 
 const ModelCard = ({ model }: { model: any }) => {
   return (
-    <div>
-      <img src={model.image} class="h-full w-full object-cover" />
-      <div>
-        <h2 class="text-lg font-medium text-primary">{model.name}</h2>
+    <div class="max-w-md md:min-w-[310px] md:max-w-[310px]">
+      <img src={model.image} class="w-full object-cover" />
+      <div class="mt-4">
+        <h2 class="text-lg font-semibold text-primary">{model.name}</h2>
         <p class="mt-1.5 flex gap-3 text-primary">
           от {model.from}
           <InfoIcon class="text-disabled" />
         </p>
-        <p class="text-caption">выгода до {model.benefitUpto}</p>
+        {model.benefitUpto && (
+          <p class="text-caption">выгода до {model.benefitUpto}</p>
+        )}
       </div>
+      <button class="mt-1 flex items-center">
+        <span class="text-base font-semibold text-primary">Цены</span>
+        <TickToRight />
+      </button>
     </div>
   );
 };
@@ -64,12 +150,33 @@ modelGroups;
   <SafeAreaView class="bg-white">
     <div class="container">
       <BreadCrumbs class="mt-6 hidden 2xl:block" />
-      <div class="pb-5 pt-10">
-        <h1 class="text-3xl font-semibold text-primary">Все модели Kia</h1>
+      <div class="pb-5 pt-10 md:pt-15 2xl:pt-9">
+        <h1 class="text-3xl font-semibold text-primary md:text-5xl">
+          Все модели Kia
+        </h1>
         <DropdownInput
           v-model:selectedOption="selectedOption"
           v-model:availableOptions="availableOptions"
+          class="mt-4 md:mt-7.5 md:max-w-sm"
         />
+      </div>
+
+      <div class="pb-10 pt-5 md:pb-15 2xl:py-20">
+        <div class="space-y-10 md:space-y-12 2xl:space-y-15">
+          <div v-for="modelGroup in modelGroups" :key="modelGroup.label">
+            <h1 class="text-2xl font-semibold text-primary md:text-3xl">
+              {{ modelGroup.label }}
+            </h1>
+            <div class="mt-4 flex-wrap md:mt-8 md:flex md:gap-9 2xl:mt-10">
+              <ModelCard
+                class="mx-auto shrink-0 md:mx-0"
+                :model="model"
+                v-for="model in modelGroup.models"
+                :key="model.name"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </SafeAreaView>

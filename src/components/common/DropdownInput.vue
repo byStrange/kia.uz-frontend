@@ -28,7 +28,7 @@ import Select from 'primevue/select';
     :optionLabel="optionLabel"
     :optionValue="optionValue"
     placeholder="Выберите модель"
-    class="mt-4 w-full"
+    class="w-full"
     unstyled
     :pt="{
       dropdown: (props) => {

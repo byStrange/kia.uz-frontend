@@ -1,5 +1,5 @@
 <template>
-  <nav class="container">
+  <nav>
     <ul class="flex items-center">
       <li v-for="(crumb, index) in breadcrumbs" :key="index">
         <div v-if="currentRoute.name !== crumb.name" class="flex items-center">
