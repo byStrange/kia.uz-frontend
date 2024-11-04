@@ -150,7 +150,7 @@ onUnmounted(() => {
       </picture>
       <div
         data-label="Hero bottom"
-        class="absolute !left-0 bottom-[31px] z-10 flex w-full items-end justify-center md:!left-auto md:bottom-15 md:justify-start md:pb-0"
+        class="absolute !left-0 bottom-[31px] z-10 flex w-full items-end justify-center md:!left-auto md:bottom-15 md:justify-start md:pb-0 2xl:bottom-16"
         :style="{
           left: offset.offsetLeft.value + 'px',
           padding: `0 ${offset.offsetLeft.value}px`,
