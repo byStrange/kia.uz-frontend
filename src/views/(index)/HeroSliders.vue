@@ -115,7 +115,7 @@ const slidesLength = computed(() => {
             />
             <img
               src="@/assets/test/kia-test-hero-img-mobile.png"
-              class="w-full object-cover md:h-full"
+              class="h-[75%] w-full object-cover md:h-full"
             />
           </picture>
           <div
