@@ -1,14 +1,14 @@
-import { defineConfig, loadEnv } from 'vite';
-import vueJsx from '@vitejs/plugin-vue-jsx';
 import vue from '@vitejs/plugin-vue';
-import VueDevTools from 'vite-plugin-vue-devtools';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
+import { defineConfig, loadEnv } from 'vite';
+import VueDevTools from 'vite-plugin-vue-devtools';
 
 import {
   assetDir,
-  processAssetFileNames,
-  entryFileNames,
   chunkFileNames,
+  entryFileNames,
+  processAssetFileNames,
 } from './config/assets';
 
 // https://vitejs.dev/config/

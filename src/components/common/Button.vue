@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { tv, type VariantProps } from 'tailwind-variants';
+import { type VariantProps, tv } from 'tailwind-variants';
 
 const button = tv({
   base: 'flex items-center justify-center whitespace-nowrap transition-all outline-none font-semibold',
@@ -8,7 +8,7 @@ const button = tv({
       unstyled: '',
       primary: 'bg-white text-semantic-text',
       secondary:
-        'bg-primary text-white hover:bg-[#434E56] active:bg-[#2D3A43] active:text-[#CDD0D2] disabled:bg-opacity-40 disabled:text-[#CDD0D2]',
+        'bg-primary border border-city-gray text-white hover:bg-[#434E56] active:bg-[#2D3A43] active:text-[#CDD0D2] disabled:bg-opacity-40 disabled:text-[#CDD0D2]',
       transparent:
         'bg-transparent text-white bg-opacity-60 hover:bg-opacity-100 border border-city-gray',
       danger:

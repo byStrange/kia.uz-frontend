@@ -8,9 +8,14 @@
   }
 }
 
+background: linear-gradient(0deg, #05141f 84.03%, rgba(5, 20, 31, 0) 100%);
 @layer components {
   .hero-slider-shade {
     @apply bg-[linear-gradient(0deg,#05141F_72.81%,rgba(5,20,31,0)100%)] 2xl:bg-[linear-gradient(0deg,rgba(5,20,31,0.5)_24.47%,rgba(5,20,31,0)100%)];
+  }
+
+  .hero-slider-shade.long {
+    @apply bg-[linear-gradient(0deg,#05141F_84.03%,rgba(5,20,31,0)_100%)] md:bg-[linear-gradient(0deg,#05141F_72.81%,rgba(5,20,31,0)100%)] 2xl:h-[329px] 2xl:bg-[linear-gradient(to_top,rgba(5,20,31,0.5)_24.47%,rgba(5,20,31,0)100%)];
   }
 
   #header a,
@@ -19,7 +24,7 @@
   }
 
   #header.hover {
-    @apply bg-white border-b-protection;
+    @apply border-b-protection bg-white;
   }
 
   #header.hover a,

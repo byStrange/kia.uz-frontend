@@ -106,3 +106,7 @@ export function createDateTimeObject(dateTimeString: string): DateTimeObject {
     },
   };
 }
+
+export function insertToIndex(array: any, index: number, item: any) {
+  return array.slice(0, index).concat(item, array.slice(index));
+}

@@ -1,20 +1,24 @@
 <script setup lang="ts">
-import TabsContainer from '@/components/common/TabsContainer.vue';
-import Section from '@/components/home/Section.vue';
+import { computed, ref } from 'vue';
+import { watch } from 'vue';
 
+import { useCssVar } from '@vueuse/core';
+import { Pagination } from 'swiper/modules';
+import { SwiperClass } from 'swiper/react';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 
-import { useContainer } from '@/composables/useContainer';
-import { SwiperClass } from 'swiper/react';
-import { computed, ref } from 'vue';
-import TickToRight from '@/components/icons/20x20/TickToRight.vue';
-import { useCssVar } from '@vueuse/core';
-import { watch } from 'vue';
-import ButtonCarousel from '@/components/common/ButtonCarousel.vue';
-import PlayIcon from '@/components/icons/PlayIcon.vue';
-import PlayIcon2 from '@/components/icons/PlayIcon2.vue';
 import { useCoursesService } from '@/services/coursesService';
-import { Pagination } from 'swiper/modules';
+
+import { useContainer } from '@/composables/useContainer';
+
+import ButtonCarousel from '@/components/common/ButtonCarousel.vue';
+import TabsContainer from '@/components/common/TabsContainer.vue';
+
+import Section from '@/components/home/Section.vue';
+
+import TickToRight from '@/components/icons/20x20/TickToRight.vue';
+import PlayIcon2 from '@/components/icons/PlayIcon2.vue';
+import PlayIcon from '@/components/icons/PlayIcon.vue';
 
 const { bounding } = useContainer();
 const { courses } = useCoursesService();

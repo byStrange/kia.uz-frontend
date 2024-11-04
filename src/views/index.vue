@@ -1,12 +1,14 @@
-<script setup lang="ts">
-import HeroSliders from './(index)/HeroSliders.vue';
-import FloatingContactButton from '@/components/home/FloatingContactButton.vue';
-import SpecialOffers from './(index)/SpecialOffers.vue';
-import Models from './(index)/Models.vue';
-import Courses from './(index)/Courses.vue';
+<script setup lang="tsx">
+import { useContainer } from '@/composables/useContainer';
+
 import Button from '@/components/common/Button.vue';
 
-import { useContainer } from '@/composables/useContainer';
+import FloatingContactButton from '@/components/home/FloatingContactButton.vue';
+
+import Courses from './(index)/Courses.vue';
+import HeroSliders from './(index)/HeroSliders.vue';
+import Models from './(index)/Models.vue';
+import SpecialOffers from './(index)/SpecialOffers.vue';
 
 const { bounding } = useContainer();
 

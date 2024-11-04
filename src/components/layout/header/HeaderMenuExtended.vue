@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import Button from '@/components/common/Button.vue';
-import TickToLeft from '@/components/icons/20x20/TickToLeft.vue';
 import { useHeaderService } from '@/services/headerService';
+
+import Button from '@/components/common/Button.vue';
+
+import TickToLeft from '@/components/icons/20x20/TickToLeft.vue';
+
 const { headerService } = useHeaderService();
 </script>
 <template>
