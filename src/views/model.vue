@@ -21,7 +21,6 @@ import SlideView from '@/components/common/SlideView.vue';
 import { useCoursesService } from '@/services/coursesService';
 import Section from '@/components/home/Section.vue';
 import Button from '@/components/common/Button.vue';
-import Checkbox from 'primevue/checkbox';
 import RadioButton from 'primevue/radiobutton';
 import CheckIcon from '@/components/icons/CheckIcon.vue';
 const route = useRoute();
