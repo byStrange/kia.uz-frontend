@@ -1,5 +1,5 @@
 // useOffset.js
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 export function useOffset(element: HTMLElement) {
   const offsetLeft = ref(0);

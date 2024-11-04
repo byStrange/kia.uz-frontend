@@ -1,20 +1,23 @@
 <script setup lang="ts">
-import TabsContainer from '@/components/common/TabsContainer.vue';
-import Section from '@/components/home/Section.vue';
-import { useT } from '@/composables/useT';
+import { computed, ref, watch } from 'vue';
 
+import { useCssVar } from '@vueuse/core';
+import { Pagination } from 'swiper/modules';
+import { SwiperClass } from 'swiper/react';
 import { Swiper, SwiperSlide } from 'swiper/vue';
+
 import { useSpecialsService } from '@/services/specialsService';
 
 import { useContainer } from '@/composables/useContainer';
-import { SwiperClass } from 'swiper/react';
-import { computed, ref } from 'vue';
-import ServiceRegistrationIcon from '@/components/icons/ServiceRegistrationIcon.vue';
-import TickToRight from '@/components/icons/20x20/TickToRight.vue';
-import { useCssVar } from '@vueuse/core';
-import { watch } from 'vue';
+import { useT } from '@/composables/useT';
+
 import ButtonCarousel from '@/components/common/ButtonCarousel.vue';
-import { Pagination } from 'swiper/modules';
+import TabsContainer from '@/components/common/TabsContainer.vue';
+
+import Section from '@/components/home/Section.vue';
+
+import TickToRight from '@/components/icons/20x20/TickToRight.vue';
+import ServiceRegistrationIcon from '@/components/icons/ServiceRegistrationIcon.vue';
 
 const { bounding } = useContainer();
 

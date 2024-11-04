@@ -1,11 +1,14 @@
 <script setup lang="tsx">
-import TickToBottom from '../icons/20x20/TickToBottom.vue';
-import { HeaderItem } from '@/services/headerService';
-
-import { useHeaderService } from '@/services/headerService';
 import { h, ref } from 'vue';
-import Button from '@/components/common/Button.vue';
+
 import { RouterLink } from 'vue-router';
+
+import { HeaderItem } from '@/services/headerService';
+import { useHeaderService } from '@/services/headerService';
+
+import Button from '@/components/common/Button.vue';
+
+import TickToBottom from '../icons/20x20/TickToBottom.vue';
 
 const { headerService } = useHeaderService();
 

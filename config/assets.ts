@@ -1,4 +1,5 @@
 import { PreRenderedAsset } from 'rollup';
+
 type AssetOutputEntry = {
   output: string;
   regex: RegExp;

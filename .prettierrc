@@ -4,6 +4,28 @@
   "trailingComma": "es5",
   "printWidth": 80,
   "tabWidth": 2,
+  "importOrder": [
+    "^vue$",
+    "^@?\\w",
+
+    "^@/assets/(.*)$",
+    "^@/types/(.*)$",
+    "^@/services/(.*)$",
+    "^@/composables/(.*)$",
+
+    "^@/components/common/(.*)$",
+    "^@/components/home/(.*)$",
+    "^@/components/icons/(.*)$",
+    "^@/components/layout/(.*)$",
+    "^@/components/(.*)$",
+
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
   "useTabs": false,
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "plugins": [
+    "prettier-plugin-tailwindcss",
+    "@trivago/prettier-plugin-sort-imports"
+  ]
 }

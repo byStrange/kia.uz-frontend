@@ -1,9 +1,13 @@
 <script setup lang="tsx">
-import TickToRight from '@/components/icons/20x20/TickToRight.vue';
-import { useHeaderService } from '@/services/headerService';
-import HeaderMenuExtended from './HeaderMenuExtended.vue';
-import { useDynamicHeight } from '@/composables/useDynamicHeight';
 import { h } from 'vue';
+
+import { useHeaderService } from '@/services/headerService';
+
+import { useDynamicHeight } from '@/composables/useDynamicHeight';
+
+import TickToRight from '@/components/icons/20x20/TickToRight.vue';
+
+import HeaderMenuExtended from './HeaderMenuExtended.vue';
 
 const { headerService, closeExtendedMenu } = useHeaderService();
 let commonClasses =
@@ -94,7 +98,7 @@ const MenuFooter = () => {
     <div
       @click.self="closeExtendedMenu"
       :style="{ height: `${height}px` }"
-      class="fixed top-[65px] z-40 w-full overflow-auto bg-black bg-opacity-20"
+      class="fixed top-[65px] z-20 w-full overflow-auto bg-black bg-opacity-20"
       v-if="headerService.isMenuOpen"
       :key="headerService.extendedMenu?.label"
     >

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
-import TickToBottom from '@/components/icons/20x20/TickToBottom.vue';
-import GlobeIcon from '@/components/icons/GlobeIcon.vue';
+import { onMounted, onUnmounted, ref } from 'vue';
+
 import { useHeaderService } from '@/services/headerService';
+
+import TickToBottom from '@/components/icons/20x20/TickToBottom.vue';
 
 const { headerService } = useHeaderService();
 
@@ -33,7 +34,7 @@ onUnmounted(() => {
 <template>
   <div class="language-selector relative text-primary">
     <button @click="toggleDropdown" class="flex items-center">
-      <div class="hidden items-center 2xl:flex">
+      <div class="flex items-center">
         <span>{{ $i18n.locale.toUpperCase() }}</span>
         <TickToBottom
           class="transition-all"
@@ -44,10 +45,6 @@ onUnmounted(() => {
           }"
         />
       </div>
-      <GlobeIcon
-        class="text-white 2xl:hidden"
-        :class="{ '!text-primary': headerService.isHover }"
-      />
     </button>
 
     <Transition
@@ -60,16 +57,20 @@ onUnmounted(() => {
     >
       <div
         v-if="isOpen"
-        class="absolute right-0 z-10 mt-1 w-full min-w-fit overflow-hidden rounded-[8px] border border-gray-300 bg-white shadow-lg"
+        class="absolute right-0 z-40 mt-1 w-full min-w-fit overflow-hidden rounded-[8px] border border-gray-300 bg-white shadow-lg"
       >
         <ul>
           <li
             v-for="ln in $i18n.availableLocales"
             :key="ln"
             @click="
-              $i18n.locale = ln;
-              isOpen = false;
-              headerService.isHover = false;
+              () => {
+                $i18n.locale = ln;
+                isOpen = false;
+                if (!headerService.lockHover) {
+                  headerService.isHover = false;
+                }
+              }
             "
             class="cursor-pointer px-6 py-4 text-base hover:bg-gray-100"
           >
