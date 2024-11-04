@@ -74,7 +74,7 @@ watch(
     <header
       :data-isHover="headerService.isHover"
       :key="headerService.isHeaderFixed + ''"
-      class="bg-semantic-header-bg absolute top-0 z-40 w-full border-b border-b-white border-opacity-20 py-5"
+      class="bg-semantic-header-bg absolute top-0 z-40 w-full border-b border-b-white border-opacity-20 py-5 transition-all duration-300"
       id="header"
       :class="{
         hover:

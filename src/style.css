@@ -42,6 +42,18 @@ background: linear-gradient(0deg, #05141f 84.03%, rgba(5, 20, 31, 0) 100%);
     @apply border-white bg-white;
   }
 
+  .light-pagination .swiper-pagination-bullet {
+    @apply border border-primary bg-transparent opacity-100;
+  }
+
+  .light-pagination .swiper-pagination-bullet-active {
+    @apply bg-primary;
+  }
+
+  .light-pagination .swiper-pagination {
+    @apply static mt-10 text-white;
+  }
+
   @media screen(md) {
     .container {
       @apply px-[57px];

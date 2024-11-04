@@ -197,11 +197,9 @@ const toggleMenu = () => {
   headerService.value.isMenuOpen = !headerService.value.isMenuOpen;
 
   if (!headerService.value.lockHover) {
-    alert('what the fuck');
     headerService.value.isHover =
       headerService.value.isMenuOpen || headerService.value.isHeaderFixed;
   } else {
-    alert(headerService.value.isHover);
     headerService.value.isHover = headerService.value.lockHover;
   }
 
