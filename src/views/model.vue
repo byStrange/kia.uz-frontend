@@ -1,183 +1,214 @@
-<script setup lang="tsx">
-import { useHeaderService } from '@/services/headerService';
-import { onMounted, ref } from 'vue';
+<script setup lang="ts">
+import { insertToIndex } from '@/utils';
 
-import SafeAreaView from '@/components/layout/SafeAreaView.vue';
+import { onMounted, onUnmounted, ref } from 'vue';
+
+import { useRoute } from 'vue-router';
+
+import { useHeaderService } from '@/services/headerService';
+
+import { useBreadCrumb } from '@/composables/useBreadCrumb';
+import { useContainer } from '@/composables/useContainer';
+
 import BreadCrumbs from '@/components/common/BreadCrumbs.vue';
-import DropdownInput from '@/components/common/DropdownInput.vue';
+import Button from '@/components/common/Button.vue';
+
 import InfoIcon from '@/components/icons/20x20/InfoIcon.vue';
-import TickToRight from '@/components/icons/20x20/TickToRight.vue';
+import MoreIcon from '@/components/icons/20x20/MoreIcon.vue';
+import TickToBottom from '@/components/icons/20x20/TickToBottom.vue';
+import ComputerIcon from '@/components/icons/onboard/ComputerIcon.vue';
+import MultimediaIcon from '@/components/icons/onboard/MultimediaIcon.vue';
+import SalonIcon from '@/components/icons/onboard/SalonIcon.vue';
+
+import DesktopOnly from '@/components/layout/DesktopOnly.vue';
+import SafeAreaView from '@/components/layout/SafeAreaView.vue';
+
+const route = useRoute();
+const { _breadcrumbsRaw } = useBreadCrumb(route);
+const { offset } = useContainer();
+
 const { headerService } = useHeaderService();
 
-const availableOptions = ref([
-  { label: 'Carens', value: 'car' },
-  { label: 'Carnival', value: 'carnival' },
-  { label: 'Ceed', value: 'ceed' },
-  { label: 'Ceed GT', value: 'ceed-gt' },
-  { label: 'Ceed SW', value: 'ceed-sw' },
-  { label: 'Carnival', value: 'carnival' },
-  { label: 'Seed', value: 'seed' },
-  { label: 'Seed', value: 'seed' },
-  { label: 'Seed', value: 'seed' },
-  { label: 'Seed', value: 'seed' },
-]);
-
-const selectedOption = ref(null);
+const model = ref({
+  name: 'K5',
+});
 
 onMounted(() => {
+  _breadcrumbsRaw.value = insertToIndex(_breadcrumbsRaw.value, 1, {
+    name: 'Models',
+    path: '/models',
+    meta: { breadcrumb: 'Модели' },
+  });
+  headerService.value.isHeaderFixed = true;
   headerService.value.lockHover = true;
 });
 
-const modelGroups = ref([
-  {
-    label: 'Новинки',
-    models: [
-      {
-        name: 'K5',
-        image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
-        from: '379 900 000 сум',
-        benefitUpto: '90 000 000 сум',
-      },
-    ],
-  },
-  {
-    label: 'Компактные',
-    models: [
-      {
-        name: 'Cerato',
-        image:
-          'https://ucarecdn.com/b0ea31c9-923e-4bd3-93e0-0c80746b371a/-/preview/1000x479/',
-        from: '292 468 000 сум',
-        benefitUpto: '64 000 000 сум',
-      },
-    ],
-  },
-  {
-    label: 'Бизнес-класс и представительский класс',
-
-    models: [
-      {
-        name: 'K5',
-        from: '379 900 000 сум',
-        image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
-      },
-      {
-        name: 'K8',
-        from: '675 157 000 сум',
-        image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
-      },
-      {
-        name: 'K9',
-        from: '869 900 000 сум',
-        image:
-          'https://ucarecdn.com/0bdd809b-c71e-4eda-b2fd-ecbc18a63eb6/-/preview/1000x479/',
-      },
-    ],
-  },
-  {
-    label: 'Кроссоверы и внедорожники',
-    models: [
-      {
-        name: 'K5',
-        from: '379 900 000 сум',
-        image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
-      },
-      {
-        name: 'K8',
-        from: '675 157 000 сум',
-        image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
-      },
-      {
-        name: 'K9',
-        from: '869 900 000 сум',
-        image:
-          'https://ucarecdn.com/0bdd809b-c71e-4eda-b2fd-ecbc18a63eb6/-/preview/1000x479/',
-      },
-
-      {
-        name: 'K5',
-        from: '379 900 000 сум',
-        image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
-      },
-      {
-        name: 'K8',
-        from: '675 157 000 сум',
-        image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
-      },
-      {
-        name: 'K9',
-        from: '869 900 000 сум',
-        image:
-          'https://ucarecdn.com/0bdd809b-c71e-4eda-b2fd-ecbc18a63eb6/-/preview/1000x479/',
-      },
-    ],
-  },
-]);
-
-const ModelCard = ({ model }: { model: any }) => {
-  return (
-    <div class="max-w-md md:min-w-[310px] md:max-w-[310px]">
-      <img src={model.image} class="w-full object-cover" />
-      <div class="mt-4">
-        <h2 class="text-lg font-semibold text-primary">{model.name}</h2>
-        <p class="mt-1.5 flex gap-3 text-primary">
-          от {model.from}
-          <InfoIcon class="text-disabled" />
-        </p>
-        {model.benefitUpto && (
-          <p class="text-caption">выгода до {model.benefitUpto}</p>
-        )}
-      </div>
-      <button class="mt-1 flex items-center">
-        <span class="text-base font-semibold text-primary">Цены</span>
-        <TickToRight />
-      </button>
-    </div>
-  );
-};
-ModelCard({ model: { name: 'K5', image: '', from: '379 900 000 сум' } });
-modelGroups;
+onUnmounted(() => {
+  headerService.value.lockHover = false;
+});
 </script>
-
 <template>
-  <SafeAreaView class="bg-white">
-    <div class="container">
-      <BreadCrumbs class="mt-6 hidden 2xl:block" />
-      <div class="pb-5 pt-10 md:pt-15 2xl:pt-9">
-        <h1 class="text-3xl font-semibold text-primary md:text-5xl">
-          Все модели Kia
-        </h1>
-        <DropdownInput
-          v-model:selectedOption="selectedOption"
-          v-model:availableOptions="availableOptions"
-          class="mt-4 md:mt-7.5 md:max-w-sm"
+  <div
+    data-label="Model bar"
+    class="fixed top-0 z-20 flex w-full justify-between bg-primary px-page-padding py-3.5 transition-all duration-300 2xl:container"
+    :class="{
+      '!top-[65px]': headerService.isHeaderFixed,
+      '!z-10': headerService.isMenuOpen,
+    }"
+  >
+    <div
+      class="2xl:flex 2xl:divide-x 2xl:divide-caption"
+      data-label="Model bar left"
+    >
+      <button class="flex gap-2 text-white 2xl:2xl:pr-5">
+        <span class="2xl:text-lg">{{ model.name }}</span>
+        <TickToBottom class="text-white 2xl:hidden" />
+      </button>
+      <DesktopOnly flex class="gap-2 pl-5 text-white">
+        <p class="text-base">от 543 510 000 сум</p>
+        <button>
+          <InfoIcon />
+        </button>
+      </DesktopOnly>
+    </div>
+    <div
+      class="2xl:flex 2xl:divide-x 2xl:divide-caption"
+      data-label="Model bar right"
+    >
+      <DesktopOnly class="pr-5">
+        <ul class="flex items-center gap-6">
+          <li>
+            <a href="#" class="text-base text-white">Обзор</a>
+          </li>
+          <li>
+            <a href="#" class="text-base text-white">Комплектации и цены</a>
+          </li>
+          <li>
+            <a href="#" class="text-base text-white">Характеристики</a>
+          </li>
+          <li>
+            <a href="#" class="text-base text-white">Брошюра</a>
+          </li>
+          <li class="flex items-center">
+            <button class="text-white">
+              <MoreIcon />
+            </button>
+          </li>
+        </ul>
+      </DesktopOnly>
+      <button class="pl-5 text-white">Конфигуратор</button>
+    </div>
+  </div>
+  <div class="h-screen overflow-hidden">
+    <SafeAreaView :extra="52">
+      <div
+        data-label="Hero shadow bottom"
+        aria-hidden="true"
+        class="hero-slider-shade long absolute bottom-0 z-10 h-[428px] w-full md:h-[356px]"
+      ></div>
+      <div
+        data-label="Hero top"
+        class="container absolute hidden h-[190px] w-full items-start justify-end gap-6 pt-7.5 md:block md:bg-[linear-gradient(180deg,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0)100%)] 2xl:bg-[linear-gradient(180deg,rgba(5,20,31,0.5)_24.47%,rgba(5,20,31,0)100%)] 2xl:pt-5"
+      >
+        <BreadCrumbs
+          class="hidden bg-transparent text-white 2xl:block"
+          theme="light"
         />
+        <div class="flex w-full items-start justify-end gap-6 2xl:mt-4.5">
+          <Button
+            label="Заказать звонок"
+            color="primary"
+            size="md"
+            mode="full"
+            class="md:!w-auto"
+          />
+          <Button
+            label="Скачать прайс-лист"
+            color="secondary"
+            size="md"
+            mode="full"
+            class=""
+          />
+        </div>
       </div>
+      <picture class="h-full w-full" data-label="Main Hero image">
+        <source
+          srcset="@/assets/test/kia-test-hero-img.png"
+          media="(min-width: 1024px)"
+        />
 
-      <div class="pb-10 pt-5 md:pb-15 2xl:py-20">
-        <div class="space-y-10 md:space-y-12 2xl:space-y-15">
-          <div v-for="modelGroup in modelGroups" :key="modelGroup.label">
-            <h1 class="text-2xl font-semibold text-primary md:text-3xl">
-              {{ modelGroup.label }}
-            </h1>
-            <div class="mt-4 flex-wrap md:mt-8 md:flex md:gap-9 2xl:mt-10">
-              <ModelCard
-                class="mx-auto shrink-0 md:mx-0"
-                :model="model"
-                v-for="model in modelGroup.models"
-                :key="model.name"
+        <source
+          srcset="
+            https://ucarecdn.com/48b7e2b2-dcf3-40c1-912a-83bef358396c/-/preview/1000x720/
+          "
+          media="(min-width: 768px)"
+        />
+        <img
+          src="https://ucarecdn.com/7697fb74-fadd-4192-8a5e-5f0491567ff6/-/preview/1000x1000/"
+          class="w-full object-cover"
+        />
+      </picture>
+      <div
+        data-label="Hero bottom"
+        class="absolute !left-0 bottom-[31px] z-10 flex w-full items-end justify-center md:!left-auto md:bottom-15 md:justify-start md:pb-0"
+        :style="{
+          left: offset.offsetLeft.value + 'px',
+          padding: `0 ${offset.offsetLeft.value}px`,
+        }"
+      >
+        <div class="flex w-full">
+          <div class="w-full md:px-0 2xl:grid 2xl:grid-cols-12 2xl:gap-10">
+            <div class="space-y-2.5 text-white md:space-y-2 2xl:col-span-3">
+              <p class="text-sm text-white md:text-lg">Новый Kia</p>
+
+              <h1
+                class="mt-1 text-2xl font-semibold md:mt-2 md:text-4xl 2xl:mt-4 2xl:text-7xl"
+              >
+                Carnival
+              </h1>
+              <p class="mt-1 text-sm md:mt-2 md:text-lg 2xl:mt-4">
+                Для тех, у кого большие планы
+              </p>
+            </div>
+            <div class="mt-6 space-y-4 md:hidden">
+              <Button
+                label="Заказать звонок"
+                color="primary"
+                size="md"
+                mode="full"
+                class="md:!w-auto"
               />
+              <Button
+                label="Скачать прайс-лист"
+                color="secondary"
+                size="md"
+                mode="full"
+                class=""
+              />
+            </div>
+            <div
+              class="col-span-6 mt-6 space-y-4 text-white md:mt-10 md:grid md:grid-cols-3 md:space-y-0 2xl:col-start-7 2xl:gap-10"
+            >
+              <div class="flex items-center gap-2.5 md:flex-col md:items-start">
+                <ComputerIcon class="md:size-12.5" />
+                <p class="text-xs text-protection">
+                  12” мультимедийная система c панорамным монитором
+                </p>
+              </div>
+              <div class="flex items-center gap-2.5 md:flex-col md:items-start">
+                <MultimediaIcon class="md:size-12.5" />
+                <p class="text-xs text-protection">
+                  12” Цифровая панель приборов
+                </p>
+              </div>
+              <div class="flex items-center gap-2.5 md:flex-col md:items-start">
+                <SalonIcon class="md:size-12.5" />
+                <p class="text-xs text-protection">Атмосферная подсветка</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </SafeAreaView>
+    </SafeAreaView>
+  </div>
 </template>

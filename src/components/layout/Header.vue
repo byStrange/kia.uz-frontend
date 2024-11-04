@@ -1,15 +1,17 @@
 <script setup lang="tsx">
-import PhoneIcon from '../icons/PhoneIcon.vue';
-import UserIcon from '../icons/UserIcon.vue';
-import LenseIcon from '../icons/LenseIcon.vue';
-
-import HeaderMenu from './header/HeaderMenu.vue';
+import { watch } from 'vue';
 
 import { HeaderItem, useHeaderService } from '@/services/headerService';
-import LanguageSelector from './header/LanguageSelector.vue';
-import { watch } from 'vue';
+import { isLocked } from '@/services/headerService';
+
 import { useScroll } from '@/composables/useScroll';
+
 import AnimatedBurgerMenuIcon from '../icons/AnimatedBurgerMenuIcon.vue';
+import LenseIcon from '../icons/LenseIcon.vue';
+import PhoneIcon from '../icons/PhoneIcon.vue';
+import UserIcon from '../icons/UserIcon.vue';
+import HeaderMenu from './header/HeaderMenu.vue';
+import LanguageSelector from './header/LanguageSelector.vue';
 
 const { toggleMenu, headerService } = useHeaderService();
 
@@ -22,12 +24,16 @@ const openMenu = (item: HeaderItem) => {
   ) {
     headerService.value.extendedMenu = null;
     headerService.value.isMenuOpen = false;
-    headerService.value.isHover = false;
+    isLocked.value = false;
     return;
   }
-  headerService.value.isHover = true;
+
+  if (!headerService.value.lockHover) {
+    headerService.value.isHover = true;
+  }
   headerService.value.isMenuOpen = true;
   headerService.value.extendedMenu = item;
+  isLocked.value = true;
 };
 
 const HeaderLink = ({ item }: { item: HeaderItem }) => {
@@ -92,7 +98,9 @@ watch(
         }
       "
     >
-      <div class="container relative flex items-center justify-between">
+      <div
+        class="relative flex w-full items-center justify-between px-page-padding transition-all duration-300 2xl:container"
+      >
         <button
           class="!bg-transparent !p-0 !text-white 2xl:hidden"
           @click="
@@ -121,38 +129,20 @@ watch(
         <div class="absolute left-1/2 -translate-x-1/2">
           <a href="/" class="relative block h-3 w-[50px]">
             <!-- Light Logo -->
-            <Transition
-              enter-from-class="opacity-0 rotate-y-90 scale-50"
-              enter-active-class="transition-all duration-300 transform-gpu"
-              enter-to-class="opacity-100 rotate-y-0 scale-100"
-              leave-active-class="transition-all duration-300 transform-gpu absolute top-0"
-              leave-from-class="opacity-100 rotate-y-0 scale-100"
-              leave-to-class="opacity-0 rotate-y-90 scale-50"
-            >
-              <img
-                v-if="!headerService.isHover"
-                src="@/assets/logo/main-logo.svg"
-                alt="Logo"
-                class="h-3 w-[50px] transform-gpu"
-              />
-            </Transition>
+            <img
+              v-if="!headerService.isHover"
+              src="@/assets/logo/main-logo.svg"
+              alt="Logo"
+              class="h-3 w-[50px] transform-gpu"
+            />
 
             <!-- Dark Logo -->
-            <Transition
-              enter-from-class="opacity-0 -rotate-y-90 scale-50"
-              enter-active-class="transition-all duration-300 transform-gpu"
-              enter-to-class="opacity-100 rotate-y-0 scale-100"
-              leave-active-class="transition-all duration-300 transform-gpu absolute top-0"
-              leave-from-class="opacity-100 rotate-y-0 scale-100"
-              leave-to-class="opacity-0 -rotate-y-90 scale-50"
-            >
-              <img
-                v-if="headerService.isHover"
-                src="@/assets/logo/main-logo-invert.svg"
-                alt="Logo"
-                class="h-3 w-[50px] transform-gpu"
-              />
-            </Transition>
+            <img
+              v-if="headerService.isHover"
+              src="@/assets/logo/main-logo-invert.svg"
+              alt="Logo"
+              class="h-3 w-[50px] transform-gpu"
+            />
           </a>
         </div>
 
@@ -171,7 +161,7 @@ watch(
               }"
             />
           </button>
-          <button>
+          <button class="hidden md:block">
             <LenseIcon
               class="transition-colors"
               :class="{
@@ -180,7 +170,7 @@ watch(
               }"
             />
           </button>
-          <button>
+          <button class="hidden 2xl:block">
             <UserIcon
               class="transition-colors"
               :class="{

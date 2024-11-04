@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import CarouselPrevIcon from '../icons/CarouselPrevIcon.vue';
+import { VariantProps, tv } from 'tailwind-variants';
+
 import CarouselNextIcon from '../icons/CarouselNextIcon.vue';
+import CarouselPrevIcon from '../icons/CarouselPrevIcon.vue';
 import Button from './Button.vue';
-import { tv, VariantProps } from 'tailwind-variants';
 
 const cButton = tv({
   base: 'bg-primary p-0 bg-opacity-40 hover:bg-opacity-100',

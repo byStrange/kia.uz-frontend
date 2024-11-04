@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Select from 'primevue/select';
+
 type Option = {
   label: string;
   value: string;
@@ -18,7 +20,6 @@ withDefaults(
     optionValue: 'value',
   }
 );
-import Select from 'primevue/select';
 </script>
 
 <template>

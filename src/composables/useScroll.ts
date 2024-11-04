@@ -1,5 +1,7 @@
-import { ref, onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
+
 import { useHeaderService } from '@/services/headerService';
+
 const { headerService } = useHeaderService();
 
 export function useScroll() {
@@ -35,7 +37,7 @@ export function useScroll() {
     // Determine if the header should be fixed
     if (currentScrollY === 0) {
       if (!headerService.value.lockHover) {
-        headerService.value.isHeaderFixed = false;
+        headerService.value.isHeaderFixed = true;
       }
     } else if (scrollDirection.value === 'up' && speed > speedThreshold) {
       headerService.value.isHeaderFixed = true;

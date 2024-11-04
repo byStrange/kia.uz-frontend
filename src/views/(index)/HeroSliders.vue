@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { SwiperSlide, Swiper } from 'swiper/vue';
+
 import { Pagination } from 'swiper/modules';
+import { SwiperClass } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+
+import { useContainer } from '@/composables/useContainer';
+
 import Button from '@/components/common/Button.vue';
 import ButtonCarousel from '@/components/common/ButtonCarousel.vue';
-import { SwiperClass } from 'swiper/react';
-import { useContainer } from '@/composables/useContainer';
 
 const slides = ref([
   {
@@ -112,17 +115,20 @@ const slidesLength = computed(() => {
             />
             <img
               src="@/assets/test/kia-test-hero-img-mobile.png"
-              class="h-full w-full object-cover"
+              class="w-full object-cover md:h-full"
             />
           </picture>
           <div
-            class="absolute bottom-[88px] z-40 flex items-end justify-center md:bottom-[100px] md:justify-start md:pb-0"
-            :style="{ left: offset.offsetLeft.value + 'px' }"
+            class="absolute !left-0 bottom-[88px] z-40 flex w-full max-w-[540px] items-end justify-center md:!left-auto md:bottom-[100px] md:justify-start md:pb-0"
+            :style="{
+              left: offset.offsetLeft.value + 'px',
+              padding: `0 ${offset.offsetLeft.value}px`,
+            }"
           >
-            <div class="flex w-full md:max-w-[540px]">
-              <div class="min-w-full md:px-0">
+            <div class="flex w-full">
+              <div class="w-full md:px-0">
                 <div class="space-y-2.5 text-white md:space-y-2">
-                  <p class="text-white md:text-lg">
+                  <p class="text-sm text-white md:text-lg">
                     {{ slides[0].title }}
                   </p>
 
@@ -131,7 +137,7 @@ const slidesLength = computed(() => {
                   >
                     Kia Sonet
                   </h1>
-                  <p class="w-[20ch] md:w-auto md:text-lg">
+                  <p class="w-[20ch] text-sm md:w-auto md:text-lg">
                     {{ slides[0].description }}
                   </p>
                 </div>

@@ -19,6 +19,8 @@ export default {
         '3xl': ['32px', '40px'],
         '4xl': ['36px', '42px'],
         '5xl': ['42px', '48px'],
+        '6xl': ['48px', '56px'],
+        '7xl': ['56px', '64px'],
       },
 
       screens: {
@@ -78,6 +80,7 @@ export default {
         7.5: '1.875rem',
         4.5: '1.125rem',
         15: '3.75rem',
+        12.5: '3.125rem',
       },
     },
   },

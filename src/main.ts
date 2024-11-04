@@ -1,19 +1,17 @@
 import { createApp } from 'vue';
 
+import { createPinia } from 'pinia';
+import PrimeVue from 'primevue/config';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import './style.css';
-import './assets/transitions.css';
-
-import router from './router';
 import App from './App.vue';
-import { createPinia } from 'pinia';
+import './assets/transitions.css';
 import { i18n } from './i18n';
-
-import PrimeVue from 'primevue/config';
 import Noir from './presets/Noir';
+import router from './router';
+import './style.css';
 
 const pinia = createPinia();
 const app = createApp(App);

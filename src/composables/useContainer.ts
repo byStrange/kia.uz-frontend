@@ -1,4 +1,5 @@
 import { useElementBounding } from '@vueuse/core';
+
 import { useOffset } from './useOffset';
 
 const container = document.createElement('div');

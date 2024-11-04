@@ -1,16 +1,21 @@
 <script setup lang="tsx">
-import InfoIcon from '@/components/icons/20x20/InfoIcon.vue';
-import Button from '@/components/common/Button.vue';
-import Section from '@/components/home/Section.vue';
-import { SwiperSlide, Swiper } from 'swiper/vue';
-import { useCssVar } from '@vueuse/core';
 import { computed, ref } from 'vue';
-import { SwiperClass } from 'swiper/react';
-import { Controller } from 'swiper/modules';
-import { useModelsService, Model } from '@/services/modelsService';
-import ElectroCarIcon from '@/components/icons/ElectroCarIcon.vue';
-import ButtonCarousel from '@/components/common/ButtonCarousel.vue';
 import { onMounted } from 'vue';
+
+import { useCssVar } from '@vueuse/core';
+import { Controller } from 'swiper/modules';
+import { SwiperClass } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+
+import { Model, useModelsService } from '@/services/modelsService';
+
+import Button from '@/components/common/Button.vue';
+import ButtonCarousel from '@/components/common/ButtonCarousel.vue';
+
+import Section from '@/components/home/Section.vue';
+
+import InfoIcon from '@/components/icons/20x20/InfoIcon.vue';
+import ElectroCarIcon from '@/components/icons/ElectroCarIcon.vue';
 
 const modelsThumbSwiper = ref<SwiperClass | null>(null);
 const modelsSwiper = ref<SwiperClass | null>(null);

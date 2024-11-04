@@ -1,12 +1,15 @@
+import VueComponent from '@/types';
+
+import { Ref, h } from 'vue';
+import { ref } from 'vue';
+
+import { useScrollLock } from '@vueuse/core';
+import { RouteLocationRaw } from 'vue-router';
+
 import FacebookIcon from '@/components/icons/socials/FacebookIcon.vue';
 import InstagramIcon from '@/components/icons/socials/InstagramIcon.vue';
 import TelegramIcon from '@/components/icons/socials/TelegramIcon.vue';
 import YoutubeIcon from '@/components/icons/socials/YoutubeIcon.vue';
-import VueComponent from '@/types';
-import { h, Ref } from 'vue';
-import { ref } from 'vue';
-import { RouteLocationRaw } from 'vue-router';
-import { useScrollLock } from '@vueuse/core';
 
 export type HeaderItem = {
   label: string;
@@ -188,15 +191,17 @@ const headerService = ref<headerServiceType>({
   ],
 });
 
-const isLocked = useScrollLock(document.body);
+export const isLocked = useScrollLock(document.body);
 
 const toggleMenu = () => {
   headerService.value.isMenuOpen = !headerService.value.isMenuOpen;
 
   if (!headerService.value.lockHover) {
+    alert('what the fuck');
     headerService.value.isHover =
       headerService.value.isMenuOpen || headerService.value.isHeaderFixed;
   } else {
+    alert(headerService.value.isHover);
     headerService.value.isHover = headerService.value.lockHover;
   }
 
