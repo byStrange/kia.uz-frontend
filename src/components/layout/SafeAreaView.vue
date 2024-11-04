@@ -10,7 +10,7 @@ const paddingTop = computed(() => {
 });
 </script>
 <template>
-  <div :style="{ paddingTop: paddingTop }">
+  <div :style="{ paddingTop: paddingTop }" class="h-full">
     <slot :top="paddingTop"></slot>
   </div>
 </template>
