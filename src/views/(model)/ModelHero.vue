@@ -13,7 +13,7 @@ import SafeAreaView from '@/components/layout/SafeAreaView.vue';
 const { offset } = useContainer();
 </script>
 <template>
-  <div class="h-screen overflow-hidden">
+  <div class="h-screen overflow-hidden bg-primary">
     <SafeAreaView :extra="52">
       <div
         data-label="Hero shadow bottom"
