@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { watch } from 'vue';
-
-import { useCssVar } from '@vueuse/core';
-
 import { useCoursesService } from '@/services/coursesService';
 
 import { useContainer } from '@/composables/useContainer';
 
+import SlideView from '@/components/common/SlideView.vue';
 import TabsContainer from '@/components/common/TabsContainer.vue';
 
 import Section from '@/components/home/Section.vue';
@@ -15,32 +11,9 @@ import Section from '@/components/home/Section.vue';
 import TickToRight from '@/components/icons/20x20/TickToRight.vue';
 import PlayIcon2 from '@/components/icons/PlayIcon2.vue';
 import PlayIcon from '@/components/icons/PlayIcon.vue';
-import SlideView from '@/components/common/SlideView.vue';
 
 const { bounding } = useContainer();
 const { courses } = useCoursesService();
-
-const md = useCssVar('--screen-md');
-const lg = useCssVar('--screen-2xl');
-
-watch(bounding.x, () => {
-  specialsSwiperBreakpoints.value = {
-    [md.value ? parseInt(md.value) : 0]: {
-      slidesOffsetBefore: bounding.x.value,
-      slidesOffsetAfter: bounding.x.value,
-      spaceBetween: 35,
-      centeredSlides: false,
-    },
-    [lg.value ? parseInt(lg.value) : 0]: {
-      slidesOffsetBefore: bounding.x.value,
-      slidesOffsetAfter: bounding.x.value,
-      spaceBetween: 35,
-      centeredSlides: false,
-    },
-  };
-});
-
-const specialsSwiperBreakpoints = ref({});
 </script>
 <template>
   <Section sectionTitle="Будьте в курсе">

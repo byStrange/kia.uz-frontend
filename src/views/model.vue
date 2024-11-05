@@ -5,32 +5,33 @@ import { onMounted, onUnmounted, ref } from 'vue';
 
 import { useRoute } from 'vue-router';
 
+import { useCoursesService } from '@/services/coursesService';
 import { useHeaderService } from '@/services/headerService';
 
 import { useBreadCrumb } from '@/composables/useBreadCrumb';
-
-import InfoIcon from '@/components/icons/20x20/InfoIcon.vue';
-import Icon360 from '@/components/icons/Icon360.vue';
-import MoreIcon from '@/components/icons/20x20/MoreIcon.vue';
-import TickToBottom from '@/components/icons/20x20/TickToBottom.vue';
-
-import DesktopOnly from '@/components/layout/DesktopOnly.vue';
-import ModelHero from './(model)/ModelHero.vue';
+import { useContainer } from '@/composables/useContainer';
 
 import SlideView from '@/components/common/SlideView.vue';
-import { useCoursesService } from '@/services/coursesService';
+
 import Section from '@/components/home/Section.vue';
-import Button from '@/components/common/Button.vue';
-import RadioButton from 'primevue/radiobutton';
-import CheckIcon from '@/components/icons/CheckIcon.vue';
+
+import TickToRight from '@/components/icons/20x20/TickToRight.vue';
+import PlayIcon2 from '@/components/icons/PlayIcon2.vue';
+
+import Bar from './(model)/Bar.vue';
+import ModelHero from './(model)/ModelHero.vue';
+
 const route = useRoute();
 const { _breadcrumbsRaw } = useBreadCrumb(route);
+const { bounding } = useContainer();
 
 const { headerService } = useHeaderService();
 
-const model = ref({
-  name: 'K5',
-});
+const variants = ref([
+  { label: 'Comfort', price_start: 543, engine: 'vv' },
+  { label: 'Comfort', price_start: 543, engine: 'vv' },
+  { label: 'Comfort', price_start: 543, engine: 'vv' },
+]);
 
 onMounted(() => {
   _breadcrumbsRaw.value = insertToIndex(_breadcrumbsRaw.value, 1, {
@@ -47,71 +48,12 @@ onUnmounted(() => {
 });
 
 const { courses } = useCoursesService();
-const modelType = ref('');
-const availableColors = ref([
-  '#F3F3F3',
-  '#B6B7B2',
-  '#2E2F31',
-  '#99989E',
-  '#7E2E35',
-  '#8F9998',
-]);
-
-const selectedColor = ref();
 </script>
 <template>
-  <div
-    data-label="Model bar"
-    class="fixed top-0 z-20 flex w-full justify-between bg-primary px-page-padding py-3.5 transition-all duration-300 2xl:container"
-    :class="{
-      '!top-[65px]': headerService.isHeaderFixed,
-      '!z-10': headerService.isMenuOpen,
-    }"
-  >
-    <div
-      class="2xl:flex 2xl:divide-x 2xl:divide-caption"
-      data-label="Model bar left"
-    >
-      <button class="flex gap-2 text-white 2xl:2xl:pr-5">
-        <span class="2xl:text-lg">{{ model.name }}</span>
-        <TickToBottom class="text-white 2xl:hidden" />
-      </button>
-      <DesktopOnly flex class="gap-2 pl-5 text-white">
-        <p class="text-base">от 543 510 000 сум</p>
-        <button>
-          <InfoIcon />
-        </button>
-      </DesktopOnly>
-    </div>
-    <div
-      class="2xl:flex 2xl:divide-x 2xl:divide-caption"
-      data-label="Model bar right"
-    >
-      <DesktopOnly class="pr-5">
-        <ul class="flex items-center gap-6">
-          <li>
-            <a href="#" class="text-base text-white">Обзор</a>
-          </li>
-          <li>
-            <a href="#" class="text-base text-white">Комплектации и цены</a>
-          </li>
-          <li>
-            <a href="#" class="text-base text-white">Характеристики</a>
-          </li>
-          <li>
-            <a href="#" class="text-base text-white">Брошюра</a>
-          </li>
-          <li class="flex items-center">
-            <button class="text-white">
-              <MoreIcon />
-            </button>
-          </li>
-        </ul>
-      </DesktopOnly>
-      <button class="pl-5 text-white">Конфигуратор</button>
-    </div>
-  </div>
+  <Bar />
+
   <ModelHero />
+
   <Section sectionTitle="Специальные предложения">
     <SlideView :data="courses">
       <template #slide="{ item, bounding }">
@@ -138,65 +80,59 @@ const selectedColor = ref();
     </SlideView>
   </Section>
 
-  <div data-label="360 view" class="container py-10">
-    <div>
-      <p class="text-xs leading-[20px] text-primary">Просмотр 360°</p>
-      <h2 class="mt-1.5 text-4xl font-semibold text-primary">Carnival</h2>
-    </div>
-    <img
-      src="https://ucarecdn.com/40aceb5c-0188-4362-bacd-86dd776ce86b/-/preview/1000x501/"
-      class="w-full"
-    />
-    <div>
-      <div class="flex flex-col items-center gap-2.5">
-        <Icon360 />
-        <p class="text-xs leading-[20px] text-disabled">
-          Изображение может не соответствовать выбранной комплектации. Цвет
-          автомобиля может отличаться от представленного на данном сайте.
-        </p>
-      </div>
-      <div class="mt-7.5">
-        <div class="flex gap-5 text-[15px] leading-[20px]">
-          <div class="flex items-center gap-2.5">
-            <RadioButton
-              value="exterior"
-              inputId="exterior"
-              name="type"
-              v-model="modelType"
-            />
-            <label for="exterior">Экстерьер</label>
-          </div>
-          <div class="flex items-center gap-2.5">
-            <RadioButton
-              value="interior"
-              inputId="interior"
-              name="type"
-              v-model="modelType"
-            />
-            <label for="interior">Интерьер</label>
-          </div>
-        </div>
-        <div class="mt-5">
-          <div class="flex gap-1.5 text-[15px] leading-[20px]">
-            <span class="text-disabled">Цвет:</span>
-            <b class="text-primary">Snow White Pearl (SWP)</b>
-          </div>
-          <div class="mt-[15px] flex gap-2.5">
-            <div
-              @click="selectedColor = color"
-              class="color flex size-[35px] items-center justify-center rounded-full border border-disabled"
-              :style="{ backgroundColor: color }"
-              v-for="color in availableColors"
-            >
-              <CheckIcon v-if="color === selectedColor" class="text-white" />
+  <Section
+    sectionTitle="Варианты Carnival"
+    subtitle="Комплектации"
+    class="bg-background"
+    size="lg"
+  >
+    <template #after-title>
+      <p class="mt-1 text-center text-[15px] text-primary">
+        5 доступных комплектаций
+      </p>
+    </template>
+
+    <SlideView :data="variants" :space-between="12" class="mt-10">
+      <template #slide="{ item }">
+        <div
+          class="md:w-[425px] md:!px-0"
+          :style="{ padding: `0 ${bounding.x.value}px` }"
+        >
+          <div class="w-full bg-white">
+            <div class="bg-primary px-7.5 pb-6 pt-5">
+              <h1 class="text-[25px] font-semibold leading-[35px] text-white">
+                {{ item.label }}
+              </h1>
+              <p class="mt-1.5 text-lg font-semibold text-white">
+                от {{ item.price_start }}
+              </p>
+            </div>
+            <div class="p-7.5">
+              <div>
+                <b class="text-sm+">Двигатель</b>
+                <p class="mt-2.5 text-xs">3.5 MPI / 272 л.с., Бензин</p>
+              </div>
+              <div class="mt-7.5 h-[314px]">
+                <b class="text-sm+">Основные опции</b>
+                <div class="mt-2.5 space-y-2.5 text-xs">
+                  <p>Подогрев передних сидений</p>
+                  <p>Рейлинги на крыше</p>
+                  <p>Система контроля слепых зон (BCW)</p>
+                  <p>Датчик дождя</p>
+                </div>
+              </div>
+              <div class="mt-7.5 border-t border-t-protection pt-5">
+                <button class="flex">
+                  <span class="text-sm+ font-semibold text-primary"
+                    >Комплектации и цены</span
+                  >
+                  <TickToRight />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="mt-7.5">
-        <Button label="Конфигуратор" color="secondary" mode="full" />
-      </div>
-    </div>
-  </div>
+      </template>
+    </SlideView>
+  </Section>
 </template>

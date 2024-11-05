@@ -43,7 +43,12 @@ watch(bounding.x, () => {
 
 const swiperBreakpoints = ref({});
 
-defineProps<{ data: any[] }>();
+defineProps<{
+  data: any[];
+  spaceBetween?: number;
+  slidesOffsetBefore?: number;
+  slidesOffsetAfter?: number;
+}>();
 </script>
 <template>
   <div>
@@ -52,9 +57,13 @@ defineProps<{ data: any[] }>();
       slides-per-view="auto"
       :modules="[Pagination]"
       pagination
+      :slides-offset-before="slidesOffsetBefore"
+      :slides-offset-after="slidesOffsetAfter"
+      :space-between="spaceBetween"
       class="light-pagination"
       @swiper="swiper = $event"
       :key="bounding.x.value"
+      v-bind="$attrs"
     >
       <template #container-start>
         <div
