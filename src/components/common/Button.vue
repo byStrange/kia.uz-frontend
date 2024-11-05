@@ -6,7 +6,7 @@ const button = tv({
   variants: {
     color: {
       unstyled: '',
-      primary: 'bg-white text-semantic-text',
+      primary: 'bg-white text-semantic-text border border-disabled',
       secondary:
         'bg-primary border border-city-gray text-white hover:bg-[#434E56] active:bg-[#2D3A43] active:text-[#CDD0D2] disabled:bg-opacity-40 disabled:text-[#CDD0D2]',
       transparent:

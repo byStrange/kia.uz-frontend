@@ -6,7 +6,7 @@ const sectionStyle = tv({
   variants: {
     size: {
       md: 'py-12 md:py-15',
-      lg: 'py-15',
+      lg: 'py-12 md:py-16',
     },
   },
   defaultVariants: {
@@ -21,37 +21,64 @@ const textStyle = tv({
       md: 'text-2xl md:text-4xl 2xl:text-5xl',
       lg: 'text-4xl md:text-5xl',
     },
+    align: {
+      center: 'text-center',
+      left: 'text-left',
+      right: 'text-right',
+    },
   },
   defaultVariants: {
     size: 'md',
+    align: 'center',
+  },
+});
+
+const subtitleStyle = tv({
+  base: 'text-forest-green font-semibold text-sm',
+  variants: {
+    align: {
+      center: 'text-center',
+      left: 'text-left',
+      right: 'text-right',
+    },
+  },
+  defaultVariants: {
+    align: 'center',
   },
 });
 
 type SectionVariants = VariantProps<typeof sectionStyle>;
+type SectionTitleVariants = VariantProps<typeof textStyle>;
 
 defineProps<{
   sectionTitle: string;
   subtitle?: string;
   size?: SectionVariants['size'];
+  align?: SectionTitleVariants['align'];
 }>();
 </script>
 <template>
   <section :class="sectionStyle({ size })">
     <slot
       name="title"
-      v-bind="{ sectionTitle, sectionTitleClass: textStyle({ size }) }"
+      v-bind="{
+        sectionTitle,
+        sectionTitleClass: textStyle({ size, align }),
+        subtitle,
+        subtitleClass: subtitleStyle({ align }),
+      }"
     >
-      <h3
-        v-if="subtitle"
-        class="mb-1.5 text-center text-sm font-semibold text-forest-green"
-      >
+      <h3 v-if="subtitle" class="mb-1.25" :class="subtitleStyle({ align })">
         {{ subtitle }}
       </h3>
-      <h1 :class="textStyle({ size })">
+      <h1 :class="textStyle({ size, align })">
         {{ sectionTitle }}
       </h1>
     </slot>
-    <slot name="after-title"></slot>
+    <slot
+      name="after-title"
+      :align="textStyle.variants.align[align || 'center']"
+    />
     <slot />
   </section>
 </template>

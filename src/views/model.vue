@@ -11,6 +11,7 @@ import { useHeaderService } from '@/services/headerService';
 import { useBreadCrumb } from '@/composables/useBreadCrumb';
 import { useContainer } from '@/composables/useContainer';
 
+import Button from '@/components/common/Button.vue';
 import SlideView from '@/components/common/SlideView.vue';
 
 import Section from '@/components/home/Section.vue';
@@ -19,7 +20,9 @@ import TickToRight from '@/components/icons/20x20/TickToRight.vue';
 import PlayIcon2 from '@/components/icons/PlayIcon2.vue';
 
 import Bar from './(model)/Bar.vue';
+import BriefSection from './(model)/BriefSection.vue';
 import ModelHero from './(model)/ModelHero.vue';
+import ThreeSixty from './(model)/ThreeSixty.vue';
 
 const route = useRoute();
 const { _breadcrumbsRaw } = useBreadCrumb(route);
@@ -55,12 +58,15 @@ const { courses } = useCoursesService();
   <ModelHero />
 
   <Section sectionTitle="Специальные предложения">
-    <SlideView :data="courses">
+    <SlideView
+      :data="courses"
+      :space-between="16"
+      :slides-offset-before="bounding.x.value"
+      :slides-offset-after="bounding.x.value"
+      swiper-slide-class="!w-fit"
+    >
       <template #slide="{ item, bounding }">
-        <div
-          :style="{ padding: `0 ${bounding.x.value}px` }"
-          class="h-[408px] md:w-[310px] md:!px-0"
-        >
+        <div class="h-[408px] md:w-[310px] md:!px-0">
           <div class="mx-auto h-full max-w-[310px] bg-background">
             <div
               class="relative flex h-[222px] w-full items-center justify-center bg-gray-200"
@@ -80,41 +86,51 @@ const { courses } = useCoursesService();
     </SlideView>
   </Section>
 
+  <ThreeSixty />
+
   <Section
     sectionTitle="Варианты Carnival"
     subtitle="Комплектации"
     class="bg-background"
-    size="lg"
   >
-    <template #after-title>
-      <p class="mt-1 text-center text-[15px] text-primary">
+    <template #after-title="{ align }">
+      <p class="text-[15px] text-primary" :class="align">
         5 доступных комплектаций
       </p>
     </template>
 
-    <SlideView :data="variants" :space-between="12" class="mt-10">
+    <SlideView
+      :space-between="16"
+      :slides-offset-before="bounding.x.value"
+      :slides-offset-after="bounding.x.value"
+      swiper-slide-class="!w-fit"
+      :navigation="false"
+      :data="variants"
+      class="mt-6 2xl:mt-8"
+      :paginator="false"
+    >
       <template #slide="{ item }">
         <div
-          class="md:w-[425px] md:!px-0"
-          :style="{ padding: `0 ${bounding.x.value}px` }"
+          class="max-w-[425px] md:!px-0"
+          :style="{ width: bounding.width.value + 'px' }"
         >
           <div class="w-full bg-white">
-            <div class="bg-primary px-7.5 pb-6 pt-5">
-              <h1 class="text-[25px] font-semibold leading-[35px] text-white">
+            <div class="bg-primary px-6 py-4">
+              <h1 class="text-2xl font-semibold text-white">
                 {{ item.label }}
               </h1>
-              <p class="mt-1.5 text-lg font-semibold text-white">
+              <p class="mt-1 text-base font-semibold text-white">
                 от {{ item.price_start }}
               </p>
             </div>
-            <div class="p-7.5">
+            <div class="px-6 py-4">
               <div>
-                <b class="text-sm+">Двигатель</b>
-                <p class="mt-2.5 text-xs">3.5 MPI / 272 л.с., Бензин</p>
+                <b class="text-sm">Двигатель</b>
+                <p class="mt-2.5 text-sm">3.5 MPI / 272 л.с., Бензин</p>
               </div>
-              <div class="mt-7.5 h-[314px]">
-                <b class="text-sm+">Основные опции</b>
-                <div class="mt-2.5 space-y-2.5 text-xs">
+              <div class="mt-6 pb-5">
+                <b class="text-sm">Основные опции</b>
+                <div class="mt-2 space-y-2 text-sm">
                   <p>Подогрев передних сидений</p>
                   <p>Рейлинги на крыше</p>
                   <p>Система контроля слепых зон (BCW)</p>
@@ -123,7 +139,7 @@ const { courses } = useCoursesService();
               </div>
               <div class="mt-7.5 border-t border-t-protection pt-5">
                 <button class="flex">
-                  <span class="text-sm+ font-semibold text-primary"
+                  <span class="text-base font-semibold text-primary"
                     >Комплектации и цены</span
                   >
                   <TickToRight />
@@ -134,5 +150,14 @@ const { courses } = useCoursesService();
         </div>
       </template>
     </SlideView>
+    <div
+      class="container space-y-3 mt-6 md:grid md:grid-cols-3 md:space-y-0 md:gap-5 2xl:flex 2xl:justify-center 2xl:mt-8"
+    >
+      <Button mode="full" label="Отправить заявку" color="secondary" />
+      <Button mode="full" label="Скачать прайс-лист" />
+      <Button mode="full" label="Контакты дилеров" />
+    </div>
   </Section>
+
+  <BriefSection />
 </template>

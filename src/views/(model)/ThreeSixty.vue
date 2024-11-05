@@ -22,23 +22,23 @@ const availableColors = ref([
 <template>
   <div data-label="360 view" class="container py-10">
     <div>
-      <p class="text-xs leading-[20px] text-primary">Просмотр 360°</p>
-      <h2 class="mt-1.5 text-4xl font-semibold text-primary">Carnival</h2>
+      <p class="text-sm text-primary font-semibold">Просмотр 360°</p>
+      <h2 class="mt-2.5 text-4xl font-semibold text-primary">Carnival</h2>
     </div>
     <img
       src="https://ucarecdn.com/40aceb5c-0188-4362-bacd-86dd776ce86b/-/preview/1000x501/"
-      class="w-full"
+      class="w-full my-4"
     />
     <div>
       <div class="flex flex-col items-center gap-2.5">
         <Icon360 />
-        <p class="text-xs leading-[20px] text-disabled">
+        <p class="text-xs+ text-disabled">
           Изображение может не соответствовать выбранной комплектации. Цвет
           автомобиля может отличаться от представленного на данном сайте.
         </p>
       </div>
-      <div class="mt-7.5">
-        <div class="flex gap-5 text-[15px] leading-[20px]">
+      <div class="mt-6">
+        <div class="flex gap-5 text-base+">
           <div class="flex items-center gap-2.5">
             <RadioButton
               value="exterior"
@@ -70,12 +70,12 @@ const availableColors = ref([
             <label for="interior">Интерьер</label>
           </div>
         </div>
-        <div class="mt-5">
-          <div class="flex gap-1.5 text-[15px] leading-[20px]">
+        <div class="mt-4">
+          <div class="flex gap-1.5 text-base">
             <span class="text-disabled">Цвет:</span>
             <b class="text-primary">Snow White Pearl (SWP)</b>
           </div>
-          <div class="mt-[15px] flex gap-2.5">
+          <div class="mt-4 flex gap-2.5">
             <div
               @click="selectedColor = color"
               class="color flex size-[35px] items-center justify-center rounded-full border border-disabled"
