@@ -65,7 +65,7 @@ const { courses } = useCoursesService();
       :slides-offset-after="bounding.x.value"
       swiper-slide-class="!w-fit"
     >
-      <template #slide="{ item, bounding }">
+      <template #slide="{ item }">
         <div class="h-[408px] md:w-[310px] md:!px-0">
           <div class="mx-auto h-full max-w-[310px] bg-background">
             <div
