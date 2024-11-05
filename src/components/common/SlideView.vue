@@ -43,20 +43,42 @@ watch(bounding.x, () => {
 
 const swiperBreakpoints = ref({});
 
-defineProps<{ data: any[] }>();
+withDefaults(
+  defineProps<{
+    data: any[];
+    spaceBetween?: number;
+    slidesOffsetBefore?: number;
+    slidesOffsetAfter?: number;
+    paginator?: boolean;
+    swiperSlideClass?: string;
+    navigation?: boolean;
+    paginationMt?: string;
+  }>(),
+  {
+    navigation: true,
+    paginator: true,
+  }
+);
 </script>
 <template>
   <div>
     <Swiper
+      :style="{
+        '--swiper-pagination-mt': paginationMt,
+      }"
       :breakpoints="swiperBreakpoints"
       slides-per-view="auto"
       :modules="[Pagination]"
-      pagination
+      :pagination="paginator"
+      :slides-offset-before="slidesOffsetBefore"
+      :slides-offset-after="slidesOffsetAfter"
+      :space-between="spaceBetween"
       class="light-pagination"
       @swiper="swiper = $event"
       :key="bounding.x.value"
+      v-bind="$attrs"
     >
-      <template #container-start>
+      <template #container-start v-if="navigation">
         <div
           class="absolute left-0 top-1/2 z-30 hidden -translate-y-1/2 2xl:block"
           :style="{
@@ -82,11 +104,13 @@ defineProps<{ data: any[] }>();
           />
         </div>
       </template>
-      <SwiperSlide class="md:!w-fit" v-for="item in data">
+      <SwiperSlide
+        class="md:!w-fit"
+        v-for="item in data"
+        :class="swiperSlideClass"
+      >
         <slot name="slide" :item :bounding> </slot>
       </SwiperSlide>
     </Swiper>
   </div>
 </template>
-
-<style></style>

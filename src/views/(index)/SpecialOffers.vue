@@ -8,13 +8,13 @@ import { useSpecialsService } from '@/services/specialsService';
 import { useContainer } from '@/composables/useContainer';
 import { useT } from '@/composables/useT';
 
+import SlideView from '@/components/common/SlideView.vue';
 import TabsContainer from '@/components/common/TabsContainer.vue';
 
 import Section from '@/components/home/Section.vue';
 
 import TickToRight from '@/components/icons/20x20/TickToRight.vue';
 import ServiceRegistrationIcon from '@/components/icons/ServiceRegistrationIcon.vue';
-import SlideView from '@/components/common/SlideView.vue';
 
 const { bounding } = useContainer();
 

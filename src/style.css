@@ -51,7 +51,16 @@ background: linear-gradient(0deg, #05141f 84.03%, rgba(5, 20, 31, 0) 100%);
   }
 
   .light-pagination .swiper-pagination {
-    @apply static mt-10 text-white;
+    margin-top: var(--swiper-pagination-mt, theme('spacing.10'));
+    @apply static text-white;
+  }
+
+  .rtl {
+    direction: rtl;
+  }
+
+  .ltr {
+    direction: ltr;
   }
 
   @media screen(md) {
