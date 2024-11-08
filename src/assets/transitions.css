@@ -1,3 +1,11 @@
+/* smooth slide fade transition */
+
+/* 
+* used in:
+*   TabsContainer
+*   HeaderMenu
+*/
+
 .slide-fade-enter-active,
 .slide-fade-leave-active {
   transition: all 0.3s ease;
@@ -19,6 +27,57 @@
   transform: translateY(0);
 }
 
+/* same as slide-fade but with longer translate y */
+
+.slide-fade_long-enter-active,
+.slide-fade_long-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-fade_long-enter-from {
+  opacity: 0;
+  transform: translateY(100px);
+}
+
+.slide-fade_long-leave-to {
+  opacity: 0;
+  transform: translateY(100px);
+}
+
+.slide-fade_long-enter-to,
+.slide-fade_long-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* same as slide-fade but with full height translate y */
+
+.slide-fade_full-enter-active,
+.slide-fade_full-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-fade_full-enter-from {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.slide-fade_full-leave-to {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.slide-fade_full-enter-to,
+.slide-fade_full-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 
+* used in:
+*   Header
+*/
+
 .slide-fade_bottom-enter-active,
 .slide-fade_bottom-leave-active {
   transition: all 0.3s ease;
@@ -35,6 +94,11 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* 
+* used in:
+*   FloatingContactButton
+*/
 
 .slide-down-enter-active,
 .slide-down-leave-active {
