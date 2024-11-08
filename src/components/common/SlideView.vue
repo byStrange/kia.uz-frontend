@@ -43,7 +43,7 @@ watch(bounding.x, () => {
 
 const swiperBreakpoints = ref({});
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     data: any[];
     spaceBetween?: number;
@@ -53,12 +53,27 @@ withDefaults(
     swiperSlideClass?: string;
     navigation?: boolean;
     paginationMt?: string;
+    breakpointsEnabled?: boolean;
+    paginatorClass?: string;
   }>(),
   {
     navigation: true,
     paginator: true,
+    breakpointsEnabled: true,
   }
 );
+
+watch(swiper, () => {
+  if (props.paginatorClass) {
+    swiper.value?.el
+      .querySelector('.swiper-pagination')
+      ?.classList.add(props.paginatorClass);
+  }
+});
+
+defineExpose({
+  swiper,
+});
 </script>
 <template>
   <div>
@@ -66,7 +81,7 @@ withDefaults(
       :style="{
         '--swiper-pagination-mt': paginationMt,
       }"
-      :breakpoints="swiperBreakpoints"
+      :breakpoints="breakpointsEnabled ? swiperBreakpoints : {}"
       slides-per-view="auto"
       :modules="[Pagination]"
       :pagination="paginator"
@@ -79,30 +94,17 @@ withDefaults(
       v-bind="$attrs"
     >
       <template #container-start v-if="navigation">
-        <div
-          class="absolute left-0 top-1/2 z-30 hidden -translate-y-1/2 2xl:block"
-          :style="{
-            left: bounding.x.value + 'px',
-          }"
+        <ButtonCarousel
+          position="left"
+          :hide="swiperActiveIndex === 0"
+          @click="swiper?.slidePrev()"
+        />
         >
-          <ButtonCarousel
-            position="left"
-            :hide="swiperActiveIndex === 0"
-            @click="swiper?.slidePrev()"
-          />
-        </div>
-        <div
-          :style="{
-            right: bounding.x.value + 'px',
-          }"
-          class="absolute right-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
-        >
-          <ButtonCarousel
-            position="right"
-            :hide="swiperActiveIndex === swiperLength - 1"
-            @click="swiper?.slideNext()"
-          />
-        </div>
+        <ButtonCarousel
+          position="right"
+          :hide="swiperActiveIndex === swiperLength - 1"
+          @click="swiper?.slideNext()"
+        />
       </template>
       <SwiperSlide
         class="md:!w-fit"
