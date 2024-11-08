@@ -1,10 +1,10 @@
-import VueComponent from '@/types';
-
 import { Ref, h } from 'vue';
 import { ref } from 'vue';
 
 import { useScrollLock } from '@vueuse/core';
 import { RouteLocationRaw } from 'vue-router';
+
+import VueComponent from '@/types';
 
 import FacebookIcon from '@/components/icons/socials/FacebookIcon.vue';
 import InstagramIcon from '@/components/icons/socials/InstagramIcon.vue';

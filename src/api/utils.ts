@@ -1,7 +1,7 @@
+import axios from 'axios';
+
 import { SITE_CONF } from '@/api/config';
 import { getToken } from '@/utils';
-
-import axios from 'axios';
 
 interface IAxiosArgs {
   hasAuthHeaders?: boolean;
