@@ -1,14 +1,10 @@
-import index from '@/views/index.vue';
-import model from '@/views/model.vue';
-import models from '@/views/models.vue';
-
 import { RouteRecordRaw } from 'vue-router';
 
 export const mainRoutes: RouteRecordRaw[] = [
   {
     path: '',
     name: 'home',
-    component: index,
+    component: () => import('@/views/index.vue'),
     meta: {
       breadcrumb: 'Главная',
     },
@@ -16,7 +12,7 @@ export const mainRoutes: RouteRecordRaw[] = [
   {
     path: 'models',
     name: 'models',
-    component: models,
+    component: () => import('@/views/models.vue'),
     meta: {
       breadcrumb: 'Модели',
     },
@@ -24,7 +20,7 @@ export const mainRoutes: RouteRecordRaw[] = [
   {
     path: 'model/:id',
     name: 'model',
-    component: model,
+    component: () => import('@/views/model.vue'),
     meta: {
       breadcrumb: 'Модель',
     },

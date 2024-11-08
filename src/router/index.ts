@@ -1,13 +1,12 @@
 import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
 
-import mainLayout from '../layouts/main.vue';
 import { mainRoutes } from './mainRoutes';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'MainLayout',
-    component: mainLayout,
+    component: () => import('../layouts/main.vue'),
     children: [...mainRoutes],
     meta: {
       breadcrumb: 'Главная',
