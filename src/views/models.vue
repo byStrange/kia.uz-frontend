@@ -146,8 +146,6 @@ const ModelCard = ({ model }: { model: any }) => {
     </div>
   );
 };
-ModelCard({ model: { name: 'K5', image: '', from: '379 900 000 сум' } });
-modelGroups;
 </script>
 
 <template>
