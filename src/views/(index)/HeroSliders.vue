@@ -23,7 +23,7 @@ const slides = ref([
   },
 ]);
 
-const { bounding, offset } = useContainer();
+const { offset } = useContainer();
 console.log(offset);
 
 const swiper = ref<SwiperClass | undefined>();
@@ -71,30 +71,17 @@ const slidesLength = computed(() => {
       :pagination="{ clickable: true }"
     >
       <template #container-start>
-        <div
-          class="absolute left-0 top-1/2 z-30 hidden -translate-y-1/2 2xl:block"
-          :style="{
-            left: bounding.x.value + 'px',
-          }"
-        >
-          <ButtonCarousel
-            position="left"
-            :hide="currentIndex === 0"
-            @click="prev"
-          />
-        </div>
-        <div
-          :style="{
-            right: bounding.x.value + 'px',
-          }"
-          class="absolute right-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
-        >
-          <ButtonCarousel
-            position="right"
-            :hide="currentIndex === slidesLength - 1"
-            @click="next"
-          />
-        </div>
+        <ButtonCarousel
+          position="left"
+          :hide="currentIndex === 0"
+          @click="prev"
+        />
+
+        <ButtonCarousel
+          position="right"
+          :hide="currentIndex === slidesLength - 1"
+          @click="next"
+        />
       </template>
       <SwiperSlide v-for="i in 3" :key="i">
         <div class="h-full">
@@ -114,6 +101,7 @@ const slidesLength = computed(() => {
               media="(min-width: 768px)"
             />
             <img
+              loading="lazy"
               src="@/assets/test/kia-test-hero-img-mobile.png"
               class="h-[75%] w-full object-cover md:h-full"
             />

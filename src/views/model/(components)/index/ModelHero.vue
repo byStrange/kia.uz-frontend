@@ -57,7 +57,7 @@ const { offset } = useContainer();
         />
         <img
           src="https://ucarecdn.com/7697fb74-fadd-4192-8a5e-5f0491567ff6/"
-          class="w-full object-cover 2xl:h-full"
+          class="w-full object-cover 2xl:h-full md:h-[73%]"
         />
       </picture>
       <div

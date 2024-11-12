@@ -85,12 +85,12 @@ background: linear-gradient(0deg, #05141f 84.03%, rgba(5, 20, 31, 0) 100%);
   }
 
   .flip-x {
-    --deg: -90deg;
+    --deg: 180deg;
     transform: rotateY(var(--deg));
   }
 
   .flip-y {
-    --deg: -90deg;
+    --deg: -80deg;
     transform: rotateX(var(--deg));
   }
 }
