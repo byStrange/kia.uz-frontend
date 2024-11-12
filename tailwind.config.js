@@ -1,12 +1,14 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
 export default {
   content: ['index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+
   theme: {
     extend: {
       container: ({ theme }) => ({
         center: true,
         padding: {
-          DEFAULT: theme('spacing.page-padding'),
+          DEFAULT: '31px',
         },
         screens: {},
       }),
@@ -80,7 +82,7 @@ export default {
       },
 
       spacing: {
-        'page-padding': '31px',
+        'page-padding': '1rem',
         1.25: '0.3125rem',
         7.5: '1.875rem',
         4.5: '1.125rem',
@@ -103,10 +105,44 @@ export default {
         '8h': '800px',
         '8.5h': '850px',
         'grid-12-gap': '2.5rem',
+        '6h-10': '640px',
       },
     },
   },
   plugins: [
+    plugin(
+      function hoverablePlugin({ matchVariant, theme }) {
+        matchVariant(
+          'hoverable',
+          (value = 'DEFAULT') => {
+            // Handle different hover behaviors based on the value
+            switch (value) {
+              case 'force':
+                return '@media (hover: hover) and (pointer: fine)';
+              case 'any':
+                return '@media (any-hover: hover)';
+              default:
+                return '@media (hover: hover)';
+            }
+          },
+          {
+            values: {
+              DEFAULT: '',
+              force: 'force', // For devices with fine pointer only
+              any: 'any', // For any hover-capable device
+            },
+          }
+        );
+      },
+      {
+        // Optional theme configuration
+        theme: {
+          hoverable: {
+            // You can add custom configurations here if needed
+          },
+        },
+      }
+    ),
     function ({ addBase, theme }) {
       const screens = theme('screens');
       const screenProperties = {};
