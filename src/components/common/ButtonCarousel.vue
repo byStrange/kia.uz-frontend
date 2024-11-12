@@ -8,7 +8,7 @@ import CarouselPrevIcon from '../icons/CarouselPrevIcon.vue';
 import Button from './Button.vue';
 
 const cButton = tv({
-  base: 'bg-primary p-0 bg-opacity-40 hover:bg-opacity-100',
+  base: 'bg-primary p-0 hoverable:bg-opacity-40 hoverable:hover:bg-opacity-100',
   variants: {
     size: {
       lg: 'w-16 h-16',
@@ -24,17 +24,27 @@ const { bounding } = useContainer();
 
 type ButtonCarouselVariants = VariantProps<typeof cButton>;
 
-defineProps<{
-  position: 'left' | 'right';
-  hide?: boolean;
-  size?: ButtonCarouselVariants['size'];
-}>();
+withDefaults(
+  defineProps<{
+    position?: 'left' | 'right';
+    hide?: boolean;
+    size?: ButtonCarouselVariants['size'];
+    mode?: 'normal' | 'oneside-left';
+  }>(),
+  {
+    mode: 'normal',
+  }
+);
 </script>
 <template>
   <div
-    class="absolute left-[--left] right-[--right] top-1/2 z-30 hidden -translate-y-1/2 2xl:block"
+    class="left-[--left] right-[--right] top-1/2 z-30 hidden 2xl:block"
     :style="{
       [`--${position}`]: bounding.x.value + 'px',
+    }"
+    :class="{
+      static: mode === 'oneside-left',
+      'absolute -translate-y-1/2': mode === 'normal',
     }"
   >
     <Button
