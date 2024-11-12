@@ -28,8 +28,8 @@ const { courses } = useCoursesService();
         <SlideView :data="courses">
           <template #slide="{ item, bounding }">
             <div
-              :style="{ padding: `0 ${bounding.x.value}px` }"
-              class="h-[408px] md:w-[310px] md:!px-0"
+              :style="{ '--padding': `0 ${bounding.x.value}px` }"
+              class="h-[408px] p-[--padding] md:w-[310px] md:px-0"
             >
               <div class="mx-auto h-full max-w-[310px] bg-background">
                 <div
@@ -37,6 +37,7 @@ const { courses } = useCoursesService();
                 >
                   <img
                     :src="item.thumbnail"
+                    loading="lazy"
                     class="h-full w-full object-cover"
                   />
                   <PlayIcon2 class="absolute" />
@@ -57,8 +58,8 @@ const { courses } = useCoursesService();
         <SlideView :data="courses">
           <template #slide="{ item, bounding }">
             <div
-              :style="{ padding: `0 ${bounding.x.value}px` }"
-              class="h-[408px] md:w-[310px] md:!px-0"
+              :style="{ '--padding': `0 ${bounding.x.value}px` }"
+              class="h-[408px] p-[--padding] md:w-[310px] md:!px-0"
             >
               <div class="mx-auto h-full max-w-[310px] bg-background">
                 <div
@@ -66,6 +67,7 @@ const { courses } = useCoursesService();
                 >
                   <img
                     :src="item.thumbnail"
+                    loading="lazy"
                     class="h-full w-full object-cover"
                   />
                   <PlayIcon2 class="absolute" />
@@ -84,8 +86,8 @@ const { courses } = useCoursesService();
 
       <template #default>
         <button
-          class="container mt-4 flex items-center gap-2.5 text-primary md:absolute md:right-0 md:top-0 md:mt-0 md:w-auto md:px-0"
-          :style="{ right: bounding.x.value + 'px' }"
+          class="container mt-4 flex items-center gap-2.5 text-primary md:absolute md:right-[--right] md:top-0 md:mt-0 md:w-auto md:px-0"
+          :style="{ '--right': bounding.x.value + 'px' }"
         >
           <PlayIcon class="md:hidden" />
           <div class="flex">

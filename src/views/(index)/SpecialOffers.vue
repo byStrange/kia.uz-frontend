@@ -55,11 +55,15 @@ const specialsSwiperBreakpoints = ref({});
         <SlideView :data="specials">
           <template #slide="{ item, bounding }">
             <div
-              :style="{ padding: `0 ${bounding.x.value}px` }"
-              class="h-[408px] md:w-[310px] md:!px-0"
+              :style="{ '--padding': `0 ${bounding.x.value}px` }"
+              class="h-[408px] p-[--padding] md:w-[310px] md:px-0"
             >
               <div class="mx-auto h-full max-w-[310px] bg-background">
-                <img :src="item.thumbnail" class="h-[222px] w-full" />
+                <img
+                  :src="item.thumbnail"
+                  class="h-[222px] w-full"
+                  loading="lazy"
+                />
 
                 <div class="p-4">
                   <div class="text-left">
@@ -81,11 +85,15 @@ const specialsSwiperBreakpoints = ref({});
         <SlideView :data="specials">
           <template #slide="{ item, bounding }">
             <div
-              :style="{ padding: `0 ${bounding.x.value}px` }"
-              class="h-[408px] md:w-[310px] md:!px-0"
+              :style="{ '--padding': `0 ${bounding.x.value}px` }"
+              class="h-[408px] p-[--padding] md:w-[310px] md:px-0"
             >
               <div class="mx-auto h-full max-w-[310px] bg-background">
-                <img :src="item.thumbnail" class="h-[222px] w-full" />
+                <img
+                  :src="item.thumbnail"
+                  class="h-[222px] w-full"
+                  loading="lazy"
+                />
 
                 <div class="p-4">
                   <div class="text-left">
@@ -104,8 +112,8 @@ const specialsSwiperBreakpoints = ref({});
       </template>
       <template #default>
         <button
-          class="container mt-4 flex items-center gap-2.5 text-primary md:absolute md:right-0 md:top-0 md:mt-0 md:w-auto md:px-0"
-          :style="{ right: bounding.x.value + 'px' }"
+          class="container mt-4 flex items-center gap-2.5 text-primary md:absolute md:right-[--right] md:top-0 md:mt-0 md:w-auto md:px-0"
+          :style="{ '--right': bounding.x.value + 'px' }"
         >
           <ServiceRegistrationIcon class="md:hidden" />
           <div class="flex">

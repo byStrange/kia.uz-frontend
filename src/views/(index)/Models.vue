@@ -9,6 +9,8 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 
 import { Model, useModelsService } from '@/services/modelsService';
 
+import { useContainer } from '@/composables/useContainer';
+
 import Button from '@/components/common/Button.vue';
 import ButtonCarousel from '@/components/common/ButtonCarousel.vue';
 
@@ -19,6 +21,8 @@ import ElectroCarIcon from '@/components/icons/ElectroCarIcon.vue';
 
 const modelsThumbSwiper = ref<SwiperClass | null>(null);
 const modelsSwiper = ref<SwiperClass | null>(null);
+
+const { bounding } = useContainer();
 
 const slidesLength = computed(() =>
   modelsThumbSwiper.value ? modelsThumbSwiper.value.slides.length : 0
@@ -59,6 +63,7 @@ const MiniThumbCard = ({ model }: { model: Model }) => {
       {model.electric && <ElectroCarIcon class="absolute right-1 top-2" />}
 
       <img
+        loading="lazy"
         src={model.images.small}
         class="h-[40px] w-[84px] md:h-[52px] md:w-[108px]"
       />
@@ -74,6 +79,7 @@ const ModelCard = ({ model }: { model: Model }) => {
     <div data-label="card">
       <div data-label="image wrapper">
         <img
+          loading="lazy"
           src={model.images.medium}
           class="w-full md:mx-auto md:max-w-[500px] 2xl:max-w-[742px]"
         />
@@ -114,26 +120,18 @@ const ModelCard = ({ model }: { model: Model }) => {
         :space-between="8"
       >
         <template #container-start>
-          <div
-            class="absolute left-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
-          >
-            <ButtonCarousel
-              position="left"
-              :hide="activeModelIndex === 0"
-              size="sm"
-              @click="slidePrev"
-            />
-          </div>
-          <div
-            class="absolute right-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
-          >
-            <ButtonCarousel
-              position="right"
-              :hide="activeModelIndex === slidesLength - 1"
-              size="sm"
-              @click="slideNext"
-            />
-          </div>
+          <ButtonCarousel
+            position="left"
+            :hide="activeModelIndex === 0"
+            size="sm"
+            @click="slidePrev"
+          />
+          <ButtonCarousel
+            position="right"
+            :hide="activeModelIndex === slidesLength - 1"
+            size="sm"
+            @click="slideNext"
+          />
           <div
             :style="{
               background:
@@ -164,26 +162,23 @@ const ModelCard = ({ model }: { model: Model }) => {
           :slides-offset-after="parseInt(pagePadding + '')"
         >
           <template #container-start>
-            <div
-              class="absolute left-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
+            <ButtonCarousel
+              position="left"
+              :hide="activeModelIndex === 0"
+              @click="slidePrev"
+            />
             >
-              <ButtonCarousel
-                position="left"
-                :hide="activeModelIndex === 0"
-                @click="slidePrev"
-              />
-            </div>
-            <div
-              class="absolute right-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
-            >
-              <ButtonCarousel
-                position="right"
-                :hide="activeModelIndex === slidesLength - 1"
-                @click="slideNext"
-              />
-            </div>
+            <ButtonCarousel
+              position="right"
+              :hide="activeModelIndex === slidesLength - 1"
+              @click="slideNext"
+            />
           </template>
-          <SwiperSlide v-for="model in models" class="px-[var(--page-padding)]">
+          <SwiperSlide
+            v-for="model in models"
+            :style="{ '--padding': bounding.x.value + 'px' }"
+            class="px-[var(--padding)]"
+          >
             <ModelCard :model="model" />
           </SwiperSlide>
         </Swiper>
