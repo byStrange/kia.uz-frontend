@@ -83,4 +83,14 @@ background: linear-gradient(0deg, #05141f 84.03%, rgba(5, 20, 31, 0) 100%);
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+
+  .flip-x {
+    --deg: -90deg;
+    transform: rotateY(var(--deg));
+  }
+
+  .flip-y {
+    --deg: -90deg;
+    transform: rotateX(var(--deg));
+  }
 }
