@@ -1,6 +1,7 @@
 import { computed } from 'vue';
 import { ref } from 'vue';
 
+import { useTitle } from '@vueuse/core';
 import {
   RouteLocationMatched,
   RouteLocationNormalized,
@@ -8,6 +9,7 @@ import {
 } from 'vue-router';
 
 const _breadcrumbsRaw = ref<RouteLocationMatched[] | RouteRecordRaw[]>([]);
+const title = useTitle();
 
 export const useBreadCrumb = (route: RouteLocationNormalized) => {
   _breadcrumbsRaw.value = route.matched;
@@ -15,7 +17,10 @@ export const useBreadCrumb = (route: RouteLocationNormalized) => {
     const matchedRoutes = _breadcrumbsRaw.value;
 
     return matchedRoutes.map((routeItem) => ({
-      label: routeItem.meta?.breadcrumb || routeItem.name,
+      label:
+        (typeof routeItem.meta?.breadcrumb === 'function'
+          ? routeItem.meta?.breadcrumb({ route, title })
+          : routeItem.meta?.breadcrumb) || routeItem.name,
       name: routeItem.name,
       to: routeItem.path,
     }));
