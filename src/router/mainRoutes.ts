@@ -1,5 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 
+import modelRoutes from './modelRoutes';
+
 export const mainRoutes: RouteRecordRaw[] = [
   {
     path: '',
@@ -17,12 +19,6 @@ export const mainRoutes: RouteRecordRaw[] = [
       breadcrumb: 'Модели',
     },
   },
-  {
-    path: 'model/:id',
-    name: 'model',
-    component: () => import('@/views/model.vue'),
-    meta: {
-      breadcrumb: 'Модель',
-    },
-  },
+
+  ...modelRoutes,
 ];
