@@ -19,7 +19,8 @@ const swiperActiveIndex = computed(() => {
 });
 
 const swiperLength = computed(() => {
-  if (!swiper.value || !swiper.value.pagination) return 0;
+  if (!swiper.value || !swiper.value.pagination)
+    return swiper.value?.slides?.length || 0;
   return swiper.value ? swiper.value.pagination.bullets.length : 0;
 });
 
@@ -43,7 +44,7 @@ watch(bounding.x, () => {
 
 const swiperBreakpoints = ref({});
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     data: any[];
     spaceBetween?: number;
@@ -53,12 +54,33 @@ withDefaults(
     swiperSlideClass?: string;
     navigation?: boolean;
     paginationMt?: string;
+    breakpointsEnabled?: boolean;
+    paginatorClass?: string;
+    navigiationMode?: 'normal' | 'oneside-left';
+    navigationType?: 'lg' | 'sm';
   }>(),
   {
     navigation: true,
     paginator: true,
+    breakpointsEnabled: true,
+    navigiationMode: 'normal',
   }
 );
+
+watch(swiper, () => {
+  if (!props.paginator) {
+    swiper.value?.el.querySelector('.swiper-pagination')?.remove();
+  }
+  if (props.paginatorClass) {
+    swiper.value?.el
+      .querySelector('.swiper-pagination')
+      ?.classList.add(props.paginatorClass);
+  }
+});
+
+defineExpose({
+  swiper,
+});
 </script>
 <template>
   <div>
@@ -66,10 +88,10 @@ withDefaults(
       :style="{
         '--swiper-pagination-mt': paginationMt,
       }"
-      :breakpoints="swiperBreakpoints"
+      :breakpoints="breakpointsEnabled ? swiperBreakpoints : {}"
       slides-per-view="auto"
       :modules="[Pagination]"
-      :pagination="paginator"
+      :pagination="true"
       :slides-offset-before="slidesOffsetBefore"
       :slides-offset-after="slidesOffsetAfter"
       :space-between="spaceBetween"
@@ -78,31 +100,49 @@ withDefaults(
       :key="bounding.x.value"
       v-bind="$attrs"
     >
-      <template #container-start v-if="navigation">
-        <div
-          class="absolute left-0 top-1/2 z-30 hidden -translate-y-1/2 2xl:block"
-          :style="{
-            left: bounding.x.value + 'px',
-          }"
-        >
+      <template #container-start>
+        <template v-if="navigiationMode == 'normal'">
           <ButtonCarousel
+            v-if="navigation"
             position="left"
             :hide="swiperActiveIndex === 0"
             @click="swiper?.slidePrev()"
+            :mode="navigiationMode"
+            :size="navigationType"
           />
-        </div>
-        <div
-          :style="{
-            right: bounding.x.value + 'px',
-          }"
-          class="absolute right-0 top-1/2 z-20 hidden -translate-y-1/2 2xl:block"
-        >
+
           <ButtonCarousel
+            v-if="navigation"
             position="right"
             :hide="swiperActiveIndex === swiperLength - 1"
             @click="swiper?.slideNext()"
+            :size="navigationType"
+            :mode="navigiationMode"
           />
-        </div>
+        </template>
+        <template v-else-if="navigiationMode == 'oneside-left'">
+          <div
+            class="absolute right-15 z-40 h-full flex flex-col justify-center items-center gap-2"
+          >
+            <ButtonCarousel
+              position="right"
+              v-if="navigation"
+              :hide="swiperActiveIndex === swiperLength - 2"
+              @click="swiper?.slideNext()"
+              :size="navigationType"
+              :mode="navigiationMode"
+            />
+            <ButtonCarousel
+              position="left"
+              v-if="navigation"
+              :hide="swiperActiveIndex === 0"
+              @click="swiper?.slidePrev()"
+              :mode="navigiationMode"
+              :size="navigationType"
+            />
+          </div>
+        </template>
+        <slot name="navigation" />
       </template>
       <SwiperSlide
         class="md:!w-fit"

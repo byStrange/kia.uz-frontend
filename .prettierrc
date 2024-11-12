@@ -8,6 +8,8 @@
     "^vue$",
     "^@?\\w",
 
+    "<THIRD_PARTY_MODULES>",
+
     "^@/assets/(.*)$",
     "^@/types/(.*)$",
     "^@/services/(.*)$",

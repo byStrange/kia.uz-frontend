@@ -23,6 +23,8 @@ export default {
         '5xl': ['42px', '48px'],
         '6xl': ['48px', '56px'],
         '7xl': ['56px', '64px'],
+        '8xl': ['64px', '72px'],
+        '9xl': ['72px', '76px'],
       },
 
       screens: {
@@ -100,6 +102,7 @@ export default {
         '7.5h': '750px',
         '8h': '800px',
         '8.5h': '850px',
+        'grid-12-gap': '2.5rem',
       },
     },
   },

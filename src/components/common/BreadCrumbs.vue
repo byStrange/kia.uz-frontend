@@ -6,9 +6,13 @@
           <div
             v-if="currentRoute.name !== crumb.name"
             class="flex items-center"
+            :data-test="JSON.stringify(crumb)"
           >
             <router-link
-              :to="crumb.to ? crumb.to : '/'"
+              :to="{
+                name: crumb.name ? crumb.name : '/',
+                params: route.params,
+              }"
               :class="[
                 styles({ theme }),
                 { '!text-caption': theme === 'dark' },
