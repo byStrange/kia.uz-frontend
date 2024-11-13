@@ -34,7 +34,7 @@ const textStyle = tv({
 });
 
 const subtitleStyle = tv({
-  base: 'text-forest-green font-semibold text-sm',
+  base: 'text-forest-green font-semibold text-sm mb-1.25',
   variants: {
     align: {
       center: 'text-center',
@@ -68,7 +68,7 @@ defineProps<{
         subtitleClass: subtitleStyle({ align }),
       }"
     >
-      <h3 v-if="subtitle" class="mb-1.25" :class="subtitleStyle({ align })">
+      <h3 v-if="subtitle" :class="subtitleStyle({ align })">
         {{ subtitle }}
       </h3>
       <h1 :class="textStyle({ size, align })">
