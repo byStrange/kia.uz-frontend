@@ -1,6 +1,7 @@
 <script setup lang="tsx">
 import { computed, ref } from 'vue';
 import { onMounted } from 'vue';
+import { h } from 'vue';
 
 import { useCssVar } from '@vueuse/core';
 import { Controller } from 'swiper/modules';
@@ -99,14 +100,14 @@ const ModelCard = ({ model }: { model: Model }) => {
           <p class="text-sm text-caption md:text-base">выгода: 50 000 сум</p>
         </div>
       </div>
-      <Button
-        onClick={() => router.push('/model/carnival')}
-        label="Подробнее о модели"
-        color="secondary"
-        size="md"
-        mode="full"
-        class="mx-auto mt-4 md:mt-8"
-      />
+      {h(Button, {
+        onClick: () => router.push('/model/carnival'),
+        label: 'Подробнее о модели',
+        color: 'secondary',
+        size: 'md',
+        mode: 'full',
+        class: 'mx-auto mt-4 md:mt-8',
+      })}
     </div>
   );
 };

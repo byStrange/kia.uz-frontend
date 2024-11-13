@@ -28,7 +28,7 @@ const { headerService } = useHeaderService();
       class="2xl:flex 2xl:divide-x 2xl:divide-caption"
       data-label="Model bar left"
     >
-      <button class="flex gap-2 text-white 2xl:2xl:pr-5">
+      <button class="flex gap-2 text-white 2xl:2xl:pr-5" @click="$router.push('/model/carnival')">
         <span class="2xl:text-lg">{{ model.name }}</span>
         <TickToBottom class="text-white 2xl:hidden" />
       </button>
