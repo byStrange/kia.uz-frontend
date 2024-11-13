@@ -6,6 +6,7 @@ import { useCssVar } from '@vueuse/core';
 import { Controller } from 'swiper/modules';
 import { SwiperClass } from 'swiper/react';
 import { Swiper, SwiperSlide } from 'swiper/vue';
+import { useRouter } from 'vue-router';
 
 import { Model, useModelsService } from '@/services/modelsService';
 
@@ -48,6 +49,8 @@ onMounted(() => {
     swiper.slideTo(index);
   });
 });
+
+const router = useRouter();
 
 const MiniThumbCard = ({ model }: { model: Model }) => {
   return (
@@ -97,6 +100,7 @@ const ModelCard = ({ model }: { model: Model }) => {
         </div>
       </div>
       <Button
+        onClick={() => router.push('/model/carnival')}
         label="Подробнее о модели"
         color="secondary"
         size="md"

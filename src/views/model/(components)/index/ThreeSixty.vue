@@ -23,16 +23,26 @@ const availableColors = ref([
   <div data-label="360 view" class="container py-10 md:py-15 2xl:py-20">
     <div>
       <p class="text-sm text-primary font-semibold">Просмотр 360°</p>
-      <h2 class="mt-2.5 text-4xl font-semibold text-primary">Carnival</h2>
+      <h2 class="mt-2.5 text-4xl font-semibold text-primary 2xl:text-5xl">
+        Carnival
+      </h2>
     </div>
-    <img
-      loading="lazy"
-      src="https://ucarecdn.com/40aceb5c-0188-4362-bacd-86dd776ce86b/-/preview/1000x501/"
-      class="w-full my-4 2xl:mt-8 md:mt-6"
-    />
-    <div class="md:mt-6">
+    <picture>
+      <source
+        srcset="
+          https://ucarecdn.com/9a342c87-7ca1-43d4-abb0-1b505840f0c6/-/preview/768x432/
+        "
+        media="(min-width: 1440px)"
+      />
+      <img
+        loading="lazy"
+        src="https://ucarecdn.com/40aceb5c-0188-4362-bacd-86dd776ce86b/-/preview/1000x501/"
+        class="w-full my-4 2xl:mt-8 md:mt-6 2xl:mb-0 2xl:w-auto 2xl:mx-auto"
+      />
+    </picture>
+    <div class="md:mt-6 2xl:mt-12 relative">
       <div
-        class="flex flex-col items-center gap-2.5 2xl:relative 2xl:top-[75px] 2xl:max-w-6h mx-auto 2xl:px-20"
+        class="flex flex-col items-center gap-2.5 2xl:absolute 2xl:-top-10 2xl:left-1/2 -translate-x-1/2 2xl:max-w-6h mx-auto 2xl:px-20"
       >
         <Icon360 />
         <p class="text-xs+ text-disabled md:text-center">

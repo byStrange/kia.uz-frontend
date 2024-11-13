@@ -49,7 +49,7 @@ const { headerService } = useHeaderService();
             <a href="#" class="text-base text-white">Обзор</a>
           </li>
           <li>
-            <a href="#" class="text-base text-white">Комплектации и цены</a>
+            <router-link to="/model/carnival/pricing" class="text-base text-white">Комплектации и цены</router-link>
           </li>
           <li>
             <a href="#" class="text-base text-white">Характеристики</a>
