@@ -1,4 +1,5 @@
 <script setup lang="tsx">
+import { onMounted } from 'vue';
 import { ref } from 'vue';
 
 import { RouteLocationRaw, RouteRecordRaw, useRouter } from 'vue-router';
@@ -12,6 +13,10 @@ const changeRoute = (to: RouteLocationRaw) => {
   isOpen.value = false;
 };
 
+onMounted(() => {
+  console.log(routes);
+});
+
 const Tree = (props: { node: RouteRecordRaw; depth: number }) => {
   return (
     <div
@@ -20,7 +25,9 @@ const Tree = (props: { node: RouteRecordRaw; depth: number }) => {
     >
       <button
         class="bg-slate-200 px-3 py-4 transition-colors hover:bg-slate-300"
-        onClick={() => changeRoute({ name: props.node.name })}
+        onClick={() =>
+          changeRoute({ name: props.node.name, params: { id: 'carnival' } })
+        }
       >
         {props.node.name}
       </button>
