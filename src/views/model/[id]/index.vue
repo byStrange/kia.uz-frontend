@@ -198,4 +198,136 @@ const { courses } = useCoursesService();
   </Section>
 
   <BriefSection />
+
+  <Section sectionTitle="Видео-обзоры">
+    <template #title="{ sectionTitle, sectionTitleClass }">
+      <h2 :class="[sectionTitleClass, 'mb-6']">{{ sectionTitle }}</h2>
+    </template>
+    <SlideView
+      :data="courses"
+      :space-between="16"
+      :slides-offset-before="bounding.x.value"
+      :slides-offset-after="bounding.x.value"
+      swiper-slide-class="!w-fit !h-auto"
+      :style="{ '--swiper-pagination-mt': '24px' }"
+    >
+      <template #slide="{ item }">
+        <div class="md:w-[310px] md:!px-0 h-full">
+          <div class="mx-auto h-full max-w-[310px] bg-background">
+            <div
+              class="relative flex h-[190px] w-full items-center justify-center bg-gray-200"
+            >
+              <img
+                loading="lazy"
+                :src="item.thumbnail"
+                class="h-full w-full object-cover"
+              />
+              <PlayIcon2 class="absolute" />
+            </div>
+
+            <div class="p-7.5">
+              <p class="text-base font-semibold text-primary">
+                {{ item.title }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </template>
+    </SlideView>
+  </Section>
+
+  <Section
+    align="left"
+    sectionTitle="Гарантия и сервис"
+    subtitle="Обслуживание"
+    class="flex flex-col-reverse gap-10 2xl:grid-cols-12 2xl:grid 2xl:gap-grid-12-gap container rtl"
+  >
+    <template
+      #title="{ sectionTitle, sectionTitleClass, subtitle, subtitleClass }"
+    >
+      <div
+        class="2xl:col-span-4 2xl:col-start-3 2xl:px-0 ltr flex flex-col justify-center"
+      >
+        <h3 :class="[subtitleClass, 'mb-2 md:mb-2.5']">{{ subtitle }}</h3>
+        <h2 :class="[sectionTitleClass, '!mb-0']">{{ sectionTitle }}</h2>
+        <p class="mt-3 text-sm text-primary 2xl:mt-7.5 md:text-base">
+          Автомобили Kia произведены по самым высоким стандартам автомобильной
+          промышленности. Именно это исключительное качество позволяет Kia
+          предложить уникальные условия гарантии.
+        </p>
+      </div>
+    </template>
+    <div class="2xl:col-start-8 2xl:col-span-4 2xl:px-0">
+      <img
+        src="@/assets/fiveyear-guarantee.svg"
+        class="w-full md:w-4h mx-auto 2xl:w-full"
+      />
+    </div>
+  </Section>
+
+  <Section
+    sectionTitle="Узнайте больше о Carnival"
+    subtitle="Консультация"
+    class="container bg-no-repeat bg-[length:100%_294px] md:bg-[length:100%_405px] 2xl:bg-[length:100%_500px] 2xl:pt-1h"
+    :style="{
+      '--background-image-url':
+        'url(https://ucarecdn.com/a1c7c1cf-4da7-4d94-99c6-875d0ae2c0b8/)',
+      backgroundImage: 'var(--background-image-url)',
+    }"
+  >
+    <template
+      #title="{ sectionTitle, sectionTitleClass, subtitle, subtitleClass }"
+    >
+      <div>
+        <h3
+          :class="[
+            subtitleClass,
+            'mb-2 md:mb-2.5 !text-kia-polar-white 2xl:text-sm+',
+          ]"
+        >
+          {{ subtitle }}
+        </h3>
+        <h2
+          :class="[
+            sectionTitleClass,
+            '!mb-0 !text-kia-polar-white md:!text-5xl',
+          ]"
+        >
+          {{ sectionTitle }}
+        </h2>
+
+        <Button
+          label="Заказать звонок дилера"
+          class="mt-6 mx-auto"
+          mode="full"
+        />
+        <picture>
+          <source
+            media="(min-width: 1440px)"
+            srcset="
+              https://ucarecdn.com/8a65cac6-38ee-423e-b2ff-a0956b9e931a/-/preview/1090x432/
+            "
+          />
+          <source
+            srcset="
+              https://ucarecdn.com/883cdd7b-0dd4-497f-b7b2-851a82681f6f/-/preview/543x247/
+            "
+            media="(min-width: 768px)"
+          />
+          <img
+            class="w-full my-4 md:my-6 2xl:mb-1.5 2xl:mt-5"
+            src="https://ucarecdn.com/bb0d5bc2-3996-48bd-8e7e-249b03311384/-/preview/313x143/"
+          />
+        </picture>
+        <div class="2xl:grid 2xl:grid-cols-12 2xl:gap-grid-12-gap">
+          <p class="text-xs text-caption 2xl:col-start-3 col-span-9">
+            Для наглядности было использовано виртуальное изображение.
+            Приведенные выше технические характеристики могут отличаться в
+            зависимости от комплектации, количества посадочных мест для каждой
+            модели, двигателя и выбранных опций
+          </p>
+        </div>
+      </div>
+    </template>
+  </Section>
 </template>
