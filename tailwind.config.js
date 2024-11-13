@@ -25,7 +25,7 @@ export default {
           {
             lineHeight: '40px',
             fontWeight: 600,
-            letterSpacing: '0.8px',
+            letterSpacing: '-0.8px',
           },
         ],
         '4xl': [
@@ -33,7 +33,7 @@ export default {
           {
             lineHeight: '42px',
             fontWeight: 600,
-            letterSpacing: '0.72px',
+            letterSpacing: '-0.72px',
           },
         ],
         '5xl': [
@@ -41,7 +41,7 @@ export default {
           {
             lineHeight: '48px',
             fontWeight: 600,
-            letterSpacing: '0.84px',
+            letterSpacing: '-0.84px',
           },
         ],
         '6xl': [
@@ -49,7 +49,7 @@ export default {
           {
             lineHeight: '56px',
             fontWeight: 600,
-            letterSpacing: '0.96px',
+            letterSpacing: '-0.96px',
           },
         ],
         '7xl': [
@@ -57,7 +57,7 @@ export default {
           {
             lineHeight: '64px',
             fontWeight: 600,
-            letterSpacing: '1.12px',
+            letterSpacing: '-1.12px',
           },
         ],
         '8xl': [
@@ -65,7 +65,7 @@ export default {
           {
             lineHeight: '72px',
             fontWeight: 600,
-            letterSpacing: '1.28px',
+            letterSpacing: '-1.28px',
           },
         ],
         '9xl': [
@@ -73,7 +73,7 @@ export default {
           {
             lineHeight: '76px',
             fontWeight: 600,
-            letterSpacing: '1.44px',
+            letterSpacing: '-1.44px',
           },
         ],
       },
