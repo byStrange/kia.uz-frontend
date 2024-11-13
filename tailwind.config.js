@@ -20,13 +20,62 @@ export default {
         sm: ['14px', '18px'],
         base: ['16px', '21px'],
         'base+': ['16px', '24px'],
-        '3xl': ['32px', '40px'],
-        '4xl': ['36px', '42px'],
-        '5xl': ['42px', '48px'],
-        '6xl': ['48px', '56px'],
-        '7xl': ['56px', '64px'],
-        '8xl': ['64px', '72px'],
-        '9xl': ['72px', '76px'],
+        '3xl': [
+          '32px',
+          {
+            lineHeight: '40px',
+            fontWeight: 600,
+            letterSpacing: '0.8px',
+          },
+        ],
+        '4xl': [
+          '36px',
+          {
+            lineHeight: '42px',
+            fontWeight: 600,
+            letterSpacing: '0.72px',
+          },
+        ],
+        '5xl': [
+          '42px',
+          {
+            lineHeight: '48px',
+            fontWeight: 600,
+            letterSpacing: '0.84px',
+          },
+        ],
+        '6xl': [
+          '48px',
+          {
+            lineHeight: '56px',
+            fontWeight: 600,
+            letterSpacing: '0.96px',
+          },
+        ],
+        '7xl': [
+          '56px',
+          {
+            lineHeight: '64px',
+            fontWeight: 600,
+            letterSpacing: '1.12px',
+          },
+        ],
+        '8xl': [
+          '64px',
+          {
+            lineHeight: '72px',
+            fontWeight: 600,
+            letterSpacing: '1.28px',
+          },
+        ],
+        '9xl': [
+          '72px',
+          {
+            lineHeight: '76px',
+            fontWeight: 600,
+            letterSpacing: '1.44px',
+          },
+        ],
       },
 
       screens: {
