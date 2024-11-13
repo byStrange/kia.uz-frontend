@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
+
 import { useTitle } from '@vueuse/core';
+import Checkbox from 'primevue/checkbox';
 
 import BreadCrumbs from '@/components/common/BreadCrumbs.vue';
 import Button from '@/components/common/Button.vue';
@@ -9,6 +12,10 @@ import FilterIcon from '@/components/icons/20x20/FilterIcon.vue';
 import InfoIcon from '@/components/icons/20x20/InfoIcon.vue';
 
 const title = useTitle();
+
+onMounted(() => {
+  title.value = 'Комплектации и цены K5';
+});
 </script>
 <template>
   <div
