@@ -1,6 +1,7 @@
 {
   "name": "nuxt3-template",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "nuxi dev",
     "build": "nuxi build",
@@ -8,7 +9,9 @@
     "start": "node .output/server/index.mjs",
     "lint": "eslint  .",
     "lint:fix": "eslint . --fix",
-    "configure-env": "configure-env"
+    "configure-env": "configure-env",
+    "commitlint": "commitlint --edit",
+    "prepare": "husky"
   },
   "husky": {
     "hooks": {
@@ -20,6 +23,8 @@
     "*": "prettier -w -u"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
     "@nuxt/devtools": "^1.6.0",
     "@primevue/nuxt-module": "^4.2.1",
     "configure-env": "^1.0.0",
