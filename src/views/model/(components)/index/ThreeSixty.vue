@@ -42,7 +42,7 @@ const availableColors = ref([
     </picture>
     <div class="md:mt-6 2xl:mt-12 relative">
       <div
-        class="flex flex-col items-center gap-2.5 2xl:absolute 2xl:-top-10 2xl:left-1/2 -translate-x-1/2 2xl:max-w-6h mx-auto 2xl:px-20"
+        class="flex flex-col justify-center items-center gap-2.5 2xl:absolute 2xl:-top-10 2xl:left-1/2 2xl:-translate-x-1/2 2xl:max-w-6h mx-auto 2xl:px-20"
       >
         <Icon360 />
         <p class="text-xs+ text-disabled md:text-center">

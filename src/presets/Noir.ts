@@ -21,8 +21,8 @@ const Noir = definePreset(Aura, {
         primary: {
           color: 'var(--color-primary-DEFAULT)',
           contrastColor: '#ffffff',
-          hoverColor: 'var(--color-primary-900)',
-          activeColor: 'var(--color-primary-800)',
+          hoverColor: 'var(--color-kia-midnight-black-90)',
+          activeColor: 'var(--color-kia-midnight-black-80)',
         },
         highlight: {
           background: 'var(--color-primary-500)',
