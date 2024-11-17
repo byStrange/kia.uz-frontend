@@ -1,0 +1,65 @@
+@layer utilities {
+  .dark-pagination .swiper-pagination-bullet {
+    @apply border-city-gray;
+  }
+
+  .dark-pagination .swiper-pagination-bullet-active {
+    @apply border-white bg-white;
+  }
+
+  .light-pagination .swiper-pagination-bullet {
+    @apply border border-primary bg-transparent opacity-100;
+  }
+
+  .light-pagination .swiper-pagination-bullet-active {
+    @apply bg-primary;
+  }
+
+  .light-pagination .swiper-pagination {
+    margin-top: var(--swiper-pagination-mt, theme('spacing.10'));
+    @apply static text-white;
+  }
+
+  .rtl {
+    direction: rtl;
+  }
+
+  .ltr {
+    direction: ltr;
+  }
+
+  @media screen(md) {
+    .container {
+      @apply px-[57px];
+    }
+  }
+
+  @media screen(2xl) {
+    .container {
+      @apply max-w-[1920px] px-[80px];
+    }
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .flip-x {
+    --deg: 180deg;
+    transform: rotateY(var(--deg));
+  }
+
+  .flip-y {
+    --deg: -80deg;
+    transform: rotateX(var(--deg));
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+}

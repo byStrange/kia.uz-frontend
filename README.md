@@ -1,5 +1,36 @@
-# Vue 3 + TypeScript + Vite
+# nuxt3-template
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A [Nuxt 3](https://nuxt.com/docs/guide/concepts/auto-imports) + TypeScript starter template.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+- [Vue Macros](https://vue-macros.sxzz.moe/guide/getting-started.html)
+- [VueUse](https://vueuse.org/guide/)
+- [Tailwind CSS](https://tailwindcss.com/docs/installation)
+- [Pinia](https://pinia.vuejs.org/introduction.html)
+
+## Usage
+
+```bash
+# Install packages
+pnpm install
+
+# Create .env
+pnpm run configure-env
+
+# Update packages
+pnpm up --interactive
+
+# Update packages (major versions)
+pnpm up --interactive --latest
+
+# Start dev server
+pnpm run dev
+
+# Generate static site
+pnpm run generate
+
+# Build for production
+pnpm run build
+
+# Start server
+pnpm run start
+```

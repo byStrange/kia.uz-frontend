@@ -1,17 +1,33 @@
 /** @type {import('tailwindcss').Config} */
-const plugin = require('tailwindcss/plugin');
-export default {
-  content: ['index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
 
+import plugin from 'tailwindcss/plugin'
+
+module.exports = {
+  content: [
+    'components/**/*.vue',
+    'layouts/**/*.vue',
+    'pages/**/*.vue',
+    'app.vue',
+    'error.vue',
+  ],
   theme: {
     extend: {
-      container: ({ theme }) => ({
+      container: {
         center: true,
         padding: {
           DEFAULT: '31px',
         },
         screens: {},
-      }),
+      },
+
+      fontFamily: {
+        body: [
+          'Kia Signature',
+          'Kia Signature Fix OTF',
+          'ui-sans-serif',
+          'system-ui',
+        ],
+      },
       fontSize: {
         'sm+': ['15px', '20px'],
         xs: ['12px', '14px'],
@@ -104,7 +120,7 @@ export default {
           'kia-afternoon-yellow': '#F3C300',
           'kia-forest-green': '#5D7D2B',
           'kia-city-gray': '#9EA1A2',
-        };
+        }
 
         const semantics = {
           primary: {
@@ -122,12 +138,12 @@ export default {
           'afternoon-yellow': primitives['kia-afternoon-yellow'],
           'forest-green': primitives['kia-forest-green'],
           'city-gray': primitives['kia-city-gray'],
-        };
+        }
 
         return {
           ...semantics,
           ...primitives,
-        };
+        }
       },
 
       spacing: {
@@ -160,18 +176,18 @@ export default {
   },
   plugins: [
     plugin(
-      function hoverablePlugin({ matchVariant, theme }) {
+      function hoverablePlugin({ matchVariant }) {
         matchVariant(
           'hoverable',
           (value = 'DEFAULT') => {
             // Handle different hover behaviors based on the value
             switch (value) {
               case 'force':
-                return '@media (hover: hover) and (pointer: fine)';
+                return '@media (hover: hover) and (pointer: fine)'
               case 'any':
-                return '@media (any-hover: hover)';
+                return '@media (any-hover: hover)'
               default:
-                return '@media (hover: hover)';
+                return '@media (hover: hover)'
             }
           },
           {
@@ -180,8 +196,8 @@ export default {
               force: 'force', // For devices with fine pointer only
               any: 'any', // For any hover-capable device
             },
-          }
-        );
+          },
+        )
       },
       {
         // Optional theme configuration
@@ -190,20 +206,21 @@ export default {
             // You can add custom configurations here if needed
           },
         },
-      }
+      },
     ),
+
     function ({ addBase, theme }) {
-      const screens = theme('screens');
-      const screenProperties = {};
+      const screens = theme('screens')
+      const screenProperties = {}
       for (const key in screens) {
-        screenProperties['--screen-' + key] = screens[key];
+        screenProperties['--screen-' + key] = screens[key]
       }
       addBase({
         ':root': {
           '--page-padding': theme('spacing.page-padding'),
           ...screenProperties,
         },
-      });
+      })
     },
   ],
-};
+}
