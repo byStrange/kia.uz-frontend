@@ -48,10 +48,10 @@ const specialsSwiperBreakpoints = ref({})
 
                 <div class="p-4">
                   <div class="text-left">
-                    <h2 class="text-base font-semibold">
+                    <h2 class="text-sm font-semibold">
                       {{ item.title }}
                     </h2>
-                    <p class="mt-2 text-base text-primary">
+                    <p class="mt-1 text-sm text-primary">
                       {{ item.description }}
                     </p>
                   </div>
@@ -78,10 +78,10 @@ const specialsSwiperBreakpoints = ref({})
 
                 <div class="p-4">
                   <div class="text-left">
-                    <h2 class="text-base font-semibold">
+                    <h2 class="text-sm font-semibold">
                       {{ item.title }}
                     </h2>
-                    <p class="mt-2 text-base text-primary">
+                    <p class="mt-1 text-sm text-primary">
                       {{ item.description }}
                     </p>
                   </div>
