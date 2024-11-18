@@ -100,10 +100,9 @@ const slidesLength = computed(() => {
               />
             </picture>
             <div
-              class="absolute !left-0 bottom-[88px] z-40 flex w-full max-w-[540px] items-end justify-center md:!left-auto md:bottom-[100px] md:justify-start md:pb-0"
+              class="absolute left-0 bottom-[88px] z-40 flex w-full max-w-[540px] items-end justify-center md:bottom-[100px] md:justify-start md:pb-0 2xl:left-[--left]"
               :style="{
-                left: offset.offsetLeft.value + 'px',
-                padding: `0 ${offset.offsetLeft.value}px`,
+                '--left': offset.offsetLeft.value + 'px',
               }"
             >
               <div class="flex w-full">

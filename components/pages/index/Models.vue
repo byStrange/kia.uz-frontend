@@ -36,8 +36,6 @@ onMounted(() => {
   })
 })
 
-const router = useRouter()
-
 const MiniThumbCard = ({ model }: { model: Model }) => {
   return (
     <div
@@ -114,6 +112,7 @@ const ModelCard = ({ model }: { model: Model }) => {
           <template #container-start>
             <UIButtonCarousel
               position="left"
+              mode="free"
               :hide="activeModelIndex === 0"
               size="sm"
               @click="slidePrev"
@@ -121,6 +120,7 @@ const ModelCard = ({ model }: { model: Model }) => {
             <UIButtonCarousel
               position="right"
               :hide="activeModelIndex === slidesLength - 1"
+              mode="free"
               size="sm"
               @click="slideNext"
             />
@@ -159,20 +159,18 @@ const ModelCard = ({ model }: { model: Model }) => {
               <UIButtonCarousel
                 position="left"
                 :hide="activeModelIndex === 0"
+                mode="free"
                 @click="slidePrev"
               />
               >
               <UIButtonCarousel
                 position="right"
                 :hide="activeModelIndex === slidesLength - 1"
+                mode="free"
                 @click="slideNext"
               />
             </template>
-            <SwiperSlide
-              v-for="model in models"
-              :style="{ '--padding': bounding.x.value + 'px' }"
-              class="px-[var(--padding)]"
-            >
+            <SwiperSlide v-for="model in models">
               <ModelCard :model="model" />
             </SwiperSlide>
           </Swiper>

@@ -24,7 +24,7 @@ withDefaults(
     position?: 'left' | 'right'
     hide?: boolean
     size?: ButtonCarouselVariants['size']
-    mode?: 'normal' | 'oneside-left'
+    mode?: 'normal' | 'oneside-left' | 'free'
   }>(),
   {
     mode: 'normal',
@@ -35,11 +35,11 @@ withDefaults(
   <div
     class="left-[--left] right-[--right] top-1/2 z-30 hidden 2xl:block"
     :style="{
-      [`--${position}`]: bounding.x.value + 'px',
+      [`--${position}`]: mode === 'free' ? 0 : bounding.x.value + 'px',
     }"
     :class="{
       static: mode === 'oneside-left',
-      'absolute -translate-y-1/2': mode === 'normal',
+      'absolute -translate-y-1/2': mode === 'normal' || mode === 'free',
     }"
   >
     <UIButton
