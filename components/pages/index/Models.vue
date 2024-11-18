@@ -89,7 +89,7 @@ const ModelCard = ({ model }: { model: Model }) => {
           color: 'secondary',
           size: 'md',
           mode: 'full',
-          class: 'mx-auto mt-4 md:mt-8',
+          class: 'mx-auto mt-4 md:mt-8 !py-2.5',
         })}
       </NuxtLink>
     </div>
