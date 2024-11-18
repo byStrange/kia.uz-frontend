@@ -1,26 +1,10 @@
-@import 'tailwindcss/base';
 @import './fonts.css';
-
-@import 'tailwindcss/components';
-
-@import 'tailwindcss/utilities';
-
 @import './components/index.css';
 @import './utilities/index.css';
 
-.layout-enter-active,
-.layout-leave-active,
-.page-enter-active,
-.page-leave-active {
-  @apply transition-opacity duration-500 ease-out;
-}
-
-.layout-enter,
-.layout-leave-to,
-.page-enter,
-.page-leave-to {
-  @apply opacity-0;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   body {
