@@ -9,8 +9,8 @@
     "lint": "eslint  .",
     "lint:fix": "eslint . --fix",
     "configure-env": "configure-env",
-    "commitlint": "commitlint --edit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "commitlint": "commitlint --edit"
   },
   "husky": {
     "hooks": {
@@ -31,8 +31,7 @@
     "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3",
-    "vue-i18n": "^10.0.4",
-    "wrangler": "^3.87.0"
+    "vue-i18n": "^10.0.4"
   },
   "dependencies": {
     "@nuxt/eslint": "^0.6.1",

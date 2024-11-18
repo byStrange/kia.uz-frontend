@@ -1,7 +1,7 @@
 <template>
   <div>
     <UIHeader />
-    <slot />
+    <NuxtPage />
     <UIFooter />
   </div>
 </template>

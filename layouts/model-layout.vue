@@ -2,7 +2,7 @@
   <div class="overflow-hidden">
     <UIHeader />
     <SectionBar />
-    <slot />
+    <NuxtPage />
     <UIFooter />
   </div>
 </template>
