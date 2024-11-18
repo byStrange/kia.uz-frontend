@@ -170,7 +170,7 @@ const ModelCard = ({ model }: { model: Model }) => {
                 @click="slideNext"
               />
             </template>
-            <SwiperSlide v-for="model in models">
+            <SwiperSlide v-for="model in models" class="container 2xl:px-0">
               <ModelCard :model="model" />
             </SwiperSlide>
           </Swiper>
