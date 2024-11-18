@@ -55,7 +55,6 @@ const slidesLength = computed(() => {
 
     <ClientOnly>
       <Swiper
-        :enabled="false"
         ref="heroSwiper"
         @swiper="onSwiper"
         :slides-per-view="1"
