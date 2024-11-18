@@ -107,7 +107,7 @@ const slidesLength = computed(() => {
             >
               <div class="flex w-full">
                 <div class="w-full md:px-0">
-                  <div class="space-y-2.5 text-white md:space-y-2">
+                  <div class="space-y-1 text-white md:space-y-2">
                     <p class="text-sm text-white md:text-lg">
                       {{ slides[0].title }}
                     </p>
@@ -117,7 +117,7 @@ const slidesLength = computed(() => {
                     >
                       Kia Sonet
                     </h1>
-                    <p class="w-[20ch] text-sm md:w-auto md:text-lg">
+                    <p class="text-sm md:text-lg">
                       {{ slides[0].description }}
                     </p>
                   </div>
@@ -126,7 +126,7 @@ const slidesLength = computed(() => {
                     color="primary"
                     size="md"
                     mode="full"
-                    class="mt-7.5 md:!w-auto"
+                    class="mt-6 !py-2.5 md:!w-auto text-base"
                   />
                 </div>
               </div>

@@ -135,7 +135,7 @@ watch(
           </NuxtLink>
         </div>
 
-        <div class="flex items-center gap-2 md:gap-5">
+        <div class="flex items-center gap-4 md:gap-5">
           <ul class="hidden items-center gap-5 2xl:flex">
             <li v-for="item in headerService.routes.slice(4)" :key="item.label">
               <HeaderLink :item="item" />

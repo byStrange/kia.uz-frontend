@@ -4,19 +4,18 @@ const show = ref(true)
 <template>
   <Transition name="slide-down">
     <div
-      class="fixed bottom-5 right-5 z-30 flex size-[70px] items-end md:bottom-24 md:right-14 2xl:right-20"
+      class="fixed bottom-5 size-[53px] right-[22px] z-30 flex items-end md:bottom-24 md:right-14 2xl:right-20"
       v-if="show"
     >
-      <UIButton
-        class="absolute left-full top-0 -translate-x-full !px-1.5 !py-1.5"
-        corner="full"
+      <button
+        class="absolute rounded-full bg-white right-0 top-0 p-1.25"
         @click="show = false"
       >
-        <UIXIcon width="8" height="8" />
-      </UIButton>
-      <UIButton class="!px-4.5 !py-4.5 shadow" corner="full">
-        <UIPhoneIcon width="24" height="24" />
-      </UIButton>
+        <UIXIcon width="6" height="6" />
+      </button>
+      <button class="p-3 shadow border-none flex-center bg-white rounded-full" corner="full">
+        <UIPhoneIcon width="20" height="20" />
+      </button>
     </div>
   </Transition>
 </template>
