@@ -9,6 +9,9 @@ export default defineNuxtPlugin(({ vueApp }) => {
       en: {
         hello: 'Hello, {name}!',
       },
+      ru: {
+        hello: 'Привет, {name}!',
+      }
     },
   })
 
