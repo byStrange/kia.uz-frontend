@@ -82,7 +82,8 @@ watch(
       @mouseleave="
         () => {
           if (!headerService.lockHover) {
-            headerService.isHover = headerService.isMenuOpen || headerService.isHeaderFixed
+            headerService.isHover =
+              headerService.isMenuOpen || headerService.isHeaderFixed
           } else headerService.isHover = headerService.lockHover
         }
       "
@@ -116,13 +117,13 @@ watch(
         </div>
 
         <div class="absolute left-1/2 -translate-x-1/2">
-          <NuxtLink to="/" class="relative block h-3 w-[50px]">
+          <NuxtLink to="/">
             <!-- Light Logo -->
             <img
               v-if="!headerService.isHover"
               src="@/assets/logo/main-logo.svg"
               alt="Logo"
-              class="h-3 w-[50px] transform-gpu"
+              class="h-3 w-[50px] 2xl:w-[79px] 2xl:h-4.5"
             />
 
             <!-- Dark Logo -->
@@ -130,7 +131,7 @@ watch(
               v-if="headerService.isHover"
               src="@/assets/logo/main-logo-invert.svg"
               alt="Logo"
-              class="h-3 w-[50px] transform-gpu"
+              class="h-3 w-[50px] 2xl:w-[79px] 2xl:h-4.5"
             />
           </NuxtLink>
         </div>
