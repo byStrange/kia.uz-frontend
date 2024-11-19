@@ -96,7 +96,7 @@ const slidesLength = computed(() => {
               <img
                 loading="lazy"
                 src="@/assets/test/kia-test-hero-img-mobile.png"
-                class="h-[75%] w-full object-cover md:h-full"
+                class="h-[75%] w-full object-cover md:h-[80%]"
               />
             </picture>
             <div
@@ -112,9 +112,7 @@ const slidesLength = computed(() => {
                       {{ slides[0].title }}
                     </p>
 
-                    <h1
-                      class="text-2xl font-semibold md:text-[56px] md:leading-[64px]"
-                    >
+                    <h1 class="text-2xl font-semibold md:text-4xl">
                       Kia Sonet
                     </h1>
                     <p class="text-sm md:text-lg">
@@ -124,9 +122,9 @@ const slidesLength = computed(() => {
                   <UIButton
                     label="Подробнее"
                     color="primary"
-                    size="md"
+                    size="md-"
                     mode="full"
-                    class="mt-6 !py-2.5 md:!w-auto text-base"
+                    class="mt-6 text-base"
                   />
                 </div>
               </div>

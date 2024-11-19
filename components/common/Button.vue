@@ -1,6 +1,5 @@
-
 <script setup lang="ts">
-import { type VariantProps, tv } from 'tailwind-variants';
+import { type VariantProps, tv } from 'tailwind-variants'
 
 const button = tv({
   base: 'flex items-center justify-center whitespace-nowrap transition-all outline-none font-semibold',
@@ -19,6 +18,7 @@ const button = tv({
       unstyled: '',
       sm: 'px-2 py-2 text-sm md:py-3',
       md: 'px-3  py-[14.5px] text-base md:py-4.5 md:px-10',
+      'md-': 'md:px-10 py-2.5 md:py-4.5',
       'md+': 'px-3  py-3 text-base md:py-4',
     },
     mode: {
@@ -36,17 +36,17 @@ const button = tv({
     corner: 'normal',
     mode: 'normal',
   },
-});
+})
 
-type ButtonVariants = VariantProps<typeof button>;
+type ButtonVariants = VariantProps<typeof button>
 
 defineProps<{
-  color?: ButtonVariants['color'];
-  size?: ButtonVariants['size'];
-  mode?: ButtonVariants['mode'];
-  corner?: ButtonVariants['corner'];
-  label?: string;
-}>();
+  color?: ButtonVariants['color']
+  size?: ButtonVariants['size']
+  mode?: ButtonVariants['mode']
+  corner?: ButtonVariants['corner']
+  label?: string
+}>()
 </script>
 
 <template>
