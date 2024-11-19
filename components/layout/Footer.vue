@@ -124,7 +124,7 @@ const MenuFooter = () => {
   <footer class="bg-primary py-[60px]">
     <div class="container">
       <div class="space-y-2">
-        <p class="text-xs text-disabled" aria-label="Footer text">
+        <p class="text-sm text-disabled" aria-label="Footer text">
           Сведения о ценах на продукцию бренда Kia, содержащиеся на сайте, носят
           исключительно информационный характер. Указанные цены могут отличаться
           от действительных цен дилеров Kia. Для получения подробной информации
@@ -136,7 +136,7 @@ const MenuFooter = () => {
         <UIButton
           label="Подробнее"
           size="md"
-          class="!border-none !bg-transparent !p-0 text-white ring-offset-0"
+          class="!border-none text-sm !bg-transparent !p-0 text-white ring-offset-0"
         >
           Подробнее
           <UITickToBottom class="text-white" width="20" height="20" />
