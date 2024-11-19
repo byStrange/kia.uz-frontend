@@ -47,6 +47,7 @@ const props = withDefaults(
     swiperSlideClass?: string
     navigation?: boolean
     paginationMt?: string
+    paginationGap?: string
     breakpointsEnabled?: boolean
     paginatorClass?: string
     navigiationMode?: 'normal' | 'oneside-left'
@@ -57,6 +58,8 @@ const props = withDefaults(
     paginator: true,
     breakpointsEnabled: true,
     navigiationMode: 'normal',
+    paginationGap: '12px',
+    paginatorClass: 'mt-4 md:mt-8',
   },
 )
 
@@ -65,9 +68,11 @@ watch(swiper, () => {
     swiper.value?.el.querySelector('.swiper-pagination')?.remove()
   }
   if (props.paginatorClass) {
-    swiper.value?.el
-      .querySelector('.swiper-pagination')
-      ?.classList.add(props.paginatorClass)
+    props.paginatorClass.split(' ').forEach((className) => {
+      swiper.value?.el
+        .querySelector('.swiper-pagination')
+        ?.classList.add(className)
+    })
   }
 })
 
@@ -80,7 +85,8 @@ defineExpose({
     <ClientOnly>
       <Swiper
         :style="{
-          '--swiper-pagination-mt': paginationMt,
+          '--swiper-pagination-bullet-horizontal-gap': 0, //  to disable default swiper bullet gap
+          '--swiper-pagination-gap': paginationGap,
         }"
         :breakpoints="breakpointsEnabled ? swiperBreakpoints : {}"
         slides-per-view="auto"
