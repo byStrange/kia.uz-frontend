@@ -94,7 +94,7 @@ const MenuFooterSocials = () => {
 
 const MenuFooter = () => {
   return (
-    <div class={['border-t border-t-description py-12 md:border-t-0 md:py-0']}>
+    <div class={['py-8 md:py-0']}>
       <div class="space-y-6">
         <div class="space-y-2.5">
           <h3 class="text-sm+ text-disabled">Горячая линия Kia</h3>
@@ -143,7 +143,7 @@ const MenuFooter = () => {
         </UIButton>
       </div>
 
-      <div aria-hidden="true" class="my-10 border-b border-b-description"></div>
+      <div aria-hidden="true" class="my-8 border-b border-b-description"></div>
 
       <div aria-label="Footer menu">
         <div class="logo">
@@ -155,7 +155,7 @@ const MenuFooter = () => {
         >
           <div class="md:col-span-4 2xl:col-span-8">
             <div
-              class="mt-5 flex-wrap divide-y divide-description md:mt-0 md:grid md:w-full md:grid-cols-2 md:items-start md:gap-9 md:divide-y-0 2xl:grid-cols-4"
+              class="mt-2 flex-wrap divide-y-reverse divide-y divide-description md:mt-0 md:grid md:w-full md:grid-cols-2 md:items-start md:gap-9 md:divide-y-0 2xl:grid-cols-4"
               aria-label="Footer menu links"
             >
               <div class="hidden flex-col md:flex md:gap-5">
@@ -188,7 +188,7 @@ const MenuFooter = () => {
             <UIButton
               label="Обратная связь"
               mode="full"
-              class="border border-city-gray md:!w-full"
+              class="border border-city-gray md:!w-full !py-2.5"
               color="secondary"
               size="md"
             />
