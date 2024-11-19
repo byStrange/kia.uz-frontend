@@ -12,6 +12,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      transformOrigin: {
+        'left-center': 'left center',
+        'right-center': 'right center',
+      },
       container: {
         center: true,
         padding: {

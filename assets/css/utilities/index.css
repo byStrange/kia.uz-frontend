@@ -61,4 +61,19 @@
   .flex-center {
     @apply flex items-center justify-center;
   }
+
+  .footer-hover {
+    @apply relative after:content-[''] after:absolute after:left-0 after:bottom-0 
+         after:w-full after:h-0.5 after:bg-white after:scale-x-0 
+         after:origin-left after:transition-transform after:duration-300 
+         after:ease-out;
+  }
+
+  .footer-hover:hover::after {
+    @apply scale-x-100 origin-left;
+  }
+
+  .footer-hover:not(:hover)::after {
+    @apply scale-x-0 origin-right transition-transform duration-300 ease-out;
+  }
 }
