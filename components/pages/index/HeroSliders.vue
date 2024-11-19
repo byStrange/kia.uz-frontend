@@ -96,7 +96,7 @@ const slidesLength = computed(() => {
               <img
                 loading="lazy"
                 src="@/assets/test/kia-test-hero-img-mobile.png"
-                class="h-[75%] w-full object-cover md:h-[80%]"
+                class="h-[75%] w-full object-cover md:h-[80%] 2xl:h-full"
               />
             </picture>
             <div
