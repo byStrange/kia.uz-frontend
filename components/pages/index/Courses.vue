@@ -30,8 +30,8 @@ const { courses } = useStore()
                   <UIPlayIcon2 class="absolute" />
                 </div>
 
-                <div class="p-7.5">
-                  <p class="text-base font-semibold text-primary">
+                <div class="p-4">
+                  <p class="text-sm font-semibold text-primary">
                     {{ item.title }}
                   </p>
                 </div>
@@ -60,8 +60,8 @@ const { courses } = useStore()
                   <UIPlayIcon2 class="absolute" />
                 </div>
 
-                <div class="p-7.5">
-                  <p class="text-base font-semibold text-primary">
+                <div class="p-4">
+                  <p class="text-sm font-semibold text-primary">
                     {{ item.title }}
                   </p>
                 </div>
