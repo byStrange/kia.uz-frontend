@@ -16,7 +16,6 @@
   }
 
   .light-pagination .swiper-pagination {
-    margin-top: var(--swiper-pagination-mt, theme('spacing.10'));
     @apply static text-white;
   }
 

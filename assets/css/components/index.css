@@ -51,4 +51,9 @@
   #header.hover button {
     @apply text-primary;
   }
+
+  .swiper-pagination {
+    display: flex;
+    gap: var(--swiper-pagination-gap, 12px);
+  }
 }
