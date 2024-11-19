@@ -64,10 +64,9 @@ onMounted(() => {
           <h2 class="text-lg font-semibold text-white md:text-2xl 2xl:text-5xl">
             Беспроцентная рассрочка на автомобили Kia
           </h2>
-          <p class="mt-2 text-base text-white md:mt-4 md:leading-[24px]">
-            Успейте воспользоваться уникальным предложением от официального
-            дистрибьютора Kia в Узбекистане — любой доступный автомобиль
-            в рассрочку без переплат.
+          <p class="mt-2 text-base text-white 2xl:mt-4 md:leading-[24px]">
+            Аренда автомобилей Kia по подписке. Всё включено в единый платёж —
+            выгоднее чем кредит, единый тариф, гибкость.
           </p>
           <UIButton
             color="primary"
