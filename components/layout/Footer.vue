@@ -44,14 +44,17 @@ const FooterMenuItem = ({ item }: { item: HeaderItem }) => {
           >
             <div
               class={[
-                'invisible flex min-h-0 flex-col space-y-2.5 text-white opacity-0 transition-all md:visible md:opacity-100',
+                'invisible flex min-h-0 flex-col space-y-0.5 text-white opacity-0 transition-all md:visible md:opacity-100',
                 { '!visible opacity-100': openedItem.value === item },
               ]}
             >
               {item.children?.length
                 ? item.children.map((i) => {
                     return (
-                      <NuxtLink to={i.to} class="font-normal text-disabled">
+                      <NuxtLink
+                        to={i.to}
+                        class="font-normal text-disabled py-1.25 w-fit footer-hover"
+                      >
                         {i.label}
                       </NuxtLink>
                     )
@@ -160,6 +163,7 @@ const MenuFooter = () => {
             >
               <div class="hidden flex-col md:flex md:gap-5">
                 <NuxtLink
+                  id="imi"
                   to="/"
                   class="font-semibold text-white"
                   v-for="item in headerService.routes.filter(
@@ -169,6 +173,7 @@ const MenuFooter = () => {
                   {{ item.label }}
                 </NuxtLink>
               </div>
+
               <FooterMenuItem
                 :item="item"
                 v-for="item in headerService.routes"
