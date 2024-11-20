@@ -28,11 +28,11 @@ const HeaderLink = ({ item }: { item: HeaderItem }) => {
   return (
     <>
       {item.children?.length ? (
-        <button class="text-sm+ text-primary" onClick={() => openMenu(item)}>
+        <button class="text-sm+ text-primary footer-hover footer-hover-dark" onClick={() => openMenu(item)}>
           {item.label}
         </button>
       ) : (
-        <NuxtLink to={item.to} class="text-sm+ text-primary">
+        <NuxtLink to={item.to} class="text-sm+ text-primary footer-hover footer-hover-dark">
           {item.label}
         </NuxtLink>
       )}

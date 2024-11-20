@@ -64,9 +64,17 @@
 
   .footer-hover {
     @apply relative after:content-[''] after:absolute after:left-0 after:bottom-0 
-         after:w-full after:h-0.5 after:bg-white after:scale-x-0 
+         after:w-full after:h-0.5  after:scale-x-0 
          after:origin-left after:transition-transform after:duration-300 
          after:ease-out;
+  }
+
+  .footer-hover:not(.footer-hover-dark) {
+    @apply after:bg-white;
+  }
+
+  .footer-hover-dark {
+    @apply after:bg-primary;
   }
 
   .footer-hover:hover::after {
