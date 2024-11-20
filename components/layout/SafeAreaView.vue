@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const defaultHeader = ref(65)
+const defaultHeader = ref(80)
 
 const props = defineProps<{ extra?: number }>()
 

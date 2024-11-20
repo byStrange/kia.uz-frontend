@@ -9,5 +9,6 @@
 @layer base {
   body {
     font-family: 'Kia Signature';
+    --header-height: 80px;
   }
 }
