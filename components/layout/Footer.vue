@@ -53,7 +53,7 @@ const FooterMenuItem = ({ item }: { item: HeaderItem }) => {
                     return (
                       <NuxtLink
                         to={i.to}
-                        class="font-normal text-disabled py-1.25 w-fit footer-hover"
+                        class="font-normal text-disabled py-1.25 w-fit link-hover"
                       >
                         {i.label}
                       </NuxtLink>

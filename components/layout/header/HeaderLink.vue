@@ -8,7 +8,7 @@ const { headerService } = useHeaderService()
 <template>
   <button
     v-if="item.children?.length"
-    class="py-7.5 text-sm+ text-primary footer-hover footer-hover-dark"
+    class="py-7.5 text-sm+ text-primary link-hover link-hover-dark"
     @click="openMenu ? openMenu(item) : void 0"
     :class="{
       hover: headerService.extendedMenu?.label === item.label,
@@ -19,7 +19,7 @@ const { headerService } = useHeaderService()
   <NuxtLink
     v-else
     :to="item.to"
-    class="py-7.5 text-sm+ text-primary footer-hover footer-hover-dark"
+    class="py-7.5 text-sm+ text-primary link-hover link-hover-dark"
   >
     {{ item.label }}
   </NuxtLink>

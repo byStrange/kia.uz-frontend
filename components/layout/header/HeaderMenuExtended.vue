@@ -12,7 +12,10 @@ const { headerService } = useHeaderService()
         aria-label="Header"
         class="sticky top-0 z-10 flex h-[60px] items-center bg-white py-4.5 2xl:hidden"
       >
-        <UIButton class="!p-0 !border-none" @click="headerService.extendedMenu = null">
+        <UIButton
+          class="!p-0 !border-none"
+          @click="headerService.extendedMenu = null"
+        >
           <UITickToLeft />
         </UIButton>
         <h1
@@ -30,14 +33,20 @@ const { headerService } = useHeaderService()
               v-for="item in headerService.extendedMenu.children"
               :key="item.label"
             >
-              <NuxtLink :to="item.to" class="shrink-0 py-[4.5px] footer-hover footer-hover-dark">
+              <NuxtLink
+                :to="item.to"
+                class="shrink-0 py-[4.5px] link-hover link-hover-dark"
+              >
                 {{ item.label }}
               </NuxtLink>
             </div>
           </div>
         </div>
 
-        <div class="2xl:flex 2xl:w-1/2 2xl:gap-10" v-if="headerService.extendedMenu.meta?.sideImage">
+        <div
+          class="2xl:flex 2xl:w-1/2 2xl:gap-10"
+          v-if="headerService.extendedMenu.meta?.sideImage"
+        >
           <div
             :style="{
               backgroundImage: `url(${headerService.extendedMenu.meta?.sideImage})`,
