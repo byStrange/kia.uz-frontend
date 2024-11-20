@@ -10,6 +10,9 @@ export const useBreadcrumbs = (route: any, router: any) => {
       title: 'Home',
       name: 'index',
     })
+
+    console.log(fullPath)
+    console.log(params)
     let path = ''
 
     params.forEach((param: any) => {
@@ -23,6 +26,7 @@ export const useBreadcrumbs = (route: any, router: any) => {
       }
     })
 
+    console.log(path)
     return crumbs
   })
 

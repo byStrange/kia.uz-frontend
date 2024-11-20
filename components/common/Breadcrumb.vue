@@ -18,14 +18,14 @@
                 { '!text-caption': theme === 'dark' },
               ]"
             >
-              {{ crumb.name }}
+              {{ crumb.title }}
             </router-link>
             <UIBreadCrumbsTickToRight
               :class="theme === 'light' ? 'text-white' : 'text-primary'"
             />
           </div>
           <div v-else :class="styles({ theme })" class="font-semibold">
-            {{ crumb.name }}
+            {{ crumb.title }}
           </div>
         </slot>
       </li>
