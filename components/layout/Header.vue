@@ -24,27 +24,7 @@ const openMenu = (item: HeaderItem) => {
   isLocked.value = true
 }
 
-const HeaderLink = ({ item }: { item: HeaderItem }) => {
-  return (
-    <>
-      {item.children?.length ? (
-        <button
-          class="text-sm+ text-primary footer-hover footer-hover-dark"
-          onClick={() => openMenu(item)}
-        >
-          {item.label}
-        </button>
-      ) : (
-        <NuxtLink
-          to={item.to}
-          class="text-sm+ text-primary footer-hover footer-hover-dark"
-        >
-          {item.label}
-        </NuxtLink>
-      )}
-    </>
-  )
-}
+provide('openMenu', openMenu)
 
 watch(
   () => headerService.value.isHeaderFixed,
@@ -69,7 +49,7 @@ watch(
     <header
       :data-isHover="headerService.isHover"
       :key="headerService.isHeaderFixed + ''"
-      class="bg-semantic-header-bg absolute top-0 z-40 w-full border-b border-b-white border-opacity-20 py-5 transition-all duration-300"
+      class="bg-semantic-header-bg absolute top-0 z-40 w-full border-b border-b-white border-opacity-20 transition-all duration-300"
       id="header"
       :class="{
         hover:
@@ -117,7 +97,7 @@ watch(
               v-for="item in headerService.routes.slice(0, 4)"
               :key="item.label"
             >
-              <HeaderLink :item="item" />
+              <UIHeaderLink :item="item" />
             </li>
           </ul>
         </div>

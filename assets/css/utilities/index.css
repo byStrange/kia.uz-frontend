@@ -62,26 +62,27 @@
     @apply flex items-center justify-center;
   }
 
-  .footer-hover {
+  .link-hover {
     @apply relative after:content-[''] after:absolute after:left-0 after:bottom-0 
          after:w-full after:h-0.5  after:scale-x-0 
          after:origin-left after:transition-transform after:duration-300 
          after:ease-out;
   }
 
-  .footer-hover:not(.footer-hover-dark) {
+  .link-hover:not(.link-hover-dark) {
     @apply after:bg-white;
   }
 
-  .footer-hover-dark {
+  .link-hover-dark {
     @apply after:bg-primary;
   }
 
-  .footer-hover:hover::after {
+  .link-hover:hover::after,
+  .link-hover.hover::after {
     @apply scale-x-100 origin-left;
   }
 
-  .footer-hover:not(:hover)::after {
+  .link-hover:not(:hover):not(.hover)::after {
     @apply scale-x-0 origin-right transition-transform duration-300 ease-out;
   }
 }
