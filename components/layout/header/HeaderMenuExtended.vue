@@ -12,7 +12,7 @@ const { headerService } = useHeaderService()
         aria-label="Header"
         class="sticky top-0 z-10 flex h-[60px] items-center bg-white py-4.5 2xl:hidden"
       >
-        <UIButton class="!p-0" @click="headerService.extendedMenu = null">
+        <UIButton class="!p-0 !border-none" @click="headerService.extendedMenu = null">
           <UITickToLeft />
         </UIButton>
         <h1
@@ -37,7 +37,7 @@ const { headerService } = useHeaderService()
           </div>
         </div>
 
-        <div class="2xl:flex 2xl:w-1/2 2xl:gap-10">
+        <div class="2xl:flex 2xl:w-1/2 2xl:gap-10" v-if="headerService.extendedMenu.meta?.sideImage">
           <div
             :style="{
               backgroundImage: `url(${headerService.extendedMenu.meta?.sideImage})`,
