@@ -1,5 +1,5 @@
 <script setup lang="tsx">
-import { NuxtLink } from '#components'
+import { NuxtLink, UIHeaderLink } from '#components'
 
 const { toggleMenu, headerService } = useHeaderService()
 
@@ -125,7 +125,7 @@ watch(
         <div class="flex items-center gap-4 md:gap-5">
           <ul class="hidden items-center gap-5 2xl:flex">
             <li v-for="item in headerService.routes.slice(4)" :key="item.label">
-              <HeaderLink :item="item" />
+              <UIHeaderLink :item="item" />
             </li>
           </ul>
           <button>
