@@ -7,8 +7,17 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --header-height: 60px;
+  }
+
   body {
     font-family: 'Kia Signature';
-    --header-height: 80px;
+  }
+
+  @media screen(2xl) {
+    :root {
+      --header-height: 80px;
+    }
   }
 }

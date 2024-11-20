@@ -21,16 +21,14 @@ const { offset } = useContainer()
           <UIButton
             label="Заказать звонок"
             color="primary"
-            size="md"
+            size="md-"
             mode="full"
-            class="md:!w-auto"
           />
           <UIButton
             label="Скачать прайс-лист"
             color="secondary"
-            size="md"
+            size="md-"
             mode="full"
-            class=""
           />
         </div>
       </div>
@@ -75,16 +73,14 @@ const { offset } = useContainer()
               <UIButton
                 label="Заказать звонок"
                 color="primary"
-                size="md"
+                size="md-"
                 mode="full"
-                class="md:!w-auto"
               />
               <UIButton
                 label="Скачать прайс-лист"
                 color="secondary"
-                size="md"
+                size="md-"
                 mode="full"
-                class=""
               />
             </div>
             <div

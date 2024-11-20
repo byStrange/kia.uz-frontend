@@ -75,7 +75,7 @@ watch(
       "
     >
       <div
-        class="relative flex w-full items-center justify-between px-page-padding transition-all duration-300 2xl:container"
+        class="relative flex w-full items-center justify-between px-page-padding transition-all duration-300 2xl:container h-15 2xl:h-auto"
       >
         <button
           class="!bg-transparent !p-0 !text-white 2xl:hidden"
