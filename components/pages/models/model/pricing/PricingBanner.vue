@@ -29,13 +29,13 @@
             </p>
           </div>
           <div class="gap-4 hidden 2xl:flex">
+            <UIButton label="Скачать прайс-лист" size="md-" mode="full" />
             <UIButton
               label="Свяжитесь с нами"
               size="md-"
               color="secondary"
               mode="full"
             />
-            <UIButton label="Скачать прайс-лист" size="md-" mode="full" />
           </div>
         </div>
       </div>
