@@ -1,9 +1,10 @@
 <script setup lang="tsx">
 import { NuxtLink, UIButton, UITickToBottom } from '#components'
 
+const { footerLinks } = useFooterService()
 const { headerService } = useHeaderService()
 
-const openMenu = (item: HeaderItem) => {
+const openMenu = (item: FooterItem) => {
   if (openedItem.value === item) {
     openedItem.value = null
     return
@@ -11,12 +12,12 @@ const openMenu = (item: HeaderItem) => {
   openedItem.value = item
 }
 
-const openedItem = ref<HeaderItem | null>(null)
+const openedItem = ref<FooterItem | null>(null)
 
 let footerMenuItemCommonClasses =
   'menu-item md:py-0 py-5 text-sm+ font-semibold text-white block w-full text-start'
 
-const FooterMenuItem = ({ item }: { item: HeaderItem }) => {
+const FooterMenuItem = ({ item }: { item: FooterItem }) => {
   return (
     <>
       {item.children?.length ? (
@@ -166,7 +167,7 @@ const MenuFooter = () => {
                   id="imi"
                   to="/"
                   class="font-semibold text-white"
-                  v-for="item in headerService.routes.filter(
+                  v-for="item in footerLinks.value.filter(
                     (i) => !i.children?.length,
                   )"
                 >
@@ -174,10 +175,7 @@ const MenuFooter = () => {
                 </NuxtLink>
               </div>
 
-              <FooterMenuItem
-                :item="item"
-                v-for="item in headerService.routes"
-              />
+              <FooterMenuItem :item="item" v-for="item in footerLinks.value" />
             </div>
           </div>
 

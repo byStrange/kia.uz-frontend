@@ -16,38 +16,8 @@ export type HeaderItem = {
 
 const headerItems = ref<HeaderItem[]>([
   {
-    label: 'Спецпредложения',
-    to: '#',
-    children: [
-      {
-        label: 'Авто в наличии',
-        to: '#',
-      },
-      {
-        label: 'Конфигуратор',
-        to: '#',
-      },
-      {
-        label: 'Тест-драйв',
-        to: '#',
-      },
-      {
-        label: 'Запрос предложения',
-        to: '#',
-      },
-      {
-        label: 'Трейд-ин',
-        to: '#',
-      },
-      {
-        label: 'Корпоративные продажи',
-        to: '#',
-      },
-      {
-        label: 'Сравнение авто',
-        to: '#',
-      },
-    ],
+    label: 'Модели',
+    to: '/models',
   },
   {
     label: 'Выбор и покупка',
