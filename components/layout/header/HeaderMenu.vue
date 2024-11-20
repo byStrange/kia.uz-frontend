@@ -35,7 +35,7 @@ const MenuItem = (props: any) => {
 const HeaderMenuItems = () => {
   return (
     <div class="divide-y divide-protection divide-opacity-60 2xl:hidden">
-      {headerService.value.routes.map((item) => (
+      {headerService.value.routes.map((item: any) => (
         <MenuItem key={item.label} item={item} />
       ))}
     </div>
@@ -86,5 +86,25 @@ const MenuFooter = () => {
 </script>
 
 <template>
-  <div></div>
+  <transition name="slide-fade" mode="out-in">
+    <div
+      @click.self="closeExtendedMenu"
+      :style="{ height: `${height}px` }"
+      class="fixed top-[65px] z-20 w-full overflow-auto bg-black bg-opacity-20"
+      v-if="headerService.isMenuOpen"
+      :key="headerService.extendedMenu?.label"
+    >
+      <div class="bg-white 2xl:flex 2xl:bg-transparent">
+        <HeaderMenuItems v-if="!headerService.extendedMenu" />
+
+        <UIHeaderMenuExtended>
+          <template #menuFooter="{ rootClass }">
+            <MenuFooter :class="rootClass" />
+          </template>
+        </UIHeaderMenuExtended>
+
+        <MenuFooter class="2xl:hidden" />
+      </div>
+    </div>
+  </transition>
 </template>
