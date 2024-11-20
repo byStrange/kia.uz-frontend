@@ -19,13 +19,13 @@ const { offset } = useContainer()
         />
         <div class="flex w-full items-start justify-end gap-6 2xl:mt-4.5">
           <UIButton
-            label="Заказать звонок"
+            label="Скачать прайс-лист"
             color="primary"
             size="md-"
             mode="full"
           />
           <UIButton
-            label="Скачать прайс-лист"
+            label="Заказать звонок"
             color="secondary"
             size="md-"
             mode="full"
