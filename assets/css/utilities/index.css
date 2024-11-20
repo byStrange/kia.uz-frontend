@@ -77,11 +77,12 @@
     @apply after:bg-primary;
   }
 
-  .footer-hover:hover::after {
+  .footer-hover:hover::after,
+  .footer-hover.hover::after {
     @apply scale-x-100 origin-left;
   }
 
-  .footer-hover:not(:hover)::after {
+  .footer-hover:not(:hover):not(.hover)::after {
     @apply scale-x-0 origin-right transition-transform duration-300 ease-out;
   }
 }

@@ -25,12 +25,12 @@ const { headerService } = useHeaderService()
         class="space-y-4.5 py-4.5 md:flex md:justify-between md:space-y-0 2xl:py-10"
       >
         <div v-if="headerService.extendedMenu.children" class="2xl:w-1/2">
-          <div class="flex flex-col">
+          <div class="flex flex-col gap-1">
             <div
               v-for="item in headerService.extendedMenu.children"
               :key="item.label"
             >
-              <NuxtLink :to="item.to" class="shrink-0 py-[5px]">
+              <NuxtLink :to="item.to" class="shrink-0 py-[4.5px] footer-hover footer-hover-dark">
                 {{ item.label }}
               </NuxtLink>
             </div>
