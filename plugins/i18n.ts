@@ -6,12 +6,12 @@ export default defineNuxtPlugin(({ vueApp }) => {
     globalInjection: true,
     locale: 'en',
     messages: {
-      en: {
+      ru: {
         hello: 'Hello, {name}!',
       },
-      ru: {
+      uz: {
         hello: 'Привет, {name}!',
-      }
+      },
     },
   })
 

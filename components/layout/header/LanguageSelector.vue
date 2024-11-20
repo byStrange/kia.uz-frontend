@@ -30,7 +30,8 @@ onUnmounted(() => {
   <div class="language-selector relative text-primary">
     <button @click="toggleDropdown" class="flex items-center">
       <div class="flex items-center">
-        <span>{{ $i18n.locale.toUpperCase() }}</span>
+        <span v-if="false">{{ $i18n.locale.toUpperCase() }}</span>
+        <span>RU</span>
         <UITickToBottom
           class="transition-all"
           :class="{
