@@ -10,7 +10,7 @@ const { headerService } = useHeaderService()
     data-label="Model bar"
     class="fixed top-0 z-20 flex w-full justify-between bg-primary px-page-padding py-3.5 transition-all duration-300 2xl:container"
     :class="{
-      '!top-[65px]': headerService.isHeaderFixed,
+      '!top-[--header-height]': headerService.isHeaderFixed,
       '!z-10': headerService.isMenuOpen,
     }"
   >

@@ -1,6 +1,7 @@
 <script setup lang="tsx">
 import { UIInfoIcon, UITickToRight } from '#components'
 
+const { headerService } = useHeaderService()
 const availableOptions = ref([
   { label: 'Carens', value: 'car' },
   { label: 'Carnival', value: 'carnival' },
@@ -130,6 +131,11 @@ const ModelCard = ({ model }: { model: any }) => {
     </div>
   )
 }
+
+onMounted(() => {
+  headerService.value.lockHover = true
+  headerService.value.isHeaderFixed = true
+})
 </script>
 
 <template>
