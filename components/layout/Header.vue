@@ -28,11 +28,17 @@ const HeaderLink = ({ item }: { item: HeaderItem }) => {
   return (
     <>
       {item.children?.length ? (
-        <button class="text-sm+ text-primary footer-hover footer-hover-dark" onClick={() => openMenu(item)}>
+        <button
+          class="text-sm+ text-primary footer-hover footer-hover-dark"
+          onClick={() => openMenu(item)}
+        >
           {item.label}
         </button>
       ) : (
-        <NuxtLink to={item.to} class="text-sm+ text-primary footer-hover footer-hover-dark">
+        <NuxtLink
+          to={item.to}
+          class="text-sm+ text-primary footer-hover footer-hover-dark"
+        >
           {item.label}
         </NuxtLink>
       )}
@@ -160,7 +166,7 @@ watch(
               }"
             />
           </button>
-          <button class="hidden 2xl:block">
+          <button class="hidden 2xl:block" v-if="false">
             <UIUserIcon
               class="transition-colors"
               :class="{
