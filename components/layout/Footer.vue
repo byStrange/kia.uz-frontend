@@ -191,9 +191,9 @@ const MenuFooter = () => {
             <UIButton
               label="Обратная связь"
               mode="full"
-              class="border border-city-gray md:!w-full !py-2.5"
+              class="border border-city-gray md:!w-full"
               color="secondary"
-              size="md"
+              size="md-"
             />
           </div>
 

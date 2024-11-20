@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 <template>
   <div
     data-label="Hero top"
@@ -30,8 +29,13 @@
             </p>
           </div>
           <div class="gap-4 hidden 2xl:flex">
-            <UIButton label="Свяжитесь с нами" color="secondary" mode="full" />
-            <UIButton label="Скачать прайс-лист" mode="full" />
+            <UIButton
+              label="Свяжитесь с нами"
+              size="md-"
+              color="secondary"
+              mode="full"
+            />
+            <UIButton label="Скачать прайс-лист" size="md-" mode="full" />
           </div>
         </div>
       </div>
@@ -47,8 +51,13 @@
       <div
         class="space-y-2 md:grid md:grid-cols-2 md:gap-x-4 md:space-y-0 2xl:hidden"
       >
-        <UIButton label="Свяжитесь с нами" color="secondary" mode="full" />
-        <UIButton label="Скачать прайс-лист" mode="full" />
+        <UIButton
+          label="Свяжитесь с нами"
+          size="md-"
+          color="secondary"
+          mode="full"
+        />
+        <UIButton label="Скачать прайс-лист" size="md-" mode="full" />
       </div>
     </div>
     <div class="py-4 flex gap-9 md:py-5 2xl:gap-10">

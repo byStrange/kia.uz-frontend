@@ -9,8 +9,6 @@ import { NuxtLink, UIButton } from '#components'
 const modelsThumbSwiper = ref<Swiper | null>(null)
 const modelsSwiper = ref<Swiper | null>(null)
 
-const { bounding } = useContainer()
-
 const slidesLength = computed(() =>
   modelsThumbSwiper.value ? modelsThumbSwiper.value.slides.length : 0,
 )
@@ -87,9 +85,9 @@ const ModelCard = ({ model }: { model: Model }) => {
         {h(UIButton, {
           label: 'Подробнее о модели',
           color: 'secondary',
-          size: 'md',
+          size: 'md-',
           mode: 'full',
-          class: 'mx-auto mt-4 md:mt-8 !py-2.5',
+          class: 'mx-auto mt-4 md:mt-8',
         })}
       </NuxtLink>
     </div>
