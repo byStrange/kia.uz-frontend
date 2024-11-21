@@ -8,7 +8,7 @@ const { offset } = useContainer()
         data-label="Hero shadow bottom"
         aria-hidden="true"
         class="hero-slider-shade long absolute bottom-0 z-10 h-[428px] w-full md:h-[356px]"
-      ></div>
+      />
       <div
         data-label="Hero top"
         class="container absolute hidden h-[190px] w-full items-start justify-end gap-6 pt-7.5 md:block md:bg-[linear-gradient(180deg,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0)100%)] 2xl:bg-[linear-gradient(180deg,rgba(5,20,31,0.5)_24.47%,rgba(5,20,31,0)100%)] 2xl:pt-5"
@@ -36,16 +36,16 @@ const { offset } = useContainer()
         <source
           srcset="https://ucarecdn.com/141e96f9-a90b-41e2-947c-1b3f6b9712f6/"
           media="(min-width: 1024px)"
-        />
+        >
 
         <source
           srcset="https://ucarecdn.com/48b7e2b2-dcf3-40c1-912a-83bef358396c/"
           media="(min-width: 768px)"
-        />
+        >
         <img
           src="https://ucarecdn.com/7697fb74-fadd-4192-8a5e-5f0491567ff6/"
           class="w-full object-cover 2xl:h-full md:h-[73%]"
-        />
+        >
       </picture>
       <div
         data-label="Hero bottom"

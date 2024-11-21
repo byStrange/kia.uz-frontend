@@ -7,10 +7,10 @@ const { headerService } = useHeaderService()
     <div class="flex gap-2">
       <a
         v-for="item in headerService.socials"
+        :key="item.link"
         :href="item.link"
         target="_blank"
         class="text-white"
-        :key="item.link"
       >
         <component :is="item.icon" class="size-7.5 text-white" />
       </a>

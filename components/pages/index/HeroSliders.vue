@@ -51,17 +51,17 @@ const slidesLength = computed(() => {
         background:
           'linear-gradient(180deg, rgba(5, 20, 31, 0.5) 24.47%, rgba(5, 20, 31, 0) 100%)',
       }"
-    ></div>
+    />
 
     <ClientOnly>
       <Swiper
         ref="heroSwiper"
-        @swiper="onSwiper"
         :slides-per-view="1"
         class="dark-pagination h-screen"
         :modules="[Pagination]"
-        :freeMode="true"
+        :free-mode="true"
         :pagination="{ clickable: true }"
+        @swiper="onSwiper"
       >
         <template #container-start>
           <UIButtonCarousel
@@ -82,22 +82,22 @@ const slidesLength = computed(() => {
               data-label="Hero shadow bottom"
               aria-hidden="true"
               class="hero-slider-shade absolute bottom-0 z-10 h-[356px] w-full"
-            ></div>
+            />
             <picture class="h-full w-full">
               <source
                 srcset="@/assets/test/kia-test-hero-img.png"
                 media="(min-width: 1024px)"
-              />
+              >
 
               <source
                 srcset="@/assets/test/kia-test-hero-img-tablet.png"
                 media="(min-width: 768px)"
-              />
+              >
               <img
                 loading="lazy"
                 src="@/assets/test/kia-test-hero-img-mobile.png"
                 class="h-[75%] w-full object-cover md:h-[80%] 2xl:h-full"
-              />
+              >
             </picture>
             <div
               class="absolute container 2xl:px-0 left-0 bottom-[88px] z-40 flex w-full max-w-[540px] items-end justify-center md:bottom-[100px] md:justify-start md:pb-0 2xl:left-[--left]"

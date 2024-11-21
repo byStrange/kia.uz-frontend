@@ -10,11 +10,11 @@ const { bounding } = useContainer()
       <h3 class="text-base font-semibold">Двигатель</h3>
       <ul class="space-y-2.5 mt-4">
         <li
-          class="flex gap-2"
           v-for="item in [
             '1.5 GDI / 170 л.с., Бензин',
             '2.0 GDI / 240 л.с., Бензин',
           ]"
+          class="flex gap-2"
         >
           <PrimeCheckbox />
           <label class="text-base">{{ item }}</label>
@@ -25,7 +25,6 @@ const { bounding } = useContainer()
       <h3 class="text-base font-semibold">Комплектация</h3>
       <ul class="space-y-2.5 mt-4">
         <li
-          class="flex gap-2"
           v-for="item in [
             'Comfort',
             'Comfort+',
@@ -36,6 +35,7 @@ const { bounding } = useContainer()
             'Style',
             'Premium',
           ]"
+          class="flex gap-2"
         >
           <PrimeCheckbox />
           <label class="text-base">{{ item }}</label>
@@ -54,8 +54,6 @@ const { bounding } = useContainer()
           </template>
 
           <PrimeAccordionPanel
-            :value="tab"
-            unstyled
             v-for="tab in [
               'Пакет «Тёплые опции»',
               'Экстерьер',
@@ -66,6 +64,8 @@ const { bounding } = useContainer()
               'Современные системы помощи водителю',
             ]"
             :key="tab"
+            :value="tab"
+            unstyled
           >
             <PrimeAccordionHeader
               unstyled

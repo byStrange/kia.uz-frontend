@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { sections } = useStore()
 import { UISlideView, UITabsContainer } from '#components'
+const { sections } = useStore()
 
 function is(type: 'triple' | 'double', section: any) {
   return type === section.type
@@ -27,12 +27,12 @@ const processedSections = computed(() => {
 </script>
 <template>
   <UISection
-    :sectionTitle="section.title"
+    v-for="section in processedSections"
+    :key="section.title"
+    :section-title="section.title"
     :subtitle="section.subtitle"
     class="2xl:grid 2xl:grid-cols-12 2xl:container 2xl:gap-x-grid-12-gap"
-    :key="section.title"
     align="left"
-    v-for="section in processedSections"
     :class="{
       '2xl:rtl bg-background': section.direction === 'left',
     }"
@@ -85,9 +85,9 @@ const processedSections = computed(() => {
           <div v-if="section.meta.tabs">
             <ul class="space-y-3.5 text-base ml-3.5">
               <li
-                class="cursor-pointer"
                 v-for="(tab, _index) in section.meta.tabs"
                 :key="_index"
+                class="cursor-pointer"
                 :class="{
                   'font-semibold list-disc': section.meta.activeTabIndex
                     ? _index === section.meta.activeTabIndex
@@ -107,9 +107,9 @@ const processedSections = computed(() => {
           <div v-else-if="section.meta.slides">
             <ul class="space-y-3.5 text-base ml-3.5">
               <li
-                class="cursor-pointer"
                 v-for="(tab, _index) in section.meta.slides"
                 :key="_index"
+                class="cursor-pointer"
                 :class="{
                   'font-semibold list-disc': section.meta.activeSlideIndex
                     ? _index === section.meta.activeSlideIndex
@@ -146,26 +146,26 @@ const processedSections = computed(() => {
       <template v-if="is('triple', section)">
         <picture v-if="section.images">
           <source
+            v-if="section.images.lg"
             :srcset="section.images.lg?.src"
             media="(min-width: 1440px)"
-            v-if="section.images.lg"
-          />
+          >
           <source
+            v-if="section.images.md"
             :srcset="section.images.md?.src"
             media="(min-width: 768px)"
-            v-if="section.images.md"
-          />
+          >
           <img
             :src="section.images.default?.src"
             loading="lazy"
             class="w-full"
-          />
+          >
         </picture>
       </template>
       <template v-else-if="is('double', section)">
         <UISlideView
-          ref="slidesRef"
           v-if="section.meta.slides"
+          ref="slidesRef"
           :data="section.meta.slides"
           class="2xl:pointer-events-none 2xl:max-w-[620px]"
           paginator-class="2xl:hidden"
@@ -179,7 +179,7 @@ const processedSections = computed(() => {
               class="max-h-[620px] md:w-[656px] md:h-[645px] object-cover w-full"
               :src="item.image"
               loading="lazy"
-            />
+            >
           </template>
         </UISlideView>
         <div v-else-if="section.meta.tabs">
@@ -197,8 +197,8 @@ const processedSections = computed(() => {
                 class="grid grid-cols-3 md:gap-2.5 2xl:flex 2xl:flex-col 2xl:divide-y divide-protection 2xl:gap-0"
               >
                 <div
-                  class="space-y-2 2xl:flex justify-between items-center"
                   v-for="(item, index) in tab.items"
+                  class="space-y-2 2xl:flex justify-between items-center"
                   :class="index === 0 ? '2xl:pb-10' : '2xl:py-10'"
                 >
                   <p class="text-primary text-lg font-semibold">
@@ -218,8 +218,8 @@ const processedSections = computed(() => {
                 class="grid grid-cols-3 md:gap-2.5 2xl:flex 2xl:flex-col 2xl:divide-y divide-protection 2xl:gap-0"
               >
                 <div
-                  class="space-y-2 2xl:flex justify-between items-center"
                   v-for="(item, index) in tab.items"
+                  class="space-y-2 2xl:flex justify-between items-center"
                   :class="index === 0 ? '2xl:pb-10' : '2xl:py-10'"
                 >
                   <p class="text-primary text-lg font-semibold">

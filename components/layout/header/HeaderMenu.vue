@@ -10,18 +10,18 @@ const { height } = useDynamicHeight(['#header'])
 <template>
   <transition name="slide-fade" mode="out-in">
     <div
-      @click.self="closeExtendedMenu"
-      :style="{ height: `${height}px` }"
-      class="fixed top-[--header-height] z-20 w-full overflow-auto bg-black bg-opacity-20"
       v-if="headerService.isMenuOpen"
       :key="headerService.extendedMenu?.label"
+      :style="{ height: `${height}px` }"
+      class="fixed top-[--header-height] z-20 w-full overflow-auto bg-black bg-opacity-20"
+      @click.self="closeExtendedMenu"
     >
       <div class="bg-white 2xl:flex 2xl:bg-transparent">
         <div class="divide-y divide-protection divide-opacity-60 2xl:hidden">
           <UIMenuItem
+            v-for="item in headerService.routes"
             :key="item.label"
             :item="item"
-            v-for="item in headerService.routes"
           />
         </div>
 

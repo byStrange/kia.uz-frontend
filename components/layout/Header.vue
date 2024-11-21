@@ -47,10 +47,10 @@ watch(
 <template>
   <Transition name="slide-fade_bottom">
     <header
-      :data-isHover="headerService.isHover"
-      :key="headerService.isHeaderFixed + ''"
-      class="bg-semantic-header-bg absolute top-0 z-40 w-full border-b border-b-white border-opacity-20 transition-all duration-300"
       id="header"
+      :key="headerService.isHeaderFixed + ''"
+      :data-isHover="headerService.isHover"
+      class="bg-semantic-header-bg absolute top-0 z-40 w-full border-b border-b-white border-opacity-20 transition-all duration-300"
       :class="{
         hover:
           headerService.isHover ||
@@ -110,7 +110,7 @@ watch(
               src="@/assets/logo/main-logo.svg"
               alt="Logo"
               class="h-3 w-[50px] 2xl:w-[79px] 2xl:h-4.5"
-            />
+            >
 
             <!-- Dark Logo -->
             <img
@@ -118,7 +118,7 @@ watch(
               src="@/assets/logo/main-logo-invert.svg"
               alt="Logo"
               class="h-3 w-[50px] 2xl:w-[79px] 2xl:h-4.5"
-            />
+            >
           </NuxtLink>
         </div>
 
@@ -146,7 +146,7 @@ watch(
               }"
             />
           </button>
-          <button class="hidden 2xl:block" v-if="false">
+          <button v-if="false" class="hidden 2xl:block">
             <UIUserIcon
               class="transition-colors"
               :class="{

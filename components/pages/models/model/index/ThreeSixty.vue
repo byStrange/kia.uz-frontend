@@ -24,12 +24,12 @@ const availableColors = ref([
           https://ucarecdn.com/9a342c87-7ca1-43d4-abb0-1b505840f0c6/-/preview/768x432/
         "
         media="(min-width: 1440px)"
-      />
+      >
       <img
         loading="lazy"
         src="https://ucarecdn.com/40aceb5c-0188-4362-bacd-86dd776ce86b/-/preview/1000x501/"
         class="w-full my-4 2xl:mt-8 md:mt-6 2xl:mb-0 2xl:w-auto 2xl:mx-auto"
-      />
+      >
     </picture>
     <div class="md:mt-6 2xl:mt-12 relative">
       <div
@@ -37,7 +37,7 @@ const availableColors = ref([
       >
         <UIIcon360 />
         <p class="text-xs+ text-disabled md:text-center">
-          Изображение может не соответствовать выбранной комплектации. <br />
+          Изображение может не соответствовать выбранной комплектации. <br >
           Цвет автомобиля может отличаться от представленного на данном сайте.
         </p>
       </div>
@@ -46,10 +46,10 @@ const availableColors = ref([
           <div class="flex gap-5 text-base+">
             <div class="flex items-center gap-2.5">
               <PrimeRadioButton
-                value="exterior"
-                inputId="exterior"
-                name="type"
                 v-model="modelType"
+                value="exterior"
+                input-id="exterior"
+                name="type"
                 :pt="{
                   icon: 'hidden',
                   box: (state) => {
@@ -61,10 +61,10 @@ const availableColors = ref([
             </div>
             <div class="flex items-center gap-2.5">
               <PrimeRadioButton
-                value="interior"
-                inputId="interior"
-                name="type"
                 v-model="modelType"
+                value="interior"
+                input-id="interior"
+                name="type"
                 :pt="{
                   icon: 'hidden',
                   box: (state) => {
@@ -82,10 +82,10 @@ const availableColors = ref([
             </div>
             <div class="mt-4 flex gap-2.5">
               <div
-                @click="selectedColor = color"
+                v-for="color in availableColors"
                 class="color flex size-[35px] items-center justify-center rounded-full border border-disabled"
                 :style="{ backgroundColor: color }"
-                v-for="color in availableColors"
+                @click="selectedColor = color"
               >
                 <UICheckIcon
                   v-if="color === selectedColor"

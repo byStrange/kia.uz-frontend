@@ -27,11 +27,11 @@ const { headerService } = useHeaderService()
         </UIButton>
       </div>
 
-      <div aria-hidden="true" class="my-8 border-b border-b-description"></div>
+      <div aria-hidden="true" class="my-8 border-b border-b-description"/>
 
       <div aria-label="Footer menu">
         <div class="logo">
-          <img src="@/assets/logo/main-logo.svg" alt="Logo" aria-label="Logo" />
+          <img src="@/assets/logo/main-logo.svg" alt="Logo" aria-label="Logo" >
         </div>
 
         <div
@@ -44,18 +44,18 @@ const { headerService } = useHeaderService()
             >
               <div class="hidden flex-col md:flex md:gap-5">
                 <NuxtLink
-                  id="imi"
-                  to="/"
-                  class="font-semibold text-white"
                   v-for="item in footerLinks.value.filter(
                     (i) => !i.children?.length,
                   )"
+                  id="imi"
+                  to="/"
+                  class="font-semibold text-white"
                 >
                   {{ item.label }}
                 </NuxtLink>
               </div>
 
-              <UIFooterMenuItem :item="item" v-for="item in footerLinks.value" />
+              <UIFooterMenuItem v-for="item in footerLinks.value" :item="item" />
             </div>
           </div>
 

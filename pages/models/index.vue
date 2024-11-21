@@ -129,8 +129,8 @@ onMounted(() => {
           Все модели Kia
         </h1>
         <UIDropdownInput
-          v-model:selectedOption="selectedOption"
-          v-model:availableOptions="availableOptions"
+          v-model:selected-option="selectedOption"
+          v-model:available-options="availableOptions"
           class="mt-4 md:mt-7.5 md:max-w-sm"
         />
       </div>
@@ -143,11 +143,11 @@ onMounted(() => {
             </h1>
             <div class="mt-4 flex-wrap md:mt-8 md:flex md:gap-9 2xl:mt-10">
               <div
-                class="max-w-md md:min-w-[310px] md:max-w-[310px]"
                 v-for="model in modelGroup.models"
                 :key="model.name"
+                class="max-w-md md:min-w-[310px] md:max-w-[310px]"
               >
-                <img :src="model.image" class="w-full object-cover" />
+                <img :src="model.image" class="w-full object-cover" >
                 <div class="mt-4">
                   <h2 class="text-lg font-semibold text-primary">
                     {{ model.name }}

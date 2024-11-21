@@ -6,11 +6,11 @@
     <div class="flex items-center justify-between" @click.self="openMenu(item)">
       {{ item.label }}
       <UITickToBottom
-        @click="openMenu(item)"
         :class="[
           'text-white transition-transform md:hidden',
           { 'rotate-180': openedItem === item },
         ]"
+        @click="openMenu(item)"
       />
     </div>
     <div
@@ -56,7 +56,7 @@ const openMenu = (item: FooterItem) => {
 
 const openedItem = ref<FooterItem | null>(null)
 
-let footerMenuItemCommonClasses =
+const footerMenuItemCommonClasses =
   'menu-item md:py-0 py-5 text-sm+ font-semibold text-white block w-full text-start'
 
 defineProps<{ item: FooterItem }>()

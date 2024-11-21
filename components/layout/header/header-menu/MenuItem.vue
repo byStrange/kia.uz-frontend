@@ -2,7 +2,7 @@
 const { headerService } = useHeaderService()
 defineProps<{ item: HeaderItem }>()
 
-let commonClasses =
+const commonClasses =
   'menu-item py-4.5 text-lg font-semibold text-primary block w-full text-start'
 </script>
 

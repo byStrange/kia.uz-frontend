@@ -37,7 +37,7 @@ onUnmounted(() => {
 
 <template>
   <div class="language-selector relative text-primary">
-    <button @click="toggleDropdown" class="flex items-center">
+    <button class="flex items-center" @click="toggleDropdown">
       <div class="flex items-center">
         <span>{{ $i18n.locale.toUpperCase() }}</span>
         <UITickToBottom
@@ -67,8 +67,8 @@ onUnmounted(() => {
           <li
             v-for="ln in $i18n.availableLocales"
             :key="ln"
-            @click="selectLocale(ln)"
             class="cursor-pointer px-6 py-4 text-base hover:bg-gray-100"
+            @click="selectLocale(ln)"
           >
             {{ ln.toUpperCase() }}
           </li>

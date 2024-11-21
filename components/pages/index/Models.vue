@@ -31,17 +31,17 @@ onMounted(() => {
 })
 </script>
 <template>
-  <UISection sectionTitle="Модели Kia" class="bg-background">
+  <UISection section-title="Модели Kia" class="bg-background">
     <div class="2xl:container">
       <ClientOnly>
         <Swiper
           :modules="[Controller]"
           :controller="{ control: modelsSwiper }"
-          @swiper="modelsThumbSwiper = $event"
-          @slideChange="(e) => (activeModelIndex = e.activeIndex)"
           slides-per-view="auto"
           :centered-slides="true"
           :space-between="8"
+          @swiper="modelsThumbSwiper = $event"
+          @slide-change="(e) => (activeModelIndex = e.activeIndex)"
         >
           <template #container-start>
             <UIButtonCarousel
@@ -64,14 +64,14 @@ onMounted(() => {
                   'linear-gradient(-90deg, rgba(248, 248, 248, 0) 0%, #F8F8F8 100%)',
               }"
               class="absolute left-0 z-10 h-full w-[94px]"
-            ></div>
+            />
             <div
               :style="{
                 background:
                   'linear-gradient(90deg, rgba(248, 248, 248, 0) 0%, #F8F8F8 100%)',
               }"
               class="absolute right-0 z-10 h-full w-[94px]"
-            ></div>
+            />
           </template>
           <SwiperSlide v-for="model in models" class="!w-fit">
             <div
@@ -91,7 +91,7 @@ onMounted(() => {
                 loading="lazy"
                 :src="model.images.small"
                 class="h-[40px] w-[84px] md:h-[52px] md:w-[108px]"
-              />
+              >
               <p
                 class="mt-1 text-center text-xs text-primary md:mt-3 md:text-base"
               >
@@ -106,11 +106,11 @@ onMounted(() => {
           <Swiper
             :modules="[Controller]"
             :controller="{ control: modelsThumbSwiper }"
-            @swiper="modelsSwiper = $event"
             :slides-per-view="1"
             :centered-slides="true"
             :space-between="16"
             :slides-offset-after="parseInt(pagePadding + '')"
+            @swiper="modelsSwiper = $event"
           >
             <template #container-start>
               <UIButtonCarousel
@@ -134,7 +134,7 @@ onMounted(() => {
                     loading="lazy"
                     :src="model.images.medium"
                     class="w-full md:mx-auto md:max-w-[500px] 2xl:max-w-[742px]"
-                  />
+                  >
                 </div>
                 <div class="text-center">
                   <h2

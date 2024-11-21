@@ -24,14 +24,14 @@ watch(bounding.x, () => {
 const specialsSwiperBreakpoints = ref({})
 </script>
 <template>
-  <UISection :sectionTitle="'Special Offers'">
+  <UISection :section-title="'Special Offers'">
     <template #title="{ sectionTitle, sectionTitleClass }">
       <h1 class="container" :class="sectionTitleClass">
         {{ sectionTitle }}
       </h1>
     </template>
 
-    <UITabsContainer :tabs="['Покупка', 'Сервис']" :isContentFull="true">
+    <UITabsContainer :tabs="['Покупка', 'Сервис']" :is-content-full="true">
       <template #1>
         <UISlideView :data="specials">
           <template #slide="{ item, bounding }">
@@ -44,7 +44,7 @@ const specialsSwiperBreakpoints = ref({})
                   :src="item.thumbnail"
                   class="h-[222px] w-full"
                   loading="lazy"
-                />
+                >
 
                 <div class="p-4">
                   <div class="text-left">
@@ -74,7 +74,7 @@ const specialsSwiperBreakpoints = ref({})
                   :src="item.thumbnail"
                   class="h-[222px] w-full"
                   loading="lazy"
-                />
+                >
 
                 <div class="p-4">
                   <div class="text-left">

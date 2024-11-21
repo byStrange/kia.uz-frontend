@@ -26,8 +26,8 @@ withDefaults(
   <Select
     v-model="selectedOption"
     :options="availableOptions"
-    :optionLabel="optionLabel"
-    :optionValue="optionValue"
+    :option-label="optionLabel"
+    :option-value="optionValue"
     placeholder="Выберите модель"
     class="w-full"
     unstyled

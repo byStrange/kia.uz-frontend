@@ -47,18 +47,18 @@ onMounted(() => {
             srcset="
               https://ucarecdn.com/47fd9450-1106-44ba-b977-dfe1795a0f05/-/preview/1000x720/
             "
-          />
+          >
           <source
             srcset="
               https://ucarecdn.com/32d3bffb-f001-4406-a6c0-517ca367af7f/-/preview/827x999/
             "
             media="(min-width: 768px)"
-          />
+          >
           <img
             loading="lazy"
             src="https://ucarecdn.com/9ae43504-1cfc-4d2b-9137-b40a5473ffce/-/preview/1000x597/"
             class="img h-[187px] w-full max-w-[640px] bg-gray-200 md:absolute md:right-0 md:h-full md:w-1/2"
-          />
+          >
         </picture>
         <div class="px-4 py-8 md:w-1/2 md:px-6 2xl:px-12 2xl:py-14">
           <h2 class="text-lg font-semibold text-white md:text-2xl 2xl:text-5xl">
@@ -89,10 +89,10 @@ onMounted(() => {
         :style="{ '--padding': `0 ${bounding.x.value}px` }"
       >
         <div
-          class="relative mx-auto flex h-[208px] max-w-[310px] snap-center justify-center md:mx-0 md:w-[310px] md:max-w-none md:shrink-0 2xl:h-[265px] 2xl:w-[400px] 2xl:snap-none"
           v-for="slide in extraLinksCard"
+          class="relative mx-auto flex h-[208px] max-w-[310px] snap-center justify-center md:mx-0 md:w-[310px] md:max-w-none md:shrink-0 2xl:h-[265px] 2xl:w-[400px] 2xl:snap-none"
         >
-          <img :src="slide.image" class="h-full" loading="lazy" />
+          <img :src="slide.image" class="h-full" loading="lazy" >
           <div class="absolute bottom-0 z-10 w-full p-4 md:px-7.5 md:py-5">
             <p class="text-base font-semibold text-white md:text-2xl">
               {{ slide.title }}

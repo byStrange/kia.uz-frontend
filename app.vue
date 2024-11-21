@@ -3,7 +3,7 @@
     v-if="isLoading"
     class="w-screen h-screen fixed flex-center z-50 bg-white bg-opacity-70 backdrop-blur-xl"
   >
-    <div class="loader"></div>
+    <div class="loader"/>
   </div>
   <NuxtLayout>
     <NuxtPage />

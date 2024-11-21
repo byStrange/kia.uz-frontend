@@ -5,7 +5,7 @@ defineProps<{
 </script>
 <template>
   <div class="burger-wrapper" :class="{ show: !hidden }">
-    <div class="hamburger"></div>
+    <div class="hamburger"/>
   </div>
 </template>
 

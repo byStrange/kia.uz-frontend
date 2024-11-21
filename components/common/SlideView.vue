@@ -84,6 +84,7 @@ defineExpose({
   <div>
     <ClientOnly>
       <Swiper
+        :key="bounding.x.value"
         :style="{
           '--swiper-pagination-bullet-horizontal-gap': 0, //  to disable default swiper bullet gap
           '--swiper-pagination-gap': paginationGap,
@@ -96,9 +97,8 @@ defineExpose({
         :slides-offset-after="slidesOffsetAfter"
         :space-between="spaceBetween"
         class="light-pagination"
-        @swiper="swiper = $event"
-        :key="bounding.x.value"
         v-bind="$attrs"
+        @swiper="swiper = $event"
       >
         <template #container-start>
           <template v-if="navigiationMode == 'normal'">
@@ -106,18 +106,18 @@ defineExpose({
               v-if="navigation"
               position="left"
               :hide="swiperActiveIndex === 0"
-              @click="swiper?.slidePrev()"
               :mode="navigiationMode"
               :size="navigationType"
+              @click="swiper?.slidePrev()"
             />
 
             <UIButtonCarousel
               v-if="navigation"
               position="right"
               :hide="swiperActiveIndex === swiperLength - 1"
-              @click="swiper?.slideNext()"
               :size="navigationType"
               :mode="navigiationMode"
+              @click="swiper?.slideNext()"
             />
           </template>
           <template v-else-if="navigiationMode == 'oneside-left'">
@@ -125,31 +125,31 @@ defineExpose({
               class="absolute right-15 z-40 h-full flex flex-col justify-center items-center gap-2"
             >
               <UIButtonCarousel
-                position="right"
                 v-if="navigation"
+                position="right"
                 :hide="swiperActiveIndex === swiperLength - 2"
-                @click="swiper?.slideNext()"
                 :size="navigationType"
                 :mode="navigiationMode"
+                @click="swiper?.slideNext()"
               />
               <UIButtonCarousel
-                position="left"
                 v-if="navigation"
+                position="left"
                 :hide="swiperActiveIndex === 0"
-                @click="swiper?.slidePrev()"
                 :mode="navigiationMode"
                 :size="navigationType"
+                @click="swiper?.slidePrev()"
               />
             </div>
           </template>
           <slot name="navigation" />
         </template>
         <SwiperSlide
-          class="md:!w-fit"
           v-for="item in data"
+          class="md:!w-fit"
           :class="swiperSlideClass"
         >
-          <slot name="slide" :item :bounding> </slot>
+          <slot name="slide" :item :bounding/>
         </SwiperSlide>
       </Swiper>
     </ClientOnly>

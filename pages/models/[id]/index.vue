@@ -70,7 +70,7 @@ const { courses } = useStore()
   <div>
     <SectionModelHero />
 
-    <UISection sectionTitle="Специальные предложения">
+    <UISection section-title="Специальные предложения">
       <UISlideView
         :data="courses"
         :space-between="16"
@@ -88,7 +88,7 @@ const { courses } = useStore()
                   loading="lazy"
                   :src="item.thumbnail"
                   class="h-full w-full object-cover"
-                />
+                >
                 <UIPlayIcon2 class="absolute" />
               </div>
 
@@ -106,7 +106,7 @@ const { courses } = useStore()
     <SectionThreeSixty />
 
     <UISection
-      sectionTitle="Варианты Carnival"
+      section-title="Варианты Carnival"
       subtitle="Комплектации"
       class="bg-background"
     >
@@ -182,7 +182,7 @@ const { courses } = useStore()
 
     <SectionBriefSection />
 
-    <UISection sectionTitle="Видео-обзоры">
+    <UISection section-title="Видео-обзоры">
       <template #title="{ sectionTitle, sectionTitleClass }">
         <h2 :class="[sectionTitleClass, 'mb-6']">{{ sectionTitle }}</h2>
       </template>
@@ -204,7 +204,7 @@ const { courses } = useStore()
                   loading="lazy"
                   :src="item.thumbnail"
                   class="h-full w-full object-cover"
-                />
+                >
                 <UIPlayIcon2 class="absolute" />
               </div>
 
@@ -221,7 +221,7 @@ const { courses } = useStore()
 
     <UISection
       align="left"
-      sectionTitle="Гарантия и сервис"
+      section-title="Гарантия и сервис"
       subtitle="Обслуживание"
       class="flex flex-col-reverse gap-10 2xl:grid-cols-12 2xl:grid 2xl:gap-grid-12-gap container rtl"
     >
@@ -244,12 +244,12 @@ const { courses } = useStore()
         <img
           src="@/assets/fiveyear-guarantee.svg"
           class="w-full md:w-4h mx-auto 2xl:w-full"
-        />
+        >
       </div>
     </UISection>
 
     <UISection
-      sectionTitle="Узнайте больше о Carnival"
+      section-title="Узнайте больше о Carnival"
       subtitle="Консультация"
       class="container bg-no-repeat bg-[length:100%_294px] md:bg-[length:100%_405px] 2xl:bg-[length:100%_500px] 2xl:pt-1h"
       :style="{
@@ -290,17 +290,17 @@ const { courses } = useStore()
               srcset="
                 https://ucarecdn.com/8a65cac6-38ee-423e-b2ff-a0956b9e931a/-/preview/1090x432/
               "
-            />
+            >
             <source
               srcset="
                 https://ucarecdn.com/883cdd7b-0dd4-497f-b7b2-851a82681f6f/-/preview/543x247/
               "
               media="(min-width: 768px)"
-            />
+            >
             <img
               class="w-full my-4 md:my-6 2xl:mb-1.5 2xl:mt-5"
               src="https://ucarecdn.com/bb0d5bc2-3996-48bd-8e7e-249b03311384/-/preview/313x143/"
-            />
+            >
           </picture>
           <div class="2xl:grid 2xl:grid-cols-12 2xl:gap-grid-12-gap">
             <p class="text-xs text-caption 2xl:col-start-3 col-span-9">
