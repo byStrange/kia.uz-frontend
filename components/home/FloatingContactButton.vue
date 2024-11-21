@@ -4,8 +4,8 @@ const show = ref(true)
 <template>
   <Transition name="slide-down">
     <div
-      class="fixed bottom-5 size-[53px] md:size-[70px] right-[22px] z-30 flex items-end md:bottom-24 md:right-14 2xl:right-20"
       v-if="show"
+      class="fixed bottom-5 size-[53px] md:size-[70px] right-[22px] z-30 flex items-end md:bottom-24 md:right-14 2xl:right-20"
     >
       <button
         class="absolute rounded-full bg-white right-0 top-0 p-1.25 md:p-1.5"

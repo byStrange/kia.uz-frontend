@@ -23,6 +23,13 @@ export default defineNuxtConfig({
     },
   ],
 
+  i18n: {
+    strategy: 'prefix_and_default',
+    locales: ['ru', 'uz'],
+    defaultLocale: 'uz',
+    vueI18n: '~/i18n.config.ts',
+  },
+
   modules: [
     '@nuxt/devtools',
     '@nuxtjs/tailwindcss',
@@ -32,6 +39,7 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     '@primevue/nuxt-module',
     'nuxt-swiper',
+    '@nuxtjs/i18n',
   ],
 
   primevue: {
@@ -57,3 +65,4 @@ export default defineNuxtConfig({
     },
   },
 })
+

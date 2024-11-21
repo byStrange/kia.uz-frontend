@@ -71,7 +71,7 @@ defineExpose({
                   'scale-x-100': index === activeTab,
                 }"
                 class="absolute -bottom-[1px] left-0 h-0.5 w-full scale-x-0 bg-primary transition-transform duration-300"
-              ></span>
+              />
             </button>
           </slot>
         </template>
@@ -86,14 +86,14 @@ defineExpose({
       <div>
         <Transition name="slide-fade" mode="out-in">
           <slot
-            :name="activeTab + 1"
             :key="activeTab"
+            :name="activeTab + 1"
             v-bind="{ activeTab, changeTab, tab: tabs[activeTab] }"
-          ></slot>
+          />
         </Transition>
       </div>
     </div>
 
-    <slot name="default"></slot>
+    <slot name="default"/>
   </div>
 </template>

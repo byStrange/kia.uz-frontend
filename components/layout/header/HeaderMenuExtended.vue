@@ -4,8 +4,8 @@ const { headerService } = useHeaderService()
 <template>
   <div
     v-if="headerService.extendedMenu"
-    class="z-30 w-full border 2xl:bg-white"
     :key="headerService.extendedMenu.label"
+    class="z-30 w-full border 2xl:bg-white"
   >
     <div class="container">
       <div
@@ -33,19 +33,19 @@ const { headerService } = useHeaderService()
               v-for="item in headerService.extendedMenu.children"
               :key="item.label"
             >
-              <NuxtLink
+              <NuxtLinkLocale
                 :to="item.to"
                 class="shrink-0 py-[4.5px] link-hover link-hover-dark"
               >
                 {{ item.label }}
-              </NuxtLink>
+              </NuxtLinkLocale>
             </div>
           </div>
         </div>
 
         <div
-          class="2xl:flex 2xl:w-1/2 2xl:gap-10"
           v-if="headerService.extendedMenu.meta?.sideImage"
+          class="2xl:flex 2xl:w-1/2 2xl:gap-10"
         >
           <div
             :style="{
@@ -59,14 +59,14 @@ const { headerService } = useHeaderService()
                 background:
                   'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.75) 100%)',
               }"
-            ></div>
+            />
             <p class="relative z-10 text-white">
               {{ headerService.extendedMenu.meta?.sideText }}
             </p>
           </div>
           <slot
             name="menuFooter"
-            rootClass="hidden 2xl:block !border-none !py-0"
+            root-class="hidden 2xl:block !border-none !py-0"
           />
         </div>
       </div>

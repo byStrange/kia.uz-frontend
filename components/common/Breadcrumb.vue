@@ -8,7 +8,7 @@
             class="flex items-center"
             :data-test="JSON.stringify(crumb)"
           >
-            <router-link
+            <NuxtLinkLocale
               :to="{
                 name: crumb.name ? crumb.name : '/',
                 params: route.params,
@@ -18,14 +18,14 @@
                 { '!text-caption': theme === 'dark' },
               ]"
             >
-              {{ crumb.name }}
-            </router-link>
+              {{ crumb.title }}
+            </NuxtLinkLocale>
             <UIBreadCrumbsTickToRight
               :class="theme === 'light' ? 'text-white' : 'text-primary'"
             />
           </div>
           <div v-else :class="styles({ theme })" class="font-semibold">
-            {{ crumb.name }}
+            {{ crumb.title }}
           </div>
         </slot>
       </li>

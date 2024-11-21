@@ -3,14 +3,14 @@ const { bounding } = useContainer()
 const { courses } = useStore()
 </script>
 <template>
-  <UISection sectionTitle="Будьте в курсе">
+  <UISection section-title="Будьте в курсе">
     <template #title="{ sectionTitle, sectionTitleClass }">
       <h1 class="container" :class="sectionTitleClass">
         {{ sectionTitle }}
       </h1>
     </template>
 
-    <UITabsContainer :tabs="['Видео-обзоры', 'Новости']" :isContentFull="true">
+    <UITabsContainer :tabs="['Видео-обзоры', 'Новости']" :is-content-full="true">
       <template #1>
         <UISlideView :data="courses">
           <template #slide="{ item, bounding }">
@@ -26,7 +26,7 @@ const { courses } = useStore()
                     :src="item.thumbnail"
                     loading="lazy"
                     class="h-full w-full object-cover"
-                  />
+                  >
                   <UIPlayIcon2 class="absolute" />
                 </div>
 
@@ -56,7 +56,7 @@ const { courses } = useStore()
                     :src="item.thumbnail"
                     loading="lazy"
                     class="h-full w-full object-cover"
-                  />
+                  >
                   <UIPlayIcon2 class="absolute" />
                 </div>
 

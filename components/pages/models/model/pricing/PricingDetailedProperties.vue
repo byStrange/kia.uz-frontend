@@ -8,10 +8,10 @@ const optionsSwiperActiveIndex = computed(() => {
 
 const { bounding } = useContainer()
 
-const SliderShade = (props: { d: 'left' | 'right' }) => {
-  return (
-    <div
-      class={[
+const SliderShade = defineComponent({
+  template: `
+     <div
+      :class="[
         'absolute z-10 bg-[linear-gradient(90deg,rgba(248,248,248,_0)0%,#F8F8F8_100%)] top-0  w-[86px] md:w-[136px] h-full md:bg-[linear-gradient(90deg,rgba(248,248,248,0)0%,#F8F8F8_97.09%)] 2xl:bg-[linear-gradient(90deg,rgba(255,255,255,0)0%,#FFFFFF_51.04%,#FFFFFF_100%)]',
 
         {
@@ -19,10 +19,11 @@ const SliderShade = (props: { d: 'left' | 'right' }) => {
           'flip-x': props.d === 'left',
           'right-0': props.d === 'right',
         },
-      ]}
-    ></div>
-  )
-}
+      ]"
+    ></div> 
+  `,
+  props: { d: String },
+})
 
 const accordionTabs = ref([
   'Стандартное оборудование',
@@ -42,18 +43,18 @@ const accordionTabs = ref([
     <div class="bg-background flex w-full relative 2xl:bg-white">
       <UISlideView
         ref="optionsSwiper"
-        navigationType="sm"
+        navigation-type="sm"
         :paginator="false"
         :data="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]"
         class="w-full"
-        swiperSlideClass="!w-fit"
-        :slidesOffsetBefore="15"
-        :slidesOffsetAfter="15"
+        swiper-slide-class="!w-fit"
+        :slides-offset-before="15"
+        :slides-offset-after="15"
         :breakpoints="{
           768: { slidesOffsetBefore: 37, slidesOffsetAfter: 37 },
           1440: { slidesOFfsetBefore: 20, slidesOffsetAfter: 20 },
         }"
-        navigiationMode="oneside-left"
+        navigiation-mode="oneside-left"
       >
         <template #slide>
           <div
@@ -78,7 +79,7 @@ const accordionTabs = ref([
         </template>
 
         <template #navigation>
-          <SliderShade d="left" v-if="optionsSwiperActiveIndex > 0" />
+          <SliderShade v-if="optionsSwiperActiveIndex > 0" d="left" />
           <SliderShade d="right" />
         </template>
       </UISlideView>
