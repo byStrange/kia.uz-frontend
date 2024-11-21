@@ -16,11 +16,11 @@ const { headerService } = useHeaderService()
   >
     {{ item.label }}
   </button>
-  <NuxtLink
+  <NuxtLinkLocale
     v-else
     :to="item.to"
     class="py-7.5 text-sm+ text-primary link-hover link-hover-dark"
   >
     {{ item.label }}
-  </NuxtLink>
+  </NuxtLinkLocale>
 </template>

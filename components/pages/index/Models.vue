@@ -91,7 +91,7 @@ onMounted(() => {
                 loading="lazy"
                 :src="model.images.small"
                 class="h-[40px] w-[84px] md:h-[52px] md:w-[108px]"
-              >
+              />
               <p
                 class="mt-1 text-center text-xs text-primary md:mt-3 md:text-base"
               >
@@ -134,7 +134,7 @@ onMounted(() => {
                     loading="lazy"
                     :src="model.images.medium"
                     class="w-full md:mx-auto md:max-w-[500px] 2xl:max-w-[742px]"
-                  >
+                  />
                 </div>
                 <div class="text-center">
                   <h2
@@ -154,7 +154,7 @@ onMounted(() => {
                     </p>
                   </div>
                 </div>
-                <NuxtLink :to="{ path: '/models/1' }">
+                <NuxtLinkLocale to="/models/sonata">
                   <UIButton
                     label="Подробнее о модели"
                     color="secondary"
@@ -162,7 +162,7 @@ onMounted(() => {
                     mode="full"
                     class="mx-auto mt-4 md:mt-8"
                   />
-                </NuxtLink>
+                </NuxtLinkLocale>
               </div>
             </SwiperSlide>
           </Swiper>

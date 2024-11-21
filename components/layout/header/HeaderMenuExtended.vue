@@ -33,12 +33,12 @@ const { headerService } = useHeaderService()
               v-for="item in headerService.extendedMenu.children"
               :key="item.label"
             >
-              <NuxtLink
+              <NuxtLinkLocale
                 :to="item.to"
                 class="shrink-0 py-[4.5px] link-hover link-hover-dark"
               >
                 {{ item.label }}
-              </NuxtLink>
+              </NuxtLinkLocale>
             </div>
           </div>
         </div>

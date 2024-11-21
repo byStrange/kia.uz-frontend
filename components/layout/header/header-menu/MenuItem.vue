@@ -17,7 +17,7 @@ const commonClasses =
       <UITickToRight />
     </div>
   </button>
-  <NuxtLink v-else :class="commonClasses" :to="item.to">
+  <NuxtLinkLocale v-else :class="commonClasses" :to="item.to">
     <span class="container block">{item.label}</span>
-  </NuxtLink>
+  </NuxtLinkLocale>
 </template>

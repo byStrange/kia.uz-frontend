@@ -43,8 +43,10 @@ const { headerService } = useHeaderService()
               <a href="#" class="text-base text-white">Обзор</a>
             </li>
             <li>
-              <NuxtLink to="/models/1/pricing" class="text-base text-white"
-                >Комплектации и цены</NuxtLink
+              <NuxtLinkLocale
+                to="/models/sonata/pricing"
+                class="text-base text-white"
+                >Комплектации и цены</NuxtLinkLocale
               >
             </li>
             <li>

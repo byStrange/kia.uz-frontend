@@ -1,6 +1,4 @@
 <script setup lang="tsx">
-import { NuxtLink, UIButton, UITickToBottom } from '#components'
-
 const { footerLinks } = useFooterService()
 const { headerService } = useHeaderService()
 </script>
@@ -27,11 +25,11 @@ const { headerService } = useHeaderService()
         </UIButton>
       </div>
 
-      <div aria-hidden="true" class="my-8 border-b border-b-description"/>
+      <div aria-hidden="true" class="my-8 border-b border-b-description" />
 
       <div aria-label="Footer menu">
         <div class="logo">
-          <img src="@/assets/logo/main-logo.svg" alt="Logo" aria-label="Logo" >
+          <img src="@/assets/logo/main-logo.svg" alt="Logo" aria-label="Logo" />
         </div>
 
         <div
@@ -43,7 +41,7 @@ const { headerService } = useHeaderService()
               aria-label="Footer menu links"
             >
               <div class="hidden flex-col md:flex md:gap-5">
-                <NuxtLink
+                <NuxtLinkLocale
                   v-for="item in footerLinks.value.filter(
                     (i) => !i.children?.length,
                   )"
@@ -52,10 +50,13 @@ const { headerService } = useHeaderService()
                   class="font-semibold text-white"
                 >
                   {{ item.label }}
-                </NuxtLink>
+                </NuxtLinkLocale>
               </div>
 
-              <UIFooterMenuItem v-for="item in footerLinks.value" :item="item" />
+              <UIFooterMenuItem
+                v-for="item in footerLinks.value"
+                :item="item"
+              />
             </div>
           </div>
 

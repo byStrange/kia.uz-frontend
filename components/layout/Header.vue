@@ -103,14 +103,14 @@ watch(
         </div>
 
         <div class="absolute left-1/2 -translate-x-1/2">
-          <NuxtLink to="/">
+          <NuxtLinkLocale to="/">
             <!-- Light Logo -->
             <img
               v-if="!headerService.isHover"
               src="@/assets/logo/main-logo.svg"
               alt="Logo"
               class="h-3 w-[50px] 2xl:w-[79px] 2xl:h-4.5"
-            >
+            />
 
             <!-- Dark Logo -->
             <img
@@ -118,8 +118,8 @@ watch(
               src="@/assets/logo/main-logo-invert.svg"
               alt="Logo"
               class="h-3 w-[50px] 2xl:w-[79px] 2xl:h-4.5"
-            >
-          </NuxtLink>
+            />
+          </NuxtLinkLocale>
         </div>
 
         <div class="flex items-center gap-4 md:gap-5">

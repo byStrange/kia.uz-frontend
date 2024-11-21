@@ -8,7 +8,7 @@
             class="flex items-center"
             :data-test="JSON.stringify(crumb)"
           >
-            <router-link
+            <NuxtLinkLocale
               :to="{
                 name: crumb.name ? crumb.name : '/',
                 params: route.params,
@@ -19,7 +19,7 @@
               ]"
             >
               {{ crumb.title }}
-            </router-link>
+            </NuxtLinkLocale>
             <UIBreadCrumbsTickToRight
               :class="theme === 'light' ? 'text-white' : 'text-primary'"
             />

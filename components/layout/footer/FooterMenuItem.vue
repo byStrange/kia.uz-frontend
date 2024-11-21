@@ -25,24 +25,24 @@
           { '!visible opacity-100': openedItem === item },
         ]"
       >
-        <NuxtLink
+        <NuxtLinkLocale
           v-for="child in item.children"
           :key="child.label"
           :to="child.to"
           class="font-normal text-disabled py-1.25 w-fit link-hover"
         >
           {{ child.label }}
-        </NuxtLink>
+        </NuxtLinkLocale>
       </div>
     </div>
   </button>
-  <NuxtLink
+  <NuxtLinkLocale
     v-else
     :to="item.to"
     :class="footerMenuItemCommonClasses + ' md:hidden'"
   >
     {{ item.label }}
-  </NuxtLink>
+  </NuxtLinkLocale>
 </template>
 
 <script setup lang="ts">
