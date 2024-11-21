@@ -15,14 +15,6 @@ const { headerService } = useHeaderService()
           с условиями индивидуального договора купли-продажи. Представленные
           изображения автомобиля могут отличаться от реализуемого.
         </p>
-        <UIButton
-          label="Подробнее"
-          size="md"
-          class="!border-none text-sm !bg-transparent !p-0 text-white ring-offset-0"
-        >
-          Подробнее
-          <UITickToBottom class="text-white" width="20" height="20" />
-        </UIButton>
       </div>
 
       <div aria-hidden="true" class="my-8 border-b border-b-description" />
