@@ -8,25 +8,24 @@ export const useBreadcrumbs = (route: any, router: any) => {
 
     crumbs.push({
       title: 'Home',
-      name: 'index',
+      ...router.resolve('/'),
     })
 
-    console.log(fullPath)
-    console.log(params)
+    const { locale } = useI18n()
+
     let path = ''
 
     params.forEach((param: any) => {
       path = `${path}/${param}`
       const match = router.resolve(path)
-      if (match.name !== null) {
+      if (match.name !== null && param !== locale.value) {
         crumbs.push({
-          title: param.replace(/-/g, ' '),
+          title: toTitleCase(param.replace(/-/g, ' ')),
           ...match,
         })
       }
     })
 
-    console.log(path)
     return crumbs
   })
 

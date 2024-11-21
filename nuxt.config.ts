@@ -24,8 +24,18 @@ export default defineNuxtConfig({
   ],
 
   i18n: {
+    baseUrl: process.env.SITE_URL,
     strategy: 'prefix_and_default',
-    locales: ['ru', 'uz'],
+    locales: [
+      {
+        code: 'ru',
+        language: 'ru-RU',
+      },
+      {
+        code: 'uz',
+        language: 'uz-UZ',
+      },
+    ],
     defaultLocale: 'uz',
     vueI18n: '~/i18n.config.ts',
   },
@@ -65,4 +75,3 @@ export default defineNuxtConfig({
     },
   },
 })
-

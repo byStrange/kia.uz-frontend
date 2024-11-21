@@ -3,7 +3,7 @@
     v-if="isLoading"
     class="w-screen h-screen fixed flex-center z-50 bg-white bg-opacity-70 backdrop-blur-xl"
   >
-    <div class="loader"/>
+    <div class="loader" />
   </div>
   <NuxtLayout>
     <NuxtPage />
@@ -17,7 +17,8 @@ const isLoading = ref(true)
 const title = config.public.siteName
 const description = '{{ SITE_DESCRIPTION }}'
 const url = config.public.siteUrl
-const themeColour = '#000000'
+const themeColour = '#05141F'
+const i18nHead = useLocaleHead()
 
 useHead({
   titleTemplate(titleChunk) {
@@ -28,7 +29,7 @@ useHead({
   },
   htmlAttrs: {
     class: 'h-full',
-    lang: 'en',
+    lang: i18nHead.value.htmlAttrs!.lang,
   },
   meta: [
     { charset: 'utf-8' },
@@ -49,8 +50,10 @@ useHead({
     { name: 'msapplication-TileColor', content: themeColour },
     { name: 'msapplication-config', content: '/browserconfig.xml' },
     { name: 'theme-color', content: themeColour },
+    ...(i18nHead.value.meta || []),
   ],
   link: [
+    ...(i18nHead.value.link || []),
     {
       rel: 'apple-touch-icon',
       sizes: '180x180',

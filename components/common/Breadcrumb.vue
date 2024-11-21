@@ -9,10 +9,8 @@
             :data-test="JSON.stringify(crumb)"
           >
             <NuxtLinkLocale
-              :to="{
-                name: crumb.name ? crumb.name : '/',
-                params: route.params,
-              }"
+              :data-test="crumb.fullPath"
+              :to="crumb.fullPath"
               :class="[
                 styles({ theme }),
                 { '!text-caption': theme === 'dark' },
