@@ -60,6 +60,7 @@ const _specials = ref([
 ])
 
 export type Model = {
+  name?: string;
   title: string
   electric: boolean
   images: {

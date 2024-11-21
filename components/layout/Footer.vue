@@ -3,126 +3,6 @@ import { NuxtLink, UIButton, UITickToBottom } from '#components'
 
 const { footerLinks } = useFooterService()
 const { headerService } = useHeaderService()
-
-const openMenu = (item: FooterItem) => {
-  if (openedItem.value === item) {
-    openedItem.value = null
-    return
-  }
-  openedItem.value = item
-}
-
-const openedItem = ref<FooterItem | null>(null)
-
-let footerMenuItemCommonClasses =
-  'menu-item md:py-0 py-5 text-sm+ font-semibold text-white block w-full text-start'
-
-const FooterMenuItem = ({ item }: { item: FooterItem }) => {
-  return (
-    <>
-      {item.children?.length ? (
-        <button class={footerMenuItemCommonClasses + ' ' + 'order-1'}>
-          <div
-            class="flex items-center justify-between"
-            onClick={(e) => {
-              if (e.target === e.currentTarget) openMenu(item)
-            }}
-          >
-            {item.label}
-            {h(UITickToBottom, {
-              onClick: () => openMenu(item),
-              class: [
-                'text-white transition-transform md:hidden',
-                { 'rotate-180': openedItem.value === item },
-              ],
-            })}
-          </div>
-          <div
-            class={[
-              'grid grid-rows-[0fr] overflow-hidden transition-all md:!mt-4 md:block',
-              { 'mt-5 !grid-rows-[1fr]': openedItem.value === item },
-            ]}
-          >
-            <div
-              class={[
-                'invisible flex min-h-0 flex-col space-y-0.5 text-white opacity-0 transition-all md:visible md:opacity-100',
-                { '!visible opacity-100': openedItem.value === item },
-              ]}
-            >
-              {item.children?.length
-                ? item.children.map((i) => {
-                    return (
-                      <NuxtLink
-                        to={i.to}
-                        class="font-normal text-disabled py-1.25 w-fit link-hover"
-                      >
-                        {i.label}
-                      </NuxtLink>
-                    )
-                  })
-                : null}
-            </div>
-          </div>
-        </button>
-      ) : (
-        <NuxtLink
-          to={item.to}
-          class={footerMenuItemCommonClasses + ' md:hidden'}
-        >
-          {item.label}
-        </NuxtLink>
-      )}
-    </>
-  )
-}
-
-const MenuFooterSocials = () => {
-  return (
-    <div class="mt-12 space-y-2.5">
-      <h3 class="text-sm+ text-disabled">Kia в соцсетях</h3>
-      <div class="flex gap-2">
-        {headerService.value.socials.map((item) => (
-          <a
-            href={item.link}
-            target="_blank"
-            class="text-white"
-            key={item.link}
-          >
-            {h(item.icon, { class: 'w-7.5 h-7.5 text-white' })}
-          </a>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-const MenuFooter = () => {
-  return (
-    <div class={['py-8 md:py-0']}>
-      <div class="space-y-6">
-        <div class="space-y-2.5">
-          <h3 class="text-sm+ text-disabled">Горячая линия Kia</h3>
-          <p class="font-semibold text-white">
-            {headerService.value.phoneLine1}
-          </p>
-        </div>
-        <div class="space-y-2.5">
-          <h3 class="text-sm+ text-disabled">Информационная линия Kia</h3>
-          <p class="font-semibold text-white">
-            {headerService.value.phoneLine2}
-          </p>
-        </div>
-        <div class="space-y-2.5">
-          <h3 class="text-sm+ text-disabled">Телефон доверия</h3>
-          <p class="font-semibold text-white">
-            {headerService.value.phoneLine3}
-          </p>
-        </div>
-        {h(MenuFooterSocials, { class: 'mt-12 md:hidden' })}
-      </div>
-    </div>
-  )
-}
 </script>
 <template>
   <footer class="bg-primary py-[60px]">
@@ -175,14 +55,36 @@ const MenuFooter = () => {
                 </NuxtLink>
               </div>
 
-              <FooterMenuItem :item="item" v-for="item in footerLinks.value" />
+              <UIFooterMenuItem :item="item" v-for="item in footerLinks.value" />
             </div>
           </div>
 
-          <MenuFooter class="md:col-span-2 2xl:col-start-10" />
+          <div class="py-8 md:py-0 md:col-span-2 2xl:col-start-10">
+            <div class="space-y-6">
+              <div class="space-y-2.5">
+                <h3 class="text-sm+ text-disabled">Горячая линия Kia</h3>
+                <p class="font-semibold text-white">
+                  {{ headerService.phoneLine1 }}
+                </p>
+              </div>
+              <div class="space-y-2.5">
+                <h3 class="text-sm+ text-disabled">Информационная линия Kia</h3>
+                <p class="font-semibold text-white">
+                  {{ headerService.phoneLine2 }}
+                </p>
+              </div>
+              <div class="space-y-2.5">
+                <h3 class="text-sm+ text-disabled">Телефон доверия</h3>
+                <p class="font-semibold text-white">
+                  {{ headerService.phoneLine3 }}
+                </p>
+              </div>
+              <UIMenuFooterSocials class="mt-12 md:hidden" />
+            </div>
+          </div>
         </div>
         <div class="hidden md:mt-12 md:block">
-          <MenuFooterSocials />
+          <UIMenuFooterSocials />
         </div>
         <div
           class="grid-rows-1 space-y-7.5 md:mt-12 2xl:grid 2xl:grid-cols-12 2xl:space-y-0"

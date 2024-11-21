@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@nuxt/eslint": "^0.6.1",
+    "@nuxtjs/i18n": "9.0.0-rc.2",
     "@nuxtjs/seo": "2.0.0-rc.23",
     "@nuxtjs/tailwindcss": "^6.12.2",
     "@pinia/nuxt": "^0.7.0",

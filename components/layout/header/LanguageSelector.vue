@@ -1,37 +1,45 @@
 <script setup lang="ts">
+const { headerService } = useHeaderService()
 
-const { headerService } = useHeaderService();
+const emit = defineEmits(['language-change'])
 
-const emit = defineEmits(['language-change']);
+const isOpen = ref(false)
 
-const isOpen = ref(false);
+const { setLocale } = useI18n()
 
 const toggleDropdown = () => {
-  isOpen.value = !isOpen.value;
-};
+  isOpen.value = !isOpen.value
+}
 
 const handleClickOutside = (event: any) => {
-  const dropdown = document.querySelector('.language-selector');
+  const dropdown = document.querySelector('.language-selector')
   if (dropdown && !dropdown.contains(event.target)) {
-    isOpen.value = false;
+    isOpen.value = false
   }
-};
+}
+
+const selectLocale = (locale: 'ru' | 'uz') => {
+  setLocale(locale)
+  isOpen.value = false
+  if (!headerService.value.lockHover) {
+    headerService.value.isHover = false
+  }
+}
 
 onMounted(() => {
-  document.addEventListener('click', handleClickOutside);
-});
+  document.addEventListener('click', handleClickOutside)
+})
 
 onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside);
-});
+  document.removeEventListener('click', handleClickOutside)
+})
 </script>
 
 <template>
   <div class="language-selector relative text-primary">
     <button @click="toggleDropdown" class="flex items-center">
       <div class="flex items-center">
-        <span v-if="false">{{ $i18n.locale.toUpperCase() }}</span>
-        <span>RU</span>
+        <span>{{ $i18n.locale.toUpperCase() }}</span>
         <UITickToBottom
           class="transition-all"
           :class="{
@@ -59,15 +67,7 @@ onUnmounted(() => {
           <li
             v-for="ln in $i18n.availableLocales"
             :key="ln"
-            @click="
-              () => {
-                $i18n.locale = ln;
-                isOpen = false;
-                if (!headerService.lockHover) {
-                  headerService.isHover = false;
-                }
-              }
-            "
+            @click="selectLocale(ln)"
             class="cursor-pointer px-6 py-4 text-base hover:bg-gray-100"
           >
             {{ ln.toUpperCase() }}

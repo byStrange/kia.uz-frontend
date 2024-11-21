@@ -1,4 +1,4 @@
-<script setup lang="tsx">
+<script setup lang="ts">
 import { UIInfoIcon, UITickToRight } from '#components'
 
 const { headerService } = useHeaderService()
@@ -17,7 +17,11 @@ const availableOptions = ref([
 
 const selectedOption = ref(null)
 
-const modelGroups = ref([
+type ModelGroup = {
+  label: string
+  models: { name: string; image: string; from: string; benefitUpto?: string }[]
+}
+const modelGroups = ref<ModelGroup[]>([
   {
     label: 'Новинки',
     models: [
@@ -110,28 +114,6 @@ const modelGroups = ref([
   },
 ])
 
-const ModelCard = ({ model }: { model: any }) => {
-  return (
-    <div class="max-w-md md:min-w-[310px] md:max-w-[310px]">
-      <img src={model.image} class="w-full object-cover" />
-      <div class="mt-4">
-        <h2 class="text-lg font-semibold text-primary">{model.name}</h2>
-        <p class="mt-1.5 flex gap-3 text-primary">
-          от {model.from}
-          <UIInfoIcon class="text-disabled" />
-        </p>
-        {model.benefitUpto && (
-          <p class="text-caption">выгода до {model.benefitUpto}</p>
-        )}
-      </div>
-      <button class="mt-1 flex items-center">
-        <span class="text-base font-semibold text-primary">Цены</span>
-        <UITickToRight />
-      </button>
-    </div>
-  )
-}
-
 onMounted(() => {
   headerService.value.lockHover = true
   headerService.value.isHeaderFixed = true
@@ -160,17 +142,30 @@ onMounted(() => {
               {{ modelGroup.label }}
             </h1>
             <div class="mt-4 flex-wrap md:mt-8 md:flex md:gap-9 2xl:mt-10">
-              <ModelCard
-                @click="
-                  $router.push({
-                    name: 'models-id',
-                  })
-                "
-                class="mx-auto shrink-0 md:mx-0"
-                :model="model"
+              <div
+                class="max-w-md md:min-w-[310px] md:max-w-[310px]"
                 v-for="model in modelGroup.models"
                 :key="model.name"
-              />
+              >
+                <img :src="model.image" class="w-full object-cover" />
+                <div class="mt-4">
+                  <h2 class="text-lg font-semibold text-primary">
+                    {{ model.name }}
+                  </h2>
+                  <p class="mt-1.5 flex gap-3 text-primary">
+                    от {{ model.from }}
+                    <UIInfoIcon class="text-disabled" />
+                  </p>
+
+                  <p v-if="model.benefitUpto" class="text-caption">
+                    выгода до {{ model.benefitUpto }}
+                  </p>
+                </div>
+                <button class="mt-1 flex items-center">
+                  <span class="text-base font-semibold text-primary">Цены</span>
+                  <UITickToRight />
+                </button>
+              </div>
             </div>
           </div>
         </div>
