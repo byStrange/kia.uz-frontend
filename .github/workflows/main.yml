@@ -23,11 +23,6 @@ jobs:
           SSH_USER: ${{ secrets.TRIGGER_SSH_USER }}
           SSH_PASSWORD: ${{ secrets.TRIGGER_SSH_PASSWORD }}
         run: |
-          export PNPM_HOME="/home/web/.local/share/pnpm"
-          case ":$PATH:" in
-            *":$PNPM_HOME:"*) ;;
-              *) export PATH="$PNPM_HOME:$PATH" ;;
-              esac
           sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "
-            bash -l -c 'cd /home/web/web/kia.triger.uz/public_html && ./deploy.sh'
+            cd /home/web/web/kia.triger.uz/public_html && ./deploy.sh
             "
