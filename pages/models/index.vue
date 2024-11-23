@@ -19,7 +19,7 @@ const selectedOption = ref(null)
 
 type ModelGroup = {
   label: string
-  models: { name: string; image: string; from: string; benefitUpto?: string }[]
+  models: { name: string; image: string; from: string; benefitUpto?: string; electric: boolean }[]
 }
 const modelGroups = ref<ModelGroup[]>([
   {
@@ -28,7 +28,7 @@ const modelGroups = ref<ModelGroup[]>([
       {
         name: 'K5',
         image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
+          'https://ucarecdn.com/c5d8a804-6397-4a3d-97f4-6d50b2a65699/-/preview/290x140/',
         from: '379 900 000 сум',
         benefitUpto: '90 000 000 сум',
       },
@@ -40,7 +40,7 @@ const modelGroups = ref<ModelGroup[]>([
       {
         name: 'Cerato',
         image:
-          'https://ucarecdn.com/b0ea31c9-923e-4bd3-93e0-0c80746b371a/-/preview/1000x479/',
+          'https://ucarecdn.com/73741da6-946d-4bd2-938d-9ca65e5ef7e3/-/preview/290x140/',
         from: '292 468 000 сум',
         benefitUpto: '64 000 000 сум',
       },
@@ -54,19 +54,19 @@ const modelGroups = ref<ModelGroup[]>([
         name: 'K5',
         from: '379 900 000 сум',
         image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
+          'https://ucarecdn.com/5dd2c487-5ede-400d-aa6c-21fbdda82b32/-/preview/290x140/',
       },
       {
         name: 'K8',
         from: '675 157 000 сум',
         image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
+          'https://ucarecdn.com/35cbc2ae-ce0b-4e09-ae2d-5135b74ffb9b/-/preview/290x140/',
       },
       {
         name: 'K9',
         from: '869 900 000 сум',
         image:
-          'https://ucarecdn.com/0bdd809b-c71e-4eda-b2fd-ecbc18a63eb6/-/preview/1000x479/',
+          'https://ucarecdn.com/d5bb50c5-59eb-40c5-b331-63a7819d698a/-/preview/290x140/',
       },
     ],
   },
@@ -74,41 +74,71 @@ const modelGroups = ref<ModelGroup[]>([
     label: 'Кроссоверы и внедорожники',
     models: [
       {
-        name: 'K5',
-        from: '379 900 000 сум',
+        name: 'Sonet',
+        from: '199 900 000 сум',
         image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
+          'https://ucarecdn.com/362bccf9-55d4-49bf-a0a4-6b06447f1949/-/preview/290x140/',
       },
       {
-        name: 'K8',
-        from: '675 157 000 сум',
+        name: 'Sportage',
+        from: '398 905 000 сум',
         image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
+          'https://ucarecdn.com/3cbde714-f28b-41d8-b9be-c61b5d81ffd8/-/preview/290x140/',
       },
       {
-        name: 'K9',
-        from: '869 900 000 сум',
+        name: 'Sorento',
+        from: '586 055 000 сум',
         image:
-          'https://ucarecdn.com/0bdd809b-c71e-4eda-b2fd-ecbc18a63eb6/-/preview/1000x479/',
+          'https://ucarecdn.com/92d1e566-dc7e-46e5-811a-adfe2a3257e1/-/preview/290x140/',
       },
 
       {
-        name: 'K5',
-        from: '379 900 000 сум',
+        name: 'Seltos',
+        from: '360 905 000 сум',
         image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
+          'https://ucarecdn.com/f629bb37-5e93-4161-9294-03f94417879c/-/preview/290x140/',
       },
       {
-        name: 'K8',
-        from: '675 157 000 сум',
+        name: 'Carens',
+        from: '299 900 000 сум',
         image:
-          'https://ucarecdn.com/0523f8bf-1254-4cf0-b492-1e640ccb8ab0/-/preview/1000x479/',
+          'https://ucarecdn.com/b70576f0-48b3-4cb0-8381-81a8e831aabb/-/preview/290x140/',
       },
       {
-        name: 'K9',
-        from: '869 900 000 сум',
+        name: 'Carnival',
+        from: '543 510 000 сум',
         image:
-          'https://ucarecdn.com/0bdd809b-c71e-4eda-b2fd-ecbc18a63eb6/-/preview/1000x479/',
+          'https://ucarecdn.com/b94eab73-14cf-42a7-9a9b-635372b240a9/-/preview/290x140/',
+      },
+    ],
+  },
+  {
+    label: 'Электрические кроссоверы',
+    models: [
+      {
+        name: 'EV6',
+        image:
+          'https://ucarecdn.com/58105b81-9100-400f-b10b-bab60b4f5d16/-/preview/290x140/',
+        from: '699 900 000 сум',
+        electric: true,
+      },
+      {
+        name: 'Новый Kia EV9',
+        image:
+          'https://ucarecdn.com/f7443b8a-d4cd-4ee0-9513-ea272f7a630e/-/preview/290x140/',
+        from: '999 900 000 сум',
+        electric: true,
+      },
+    ],
+  },
+  {
+    label: 'Коммерческие автомобили',
+    models: [
+      {
+        name: 'Bongo',
+        image:
+          'https://ucarecdn.com/6a8b3688-16bb-4b33-9905-2a3a3fa6a2f4/-/preview/290x140/',
+        from: '256 405 000 сум',
       },
     ],
   },
@@ -123,8 +153,8 @@ onMounted(() => {
 <template>
   <UISafeAreaView class="bg-white">
     <div class="container">
-      <UIBreadcrumb class="mt-6 hidden 2xl:block" theme="dark" />
-      <div class="pb-5 pt-10 md:pt-15 2xl:pt-9">
+      <UIBreadcrumb class="hidden mt-6 2xl:block" theme="dark" />
+      <div class="pt-10 pb-5 md:pt-15 2xl:pt-9">
         <h1 class="text-3xl font-semibold text-primary md:text-5xl">
           Все модели Kia
         </h1>
@@ -135,19 +165,19 @@ onMounted(() => {
         />
       </div>
 
-      <div class="pb-10 pt-5 md:pb-15 2xl:py-20">
+      <div class="pt-5 pb-10 md:pb-15 2xl:py-20">
         <div class="space-y-10 md:space-y-12 2xl:space-y-15">
           <div v-for="modelGroup in modelGroups" :key="modelGroup.label">
             <h1 class="text-2xl font-semibold text-primary md:text-3xl">
               {{ modelGroup.label }}
             </h1>
-            <div class="mt-4 flex-wrap md:mt-8 md:flex md:gap-9 2xl:mt-10">
+            <div class="flex-wrap mt-4 md:mt-8 md:flex md:gap-9 2xl:mt-10">
               <div
                 v-for="model in modelGroup.models"
                 :key="model.name"
                 class="max-w-md md:min-w-[310px] md:max-w-[310px]"
               >
-                <img :src="model.image" class="w-full object-cover" >
+                <img :src="model.image" class="object-cover w-full" >
                 <div class="mt-4">
                   <h2 class="text-lg font-semibold text-primary">
                     {{ model.name }}
@@ -161,7 +191,7 @@ onMounted(() => {
                     выгода до {{ model.benefitUpto }}
                   </p>
                 </div>
-                <button class="mt-1 flex items-center">
+                <button class="flex items-center mt-1">
                   <span class="text-base font-semibold text-primary">Цены</span>
                   <UITickToRight />
                 </button>
