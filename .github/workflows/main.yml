@@ -23,12 +23,10 @@ jobs:
           SSH_USER: ${{ secrets.TRIGGER_SSH_USER }}
           SSH_PASSWORD: ${{ secrets.TRIGGER_SSH_PASSWORD }}
         run: |
-          cmd="sshpass -p \"$SSH_PASSWORD\" ssh -o StrictHostKeyChecking=no -p \"$SSH_PORT\" \"$SSH_USER@$SSH_HOST\" \"
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "
             whoami &&
             cd /home/web/web/kia.triger.uz/public_html &&
             ./deploy.sh &&
             date > deploy-timestamp.txt
-          \""
-          echo "$cmd"
-          eval "$cmd"
-
+            whoami > last-whoami.txt
+            "
