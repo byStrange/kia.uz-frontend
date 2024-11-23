@@ -46,7 +46,6 @@ const props = withDefaults(
     paginator?: boolean
     swiperSlideClass?: string
     navigation?: boolean
-    paginationMt?: string
     paginationGap?: string
     breakpointsEnabled?: boolean
     paginatorClass?: string
@@ -56,9 +55,14 @@ const props = withDefaults(
   {
     navigation: true,
     paginator: true,
+    spaceBetween: 0,
+    slidesOffsetBefore: 0,
+    slidesOffsetAfter: 0,
+    swiperSlideClass: '',
     breakpointsEnabled: true,
     navigiationMode: 'normal',
     paginationGap: '12px',
+    navigationType: 'lg',
     paginatorClass: 'mt-4 md:mt-8',
   },
 )
@@ -145,11 +149,12 @@ defineExpose({
           <slot name="navigation" />
         </template>
         <SwiperSlide
-          v-for="item in data"
+          v-for="(item, index) in data"
+          :key="Math.random() * index"
           class="md:!w-fit"
           :class="swiperSlideClass"
         >
-          <slot name="slide" :item :bounding/>
+          <slot name="slide" :item :bounding />
         </SwiperSlide>
       </Swiper>
     </ClientOnly>

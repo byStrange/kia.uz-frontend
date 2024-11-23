@@ -10,9 +10,6 @@ const cButton = tv({
       sm: 'w-10 h-10',
     },
   },
-  defaultVariants: {
-    size: 'lg',
-  },
 })
 
 const { bounding } = useContainer()
@@ -28,6 +25,8 @@ withDefaults(
   }>(),
   {
     mode: 'normal',
+    position: 'left',
+    size: 'lg',
   },
 )
 </script>

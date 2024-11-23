@@ -14,6 +14,7 @@ const { bounding } = useContainer()
             '1.5 GDI / 170 л.с., Бензин',
             '2.0 GDI / 240 л.с., Бензин',
           ]"
+          :key="item"
           class="flex gap-2"
         >
           <PrimeCheckbox />
@@ -35,6 +36,7 @@ const { bounding } = useContainer()
             'Style',
             'Premium',
           ]"
+          :key="item"
           class="flex gap-2"
         >
           <PrimeCheckbox />

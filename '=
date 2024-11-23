@@ -1,7 +1,11 @@
 <script setup lang="tsx">
 import { UISlideView } from '#components'
 import type { ModelConfiguration } from '~/types'
-import type { Swiper } from 'swiper/types'
+
+const optionsSwiper = ref<InstanceType<typeof UISlideView> | null>(null)
+const optionsSwiperActiveIndex = computed(() => {
+  return optionsSwiper.value ? optionsSwiper.value.swiper?.activeIndex || 0 : 0
+})
 
 const { bounding } = useContainer()
 
@@ -11,9 +15,16 @@ const hasFeature = (feature: string, configuration: ModelConfiguration) => {
   return configuration.features.some((f) => f.label === feature)
 }
 
-const configurationPropertySwipers = ref<Swiper[]>([])
+const configurationPropertySwipers =
+  useTemplateRef<InstanceType<typeof UISlideView>[]>('confPropsSwiper')
 
 const configurationsSwiper = useTemplateRef('confSwiper')
+
+watch(configurationPropertySwipers, () => {
+  configurationPropertySwipers.value?.forEach(({ swiper }) => {
+    console.log(swiper.value)
+  })
+})
 
 onMounted(() => {
   console.log(configurationPropertySwipers.value)
@@ -93,20 +104,32 @@ onMounted(() => {
           >
           <PrimeAccordionContent unstyled>
             <div class="divide-y divide-protection">
-              <div v-for="feature in features" :key="feature.label" class="py-4">
+              <div class="py-4" v-for="feature in features">
                 <p class="text-sm">{{ feature.label }}</p>
-                <div class="mt-3.5 flex snap-x snap-mandatory overflow-auto">
-                  <div
-                    v-for="config in data?.model.configurations || []"
-                    :key="config.name"
-                    class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px] snap-start snap-always"
-                  >
-                    <div
-                      v-if="hasFeature(feature.label, config)"
-                      class="size-2.5 bg-primary rounded-full"
-                    />
-                    <div v-else>-</div>
-                  </div>
+                <div class="mt-3.5 flex">
+                  <ClientOnly>
+                    <UISlideView
+                      :navigation="false"
+                      :breakpoints-enabled="false"
+                      :paginator="false"
+                      :data="data?.model.configurations || []"
+                      class="w-full"
+                      swiper-slide-class="!w-fit"
+                      ref="confPropsSwiper"
+                    >
+                      <template #slide="prop">
+                        <div
+                          class="w-[172px] md:w-[232px] shrink-0 overflow-auto 2xl:w-[220px]"
+                        >
+                          <div
+                            class="size-2.5 bg-primary rounded-full"
+                            v-if="hasFeature(feature.label, prop.item)"
+                          ></div>
+                          <div v-else>-</div>
+                        </div>
+                      </template>
+                    </UISlideView>
+                  </ClientOnly>
                 </div>
               </div>
             </div>

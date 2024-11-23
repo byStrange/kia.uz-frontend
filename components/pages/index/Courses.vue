@@ -10,10 +10,13 @@ const { courses } = useStore()
       </h1>
     </template>
 
-    <UITabsContainer :tabs="['Видео-обзоры', 'Новости']" :is-content-full="true">
+    <UITabsContainer
+      :tabs="['Видео-обзоры', 'Новости']"
+      :is-content-full="true"
+    >
       <template #1>
         <UISlideView :data="courses">
-          <template #slide="{ item, bounding }">
+          <template #slide="{ item }">
             <div
               :style="{ '--padding': `0 ${bounding.x.value}px` }"
               class="h-[408px] p-[--padding] md:w-[310px] md:px-0"
@@ -26,7 +29,7 @@ const { courses } = useStore()
                     :src="item.thumbnail"
                     loading="lazy"
                     class="h-full w-full object-cover"
-                  >
+                  />
                   <UIPlayIcon2 class="absolute" />
                 </div>
 
@@ -43,7 +46,7 @@ const { courses } = useStore()
 
       <template #2>
         <UISlideView :data="courses">
-          <template #slide="{ item, bounding }">
+          <template #slide="{ item }">
             <div
               :style="{ '--padding': `0 ${bounding.x.value}px` }"
               class="h-[408px] p-[--padding] md:w-[310px] md:!px-0"
@@ -56,7 +59,7 @@ const { courses } = useStore()
                     :src="item.thumbnail"
                     loading="lazy"
                     class="h-full w-full object-cover"
-                  >
+                  />
                   <UIPlayIcon2 class="absolute" />
                 </div>
 

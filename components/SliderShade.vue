@@ -12,5 +12,5 @@ defineProps<{ d: 'left' | 'right' }>()
         'right-0': d === 'right',
       },
     ]"
-  ></div>
+  />
 </template>

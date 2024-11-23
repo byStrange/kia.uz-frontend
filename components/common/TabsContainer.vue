@@ -13,6 +13,9 @@ const props = withDefaults(
     headerClass?: string
   }>(),
   {
+    headerKey: undefined,
+    contentContainerClass: undefined,
+    headerClass: undefined,
     defaultTab: 0,
     isContentFull: false,
     isHeaderCenter: true,
@@ -53,7 +56,7 @@ defineExpose({
           padding: props.isHeaderFull ? '0 ' + bounding.x.value + 'px' : '',
         }"
       >
-        <template v-for="(tab, index) in tabs">
+        <template v-for="(tab, index) in tabs" :key="index * Math.random()">
           <slot
             name="tab-button"
             :tab="{ tab: tab, isActive: index === activeTab }"
@@ -94,6 +97,6 @@ defineExpose({
       </div>
     </div>
 
-    <slot name="default"/>
+    <slot name="default" />
   </div>
 </template>

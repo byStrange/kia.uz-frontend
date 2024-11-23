@@ -20,6 +20,7 @@ const handleClickOutside = (event: any) => {
 
 const selectLocale = (locale: 'ru' | 'uz') => {
   setLocale(locale)
+  emit('language-change', locale)
   isOpen.value = false
   if (!headerService.value.lockHover) {
     headerService.value.isHover = false

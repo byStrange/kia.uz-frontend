@@ -7,7 +7,6 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2024-07-16',
-
   css: ['~/assets/css/fonts.css', '~/assets/css/transitions.css'],
 
   components: [
@@ -75,3 +74,4 @@ export default defineNuxtConfig({
     },
   },
 })
+

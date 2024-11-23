@@ -37,7 +37,7 @@ const { headerService } = useHeaderService()
                   v-for="item in footerLinks.value.filter(
                     (i) => !i.children?.length,
                   )"
-                  id="imi"
+                  :key="item.label"
                   to="/"
                   class="font-semibold text-white"
                 >
@@ -47,6 +47,7 @@ const { headerService } = useHeaderService()
 
               <UIFooterMenuItem
                 v-for="item in footerLinks.value"
+                :key="item.label"
                 :item="item"
               />
             </div>

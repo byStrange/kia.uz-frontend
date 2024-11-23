@@ -149,17 +149,17 @@ const processedSections = computed(() => {
             v-if="section.images.lg"
             :srcset="section.images.lg?.src"
             media="(min-width: 1440px)"
-          >
+          />
           <source
             v-if="section.images.md"
             :srcset="section.images.md?.src"
             media="(min-width: 768px)"
-          >
+          />
           <img
             :src="section.images.default?.src"
             loading="lazy"
             class="w-full"
-          >
+          />
         </picture>
       </template>
       <template v-else-if="is('double', section)">
@@ -179,7 +179,7 @@ const processedSections = computed(() => {
               class="max-h-[620px] md:w-[656px] md:h-[645px] object-cover w-full"
               :src="item.image"
               loading="lazy"
-            >
+            />
           </template>
         </UISlideView>
         <div v-else-if="section.meta.tabs">
@@ -192,12 +192,13 @@ const processedSections = computed(() => {
             header-key="title"
             :tabs="section.meta.tabs"
           >
-            <template #1="{ tab }" }>
+            <template #1="{ tab }">
               <div
                 class="grid grid-cols-3 md:gap-2.5 2xl:flex 2xl:flex-col 2xl:divide-y divide-protection 2xl:gap-0"
               >
                 <div
                   v-for="(item, index) in tab.items"
+                  :key="index * Math.random()"
                   class="space-y-2 2xl:flex justify-between items-center"
                   :class="index === 0 ? '2xl:pb-10' : '2xl:py-10'"
                 >
@@ -213,12 +214,13 @@ const processedSections = computed(() => {
                 </div>
               </div>
             </template>
-            <template #2="{ tab }" }>
+            <template #2="{ tab }">
               <div
                 class="grid grid-cols-3 md:gap-2.5 2xl:flex 2xl:flex-col 2xl:divide-y divide-protection 2xl:gap-0"
               >
                 <div
                   v-for="(item, index) in tab.items"
+                  :key="index * Math.random()"
                   class="space-y-2 2xl:flex justify-between items-center"
                   :class="index === 0 ? '2xl:pb-10' : '2xl:py-10'"
                 >
