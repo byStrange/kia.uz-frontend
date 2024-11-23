@@ -24,7 +24,8 @@ jobs:
           SSH_PASSWORD: ${{ secrets.TRIGGER_SSH_PASSWORD }}
         run: |
           sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -p $SSH_PORT $SSH_USER@$SSH_HOST "
-            sudo -su web &&
+            whoami &&
+            echo | whoami &&
             cd /home/web/web/kia.triger.uz/public_html/ &&
             ./deploy.sh &&
             date > /home/web/web/kia.triger.uz/public_html/deploy-timestamp.txt
