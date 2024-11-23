@@ -34,7 +34,7 @@ const specialsSwiperBreakpoints = ref({})
     <UITabsContainer :tabs="['Покупка', 'Сервис']" :is-content-full="true">
       <template #1>
         <UISlideView :data="specials">
-          <template #slide="{ item, bounding }">
+          <template #slide="{ item }">
             <div
               :style="{ '--padding': `0 ${bounding.x.value}px` }"
               class="h-[408px] p-[--padding] md:w-[310px] md:px-0"
@@ -44,7 +44,7 @@ const specialsSwiperBreakpoints = ref({})
                   :src="item.thumbnail"
                   class="h-[222px] w-full"
                   loading="lazy"
-                >
+                />
 
                 <div class="p-4">
                   <div class="text-left">
@@ -64,7 +64,7 @@ const specialsSwiperBreakpoints = ref({})
 
       <template #2>
         <UISlideView :data="specials">
-          <template #slide="{ item, bounding }">
+          <template #slide="{ item }">
             <div
               :style="{ '--padding': `0 ${bounding.x.value}px` }"
               class="h-[408px] p-[--padding] md:w-[310px] md:px-0"
@@ -74,7 +74,7 @@ const specialsSwiperBreakpoints = ref({})
                   :src="item.thumbnail"
                   class="h-[222px] w-full"
                   loading="lazy"
-                >
+                />
 
                 <div class="p-4">
                   <div class="text-left">

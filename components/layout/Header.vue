@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NuxtLink, UIHeaderLink } from '#components'
+import { UIHeaderLink } from '#components'
 
 const { toggleMenu, headerService } = useHeaderService()
 

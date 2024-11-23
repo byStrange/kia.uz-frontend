@@ -9,10 +9,10 @@ export const useDynamicHeight = (
 
   const excludedElementsHeight = excludedElements
     .map((el) => {
+      if (!import.meta.client) return 0
       let offset
       if (typeof el === 'string') {
-        // @ts-ignore
-        return 1
+        return document.querySelector(el)?.getBoundingClientRect().height || 0
       } else {
         offset = el?.offsetHeight
       }

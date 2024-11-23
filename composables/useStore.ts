@@ -60,7 +60,7 @@ const _specials = ref([
 ])
 
 export type Model = {
-  name?: string;
+  name?: string
   title: string
   electric: boolean
   images: {
@@ -523,10 +523,6 @@ const _sections = ref<BriefSection[]>([
     },
   },
 ])
-
-const is = (type: 'triple' | 'double', section: BriefSection) => {
-  return type === section.type
-}
 
 const getCourses = computed(() => _courses.value)
 const getSpecials = computed(() => _specials.value)

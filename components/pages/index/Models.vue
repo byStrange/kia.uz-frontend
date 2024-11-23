@@ -73,7 +73,11 @@ onMounted(() => {
               class="absolute right-0 z-10 h-full w-[94px]"
             />
           </template>
-          <SwiperSlide v-for="model in models" class="!w-fit">
+          <SwiperSlide
+            v-for="model in models"
+            :key="model.title"
+            class="!w-fit"
+          >
             <div
               :class="[
                 'relative w-fit rounded-xl border border-transparent px-1 py-2 transition-colors md:px-1.5 md:py-3',
@@ -127,7 +131,11 @@ onMounted(() => {
                 @click="slideNext"
               />
             </template>
-            <SwiperSlide v-for="model in models" class="container 2xl:px-0">
+            <SwiperSlide
+              v-for="model in models"
+              :key="model.title"
+              class="container 2xl:px-0"
+            >
               <div data-label="card">
                 <div data-label="image wrapper">
                   <img

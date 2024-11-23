@@ -88,7 +88,7 @@ const { courses } = useStore()
                   loading="lazy"
                   :src="item.thumbnail"
                   class="h-full w-full object-cover"
-                >
+                />
                 <UIPlayIcon2 class="absolute" />
               </div>
 
@@ -151,6 +151,7 @@ const { courses } = useStore()
                     <div class="mt-2 space-y-2 text-sm">
                       <p
                         v-for="option in item.mainOptions"
+                        :key="option"
                         class="md:text-base text-sm"
                       >
                         {{ option }}
@@ -204,7 +205,7 @@ const { courses } = useStore()
                   loading="lazy"
                   :src="item.thumbnail"
                   class="h-full w-full object-cover"
-                >
+                />
                 <UIPlayIcon2 class="absolute" />
               </div>
 
@@ -244,7 +245,7 @@ const { courses } = useStore()
         <img
           src="@/assets/fiveyear-guarantee.svg"
           class="w-full md:w-4h mx-auto 2xl:w-full"
-        >
+        />
       </div>
     </UISection>
 
@@ -290,17 +291,17 @@ const { courses } = useStore()
               srcset="
                 https://ucarecdn.com/8a65cac6-38ee-423e-b2ff-a0956b9e931a/-/preview/1090x432/
               "
-            >
+            />
             <source
               srcset="
                 https://ucarecdn.com/883cdd7b-0dd4-497f-b7b2-851a82681f6f/-/preview/543x247/
               "
               media="(min-width: 768px)"
-            >
+            />
             <img
               class="w-full my-4 md:my-6 2xl:mb-1.5 2xl:mt-5"
               src="https://ucarecdn.com/bb0d5bc2-3996-48bd-8e7e-249b03311384/-/preview/313x143/"
-            >
+            />
           </picture>
           <div class="2xl:grid 2xl:grid-cols-12 2xl:gap-grid-12-gap">
             <p class="text-xs text-caption 2xl:col-start-3 col-span-9">
