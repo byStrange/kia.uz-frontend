@@ -22,6 +22,7 @@ const comfortConfiguration: ModelConfiguration = {
       label: 'Задние сиденья со спинками, складывающимися в соотношении 60/40',
       category: 'Интерьер',
     },
+
     { label: 'Бортовой компьютер', category: 'Интерьер' },
 
     { label: 'Система курсовой устойчивости (ESC)', category: 'Безопасность' },
@@ -670,7 +671,7 @@ const styleLightTConfiguration: ModelConfiguration = {
   ],
 }
 
-export const model: Model = {
+export const model: Model = Object.freeze({
   name: 'K5',
   configurations: [
     comfortConfiguration,
@@ -678,4 +679,4 @@ export const model: Model = {
     prestigeConfiguration,
     styleLightTConfiguration,
   ],
-}
+})

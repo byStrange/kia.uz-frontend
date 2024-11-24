@@ -1,7 +1,8 @@
-import { model } from '~/server/data/dumpData'
+import { model as sourceModel } from '~/server/data/dumpData'
 import _remove from 'lodash.remove'
 import _groupBy from 'lodash.groupby'
 import _mapValues from 'lodash.mapvalues'
+import _cloneDeep from 'lodash.clonedeep'
 
 import type { ModelConfiguration, ModelConfigurationFeature } from '~/types'
 
@@ -9,18 +10,14 @@ export default defineEventHandler(async () => {
   //const hasFeature = (feature: string, configuration: ModelConfiguration) => {
   //  return configuration.features.some((f) => f.label === feature)
   //}
+  //
+  const model = _cloneDeep(sourceModel)
 
   function cleanAndGroupFeatures(configurations: ModelConfiguration[]) {
     const featureCount = configurations.length
 
-    // Step 1: Create a count map for each feature's occurrence across configurations
     const featureCountMap: Record<string, { count: number; category: string }> =
       {}
-
-    console.log('before loop we have ', featureCount, ' configurations and')
-    configurations.forEach((config) => {
-      console.log('config has ', config.features.length, ' features')
-    })
 
     configurations.forEach((config) => {
       config.features.forEach((feature) => {
@@ -28,7 +25,7 @@ export default defineEventHandler(async () => {
         if (!featureCountMap[feature.label]) {
           featureCountMap[feature.label] = {
             count: 0,
-            category: feature.category,
+            category: feature.category || '',
           }
         }
         featureCountMap[feature.label].count++
@@ -41,20 +38,10 @@ export default defineEventHandler(async () => {
       },
     )
 
-    console.log(standardFeatures.length)
-
     configurations.forEach((config) => {
-      console.log(
-        'removed from ' + config.name + ' features: \n',
-        _remove(config.features, (feature: ModelConfigurationFeature) => {
-          return standardFeatures.some(([label]) => label === feature.label)
-        }),
-      )
-    })
-
-    console.log('after loop we have ', featureCount, ' configurations and')
-    configurations.forEach((config) => {
-      console.log('config has ', config.features.length, ' features')
+      _remove(config.features, (feature: ModelConfigurationFeature) => {
+        return standardFeatures.some(([label]) => label === feature.label)
+      })
     })
 
     return { standardFeatures, configurations }
@@ -63,8 +50,6 @@ export default defineEventHandler(async () => {
   const { standardFeatures, configurations } = cleanAndGroupFeatures(
     model.configurations,
   )
-
-  model.configurations = configurations
 
   const features = configurations.map((configuration) => {
     return configuration.features
@@ -90,11 +75,21 @@ export default defineEventHandler(async () => {
 
   const groupedFeatures = _groupBy(uniqueFeatures, (i) => i.category)
 
-  return {
-    model,
+  const data = {
+    model: { ...model, configurations },
     features,
     groupedFeatures,
     standardFeatures,
     groupStandardFeatures,
+    toJSON() {
+      return {
+        model: { ...model, configurations },
+        features,
+        groupedFeatures,
+        standardFeatures,
+        groupStandardFeatures,
+      }
+    },
   }
+  return data
 })
