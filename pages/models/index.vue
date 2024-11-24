@@ -19,7 +19,13 @@ const selectedOption = ref(null)
 
 type ModelGroup = {
   label: string
-  models: { name: string; image: string; from: string; benefitUpto?: string; electric: boolean }[]
+  models: {
+    name: string
+    image: string
+    from: string
+    benefitUpto?: string
+    electric?: boolean
+  }[]
 }
 const modelGroups = ref<ModelGroup[]>([
   {
@@ -161,6 +167,7 @@ onMounted(() => {
         <UIDropdownInput
           v-model:selected-option="selectedOption"
           v-model:available-options="availableOptions"
+          placeholder="Выберите модель"
           class="mt-4 md:mt-7.5 md:max-w-sm"
         />
       </div>
@@ -177,7 +184,7 @@ onMounted(() => {
                 :key="model.name"
                 class="max-w-md md:min-w-[310px] md:max-w-[310px]"
               >
-                <img :src="model.image" class="object-cover w-full" >
+                <img :src="model.image" class="object-cover w-full" />
                 <div class="mt-4">
                   <h2 class="text-lg font-semibold text-primary">
                     {{ model.name }}

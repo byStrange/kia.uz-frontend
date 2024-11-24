@@ -71,7 +71,7 @@ export default defineNuxtConfig({
     public: {
       siteName: SITE_NAME,
       siteUrl: SITE_URL,
+      yandexMapApiKey: process.env.YANDEX_MAP_API_KEY,
     },
   },
 })
-

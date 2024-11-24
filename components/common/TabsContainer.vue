@@ -9,13 +9,17 @@ const props = withDefaults(
     isHeaderCenter?: boolean
     headerKey?: string
     contentContainerClass?: string
+    headerContainerClass?: string
     tabs: string[] | any[]
     headerClass?: string
+    cache?: boolean
   }>(),
   {
+    cache: false,
     headerKey: undefined,
     contentContainerClass: undefined,
     headerClass: undefined,
+    headerContainerClass: undefined,
     defaultTab: 0,
     isContentFull: false,
     isHeaderCenter: true,
@@ -48,7 +52,7 @@ defineExpose({
 </script>
 <template>
   <div class="relative">
-    <div :class="{ container: !props.isHeaderFull }">
+    <div :class="[{ container: !props.isHeaderFull }, headerContainerClass]">
       <div
         class="flex gap-8 border-b"
         :class="[{ 'justify-center': props.isHeaderCenter }, props.headerClass]"
@@ -56,7 +60,7 @@ defineExpose({
           padding: props.isHeaderFull ? '0 ' + bounding.x.value + 'px' : '',
         }"
       >
-        <template v-for="(tab, index) in tabs" :key="index * Math.random()">
+        <template v-for="(tab, index) in tabs" :key="tab">
           <slot
             name="tab-button"
             :tab="{ tab: tab, isActive: index === activeTab }"
@@ -86,7 +90,18 @@ defineExpose({
       :class="[{ container: !props.isContentFull }, contentContainerClass]"
       class="mt-4"
     >
-      <div>
+      <div v-if="cache">
+        <div
+          class="transition-all duration-300"
+          v-for="(tab, index) in tabs"
+          :class="{
+            'opacity-0 -translate-y-4 invisible absolute': index !== activeTab,
+          }"
+        >
+          <slot :name="index + 1" v-bind="{ activeTab, changeTab, tab }"></slot>
+        </div>
+      </div>
+      <div v-else>
         <Transition name="slide-fade" mode="out-in">
           <slot
             :key="activeTab"

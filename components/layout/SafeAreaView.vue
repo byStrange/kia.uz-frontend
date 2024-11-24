@@ -11,7 +11,8 @@ onMounted(() => {
 const props = defineProps<{ extra?: number }>()
 
 const paddingTop = computed(() => {
-  return `${defaultHeaderHeight.value + (props.extra || 0)}px`
+  if (props.extra) return `${defaultHeaderHeight.value + (props.extra || 0)}px`
+  return 'var(--header-height)'
 })
 </script>
 <template>
