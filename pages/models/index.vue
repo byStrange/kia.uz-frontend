@@ -19,7 +19,7 @@ const selectedOption = ref(null)
 
 type ModelGroup = {
   label: string
-  models: { name: string; image: string; from: string; benefitUpto?: string; electric: boolean }[]
+  models: { name: string; image: string; from: string; benefitUpto?: string; electric?: boolean }[]
 }
 const modelGroups = ref<ModelGroup[]>([
   {
