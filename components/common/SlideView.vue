@@ -21,6 +21,10 @@ const md = useCssVar('--screen-md')
 const lg = useCssVar('--screen-2xl')
 
 watch(bounding.x, () => {
+  if (props.breakpoints) {
+    swiperBreakpoints.value = props.breakpoints
+    return
+  }
   swiperBreakpoints.value = {
     [md.value ? parseInt(md.value) : 0]: {
       slidesOffsetBefore: bounding.x.value,
@@ -44,23 +48,27 @@ const props = withDefaults(
     slidesOffsetBefore?: number
     slidesOffsetAfter?: number
     paginator?: boolean
+    slidesPerView?: number | 'auto'
     swiperSlideClass?: string
     navigation?: boolean
+    breakpoints?: object
     paginationGap?: string
     breakpointsEnabled?: boolean
     paginatorClass?: string
-    navigiationMode?: 'normal' | 'oneside-left'
+    navigationMode?: 'normal' | 'oneside-left'
     navigationType?: 'lg' | 'sm'
   }>(),
   {
     navigation: true,
     paginator: true,
+    slidesPerView: 'auto',
+    breakpoints: undefined,
     spaceBetween: 0,
     slidesOffsetBefore: 0,
     slidesOffsetAfter: 0,
     swiperSlideClass: '',
     breakpointsEnabled: true,
-    navigiationMode: 'normal',
+    navigationMode: 'normal',
     paginationGap: '12px',
     navigationType: 'lg',
     paginatorClass: 'mt-4 md:mt-8',
@@ -93,8 +101,8 @@ defineExpose({
           '--swiper-pagination-bullet-horizontal-gap': 0, //  to disable default swiper bullet gap
           '--swiper-pagination-gap': paginationGap,
         }"
-        :breakpoints="breakpointsEnabled ? swiperBreakpoints : {}"
-        slides-per-view="auto"
+        :breakpoints="breakpointsEnabled ? swiperBreakpoints : breakpoints"
+        :slides-per-view="slidesPerView"
         :modules="[Pagination]"
         :pagination="true"
         :slides-offset-before="slidesOffsetBefore"
@@ -105,12 +113,12 @@ defineExpose({
         @swiper="swiper = $event"
       >
         <template #container-start>
-          <template v-if="navigiationMode == 'normal'">
+          <template v-if="navigationMode == 'normal'">
             <UIButtonCarousel
               v-if="navigation"
               position="left"
               :hide="swiperActiveIndex === 0"
-              :mode="navigiationMode"
+              :mode="navigationMode"
               :size="navigationType"
               @click="swiper?.slidePrev()"
             />
@@ -120,11 +128,11 @@ defineExpose({
               position="right"
               :hide="swiperActiveIndex === swiperLength - 1"
               :size="navigationType"
-              :mode="navigiationMode"
+              :mode="navigationMode"
               @click="swiper?.slideNext()"
             />
           </template>
-          <template v-else-if="navigiationMode == 'oneside-left'">
+          <template v-else-if="navigationMode == 'oneside-left'">
             <div
               class="absolute right-15 z-40 h-full flex flex-col justify-center items-center gap-2"
             >
@@ -133,14 +141,14 @@ defineExpose({
                 position="right"
                 :hide="swiperActiveIndex === swiperLength - 2"
                 :size="navigationType"
-                :mode="navigiationMode"
+                :mode="navigationMode"
                 @click="swiper?.slideNext()"
               />
               <UIButtonCarousel
                 v-if="navigation"
                 position="left"
                 :hide="swiperActiveIndex === 0"
-                :mode="navigiationMode"
+                :mode="navigationMode"
                 :size="navigationType"
                 @click="swiper?.slidePrev()"
               />

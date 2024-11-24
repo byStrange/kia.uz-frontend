@@ -1,7 +1,14 @@
 <script setup lang="tsx">
-import { UISlideView } from '#components'
-import type { ModelConfiguration } from '~/types'
-import type { Swiper } from 'swiper/types'
+import {
+  PrimeAccordionHeader,
+  PrimeAccordionPanel,
+  UISlideView,
+} from '#components'
+import type {
+  ModelConfiguration,
+  ModelConfigurationFeature,
+  ModelConfigurationGroup,
+} from '~/types'
 
 const { bounding } = useContainer()
 
@@ -11,36 +18,76 @@ const hasFeature = (feature: string, configuration: ModelConfiguration) => {
   return configuration.features.some((f) => f.label === feature)
 }
 
-const configurationPropertySwipers = ref<Swiper[]>([])
+const configurationsSwiper =
+  useTemplateRef<InstanceType<typeof UISlideView>>('confSwiper')
 
-const configurationsSwiper = useTemplateRef('confSwiper')
+const confSwiperClientX = ref(0)
+
+// enables splitting standard features
+const splitEnabled = false
+const splitMaxFeatures = 4
+
+function splitFeatures(
+  groups: ModelConfigurationGroup[],
+  max: number,
+): ModelConfigurationGroup[] {
+  const data: ModelConfigurationGroup[] = []
+  for (let i = 0; i < groups.length; i++) {
+    if ((groups[i][1] as ModelConfigurationFeature[]).length > max) {
+      const chunks = chunkArray(
+        groups[i][1] as ModelConfigurationFeature[],
+        max,
+      )
+      for (let j = 0; j < chunks.length; j++) {
+        data.push([groups[i][0], chunks[j]])
+      }
+    } else {
+      data.push(groups[i])
+    }
+  }
+  return data
+}
+
+const splittedStandardFeatures = computed(() => {
+  const standardFeaturesGroup = Object.entries(
+    toRaw(data.value?.groupStandardFeatures) || {},
+  )
+  if (splitEnabled) {
+    return splitFeatures(standardFeaturesGroup, splitMaxFeatures)
+  }
+  return standardFeaturesGroup
+})
 
 onMounted(() => {
-  console.log(configurationPropertySwipers.value)
-  console.log(configurationsSwiper)
+  nextTick(() => {
+    configurationsSwiper.value?.swiper?.on('slideChange', (swiper) => {
+      confSwiperClientX.value = swiper.translate
+    })
+  })
 })
 </script>
 <template>
   <div class="col-span-9">
     <div class="bg-background flex w-full relative 2xl:bg-white">
       <UISlideView
-        ref="configurationsSwiper"
-        navigation-type="sm"
+        ref="confSwiper"
+        class="w-full"
         :paginator="false"
         :data="data?.model.configurations || []"
-        class="w-full"
-        swiper-slide-class="!w-fit"
-        :slides-offset-before="15"
-        :slides-offset-after="15"
+        navigation-mode="oneside-left"
+        navigation-type="sm"
+        :breakpoints-enabled="false"
         :breakpoints="{
           768: { slidesOffsetBefore: 37, slidesOffsetAfter: 37 },
           1440: { slidesOFfsetBefore: 20, slidesOffsetAfter: 20 },
         }"
-        navigiation-mode="oneside-left"
+        :slides-offset-before="15"
+        :slides-offset-after="15"
+        swiper-slide-class="!w-fit"
       >
         <template #slide="{ item }">
           <div
-            class="p-4 md:p-5 w-[172px] md:w-[232px] shrink-0 overflow-auto 2xl:w-[220px] hoverable:border hoverable:border-transparent hoverable:hover:border-primary hoverable:transition-colors cursor-pointer"
+            class="p-4 md:p-5 w-[172px] md:w-[232px] 2xl:w-[220px] hoverable:border hoverable:border-transparent hoverable:hover:border-primary hoverable:transition-colors cursor-pointer"
           >
             <div>
               <h1 class="flex items-center font-semibold">
@@ -72,13 +119,49 @@ onMounted(() => {
         '--padding-x': bounding.x.value + 'px',
       }"
     >
-      <PrimeAccordion value="0" class="divide-y-2 divide-protection">
+      <PrimeAccordion :value="0">
         <template #collapseicon>
           <UITickToTop class="min-w-5" />
         </template>
         <template #expandicon>
           <UITickToBottom class="min-w-5" />
         </template>
+
+        <PrimeAccordionPanel :value="0" unstyled>
+          <PrimeAccordionHeader
+            unstyled
+            class="py-3 flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl border-b-2 border-b-protection"
+            >Стандартное оборудование</PrimeAccordionHeader
+          >
+          <PrimeAccordionContent
+            :pt="{
+              content: 'space-y-6 md:space-y-7.5 pt-7.5 pb-15 px-0 md:pt-10',
+            }"
+          >
+            <div
+              v-for="[group, features] in splittedStandardFeatures"
+              :key="group"
+              class="group"
+            >
+              <h2
+                class="text-sm font-semibold text-primary md:text-base 2xl:text-lg"
+              >
+                {{ group }}
+              </h2>
+              <ul
+                class="mt-2.5 list-disc list-inside 2xl:grid 2xl:grid-cols-2 2xl:gap-x-10"
+              >
+                <li
+                  v-for="feature in (features as ModelConfigurationFeature[])"
+                  :key="feature.label"
+                  class="text-sm text-primary md:text-base"
+                >
+                  {{ feature.label }}
+                </li>
+              </ul>
+            </div>
+          </PrimeAccordionContent>
+        </PrimeAccordionPanel>
 
         <PrimeAccordionPanel
           v-for="[tab, features] in Object.entries(data?.groupedFeatures || {})"
@@ -88,24 +171,36 @@ onMounted(() => {
         >
           <PrimeAccordionHeader
             unstyled
-            class="py-3 flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl"
+            class="py-3 flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl border-b-2 border-b-protection"
             >{{ tab }}</PrimeAccordionHeader
           >
           <PrimeAccordionContent unstyled>
             <div class="divide-y divide-protection">
-              <div v-for="feature in features" :key="feature.label" class="py-4">
+              <div
+                v-for="feature in features"
+                :key="feature.label"
+                class="py-4"
+              >
                 <p class="text-sm">{{ feature.label }}</p>
-                <div class="mt-3.5 flex snap-x snap-mandatory overflow-auto">
+                <div class="mt-3.5 overflow-hidden">
                   <div
-                    v-for="config in data?.model.configurations || []"
-                    :key="config.name"
-                    class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px] snap-start snap-always"
+                    class="flex translate-x-[--translate-x] transition-transform"
+                    :style="{
+                      '--translate-x':
+                        (confSwiperClientX ? confSwiperClientX - 15 : 0) + 'px',
+                    }"
                   >
                     <div
-                      v-if="hasFeature(feature.label, config)"
-                      class="size-2.5 bg-primary rounded-full"
-                    />
-                    <div v-else>-</div>
+                      v-for="config in data?.model.configurations || []"
+                      :key="config.name"
+                      class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px]"
+                    >
+                      <div
+                        v-if="hasFeature(feature.label, config)"
+                        class="size-2.5 bg-primary rounded-full"
+                      />
+                      <div v-else>-</div>
+                    </div>
                   </div>
                 </div>
               </div>
