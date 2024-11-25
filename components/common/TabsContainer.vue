@@ -13,8 +13,10 @@ const props = withDefaults(
     tabs: string[] | any[]
     headerClass?: string
     cache?: boolean
+    animated?: boolean
   }>(),
   {
+    animated: true,
     cache: false,
     headerKey: undefined,
     contentContainerClass: undefined,
@@ -82,6 +84,10 @@ defineExpose({
             </button>
           </slot>
         </template>
+        <slot
+          name="tab-button-right"
+          :tab="{ tab: tabs[activeTab], activeTab }"
+        />
       </div>
     </div>
 
@@ -92,10 +98,11 @@ defineExpose({
     >
       <div v-if="cache">
         <div
-          class="transition-all duration-300"
           v-for="(tab, index) in tabs"
           :class="{
-            'opacity-0 -translate-y-4 invisible absolute': index !== activeTab,
+            'transition-all duration-500': animated,
+            'invisible absolute': index !== activeTab,
+            'opacity-0 -translate-y-4 ': animated && index !== activeTab,
           }"
         >
           <slot :name="index + 1" v-bind="{ activeTab, changeTab, tab }"></slot>
