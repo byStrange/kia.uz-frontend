@@ -21,7 +21,7 @@ export default defineEventHandler(async () => {
       name: 'Андижан',
     },
   ]
-  const dealers = [
+  const dealers: Dealer[] = [
     {
       name: 'Kia Sergeli',
       address: '111503, г. Ташкент, Сергелийский район, массив А.Навоий, ТКАД ',
