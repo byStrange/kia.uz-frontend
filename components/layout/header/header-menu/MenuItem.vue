@@ -18,6 +18,6 @@ const commonClasses =
     </div>
   </button>
   <NuxtLinkLocale v-else :class="commonClasses" :to="item.to">
-    <span class="container block">{item.label}</span>
+    <span class="container block">{{item.label}}</span>
   </NuxtLinkLocale>
 </template>
