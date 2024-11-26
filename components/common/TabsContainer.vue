@@ -101,7 +101,7 @@ defineExpose({
           v-for="(tab, index) in tabs"
           :class="{
             'transition-all duration-500': animated,
-            'invisible absolute': index !== activeTab,
+            'invisible absolute -z-10': index !== activeTab,
             'opacity-0 -translate-y-4 ': animated && index !== activeTab,
           }"
         >
