@@ -31,7 +31,6 @@ onMounted(() => {
 
 <template>
   <div v-bind="headerService">
-    <UIFloatingContactButton />
     <SectionHeroSliders />
     <SectionModels />
     <SectionSpecialOffers />
