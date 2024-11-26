@@ -92,7 +92,8 @@ const specialsSwiperBreakpoints = ref({})
         </UISlideView>
       </template>
       <template #default>
-        <button
+        <NuxtLink
+          to="/special-offers"
           class="container mt-4 flex items-center gap-2.5 text-primary md:absolute md:right-[--right] md:top-0 md:mt-0 md:w-auto md:px-0"
           :style="{ '--right': bounding.x.value + 'px' }"
         >
@@ -101,7 +102,7 @@ const specialsSwiperBreakpoints = ref({})
             <p class="text-base font-semibold">Все спецпредложения</p>
             <UITickToRight />
           </div>
-        </button>
+        </NuxtLink>
       </template>
     </UITabsContainer>
   </UISection>
