@@ -78,7 +78,7 @@ const headerItems = ref<HeaderItem[]>([
     children: [
       {
         label: 'Запись на сервис',
-        to: '#',
+        to: '/feedback',
       },
       {
         label: 'Запчасти',

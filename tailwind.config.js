@@ -1,8 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 
+const { withTV } = require('tailwind-variants/transformer')
 import plugin from 'tailwindcss/plugin'
 
-module.exports = {
+module.exports = withTV({
   content: [
     'components/**/*.vue',
     'layouts/**/*.vue',
@@ -227,4 +228,4 @@ module.exports = {
       })
     },
   ],
-}
+})
