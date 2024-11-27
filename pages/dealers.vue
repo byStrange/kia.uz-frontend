@@ -24,7 +24,7 @@ const availableOptions = computed(() => {
 
 const selectedLocation = ref(availableOptions.value[0].value)
 
-const selectedLocationConfirm = ref(availableOptions.value[0].value)
+const selectedLocationConfirm = ref()
 
 function toggleLocationPopover(event: Event) {
   locationPopover.value?.toggle(event)
@@ -88,13 +88,11 @@ useHead({
           <UIDropdownInput
             v-model:selected-option="selectedLocationConfirm"
             v-model:available-options="availableOptions"
-            :ifta="true"
+            :float-label="true"
             input-id="locationDropdown"
             placeholder="Ваш город"
-            :has-border="false"
-            overlay-class="py-4 px-3 bg-white rounded-b-8 shadow-[0_3px_4px_0px_#05141F26] !mt-0 border border-disabled"
-            option-class="py-2"
-            root-class="pt-7.5 pb-1.5 px-0 border-b-2 flex justify-between items-center relative"
+            theme="light"
+            size="large"
           />
           <UIButton
             label="Сохранить"
