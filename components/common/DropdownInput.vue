@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { IftaLabel } from 'primevue'
+import { FloatLabel } from 'primevue'
 import Select from 'primevue/select'
+import { tv } from 'tailwind-variants'
+import type { VariantProps } from 'tailwind-variants'
 
 type Option = {
   label: string
@@ -11,26 +13,68 @@ const availableOptions = defineModel<Option[]>('availableOptions')
 
 const selectedOption = defineModel<string>('selectedOption')
 
+const dropdown = tv({
+  base: 'flex justify-between items-center !rounded-none',
+  variants: {
+    theme: {
+      light: {
+        root: '!border-t-0 !border-x-0 !border-b-2 !border-b-disabled has-[:focus]:!border-b-primary !bg-transparent !px-0',
+        overlay:
+          '!mt-0 !rounded-t-none !border-disabled !rounded-b-8 !shadow-[0_3px_4px_0px_#05141F26]',
+        label: {
+          base: 'text-base !px-0 !text-primary',
+          empty: '',
+          filled: '',
+        },
+        option: 'cursor-pointer',
+      },
+      default: {
+        root: '!border-disabled px-4 bg-white',
+        overlay:
+          '!mt-0 !rounded-t-none !border-disabled !rounded-b-8 !shadow-[0_3px_4px_0px_#05141F26]',
+        label: {
+          base: 'text-base',
+          empty: '!text-caption',
+          filled: '!text-primary',
+        },
+        option: 'cursor-pointer',
+      },
+    },
+
+    size: {
+      default: {
+        label: '!p-0',
+        root: 'py-3',
+        overlay: '!py-4 !px-3',
+        option: '!py-2.5 !pl-7',
+      },
+      large: {
+        label: '!p-0',
+        root: 'py-4.5',
+        overlay: '!py-4 !px-3',
+        option: '!py-2.5 !pl-7',
+      },
+    },
+  },
+})
+
+type DropdownProps = VariantProps<typeof dropdown>
+
 withDefaults(
   defineProps<{
     optionLabel?: string
     optionValue?: string
     placeholder?: string
     inputId?: string
-    hasBorder?: boolean
-    overlayClass?: string
-    optionClass?: string
-    rootClass?: string
-    ifta?: boolean
+    size?: DropdownProps['size']
+    theme?: DropdownProps['theme']
+    floatLabel?: boolean
   }>(),
   {
     inputId: '',
-    optionClass: 'py-2 pl-7 cursor-pointer',
-    hasBorder: true,
-    rootClass: 'flex justify-between items-center px-4 py-3',
-    overlayClass:
-      '!mt-0 bg-white overflow-auto py-4 px-3 rounded-b-8 shadow-[0_3px_4px_0px_#05141F26]',
-    ifta: false,
+    theme: 'default',
+    size: 'default',
+    floatLabel: false,
     optionLabel: 'label',
     optionValue: 'value',
     placeholder: '',
@@ -39,8 +83,8 @@ withDefaults(
 </script>
 
 <template>
-  <template v-if="ifta">
-    <IftaLabel>
+  <template v-if="floatLabel">
+    <FloatLabel variant="in" :class="'theme-' + theme">
       <Select
         v-model="selectedOption"
         :options="availableOptions"
@@ -48,12 +92,11 @@ withDefaults(
         :option-value="optionValue"
         :input-id="inputId"
         class="w-full"
-        unstyled
         :pt="{
           dropdown: (props) => {
             return {
               class: [
-                'transition-all w-4 h-4',
+                'transition-all !w-4 !h-4',
                 {
                   // @ts-ignore
                   'rotate-180': props.state.clicked,
@@ -64,37 +107,41 @@ withDefaults(
           label: ({ props }) => {
             return {
               class: [
-                'text-base focus:outline-none',
+                dropdown.variants.theme[theme].label.base,
+                dropdown.variants.size[size].label,
                 {
-                  'text-caption': !props.modelValue,
-                  'text-primary': props.modelValue,
+                  [dropdown.variants.theme[theme].label.empty]:
+                    !props.modelValue,
+                  [dropdown.variants.theme[theme].label.filled]:
+                    props.modelValue,
                 },
               ],
             }
           },
           option: {
-            class: [optionClass],
+            class: [
+              dropdown.variants.theme[theme].option,
+              dropdown.variants.size[size].option,
+            ],
           },
           root: {
             class: [
-              {
-                'has-[:focus]:border-primary border border-disabled hover:border-caption':
-                  hasBorder,
-              },
-              rootClass,
+              dropdown.base,
+              dropdown.variants.theme[theme].root,
+              dropdown.variants.size[size].root,
             ],
           },
 
           overlay: {
             class: [
-              { 'border border-t-0 border-disabled ': hasBorder },
-              overlayClass,
+              dropdown.variants.theme[theme].overlay,
+              dropdown.variants.size[size].overlay,
             ],
           },
         }"
       />
       <label :for="inputId">{{ placeholder }}</label>
-    </IftaLabel>
+    </FloatLabel>
   </template>
 
   <template v-else>
@@ -106,7 +153,6 @@ withDefaults(
       :input-id="inputId"
       :placeholder
       class="w-full"
-      unstyled
       :pt="{
         dropdown: (props) => {
           return {
@@ -122,31 +168,33 @@ withDefaults(
         label: ({ props }) => {
           return {
             class: [
-              'text-base focus:outline-none',
+              dropdown.variants.theme[theme].label.base,
+              dropdown.variants.size[size].label,
               {
-                'text-caption': !props.modelValue,
-                'text-primary': props.modelValue,
+                [dropdown.variants.theme[theme].label.empty]: !props.modelValue,
+                [dropdown.variants.theme[theme].label.filled]: props.modelValue,
               },
             ],
           }
         },
         option: {
-          class: [optionClass],
+          class: [
+            dropdown.variants.theme[theme].option,
+            dropdown.variants.size[size].option,
+          ],
         },
         root: {
           class: [
-            {
-              'has-[:focus]:border-primary border border-disabled hover:border-caption':
-                hasBorder,
-            },
-            rootClass,
+            dropdown.base,
+            dropdown.variants.theme[theme].root,
+            dropdown.variants.size[size].root,
           ],
         },
 
         overlay: {
           class: [
-            { 'border border-t-0 border-disabled ': hasBorder },
-            overlayClass,
+            dropdown.variants.theme[theme].overlay,
+            dropdown.variants.size[size].overlay,
           ],
         },
       }"
@@ -154,7 +202,16 @@ withDefaults(
   </template>
 </template>
 <style>
-.p-iftalabel label {
-  left: 0 !important;
+.theme-light.p-floatlabel.p-floatlabel-in label {
+  @apply left-0;
+}
+
+.p-floatlabel .p-select-label {
+  @apply translate-y-2;
+}
+
+.p-select-option.p-select-option-selected:not(:hover),
+.p-select-option.p-select-option-selected.p-focus:not(:hover) {
+  @apply bg-[color:inherit] text-inherit;
 }
 </style>
