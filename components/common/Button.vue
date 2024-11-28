@@ -17,9 +17,9 @@ const button = tv({
     size: {
       unstyled: '',
       sm: 'px-2 py-2 text-sm md:py-3',
-      md: 'px-3  py-[14.5px] text-base md:py-4.5 md:px-10',
+      md: 'px-3  py-3 text-base md:py-4.5 md:px-10',
       'md-': 'md:px-10 py-2.5 md:py-4.5',
-      'md+': 'px-3  py-3 text-base md:py-4',
+      'md+': 'px-3  py-4.5 text-base md:px-10',
     },
     mode: {
       full: 'w-full md:w-auto',
