@@ -30,13 +30,17 @@ onMounted(() => {
         >
           <template #tab-button-right="{ tab }">
             <Transition name="slide-fade">
-              <UIDropdownInput
+              <div
                 v-if="tab.activeTab === 0"
-                v-model:available-options="options"
-                v-model:selected-option="selectedOption"
-                placeholder="Выберите спецпредложение"
-                class="max-w-4h 2xl:absolute top-0 right-0 hidden 2xl:flex"
-              />
+                class="w-4h 2xl:absolute top-0 right-0 hidden 2xl:flex"
+              >
+                <UIDropdownInput
+                  v-model:available-options="options"
+                  v-model:selected-option="selectedOption"
+                  placeholder="Выберите спецпредложение"
+                  class="w-full"
+                />
+              </div>
             </Transition>
           </template>
           <template #1>
@@ -45,35 +49,38 @@ onMounted(() => {
                 v-model:available-options="options"
                 v-model:selected-option="selectedOption"
                 placeholder="Выберите спецпредложение"
-                class="max-w-4h 2xl:hidden"
+                class="max-w-4h 2xl:!hidden"
               />
 
               <div
                 class="space-y-7.5 pt-10 pb-11 md:grid md:grid-cols-2 md:space-y-0 md:gap-7.5 md:place-content-center 2xl:grid-cols-4"
               >
-                <div
+                <NuxtLink
                   v-for="item in specials"
-                  class="w-full max-w-[420px] mx-auto"
+                  :key="item.title"
+                  to="/special-offers/buy-benefit-up-to-94880000-sum-sorento-k8-cerato-seltos-and-bongo"
                 >
-                  <div class="mx-auto h-full bg-background">
-                    <img
-                      :src="item.thumbnail"
-                      class="h-[190px] w-full object-cover"
-                      loading="lazy"
-                    />
+                  <div class="w-full max-w-[420px] mx-auto">
+                    <div class="mx-auto h-full bg-background">
+                      <img
+                        :src="item.thumbnail"
+                        class="h-[190px] w-full object-cover"
+                        loading="lazy"
+                      />
 
-                    <div class="p-4">
-                      <div class="text-left h-[86px]">
-                        <h2 class="text-sm font-semibold">
-                          {{ item.title }}
-                        </h2>
-                        <p class="mt-1 text-sm text-primary">
-                          {{ item.description }}
-                        </p>
+                      <div class="p-4">
+                        <div class="text-left h-[86px]">
+                          <h2 class="text-sm font-semibold">
+                            {{ item.title }}
+                          </h2>
+                          <p class="mt-1 text-sm text-primary">
+                            {{ item.description }}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </NuxtLink>
               </div>
             </div>
           </template>
