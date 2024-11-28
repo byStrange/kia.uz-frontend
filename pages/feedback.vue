@@ -85,6 +85,7 @@ onMounted(() => {
           color="secondary"
           mode="full"
           class="mx-auto mt-8 2xl:mt-10"
+          @click="isPrivacyDialogVisible = false"
         />
       </div>
     </Dialog>
