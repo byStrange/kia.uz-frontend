@@ -7,6 +7,8 @@ const { bounding } = useContainer()
 
 const { headerService } = useHeaderService()
 
+const { src } = useUploadcareSource()
+
 const example = {
   model: 'Sorento',
   option: 'Comfort 5S (G1Q8)',
@@ -52,17 +54,22 @@ onMounted(() => {
       <picture>
         <source
           media="(min-width: 1600px)"
-          :srcset="`https://ucarecdn.com/c4cf135d-9589-487e-b461-bdaa8c182d02/-/crop/1439x692/0,258/-/preview/3000x3000/438b1403d5a9198cef0a0d3906f6c60c`"
+          :srcset="
+            src('c4cf135d-9589-487e-b461-bdaa8c182d02', {
+              crop: '1439x692/0,258',
+              preview: '3000x3000/438b1403d5a9198cef0a0d3906f6c60c',
+            })
+          "
         />
         <source
-          srcset="
-            https://ucarecdn.com/d3ca786f-29fa-45ac-b5de-ef5da8f64557/-/preview/1440x600/-/format/auto/-/quality/smart/
+          :srcset="
+            src('d3ca786f-29fa-45ac-b5de-ef5da8f64557', { preview: '1440x600' })
           "
           media="(min-width: 1440px)"
         />
         <source
-          srcset="
-            https://ucarecdn.com/16c972c6-01c4-4aa4-a695-ec1552e6303d/-/preview/768x420/-/format/auto/-/quality/smart/
+          :srcset="
+            src('16c972c6-01c4-4aa4-a695-ec1552e6303d', { preview: '768x420' })
           "
           media="(min-width: 768px)"
         />
@@ -137,7 +144,7 @@ onMounted(() => {
             условиях. Предложение действует на ограниченное количество
             автомобилей. Узнайте подробности прямо сейчас!
           </p>
-          <div class="border border-b-protection"></div>
+          <div class="border border-protection"></div>
           <div class="space-y-1 2xl:self-center">
             <p class="text-sm md:text-base+">Подробная информация по номеру</p>
             <span class="text-2xl font-semibold">1333</span>
