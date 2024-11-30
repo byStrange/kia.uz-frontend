@@ -60,7 +60,7 @@ onMounted(() => {
         root: '!rounded-none 2xl:h-full 2xl:!max-h-[758px]',
         mask: 'px-3',
         header:
-          '!px-8 !pt-8 !pb-5 border-b border-b-protection 2xl:w-[624px] 2xl:!mx-auto 2xl:!px-0 2xl:!pt-20',
+          '!px-8 !pt-8 !pb-5 border-b border-protection 2xl:w-[624px] 2xl:!mx-auto 2xl:!px-0 2xl:!pt-20',
         content: '!pt-5 2xl:!px-0 2xl:max-w-[624px] 2xl:mx-auto',
         pcCloseButton: {
           root: '!absolute top-3 right-3 md:top-4 md:right-4 2xl:top-6 2xl:right-6',
@@ -94,7 +94,7 @@ onMounted(() => {
     </UIContainer>
     <div>
       <h1
-        class="text-primary text-2xl font-semibold py-7.5 border-b border-b-protection md:text-4xl container 2xl:text-7xl 2xl:py-10"
+        class="text-primary text-2xl font-semibold py-7.5 border-b border-protection md:text-4xl container 2xl:text-7xl 2xl:py-10"
       >
         Обратная связь
       </h1>
@@ -104,7 +104,7 @@ onMounted(() => {
           class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px]"
         >
           <template #title>
-            <div class="pb-8 border-b border-b-protection">
+            <div class="pb-8 border-b border-protection">
               <h4 class="text-sm md:text-base">Горячая линия</h4>
               <span class="mt-1 text-lg font-semibold md:text-2xl">1333</span>
             </div>

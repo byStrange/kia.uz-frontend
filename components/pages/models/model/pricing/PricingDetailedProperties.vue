@@ -130,7 +130,7 @@ onMounted(() => {
         <PrimeAccordionPanel :value="0" unstyled>
           <PrimeAccordionHeader
             unstyled
-            class="py-3 flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl border-b-2 border-b-protection"
+            class="py-3 flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl border-b-2 border-protection"
             >Стандартное оборудование</PrimeAccordionHeader
           >
           <PrimeAccordionContent
@@ -171,7 +171,7 @@ onMounted(() => {
         >
           <PrimeAccordionHeader
             unstyled
-            class="py-3 flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl border-b-2 border-b-protection"
+            class="py-3 flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl border-b-2 border-protection"
             >{{ tab }}</PrimeAccordionHeader
           >
           <PrimeAccordionContent unstyled>

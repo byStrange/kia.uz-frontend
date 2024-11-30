@@ -44,7 +44,7 @@
   }
 
   #header.hover {
-    @apply border-b-protection bg-white;
+    @apply border-protection bg-white;
   }
 
   #header.hover a,

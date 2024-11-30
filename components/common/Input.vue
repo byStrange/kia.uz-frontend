@@ -10,7 +10,7 @@ const input = tv(
 
     variants: {
       theme: {
-        light: '!border-t-0 !border-x-0 !px-0 !border-b-protection',
+        light: '!border-t-0 !border-x-0 !px-0 !border-protection',
         default: '!border-protection !px-4 bg-white',
       },
       size: {

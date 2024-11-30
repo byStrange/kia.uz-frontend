@@ -17,7 +17,10 @@ const { height } = useDynamicHeight(['#header'])
       @click.self="closeExtendedMenu"
     >
       <div class="bg-white 2xl:flex 2xl:bg-transparent">
-        <div class="divide-y divide-protection divide-opacity-60 2xl:hidden">
+        <div
+          class="divide-y divide-protection divide-opacity-60 2xl:hidden"
+          v-if="!headerService.extendedMenu"
+        >
           <UIMenuItem
             v-for="item in headerService.routes"
             :key="item.label"
