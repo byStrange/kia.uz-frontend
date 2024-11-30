@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { offset } = useContainer()
+const { src } = useUploadcareSource()
 </script>
 <template>
   <div class="h-screen overflow-hidden bg-primary">
@@ -34,18 +35,18 @@ const { offset } = useContainer()
       </div>
       <picture class="h-full w-full" data-label="Main Hero image">
         <source
-          srcset="https://ucarecdn.com/141e96f9-a90b-41e2-947c-1b3f6b9712f6/"
+          :srcset="src('141e96f9-a90b-41e2-947c-1b3f6b9712f6')"
           media="(min-width: 1024px)"
-        >
+        />
 
         <source
-          srcset="https://ucarecdn.com/48b7e2b2-dcf3-40c1-912a-83bef358396c/"
+          :srcset="src('48b7e2b2-dcf3-40c1-912a-83bef358396c')"
           media="(min-width: 768px)"
-        >
+        />
         <img
-          src="https://ucarecdn.com/7697fb74-fadd-4192-8a5e-5f0491567ff6/"
+          :src="src('7697fb74-fadd-4192-8a5e-5f0491567ff6')"
           class="w-full object-cover 2xl:h-full md:h-[73%]"
-        >
+        />
       </picture>
       <div
         data-label="Hero bottom"

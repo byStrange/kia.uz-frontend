@@ -2,24 +2,25 @@
 const { bounding } = useContainer()
 const { headerService } = useHeaderService()
 
+const { src } = useUploadcareSource()
+
 const extraLinksCard = [
   {
     title: 'Бренд',
     href: '#',
-    image:
-      'https://ucarecdn.com/8701cf69-f335-45be-b0d7-2c939d629d0f/-/preview/1000x664/',
+    image: src('8701cf69-f335-45be-b0d7-2c939d629d0f', { preview: '1000x664' }),
   },
   {
     title: 'Kia в Узбекистане',
     href: '#',
-    image:
-      'https://ucarecdn.com/907872e6-383c-4eee-8d95-4779a60485ca/-/preview/1000x664/',
+    image: src('907872e6-383c-4eee-8d95-4779a60485ca', { preview: '1000x664' }),
   },
   {
     title: 'Технологии',
     href: '#',
-    image:
-      'https://ucarecdn.com/b3436484-91af-4e8c-9678-d36a564a1a3f/-/preview/1000x664/',
+    image: src('b3436484-91af-4e8c-9678-d36a564a1a3f', {
+      preview: '1000x664',
+    }),
   },
 ]
 onMounted(() => {
@@ -43,19 +44,27 @@ onMounted(() => {
         <picture>
           <source
             media="(min-width: 1024px)"
-            srcset="
-              https://ucarecdn.com/47fd9450-1106-44ba-b977-dfe1795a0f05/-/preview/1000x720/
+            :srcset="
+              src('47fd9450-1106-44ba-b977-dfe1795a0f05', {
+                preview: '1000x720',
+              })
             "
           />
           <source
-            srcset="
-              https://ucarecdn.com/32d3bffb-f001-4406-a6c0-517ca367af7f/-/preview/827x999/
+            :srcset="
+              src('32d3bffb-f001-4406-a6c0-517ca367af7f', {
+                preview: '827x999',
+              })
             "
             media="(min-width: 768px)"
           />
           <img
             loading="lazy"
-            src="https://ucarecdn.com/9ae43504-1cfc-4d2b-9137-b40a5473ffce/-/preview/1000x597/"
+            :src="
+              src('9ae43504-1cfc-4d2b-9137-b40a5473ffce', {
+                preview: '1000x597',
+              })
+            "
             class="img h-[187px] w-full max-w-[640px] bg-gray-200 md:absolute md:right-0 md:h-full md:w-1/2"
           />
         </picture>

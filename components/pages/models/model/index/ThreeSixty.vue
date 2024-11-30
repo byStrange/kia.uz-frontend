@@ -9,6 +9,8 @@ const availableColors = ref([
   '#7E2E35',
   '#8F9998',
 ])
+
+const { src } = useUploadcareSource()
 </script>
 <template>
   <div data-label="360 view" class="container py-10 md:py-15 2xl:py-20">
@@ -20,14 +22,16 @@ const availableColors = ref([
     </div>
     <picture>
       <source
-        srcset="
-          https://ucarecdn.com/9a342c87-7ca1-43d4-abb0-1b505840f0c6/-/preview/768x432/
+        :srcset="
+          src('9a342c87-7ca1-43d4-abb0-1b505840f0c6', { preview: '768x432' })
         "
         media="(min-width: 1440px)"
       />
       <img
         loading="lazy"
-        src="https://ucarecdn.com/40aceb5c-0188-4362-bacd-86dd776ce86b/-/preview/1000x501/"
+        :src="
+          src('40aceb5c-0188-4362-bacd-86dd776ce86b', { preview: '1000x501' })
+        "
         class="w-full my-4 2xl:mt-8 md:mt-6 2xl:mb-0 2xl:w-auto 2xl:mx-auto"
       />
     </picture>

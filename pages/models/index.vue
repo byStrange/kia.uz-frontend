@@ -15,7 +15,7 @@ const availableOptions = ref([
   { label: 'Seed', value: 'seed' },
 ])
 
-const selectedOption = ref(null)
+const selectedOption = ref('')
 
 type ModelGroup = {
   label: string

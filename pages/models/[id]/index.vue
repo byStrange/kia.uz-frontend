@@ -3,10 +3,15 @@ import { useContainer } from '@/composables/useContainer'
 
 const { bounding } = useContainer()
 const { headerService } = useHeaderService()
+const { src } = useUploadcareSource()
 
 definePageMeta({
   layout: 'model-layout',
 })
+
+function url(s: string): string {
+  return `url('${s}')`
+}
 
 const variants = ref([
   {
@@ -254,8 +259,9 @@ const { courses } = useStore()
       subtitle="Консультация"
       class="container bg-no-repeat bg-[length:100%_294px] md:bg-[length:100%_405px] 2xl:bg-[length:100%_500px] 2xl:pt-1h"
       :style="{
-        '--background-image-url':
-          'url(https://ucarecdn.com/a1c7c1cf-4da7-4d94-99c6-875d0ae2c0b8/)',
+        '--background-image-url': url(
+          src('a1c7c1cf-4da7-4d94-99c6-875d0ae2c0b8'),
+        ),
         backgroundImage: 'var(--background-image-url)',
       }"
     >
@@ -288,19 +294,27 @@ const { courses } = useStore()
           <picture>
             <source
               media="(min-width: 1440px)"
-              srcset="
-                https://ucarecdn.com/8a65cac6-38ee-423e-b2ff-a0956b9e931a/-/preview/1090x432/
+              :srcset="
+                src('8a65cac6-38ee-423e-b2ff-a0956b9e931a', {
+                  preview: '1090x432',
+                })
               "
             />
             <source
-              srcset="
-                https://ucarecdn.com/883cdd7b-0dd4-497f-b7b2-851a82681f6f/-/preview/543x247/
+              :srcset="
+                src('883cdd7b-0dd4-497f-b7b2-851a82681f6f', {
+                  preview: '543x247',
+                })
               "
               media="(min-width: 768px)"
             />
             <img
               class="w-full my-4 md:my-6 2xl:mb-1.5 2xl:mt-5"
-              src="https://ucarecdn.com/bb0d5bc2-3996-48bd-8e7e-249b03311384/-/preview/313x143/"
+              :src="
+                src('bb0d5bc2-3996-48bd-8e7e-249b03311384', {
+                  preview: '313x143',
+                })
+              "
             />
           </picture>
           <div class="2xl:grid 2xl:grid-cols-12 2xl:gap-grid-12-gap">

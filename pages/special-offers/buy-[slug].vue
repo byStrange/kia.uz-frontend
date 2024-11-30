@@ -75,7 +75,9 @@ onMounted(() => {
         />
         <img
           class="w-full absolute top-0 left-0 h-2/3 object-cover md:h-auto"
-          src="https://ucarecdn.com/a9a133a8-6bb2-4862-b3e4-d0053e85fa44/-/preview/375x490/-/format/auto/-/quality/smart/"
+          :src="
+            src('a9a133a8-6bb2-4862-b3e4-d0053e85fa44', { preview: '375x490' })
+          "
         />
       </picture>
       <div
