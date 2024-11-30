@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import type { UITabsContainer } from '#components'
-
 const { headerService } = useHeaderService()
 
 const options = ref([{ label: 'model', value: 'model' }])
 const selectedOption = ref()
 
 const { specials } = useStore()
+const { src } = useUploadcareSource()
 
 onMounted(() => {
   headerService.value.isHeaderFixed = true
@@ -91,7 +90,11 @@ onMounted(() => {
               <div class="w-full max-w-[420px] mx-auto">
                 <div class="mx-auto h-full bg-background">
                   <img
-                    src="https://ucarecdn.com/b91b27cd-b3b8-4dd9-84df-622c45ed82b0/-/preview/313x190/"
+                    :src="
+                      src('b91b27cd-b3b8-4dd9-84df-622c45ed82b0', {
+                        preview: '313x190',
+                      })
+                    "
                     class="h-[190px] w-full object-cover"
                     loading="lazy"
                   />

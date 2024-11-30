@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { src } = useUploadcareSource()
+</script>
 <template>
   <div
     data-label="Hero top"
@@ -41,11 +43,15 @@
       </div>
       <div class="py-6 my-5 md:py-10 md:my-0">
         <picture>
-          <source >
+          <source />
           <img
             class="2xl:max-w-6h-10 mx-auto"
-            src="https://ucarecdn.com/8468f693-0741-409d-9b50-b8db499ecc26/-/preview/313x118"
-          >
+            :src="
+              src('8468f693-0741-409d-9b50-b8db499ecc26', {
+                preview: '313x118',
+              })
+            "
+          />
         </picture>
       </div>
       <div
