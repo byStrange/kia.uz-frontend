@@ -8,5 +8,7 @@ node_modules
 .DS_Store
 ecosystem.config.js
 
+coc-settings.json
+
 .data
 .wrangler
