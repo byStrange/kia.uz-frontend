@@ -35,7 +35,7 @@ export const useUploadcareSource = () => {
       .map(([_option, _value]) => `/-/${_option}/${_value}`)
       .join('')
 
-    return `${UPLOADCARE_CDN_URL}/${uuid}${_optStr}`
+    return `${UPLOADCARE_CDN_URL}/${uuid}${_optStr}/`
   }
 
   /*
