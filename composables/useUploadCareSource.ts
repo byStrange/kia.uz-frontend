@@ -16,12 +16,16 @@ export const useUploadcareSource = () => {
   }
 
   // Function to generate the Uploadcare URL
-  const src = (uuid: string, option?: UploadcareOption): string => {
+  const src = (
+    uuid: string,
+    option?: UploadcareOption,
+    trailingSlash: boolean = true,
+  ): string => {
     if (!uuid) {
       throw new Error('UUID is required to generate the Uploadcare URL.')
     }
 
-    // format/quality/crop options only work when preview is set 
+    // format/quality/crop options only work when preview is set
     let _opt
     if (option?.preview) {
       _opt = { ...defaultOption, ...option }
@@ -32,10 +36,10 @@ export const useUploadcareSource = () => {
     // Build the option string
     const _optStr = Object.entries(_opt)
       .filter(([_option, _value]) => _value !== undefined) // Ignore undefined values
-      .map(([_option, _value]) => `/-/${_option}/${_value}`)
+      .map(([_option, _value]) => (_value ? `/-/${_option}/${_value}` : ''))
       .join('')
 
-    return `${UPLOADCARE_CDN_URL}/${uuid}${_optStr}/`
+    return `${UPLOADCARE_CDN_URL}/${uuid}${_optStr}${trailingSlash ? '/' : ''}`
   }
 
   /*
