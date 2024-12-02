@@ -198,7 +198,7 @@ const processedSections = computed(() => {
               >
                 <div
                   v-for="(item, index) in tab.items"
-                  :key="index * Math.random()"
+                  :key="item.label"
                   class="space-y-2 2xl:flex justify-between items-center"
                   :class="index === 0 ? '2xl:pb-10' : '2xl:py-10'"
                 >
@@ -220,7 +220,7 @@ const processedSections = computed(() => {
               >
                 <div
                   v-for="(item, index) in tab.items"
-                  :key="index * Math.random()"
+                  :key="item.label"
                   class="space-y-2 2xl:flex justify-between items-center"
                   :class="index === 0 ? '2xl:pb-10' : '2xl:py-10'"
                 >
