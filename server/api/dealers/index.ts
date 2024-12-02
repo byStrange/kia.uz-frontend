@@ -1,24 +1,36 @@
-export default defineEventHandler(async () => {
-  interface Dealer {
-    name: string
-    address: string
-    phone: string
-    workingHours: string
-    location: {
-      lat: number
-      lng: number
-    }
+export interface Dealer {
+  name: string
+  address: string
+  phone: string
+  workingHours: string
+  location: {
+    lat: number
+    lng: number
   }
+}
 
+export default defineEventHandler(async () => {
   const cities = [
     {
       name: 'Ташкент',
+      location: {
+        lat: 69.279737,
+        lng: 41.311151,
+      },
     },
     {
       name: 'Яккасарай',
+      location: {
+        lat: 69.243539,
+        lng: 41.28209,
+      },
     },
     {
       name: 'Андижан',
+      location: {
+        lat: 72.352487,
+        lng: 40.76721,
+      },
     },
   ]
   const dealers: Dealer[] = [
