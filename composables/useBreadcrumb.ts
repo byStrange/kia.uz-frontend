@@ -20,7 +20,11 @@ export const useBreadcrumbs = (route: any, router: any) => {
       const match = router.resolve(path)
       if (match.name !== null && param !== locale.value) {
         crumbs.push({
-          title: toTitleCase(param.replace(/-/g, ' ')),
+          title: toTitleCase(
+            param.split(':').length > 1
+              ? param.split(':')[1].replace(/-/g, ' ')
+              : param.replace(/-/g, ' '),
+          ),
           ...match,
         })
       }
