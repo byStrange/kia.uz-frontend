@@ -91,9 +91,7 @@ onMounted(() => {
             свой автомобиль в счет стоимости нового Kia.
           </p>
           <div>
-            <h3 class="font-semibold">
-              Все, что от вас требуется — это:
-            </h3>
+            <h3 class="font-semibold">Все, что от вас требуется — это:</h3>
             <ul class="space-y-4 py-6 md:py-0 md:mt-4.5">
               <li class="flex items-start gap-2.5">
                 <UICheckIcon class="size-5 shrink-0" />
@@ -181,17 +179,3 @@ onMounted(() => {
     </UIContainer>
   </div>
 </template>
-
-<style>
-.p-datatable th,
-.p-datatable td {
-  @apply text-primary;
-}
-.p-datatable.p-datatable-striped .p-datatable-tbody > tr.p-row-odd {
-  @apply !bg-transparent;
-}
-
-.p-datatable.p-datatable-striped .p-datatable-tbody > tr.p-row-even {
-  @apply bg-background;
-}
-</style>
