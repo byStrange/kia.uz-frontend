@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Popover } from 'primevue'
+import type { Dealer } from '~/server/api/dealers'
 
 declare const ymaps3: any
 
@@ -18,40 +19,103 @@ const availableOptions = computed(() => {
     data.value?.cities.map((city) => ({
       label: city.name,
       value: city.name,
+      location: city.location,
     })) || []
   )
 })
 
-const selectedLocation = ref(availableOptions.value[0].value)
+const selectedLocation = ref(availableOptions.value[0])
 
 const selectedLocationConfirm = ref()
+
+const currentSelectedDealer = ref<Dealer | null>(null)
+
+const fetchIcon = async (src: string) => {
+  return await fetch(src)
+    .then((res) => res.text())
+    .then((text) => {
+      return text
+    })
+}
+
+const generateMarkerTemplate = (dealer: Dealer, id: string, icon?: string) => {
+  const iconWrapper = document.createElement('div')
+  iconWrapper.className = 'absolute left-0 -translate-x-1/2'
+  iconWrapper.innerHTML = icon || ''
+  return `
+    <label class="bg-white rounded-r py-2 pr-2.5 pl-5 relative flex items-center bg-opacity-90 text-primary has-[:checked]:text-forest-green" id="${id}">
+     <input type="radio" name="dealer" value="${id}" class="sr-only hidden">
+     ${iconWrapper.outerHTML}
+     <span class="text-nowrap text-xs text-primary">${dealer.name}</span>
+    </label>
+  `
+}
 
 function toggleLocationPopover(event: Event) {
   locationPopover.value?.toggle(event)
 }
 
+function closeDealerPopover(dealerName: string) {
+  let dealerId = 'd' + dealerName.split(' ').join('-')
+  currentSelectedDealer.value = null
+  const input = document.querySelector(
+    `[value="${dealerId}"]`,
+  ) as HTMLInputElement
+  if (input) input.checked = false
+}
+
 function saveLocation(event: Event) {
-  selectedLocation.value = selectedLocationConfirm.value
+  const re = availableOptions.value.find(
+    (d) => (d.value = selectedLocationConfirm.value),
+  )
+  if (re) selectedLocation.value = re
   toggleLocationPopover(event)
 }
 
 async function initMap() {
+  const icon = await fetchIcon('/icons/map-pin.svg')
   await ymaps3.ready
 
-  const { YMap, YMapDefaultSchemeLayer } = ymaps3
+  const { YMap, YMapDefaultSchemeLayer, YMapDefaultFeaturesLayer, YMapMarker } =
+    ymaps3
 
   const map = new YMap(
     document.getElementById('map'),
 
     {
       location: {
-        center: [25.229762, 55.289311],
+        center: [
+          selectedLocation.value.location.lat,
+          selectedLocation.value.location.lng,
+        ],
         zoom: 10,
       },
     },
   )
 
   map.addChild(new YMapDefaultSchemeLayer())
+  map.addChild(new YMapDefaultFeaturesLayer())
+
+  data.value?.dealers.forEach((dealer) => {
+    const content = document.createElement('div')
+    content.onclick = (event) => {
+      const target = event.currentTarget as HTMLElement
+      const dealerId = target?.dataset.dealerId || ''
+      const dealerName = dealerId.split('-').join(' ').slice(1)
+      const result = data.value?.dealers.find((d) => d.name === dealerName)
+      if (result) currentSelectedDealer.value = result
+    }
+    let id = 'd' + dealer.name.split(' ').join('-')
+    content.dataset.dealerId = id
+    content.innerHTML = generateMarkerTemplate(dealer, id, icon)
+    const marker = new YMapMarker(
+      {
+        coordinates: [dealer.location.lat, dealer.location.lng],
+      },
+      content,
+    )
+    map.addChild(marker)
+  })
 }
 
 onMounted(() => {
@@ -74,12 +138,12 @@ useHead({
   <UISafeAreaView>
     <div class="container pt-7.5 2xl:pt-6">
       <UIBreadcrumb class="hidden 2xl:block" theme="dark" />
-      <h1 class="text-2xl font-semibold text-primary md:text-5xl">
+      <h1 class="text-2xl font-semibold text-primary md:text-5xl 2xl:mt-10">
         Официальные дилеры Kia
       </h1>
     </div>
 
-    <div class="mt-5">
+    <div class="mt-5 2xl:mt-10">
       <Popover ref="locationPopover" unstyled>
         <div
           class="bg-white p-5 border w-[--width] md:w-[378px] space-y-10 mt-4"
@@ -106,7 +170,9 @@ useHead({
       <div class="container">
         <button class="space-x-2.5 flex" @click="toggleLocationPopover">
           <UICompassIcon />
-          <span class="text-primary text-base">{{ selectedLocation }}</span>
+          <span class="text-primary text-base">{{
+            selectedLocation.label
+          }}</span>
         </button>
       </div>
 
@@ -118,7 +184,44 @@ useHead({
         :cache="true"
       >
         <template #1>
-          <div id="map" class="h-5h w-full"></div>
+          <div class="relative">
+            <Transition name="slide-fade">
+              <div
+                v-if="currentSelectedDealer"
+                class="border-2 absolute z-[1000] left-[--x] top-5 border-primary p-7.5 text-primray bg-white w-[--width] 2xl:w-[320px]"
+                :style="{
+                  '--width': bounding.width.value + 'px',
+                  '--x': bounding.x.value + 'px',
+                }"
+              >
+                <button
+                  class="absolute top-3 right-3 text-primary cursor-pointer"
+                  @click="closeDealerPopover(currentSelectedDealer.name)"
+                >
+                  <UIXIcon class="size-5" />
+                </button>
+                <h1 class="text-base font-semibold 2xl:text-lg">
+                  {{ currentSelectedDealer.name }}
+                </h1>
+                <div class="space-y-2 mt-3 2xl:mt-4">
+                  <p class="text-sm md:text-base+">
+                    {{ currentSelectedDealer.address }}
+                  </p>
+                  <div class="flex gap-2 items-center">
+                    <UIPhoneIcon class="size-5" />
+                    <span class="text-xs md:text-base+">{{
+                      currentSelectedDealer.phone
+                    }}</span>
+                  </div>
+                  <p class="text-caption text-xs md:text-sm">
+                    {{ currentSelectedDealer.workingHours }}
+                  </p>
+                </div>
+              </div>
+            </Transition>
+
+            <div id="map" class="h-5h w-full"></div>
+          </div>
         </template>
         <template #2>
           <div class="container pb-10">
