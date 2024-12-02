@@ -42,6 +42,14 @@ module.exports = withTV({
         sm: ['14px', '18px'],
         base: ['16px', '21px'],
         'base+': ['16px', '24px'],
+        '2xl': [
+          '24px',
+          {
+            lineHeight: '32px',
+            fontWeight: 600,
+            letterSpacing: '-0.48px',
+          },
+        ],
         '3xl': [
           '32px',
           {
