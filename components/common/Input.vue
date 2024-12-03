@@ -6,16 +6,16 @@ const value = defineModel({ default: '' })
 
 const input = tv(
   {
-    base: '!rounded-none hover:!border-caption focus:!border-primary !text-base+ !text-primary',
+    base: 'rounded-none hover:border-caption focus:border-primary border-b text-base+ text-primary focus:outline-none',
 
     variants: {
       theme: {
-        light: '!border-t-0 !border-x-0 !px-0 !border-protection',
-        default: '!border-protection !px-4 bg-white',
+        light: 'border-protection',
+        default: 'border-protection px-4 bg-white',
       },
       size: {
-        large: '!pt-6 !pb-3', // overally py-4.5
-        default: '!pt-5 !pb-1', // overall py-3
+        large: 'pt-6 pb-3', // overally py-4.5
+        default: 'pt-5 pb-1', // overall py-3
       },
     },
   },
@@ -47,6 +47,7 @@ withDefaults(
     :pt="{ root: { style: '--p-floatlabel-position-x: 16px' } }"
   >
     <InputText
+      unstyled
       :inputId="inputId"
       v-bind="inputProps"
       :pt="{
