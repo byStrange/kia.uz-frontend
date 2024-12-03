@@ -6,7 +6,7 @@ const value = defineModel({ default: '' })
 
 const input = tv(
   {
-    base: 'rounded-none hover:border-caption focus:border-primary border-b text-base+ text-primary focus:outline-none',
+    base: 'w-full rounded-none hover:border-caption focus:border-primary border-b text-base+ text-primary focus:outline-none',
 
     variants: {
       theme: {
