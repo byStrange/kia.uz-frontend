@@ -18,24 +18,24 @@ const dropdown = tv({
   variants: {
     theme: {
       light: {
-        root: '!border-t-0 !border-x-0 !border-b-2 !border-b-disabled has-[:focus]:!border-b-primary !bg-transparent !px-0',
+        root: 'border-b-2 border-disabled has-[:focus]:border-primary bg-white px-0',
         overlay:
-          '!mt-0 !rounded-t-none !border-disabled !rounded-b-8 !shadow-[0_3px_4px_0px_#05141F26]',
+          'bg-white border !mt-0 border-disabled bg-red-300 rounded-b-8 shadow-[0_3px_4px_0px_#05141F26] overflow-auto',
         label: {
-          base: 'text-base !px-0 !text-primary',
+          base: 'text-base px-0 text-primary line-clamp-1',
           empty: '',
           filled: '',
         },
         option: 'cursor-pointer',
       },
       default: {
-        root: '!border-disabled px-4 bg-white',
+        root: 'border border-disabled px-4 bg-white',
         overlay:
-          '!mt-0 !rounded-t-none !border-disabled !rounded-b-8 !shadow-[0_3px_4px_0px_#05141F26]',
+          'bg-white border !mt-0 border-disabled rounded-b-8 shadow-[0_3px_4px_0px_#05141F26] overflow-auto',
         label: {
-          base: 'text-base',
-          empty: '!text-caption',
-          filled: '!text-primary',
+          base: 'text-base focus:outline-none line-clamp-1',
+          empty: 'text-caption',
+          filled: 'text-primary',
         },
         option: 'cursor-pointer',
       },
@@ -45,14 +45,14 @@ const dropdown = tv({
       default: {
         label: '!p-0',
         root: 'py-3 2xl:py-4.5',
-        overlay: '!py-4 !px-3',
-        option: '!py-2.5 !pl-7',
+        overlay: 'py-4 px-3',
+        option: 'py-2.5 pl-7',
       },
       large: {
         label: '!p-0',
         root: 'py-4.5',
-        overlay: '!py-4 !px-3',
-        option: '!py-2.5 !pl-7',
+        overlay: 'py-4 px-3',
+        option: 'py-2.5 pl-7',
       },
     },
   },
@@ -83,6 +83,7 @@ withDefaults(
 <template>
   <FloatLabel variant="in" :class="'theme-' + theme">
     <Select
+      unstyled
       v-model="selectedOption"
       :options="availableOptions"
       :option-label="optionLabel"
@@ -91,7 +92,7 @@ withDefaults(
       class="w-full"
       :pt="{
         list: '!p-0',
-        optionLabel: 'w-[240px] text-balance md:w-auto',
+        optionLabel: 'w-[240px] text-balance md:w-auto block',
         dropdown: (props) => {
           return {
             class: [
@@ -111,6 +112,7 @@ withDefaults(
               {
                 [dropdown.variants.theme[theme].label.empty]: !props.modelValue,
                 [dropdown.variants.theme[theme].label.filled]: props.modelValue,
+                'p-inputwrapper-filled p-select-label': props.modelValue,
               },
             ],
           }
