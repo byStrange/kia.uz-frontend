@@ -168,11 +168,10 @@ const processedSections = computed(() => {
           ref="slidesRef"
           :data="section.meta.slides"
           class="2xl:pointer-events-none 2xl:max-w-[620px]"
-          paginator-class="2xl:hidden"
+          paginator-class="2xl:hidden mt-4"
           :space-between="0"
           :breakpoints-enabled="false"
           :navigation="false"
-          pagination-mt="1rem"
         >
           <template #slide="{ item }">
             <img
