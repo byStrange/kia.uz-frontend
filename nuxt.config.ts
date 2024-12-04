@@ -1,6 +1,15 @@
 const { SITE_NAME, SITE_URL } = process.env
 
 export default defineNuxtConfig({
+  experimental: {
+    defaults: {
+      nuxtLink: {
+        prefetchOn: {
+          interaction: true,
+        },
+      },
+    },
+  },
   app: {
     layoutTransition: { name: 'layout', mode: 'out-in' },
     pageTransition: { name: 'page', mode: 'out-in' },
