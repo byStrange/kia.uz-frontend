@@ -6,10 +6,8 @@
           <div
             v-if="index !== breadcrumbs.length - 1"
             class="flex items-center"
-            :data-test="JSON.stringify(crumb)"
           >
             <NuxtLinkLocale
-              :data-test="crumb.fullPath"
               :to="crumb.fullPath"
               :class="[
                 styles({ theme }),
