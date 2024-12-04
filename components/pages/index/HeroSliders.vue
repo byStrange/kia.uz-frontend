@@ -87,17 +87,17 @@ const slidesLength = computed(() => {
               <source
                 srcset="@/assets/test/kia-test-hero-img.png"
                 media="(min-width: 1024px)"
-              >
+              />
 
               <source
                 srcset="@/assets/test/kia-test-hero-img-tablet.png"
                 media="(min-width: 768px)"
-              >
+              />
               <img
                 loading="lazy"
                 src="@/assets/test/kia-test-hero-img-mobile.png"
                 class="h-[75%] w-full object-cover md:h-[80%] 2xl:h-full"
-              >
+              />
             </picture>
             <div
               class="absolute container 2xl:px-0 left-0 bottom-[88px] z-40 flex w-full max-w-[540px] items-end justify-center md:bottom-[100px] md:justify-start md:pb-0 2xl:left-[--left]"
@@ -138,6 +138,6 @@ const slidesLength = computed(() => {
 
 <style>
 .swiper-pagination {
-  @apply !bottom-10 flex justify-center md:!bottom-12;
+  @apply flex !bottom-10 !justify-center md:!bottom-12;
 }
 </style>
