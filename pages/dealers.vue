@@ -6,8 +6,6 @@ declare const ymaps3: any
 
 const runtimeConfig = useRuntimeConfig()
 
-const { headerService } = useHeaderService()
-
 const { data } = await useFetch('/api/dealers')
 
 const { bounding } = useContainer()
@@ -119,9 +117,11 @@ async function initMap() {
 }
 
 onMounted(() => {
-  headerService.value.isHeaderFixed = true
-  headerService.value.lockHover = true
   initMap()
+})
+
+definePageMeta({
+  lockHover: true,
 })
 
 useHead({

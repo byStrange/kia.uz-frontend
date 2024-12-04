@@ -1,15 +1,12 @@
 <script setup lang="ts">
-const { headerService } = useHeaderService()
-
 const options = ref([{ label: 'model', value: 'model' }])
 const selectedOption = ref()
 
 const { specials } = useStore()
 const { src } = useUploadcareSource()
 
-onMounted(() => {
-  headerService.value.isHeaderFixed = true
-  headerService.value.lockHover = true
+definePageMeta({
+  lockHover: true,
 })
 </script>
 <template>

@@ -185,8 +185,29 @@ const closeExtendedMenu = () => {
   isLocked.value = false
 }
 
+/**
+ * Locks the header
+ *
+ * Locking header means that the header will be
+ * fixed on the top of the page and will
+ * have background of white not transparent
+ *
+ */
+const lockHeader = () => {
+  headerService.value.lockHover = true
+  headerService.value.isHeaderFixed = true
+}
+
+const unlockHeader = () => {
+  headerService.value.lockHover = false
+  headerService.value.isHeaderFixed = false
+  headerService.value.isHover = false
+}
+
 export const useHeaderService = () => {
   return {
+    lockHeader,
+    unlockHeader,
     headerService,
     toggleMenu,
     closeExtendedMenu,

@@ -2,11 +2,11 @@
 import { useContainer } from '@/composables/useContainer'
 
 const { bounding } = useContainer()
-const { headerService } = useHeaderService()
 const { src } = useUploadcareSource()
 
 definePageMeta({
   layout: 'model-layout',
+  lockHover: true,
 })
 
 function url(s: string): string {
@@ -63,11 +63,6 @@ const variants = ref([
     ],
   },
 ])
-
-onMounted(() => {
-  headerService.value.lockHover = true
-  headerService.value.isHeaderFixed = true
-})
 
 const { courses } = useStore()
 </script>
