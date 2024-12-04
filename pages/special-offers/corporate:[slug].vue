@@ -39,7 +39,7 @@ onMounted(() => {
 <template>
   <div>
     <div
-      class="h-screen overflow-hidden grid place-items-end md:place-items-start md:pt-[--safe-area-padding-top] md:h-[420px] 2xl:h-6h 2xl:place-items-end relative"
+      class="h-5h overflow-hidden grid place-items-end md:place-items-start md:pt-[--safe-area-padding-top] md:h-[420px] 2xl:h-6h 2xl:place-items-end relative"
       :style="{
         '--safe-area-padding-top': paddingTop,
       }"
@@ -54,20 +54,20 @@ onMounted(() => {
       <picture>
         <source
           :srcset="
-            src('2ba0480c-303b-4b8e-b7b1-3318e82632de', { preview: '1440x492' })
+            src('baac8213-4129-40cb-ae4f-f601d90e61af', { preview: '1440x492' })
           "
           media="(min-width: 1440px)"
         />
         <source
           :srcset="
-            src('bb3bebbb-09d8-41d7-b89c-5e0cfa9bd855', { preview: '768x420' })
+            src('78a7f64a-3b98-4d00-bac1-ae1be3de15bd', { preview: '768x420' })
           "
           media="(min-width: 768px)"
         />
         <img
           class="w-full absolute top-0 left-0 h-2/3 object-cover md:h-auto 2xl:h-full"
           :src="
-            src('61839bda-3ff1-4b35-926b-833fcae20e61', { preview: '375x490' })
+            src('28607f12-4f02-4823-a9d1-afc0edb84f0d', { preview: '375x490' })
           "
         />
       </picture>

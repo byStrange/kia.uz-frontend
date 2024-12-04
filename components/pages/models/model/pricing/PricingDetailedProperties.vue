@@ -60,7 +60,7 @@ const splittedStandardFeatures = computed(() => {
 
 onMounted(() => {
   nextTick(() => {
-    configurationsSwiper.value?.swiper?.on('slideChange', (swiper) => {
+    configurationsSwiper.value?.swiper?.on('slideChange', (swiper: any) => {
       confSwiperClientX.value = swiper.translate
     })
   })
