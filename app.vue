@@ -15,7 +15,7 @@ const config = useRuntimeConfig()
 const isLoading = ref(true)
 
 const title = config.public.siteName
-const description = '{{ SITE_DESCRIPTION }}'
+const description = 'Официальный сайт KIA в Узбекистане'
 const url = config.public.siteUrl
 const themeColour = '#05141F'
 const i18nHead = useLocaleHead()
