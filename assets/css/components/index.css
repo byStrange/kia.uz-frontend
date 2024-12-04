@@ -53,7 +53,12 @@
   }
 
   .swiper-pagination {
-    display: flex;
     gap: var(--swiper-pagination-gap, 12px);
+
+    @apply flex !bottom-10 justify-center md:!bottom-12;
+  }
+
+  .nuxt-loading-indicator {
+    @apply z-50;
   }
 }

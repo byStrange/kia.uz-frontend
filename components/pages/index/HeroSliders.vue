@@ -135,9 +135,3 @@ const slidesLength = computed(() => {
     </ClientOnly>
   </div>
 </template>
-
-<style>
-.swiper-pagination {
-  @apply flex !bottom-10 !justify-center md:!bottom-12;
-}
-</style>

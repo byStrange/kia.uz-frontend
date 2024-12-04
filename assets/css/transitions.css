@@ -132,5 +132,4 @@
 .layout-leave-to,
 .page-enter,
 .page-leave-to {
-  @apply opacity-0;
 }
