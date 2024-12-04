@@ -17,7 +17,7 @@ onMounted(() => {
 <template>
   <div>
     <div
-      class="h-screen overflow-hidden grid place-items-end md:place-items-start md:pt-[--safe-area-padding-top] md:h-[420px] 2xl:h-6h 2xl:place-items-end relative"
+      class="h-5h overflow-hidden grid place-items-end md:place-items-start md:pt-[--safe-area-padding-top] md:h-[420px] 2xl:h-6h 2xl:place-items-end relative"
       :style="{
         '--safe-area-padding-top': paddingTop,
       }"

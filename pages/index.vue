@@ -31,7 +31,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-bind="headerService">
+  <div>
     <SectionHeroSliders />
     <SectionModels />
     <SectionSpecialOffers />
