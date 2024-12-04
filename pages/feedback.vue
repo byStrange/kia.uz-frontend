@@ -2,8 +2,6 @@
 import { UIInput } from '#components'
 import { Dialog } from 'primevue'
 
-const { headerService } = useHeaderService()
-
 const requestTypes = ref([
   { label: 'Наличие и процесс поставки автомобиля Kia', value: '1' },
   {
@@ -46,9 +44,8 @@ const commonUIInputProps: Omit<
   size: 'large',
 }
 
-onMounted(() => {
-  headerService.value.isHeaderFixed = true
-  headerService.value.lockHover = true
+definePageMeta({
+  lockHover: true,
 })
 </script>
 <template>

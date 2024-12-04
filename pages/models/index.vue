@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { UIInfoIcon, UITickToRight } from '#components'
 
-const { headerService } = useHeaderService()
 const availableOptions = ref([
   { label: 'Carens', value: 'car' },
   { label: 'Carnival', value: 'carnival' },
@@ -150,9 +149,8 @@ const modelGroups = ref<ModelGroup[]>([
   },
 ])
 
-onMounted(() => {
-  headerService.value.lockHover = true
-  headerService.value.isHeaderFixed = true
+definePageMeta({
+  lockHover: true,
 })
 </script>
 

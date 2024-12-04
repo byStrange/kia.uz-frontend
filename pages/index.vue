@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { bounding } = useContainer()
-const { headerService } = useHeaderService()
 
 const { src } = useUploadcareSource()
 
@@ -23,11 +22,6 @@ const extraLinksCard = [
     }),
   },
 ]
-onMounted(() => {
-  headerService.value.lockHover = false
-  headerService.value.isHeaderFixed = false
-  headerService.value.isHover = false
-})
 </script>
 
 <template>

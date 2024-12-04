@@ -1,12 +1,7 @@
 <script setup lang="tsx">
-const { headerService } = useHeaderService()
 definePageMeta({
   layout: 'model-layout',
-})
-
-onMounted(() => {
-  headerService.value.lockHover = true
-  headerService.value.isHeaderFixed = true
+  lockHover: true,
 })
 </script>
 

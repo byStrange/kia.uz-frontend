@@ -3,8 +3,6 @@ const { paddingTop } = useSafeArea()
 
 const { bounding } = useContainer()
 
-const { headerService } = useHeaderService()
-
 const { src } = useUploadcareSource()
 
 const items = ref([
@@ -28,12 +26,6 @@ const items = ref([
       'Специальные условия по обслуживанию автомобилей (сниженная стоимость нормо-часа и запасных частей) и выделенный в Представительстве Kia менеджер по сервисной поддержке корпоративных клиентов сделают Ваш опыт владения автомобилями Kia комфортным и выгодным.',
   },
 ])
-
-onMounted(() => {
-  headerService.value.lockHover = false
-  headerService.value.isHeaderFixed = false
-  headerService.value.isHover = false
-})
 </script>
 
 <template>

@@ -28,12 +28,6 @@ const fields = [
   { field: 'specialOffer', label: 'Специальный оффер' },
   { field: 'benefit', label: 'Преимущество' },
 ]
-
-onMounted(() => {
-  headerService.value.lockHover = false
-  headerService.value.isHeaderFixed = false
-  headerService.value.isHover = false
-})
 </script>
 
 <template>
@@ -55,12 +49,16 @@ onMounted(() => {
         <source
           media="(min-width: 1600px)"
           :srcset="
-            src('c4cf135d-9589-487e-b461-bdaa8c182d02', {
-              crop: '1439x692/0,258',
-              preview: '3000x3000/438b1403d5a9198cef0a0d3906f6c60c',
-              format: '',
-              quality: '',
-            }, false)
+            src(
+              'c4cf135d-9589-487e-b461-bdaa8c182d02',
+              {
+                crop: '1439x692/0,258',
+                preview: '3000x3000/438b1403d5a9198cef0a0d3906f6c60c',
+                format: '',
+                quality: '',
+              },
+              false,
+            )
           "
         />
         <source

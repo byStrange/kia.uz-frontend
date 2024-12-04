@@ -3,15 +3,7 @@ const { paddingTop } = useSafeArea()
 
 const { bounding } = useContainer()
 
-const { headerService } = useHeaderService()
-
 const { src } = useUploadcareSource()
-
-onMounted(() => {
-  headerService.value.lockHover = false
-  headerService.value.isHeaderFixed = false
-  headerService.value.isHover = false
-})
 </script>
 
 <template>
