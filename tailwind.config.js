@@ -184,6 +184,7 @@ module.exports = withTV({
         '7.5h': '750px',
         '8h': '800px',
         '8.5h': '850px',
+        '9h': '900px',
         'grid-12-gap': '2.5rem',
         '6h-10': '640px',
       },
