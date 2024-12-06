@@ -15,7 +15,7 @@ import {
   UIFuelLevelIcon,
   UIGlowPlugsIcon,
   UIImmobilizerIcon,
-  UILEDSignalIdicatorIcon,
+  UILEDSignalIndicator,
   UIMalfunctionIndicatorIcon,
   UIMotorOilIcon,
   UISeatBeltIcon,
@@ -139,7 +139,7 @@ const indicatorGroups = [
       {
         label: 'Светодиодный сигнальный индикатор головной фары',
         content: '...',
-        icon: UILEDSignalIdicatorIcon,
+        icon: UILEDSignalIndicator,
       },
       {
         label:
