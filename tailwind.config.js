@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+import plugin from 'tailwindcss/plugin'
 
 const { withTV } = require('tailwind-variants/transformer')
-import plugin from 'tailwindcss/plugin'
 
 module.exports = withTV({
   content: [

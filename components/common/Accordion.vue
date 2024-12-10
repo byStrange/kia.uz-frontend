@@ -68,7 +68,7 @@ const currentAccordionIndex = ref(0)
           <div>
             {{ item.label }}
             <button @click="currentAccordionIndex = index">
-              <component v-if="item.icon" :component="item.icon" />
+              <component :is="item.icon" v-if="item.icon" />
             </button>
           </div>
         </slot>

@@ -1,6 +1,9 @@
 const { SITE_NAME, SITE_URL } = process.env
 
 export default defineNuxtConfig({
+  imports: {
+    dirs: ['./composables', './utils', './schemas'],
+  },
   experimental: {
     defaults: {
       nuxtLink: {

@@ -5,8 +5,6 @@ const { paddingTop } = useSafeArea()
 
 const { bounding } = useContainer()
 
-const { headerService } = useHeaderService()
-
 const { src } = useUploadcareSource()
 
 const example = {
