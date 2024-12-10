@@ -265,7 +265,7 @@ const indicatorGroups = [
                 @click="toggle"
               >
                 <div class="flex items-center gap-4.5">
-                  <button @click="toggle" class="text-kia-live-red">
+                  <button class="text-kia-live-red" @click="toggle" >
                     <component :is="item.icon" />
                   </button>
 

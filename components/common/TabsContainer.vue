@@ -99,6 +99,7 @@ defineExpose({
       <div v-if="cache">
         <div
           v-for="(tab, index) in tabs"
+          :key="tab"
           :class="{
             'transition-all duration-500': animated,
             'invisible absolute -z-10': index !== activeTab,

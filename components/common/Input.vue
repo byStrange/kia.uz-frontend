@@ -2,7 +2,7 @@
 import { InputText, FloatLabel, type InputTextProps } from 'primevue'
 import { tv, type VariantProps } from 'tailwind-variants'
 
-const value = defineModel({ default: '' })
+const value = defineModel<any>({ default: '' })
 
 const input = tv(
   {
@@ -37,6 +37,7 @@ withDefaults(
   {
     theme: 'default',
     size: 'default',
+    inputProps: undefined,
   },
 )
 </script>
@@ -47,13 +48,25 @@ withDefaults(
     :pt="{ root: { style: '--p-floatlabel-position-x: 16px' } }"
   >
     <InputText
-      unstyled
-      :inputId="inputId"
       v-bind="inputProps"
-      :pt="{
-        root: input({ theme, size: { initial: 'default', '2xl': 'large' } }),
-      }"
       v-model="value"
+      unstyled
+      :input-id="inputId"
+      :pt="{
+        root: (c) => {
+          console.log(c.props.invalid)
+          return {
+            class: [
+              { 'p-filled': c.context.filled },
+              {
+                'p-invalid !border-kia-live-red !text-kia-live-red':
+                  c.props.invalid,
+              },
+              input({ theme, size: { initial: 'default', '2xl': 'large' } }),
+            ],
+          }
+        },
+      }"
     />
     <label :for="inputId" class="!text-caption">{{ label }}</label>
   </FloatLabel>

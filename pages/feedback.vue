@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { UIInput } from '#components'
-import { Dialog } from 'primevue'
+import { Dialog, Textarea } from 'primevue'
+import { Form, FormField } from '@primevue/forms'
+import { zodResolver } from '@primevue/forms/resolvers/zod'
 
 const requestTypes = ref([
   { label: 'Наличие и процесс поставки автомобиля Kia', value: '1' },
@@ -13,25 +15,9 @@ const requestTypes = ref([
   { label: 'Прохождение тест-драйва', value: '5' },
 ])
 
-const formData = reactive({
-  name: '',
-  surname: '',
-  phone: '',
-  email: '',
-  city: '',
-  comment: '',
-
-  requestType: '',
-  agree: false,
-})
-
 const isPrivacyDialogVisible = ref(false)
 
-const privacyAndTerms = {
-  title: 'Согласие на обработку персональных данных',
-  description:
-    'Отправляя сообщение, я выражаю свое согласие и разрешаю ООО «Roodell», а также, по их поручению, третьим лицам осуществлять обработку моих персональных данных (фамилия, имя, отчество, год, месяц, дата и место рождения; адрес, номер паспорта и сведения о дате выдачи паспорта и выдавшем его органе; образование, профессия, место работы и должность; домашний, рабочий и мобильный телефоны; адрес электронной почты и другие данные, требуемые для отправки сообщения), включая сбор, систематизацию, накопление, хранение, уточнение, использование, распространение (в том числе трансграничную передачу), обезличивание, уничтожение персональных данных), в целях связанных с возможностью предоставления информации о товарах и услугах, которые потенциально могут представлять интерес, а также в целях сбора и обработки статистической информации и проведения маркетинговых исследований. Согласие на обработку персональных данных в соответствии с указанными выше условиями я предоставляю на 10 (десять) лет. Я уведомлен и согласен с тем, что указанное согласие может быть мной отозвано посредством направления письменного заявления заказным почтовым отправлением с описью вложения, либо вручено лично под подпись.',
-}
+const { data: privacyAndTerms } = useFetch('/api/terms')
 
 const commonUIInputProps: Omit<
   InstanceType<typeof UIInput>['$props'],
@@ -47,6 +33,23 @@ const commonUIInputProps: Omit<
 definePageMeta({
   lockHover: true,
 })
+
+const initialValues = ref({
+  name: '',
+  surname: '',
+  phone: '',
+  email: '',
+  city: '',
+  comment: '',
+  requestType: '',
+  agree: false,
+})
+
+const resolver = ref(zodResolver(feedbackSchema))
+
+const onSubmit = (data: any) => {
+  console.log(data)
+}
 </script>
 <template>
   <UISafeAreaView>
@@ -70,12 +73,12 @@ definePageMeta({
       </template>
       <template #header>
         <h1 class="text-2xl text-primary font-semibold">
-          {{ privacyAndTerms.title }}
+          {{ privacyAndTerms?.terms.title }}
         </h1>
       </template>
       <div class="relative">
         <div class="space-y-5 text-primary">
-          <p class="text-base">{{ privacyAndTerms.description }}</p>
+          <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
         </div>
         <UIButton
           label="Понятно"
@@ -95,9 +98,9 @@ definePageMeta({
       >
         Обратная связь
       </h1>
-      <form>
+      <Form :resolver :initial-values="initialValues" @submit="onSubmit">
         <UISection
-          sectionTitle=""
+          section-title=""
           class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px]"
         >
           <template #title>
@@ -112,70 +115,102 @@ definePageMeta({
               Вы можете отправить ваше обращение дилеру. Оставьте ваши контакты
               и уточните тему запроса, и мы свяжемся с вами.
             </p>
-            <UIInput
-              inputId="name"
-              label="Ваше имя"
-              v-bind="commonUIInputProps"
-              v-model="formData.name"
-            />
-            <UIInput
-              inputId="surname"
-              label="Фамилия"
-              v-bind="commonUIInputProps"
-              v-model="formData.surname"
-            />
 
-            <UIInput
-              inputId="phone"
-              label="Телефон"
-              v-bind="commonUIInputProps"
-              v-model="formData.phone"
-            />
-            <UIInput
-              label="E-mail"
-              inputId="email"
-              v-bind="commonUIInputProps"
-              v-model="formData.email"
-            />
-            <UIInput
-              label="Город"
-              inputId="city"
-              v-bind="commonUIInputProps"
-              v-model="formData.city"
-            />
+            <FormField name="name">
+              <UIInput
+                input-id="name"
+                label="Ваше имя"
+                v-bind="commonUIInputProps"
+              />
+            </FormField>
+
+            <FormField name="surname">
+              <UIInput
+                input-id="surname"
+                label="Фамилия"
+                v-bind="commonUIInputProps"
+              />
+            </FormField>
+
+            <FormField name="phone">
+              <UIInput
+                input-id="phone"
+                label="Телефон"
+                v-bind="commonUIInputProps"
+              />
+            </FormField>
+
+            <FormField v-slot="$field" name="email">
+              <UIInput
+                input-id="email"
+                label="E-mail"
+                v-bind="commonUIInputProps"
+                :input-props="{ invalid: $field.invalid }"
+              />
+
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $field.error?.message }}
+              </p>
+            </FormField>
+
+            <FormField v-slot="$field" name="city">
+              <UIInput
+                input-id="city"
+                label="Город"
+                v-bind="commonUIInputProps"
+                :input-props="{ invalid: $field.invalid }"
+              />
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $field.error?.message }}
+              </p>
+            </FormField>
           </div>
 
-          <textarea
-            placeholder="Ваш комментарий или вопрос"
-            rows="4"
-            class="border focus:outline-none resize-none border-disabled hover:border-protection focus:border-primary w-full py-4.5 px-4 text-base placeholder:text-caption"
-            v-model="formData.comment"
-          ></textarea>
+          <FormField v-slot="$field" name="comment">
+            <Textarea
+              unstyled
+              input-id="comment"
+              placeholder="Ваш комментарий или вопрос"
+              class="border focus:outline-none resize-none border-disabled hover:border-protection focus:border-primary w-full py-4.5 px-4 text-base placeholder:text-caption"
+            />
+            <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+              {{ $field.error.message }}
+            </p>
+          </FormField>
 
           <div class="space-y-4">
             <label class="text-primary text-sm md:text-base">Тип запроса</label>
-            <UIDropdownInput
-              v-model:available-options="requestTypes"
-              v-model:selected-option="formData.requestType"
-              placeholder="Выберите тип вопроса"
-              :float-label="true"
-            />
+            <FormField v-slot="$field" name="requestType">
+              <UIDropdownInput
+                v-model:available-options="requestTypes"
+                placeholder="Выберите тип вопроса"
+                :float-label="true"
+              />
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $field.error?.message }}
+              </p>
+            </FormField>
           </div>
           <div>
-            <div class="flex gap-x-2">
-              <PrimeCheckbox inputId="agree" v-model="formData.agree" binary />
-              <label class="text-xs text-primary md:text-base"
-                >Даю согласие на обработку своих персональных данных на
-                условиях, указанных
-                <button
-                  type="button"
-                  class="underline"
-                  @click="isPrivacyDialogVisible = true"
+            <FormField v-slot="$field" name="agree">
+              <div class="flex gap-x-2">
+                <PrimeCheckbox input-id="agree" binary />
+                <label for="agree" class="text-xs text-primary md:text-base"
+                  >Даю согласие на обработку своих персональных данных на
+                  условиях, указанных
+                  <button
+                    type="button"
+                    class="underline"
+                    @click="isPrivacyDialogVisible = true"
+                  >
+                    здесь.
+                  </button></label
                 >
-                  здесь.
-                </button></label
-              >
-            </div>
+              </div>
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $field.error?.message }}
+              </p>
+            </FormField>
 
             <UIButton
               type="submit"
@@ -186,7 +221,7 @@ definePageMeta({
             />
           </div>
         </UISection>
-      </form>
+      </Form>
     </div>
   </UISafeAreaView>
 </template>
