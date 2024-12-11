@@ -18,8 +18,8 @@ const { height } = useDynamicHeight(['#header'])
     >
       <div class="bg-white 2xl:flex 2xl:bg-transparent">
         <div
-          class="divide-y divide-protection divide-opacity-60 2xl:hidden"
           v-if="!headerService.extendedMenu"
+          class="divide-y divide-protection divide-opacity-60 2xl:hidden"
         >
           <UIMenuItem
             v-for="item in headerService.routes"

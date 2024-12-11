@@ -117,7 +117,6 @@ const { src } = useUploadcareSource()
             </h3>
             <ul class="space-y-4 py-6 md:py-0 md:mt-4.5">
               <li
-                class="flex items-start gap-2.5"
                 v-for="i in [
                   'Приехать в дилерский центр Kia',
                   'Выбрать новый автомобиль',
@@ -126,6 +125,8 @@ const { src } = useUploadcareSource()
                   'Сдать свой автомобиль в счет стоимости нового',
                   'Уехать на новом автомобиле',
                 ]"
+                :key="i"
+                class="flex items-start gap-2.5"
               >
                 <UICheckIcon class="size-5 shrink-0" />
                 <span>{{ i }}</span>
@@ -136,13 +137,14 @@ const { src } = useUploadcareSource()
             <h3 class="font-semibold">Преимущества Trade-in Kia:</h3>
             <ul class="space-y-4 py-6 md:py-0 md:mt-4.5">
               <li
-                class="flex items-start gap-2.5"
                 v-for="i in [
                   'Выгодная оценка авто, идущего в зачет',
                   'Весь процесс происходит не выходя из дилерского центра Kia, что экономит ваши силы и время',
                   '100% прозрачная сделка и отсутствие юридических рисков',
                   'Выгода 10 миллионов сум',
                 ]"
+                :key="i"
+                class="flex items-start gap-2.5"
               >
                 <UICheckIcon class="size-5 shrink-0" />
                 <span>{{ i }}</span>

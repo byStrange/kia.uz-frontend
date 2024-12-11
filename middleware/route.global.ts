@@ -6,7 +6,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
     nuxtApp.hook('page:finish', () => {
       // some pages might require locking the header (read more about locking in the ~composables/useHeaderService)
       // pages that require locking header will have meta.lockHover set to true
-      to.meta?.lockHover ? lockHeader() : unlockHeader()
+      if (to.meta?.lockHover) lockHeader()
+      else unlockHeader()
 
       // scroll to top
       if (to.path !== from.path) window.scrollTo(0, 0)

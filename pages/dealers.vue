@@ -54,7 +54,7 @@ function toggleLocationPopover(event: Event) {
 }
 
 function closeDealerPopover(dealerName: string) {
-  let dealerId = 'd' + dealerName.split(' ').join('-')
+  const dealerId = 'd' + dealerName.split(' ').join('-')
   currentSelectedDealer.value = null
   const input = document.querySelector(
     `[value="${dealerId}"]`,
@@ -103,7 +103,7 @@ async function initMap() {
       const result = data.value?.dealers.find((d) => d.name === dealerName)
       if (result) currentSelectedDealer.value = result
     }
-    let id = 'd' + dealer.name.split(' ').join('-')
+    const id = 'd' + dealer.name.split(' ').join('-')
     content.dataset.dealerId = id
     content.innerHTML = generateMarkerTemplate(dealer, id, icon)
     const marker = new YMapMarker(

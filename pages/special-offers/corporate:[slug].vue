@@ -136,8 +136,9 @@ const items = ref([
 
             <ul class="space-y-2.5">
               <li
-                class="flex items-start gap-2"
                 v-for="i in ['+998 93 0515555', '+998 97 1285050']"
+                :key="i"
+                class="flex items-start gap-2"
               >
                 <UIMiniCheckIcon class="size-5 shrink-0" />
                 <span class="text-sm md:text-base">{{ i }}</span>

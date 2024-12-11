@@ -83,8 +83,8 @@ withDefaults(
 <template>
   <FloatLabel variant="in" :class="'theme-' + theme">
     <Select
-      unstyled
       v-model="selectedOption"
+      unstyled
       :options="availableOptions"
       :option-label="optionLabel"
       :option-value="optionValue"
