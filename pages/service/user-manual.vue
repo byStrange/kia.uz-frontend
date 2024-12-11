@@ -42,11 +42,11 @@ const { models } = useStore()
       <div class="pb-12 md:grid md:grid-cols-2 rtl">
         <picture>
           <source
-            :srcset="src('d0358662-f689-4972-b3de-58f41862bad6')"
+            :srcset="src('b233ed8a-dc9a-4e68-9fb2-24cbe43f99ba')"
             media="(min-width: 768px) and (max-width: 1440px)"
           />
           <img
-            :src="src('5073aead-8f5e-495a-8579-f42ff1228ee0')"
+            :src="src('062491d2-01fb-48b1-b730-43639a864d04')"
             alt=""
             class="object-cover md:w-full md:max-h-3h 2xl:max-h-none md:h-full 2xl:h-[388px]"
           />
