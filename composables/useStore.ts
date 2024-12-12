@@ -157,6 +157,7 @@ const _models = ref<Model[]>([
     name: 'EV9',
     from: '398 905 000 сум',
     benefitUpto: '586 055 000 сум',
+    electric: true,
 
     images: {
       '108x52': src('733c3fc3-b764-434d-9235-abd6276e5b48', {
