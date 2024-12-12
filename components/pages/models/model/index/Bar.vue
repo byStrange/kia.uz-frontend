@@ -40,20 +40,24 @@ const { headerService } = useHeaderService()
         <UIDesktopOnly class="pr-5">
           <ul class="flex items-center gap-6">
             <li>
-              <a href="#" class="text-base text-white">Обзор</a>
+              <a href="#" class="text-base text-white link-hover py-1">Обзор</a>
             </li>
             <li>
               <NuxtLinkLocale
                 to="/models/sonata/pricing"
-                class="text-base text-white"
+                class="text-base text-white py-1 link-hover"
                 >Комплектации и цены</NuxtLinkLocale
               >
             </li>
             <li>
-              <a href="#" class="text-base text-white">Характеристики</a>
+              <a href="#" class="text-base text-white py-1 link-hover"
+                >Характеристики</a
+              >
             </li>
             <li>
-              <a href="#" class="text-base text-white">Брошюра</a>
+              <a href="#" class="text-base text-white py-1 link-hover"
+                >Брошюра</a
+              >
             </li>
             <li class="flex items-center">
               <button class="text-white">
@@ -62,7 +66,9 @@ const { headerService } = useHeaderService()
             </li>
           </ul>
         </UIDesktopOnly>
-        <button class="pl-5 text-white">Конфигуратор</button>
+        <div class="pl-5">
+          <button class="text-white link-hover ">Конфигуратор</button>
+        </div>
       </div>
     </div>
   </div>
