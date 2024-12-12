@@ -104,7 +104,7 @@ const headerItems = ref<HeaderItem[]>([
   },
   {
     label: 'Дилеры',
-    to: '#',
+    to: '/dealers',
   },
 ])
 
