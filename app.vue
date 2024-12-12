@@ -5,7 +5,7 @@
   >
     <div class="loader" />
   </div>
-  <NuxtLoadingIndicator />
+  <NuxtLoadingIndicator color="#05141f"/>
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>

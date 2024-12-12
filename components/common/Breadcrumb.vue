@@ -11,8 +11,12 @@
               :to="crumb.fullPath"
               :class="[
                 styles({ theme }),
-                { '!text-caption': theme === 'dark' },
+                {
+                  '!text-caption link-hover-dark hover:!text-primary':
+                    theme === 'dark',
+                },
               ]"
+              class="link-hover py-0.5 transition-colors"
             >
               {{ crumb.title }}
             </NuxtLinkLocale>
