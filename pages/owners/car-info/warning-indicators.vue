@@ -274,7 +274,7 @@ const indicatorGroups = [
                   </h2>
                 </div>
                 <button @click="toggle">
-                  <UITickToBottom class="!text-white" />
+                  <UITickToBottom class="!text-white transition-transform" :class="{ '!rotate-180': expanded }" />
                 </button>
               </div>
             </template>
