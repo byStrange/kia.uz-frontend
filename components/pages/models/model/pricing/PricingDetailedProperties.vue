@@ -119,7 +119,14 @@ onMounted(() => {
         '--padding-x': bounding.x.value + 'px',
       }"
     >
-      <PrimeAccordion :value="0">
+      <UIAccordion
+        :default-open="true"
+        :classes="{
+          contentContainer: 'duration-700',
+          contentWrapper: 'duration-700',
+        }"
+        :items="[{ label: 'Стандартное оборудование', content: '' }]"
+      >
         <template #collapseicon>
           <UITickToTop class="min-w-5" />
         </template>
@@ -127,17 +134,23 @@ onMounted(() => {
           <UITickToBottom class="min-w-5" />
         </template>
 
-        <PrimeAccordionPanel :value="0" unstyled>
-          <PrimeAccordionHeader
-            unstyled
-            class="py-3 flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl border-b-2 border-protection"
-            >Стандартное оборудование</PrimeAccordionHeader
+        <template #header="{ toggle, expanded }">
+          <div
+            @click="toggle"
+            class="py-3 cursor-pointer flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl border-b-2 border-protection"
           >
-          <PrimeAccordionContent
-            :pt="{
-              content: 'space-y-6 md:space-y-7.5 pt-7.5 pb-15 px-0 md:pt-10',
-            }"
-          >
+            <span> Стандартное оборудовани </span>
+            <button @click="toggle">
+              <UITickToBottom
+                class="text-primary transition-transform"
+                :class="{ '!rotate-180': expanded }"
+              />
+            </button>
+          </div>
+        </template>
+
+        <template #content>
+          <div class="space-y-6 md:space-y-7.5 pt-7.5 pb-15 px-0 md:pt-10">
             <div
               v-for="[group, features] in splittedStandardFeatures"
               :key="group"
@@ -160,54 +173,74 @@ onMounted(() => {
                 </li>
               </ul>
             </div>
-          </PrimeAccordionContent>
-        </PrimeAccordionPanel>
+          </div>
+        </template>
+      </UIAccordion>
 
-        <PrimeAccordionPanel
-          v-for="[tab, features] in Object.entries(data?.groupedFeatures || {})"
-          :key="tab"
-          :value="tab"
-          unstyled
-        >
-          <PrimeAccordionHeader
-            unstyled
-            class="py-3 flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl border-b-2 border-protection"
-            >{{ tab }}</PrimeAccordionHeader
+      <UIAccordion
+        :classes="{
+          contentContainer: 'duration-700',
+          contentWrapper: 'duration-700',
+        }"
+        :items="
+          Object.entries(data?.groupedFeatures || {}).map(
+            ([tab, features]) => ({ label: tab, content: features }),
+          )
+        "
+      >
+        <template #collapseicon>
+          <UITickToTop class="min-w-5" />
+        </template>
+        <template #expandicon>
+          <UITickToBottom class="min-w-5" />
+        </template>
+
+        <template #header="{ item, toggle, expanded }">
+          <div
+            @click="toggle"
+            class="py-3 flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl border-b-2 border-protection cursor-pointer"
           >
-          <PrimeAccordionContent unstyled>
-            <div class="divide-y divide-protection">
-              <div
-                v-for="feature in features"
-                :key="feature.label"
-                class="py-4"
-              >
-                <p class="text-sm">{{ feature.label }}</p>
-                <div class="mt-3.5 overflow-hidden">
+            <span>
+              {{ item.label }}
+            </span>
+            <button @click="toggle">
+              <UITickToBottom
+                class="text-primary transition-transform duration-700"
+                :class="{ '!rotate-180': expanded }"
+              />
+            </button>
+          </div>
+        </template>
+
+        <template #content="{ content }">
+          <div class="divide-y divide-protection text-primary">
+            <div v-for="feature in content" :key="feature.label" class="py-4">
+              <p class="text-sm">{{ feature.label }}</p>
+              <div class="mt-3.5 overflow-hidden">
+                <div
+                  class="flex translate-x-[--translate-x] transition-transform"
+                  :style="{
+                    '--translate-x':
+                      (confSwiperClientX ? confSwiperClientX - 15 : 0) + 'px',
+                  }"
+                >
                   <div
-                    class="flex translate-x-[--translate-x] transition-transform"
-                    :style="{
-                      '--translate-x':
-                        (confSwiperClientX ? confSwiperClientX - 15 : 0) + 'px',
-                    }"
+                    v-for="config in data?.model.configurations || []"
+                    :key="config.name"
+                    class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px]"
                   >
                     <div
-                      v-for="config in data?.model.configurations || []"
-                      :key="config.name"
-                      class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px]"
-                    >
-                      <div
-                        v-if="hasFeature(feature.label, config)"
-                        class="size-2.5 bg-primary rounded-full"
-                      />
-                      <div v-else>-</div>
-                    </div>
+                      v-if="hasFeature(feature.label, config)"
+                      class="size-2.5 bg-primary rounded-full"
+                    />
+                    <div v-else>-</div>
                   </div>
                 </div>
               </div>
             </div>
-          </PrimeAccordionContent>
-        </PrimeAccordionPanel>
-      </PrimeAccordion>
+          </div>
+        </template>
+      </UIAccordion>
     </UIContainer>
   </div>
 </template>
