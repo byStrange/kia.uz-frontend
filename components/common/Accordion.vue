@@ -19,22 +19,40 @@ interface AccordionClasses {
 }
 
 interface AccordionItem {
-  label: string
-  content: string
-  icon: Component | null
+  label: string | any
+  content: string | any | any[]
+  icon?: Component | null
 }
 
 interface Props {
   items: AccordionItem[]
   classes?: Partial<AccordionClasses>
+  defaultOpen?: boolean
 }
 
-defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  defaultOpen: false,
+})
 
-const currentAccordionIndex = ref(0)
+const currentAccordionIndex = ref(props.defaultOpen ? 0 : -1)
+const container = useTemplateRef('container')
+
+const toggle = (index: number, e: Event) => {
+  currentAccordionIndex.value =
+    currentAccordionIndex.value === index ? -1 : index
+  const bound = e.currentTarget as HTMLElement
+  setTimeout(() => {
+    if (currentAccordionIndex.value !== -1)
+      window.scrollTo({
+        top: bound.getBoundingClientRect().top + window.scrollY - 200,
+        behavior: 'smooth',
+      })
+  }, 700)
+}
 </script>
 <template>
   <div
+    ref="container"
     :class="[
       classes?.root,
       { [classes?.rootExpanded || '']: currentAccordionIndex > -1 },
@@ -59,16 +77,19 @@ const currentAccordionIndex = ref(0)
           :item="item"
           :expanded="index === currentAccordionIndex"
           :open="() => (currentAccordionIndex = index)"
-          :toggle="
-            () =>
-              (currentAccordionIndex =
-                currentAccordionIndex === index ? -1 : index)
-          "
+          :toggle="(e: Event) => toggle(index, e)"
         >
           <div>
             {{ item.label }}
             <button @click="currentAccordionIndex = index">
-              <component :is="item.icon" v-if="item.icon" />
+              <slot name="expandicon">
+                <UITickToBottom
+                  :class="[
+                    'text-white transition-transform',
+                    { 'rotate-180': index === currentAccordionIndex },
+                  ]"
+                />
+              </slot>
             </button>
           </div>
         </slot>
@@ -95,7 +116,7 @@ const currentAccordionIndex = ref(0)
             },
           ]"
         >
-          <slot name="content">
+          <slot name="content" :content="item.content">
             <p :class="classes?.content">{{ item.content }}</p>
           </slot>
         </div>
