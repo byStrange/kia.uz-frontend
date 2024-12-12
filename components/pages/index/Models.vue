@@ -75,7 +75,7 @@ onMounted(() => {
           </template>
           <SwiperSlide
             v-for="model in models"
-            :key="model.title"
+            :key="model.name"
             class="!w-fit"
           >
             <div
@@ -93,13 +93,13 @@ onMounted(() => {
 
               <img
                 loading="lazy"
-                :src="model.images.small"
+                :src="model.images['108x52']"
                 class="h-[40px] w-[84px] md:h-[52px] md:w-[108px]"
               />
               <p
                 class="mt-1 text-center text-xs text-primary md:mt-3 md:text-base"
               >
-                {{ model.title }}
+                {{ model.name }}
               </p>
             </div>
           </SwiperSlide>
@@ -133,14 +133,14 @@ onMounted(() => {
             </template>
             <SwiperSlide
               v-for="model in models"
-              :key="model.title"
+              :key="model.name"
               class="container 2xl:px-0"
             >
               <div data-label="card">
                 <div data-label="image wrapper">
                   <img
                     loading="lazy"
-                    :src="model.images.medium"
+                    :src="model.images['742x334']"
                     class="w-full md:mx-auto md:max-w-[500px] 2xl:max-w-[742px]"
                   />
                 </div>
@@ -148,7 +148,7 @@ onMounted(() => {
                   <h2
                     class="text-lg text-primary md:text-2xl md:font-semibold 2xl:text-3xl"
                   >
-                    {{ model.title }}
+                    {{ model.name }}
                   </h2>
                   <div class="mt-2">
                     <p

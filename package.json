@@ -57,6 +57,7 @@
     "nuxt-swiper": "^1.2.2",
     "pinia": "^2.2.6",
     "primevue": "^4.2.1",
+    "swiper": "^11.1.15",
     "tailwind-variants": "^0.3.0",
     "vue": ">=3.2.13",
     "zod": "^3.23.8"
