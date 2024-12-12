@@ -1,3 +1,4 @@
+const { src } = useUploadcareSource()
 const _specials = ref([
   {
     title: 'Kia лизинг',
@@ -60,155 +61,198 @@ const _specials = ref([
 ])
 
 export type Model = {
-  name?: string
-  title: string
-  electric: boolean
+  name: string
+  electric?: boolean
   images: {
-    small: string
-    medium: string
+    [key: string]: string
   }
+  from: string
+  benefitUpto: string
 }
 
 const _models = ref<Model[]>([
   {
-    title: 'Sonet',
+    name: 'Sonet',
+    images: {
+      '108x52': src('eea46690-58e2-4b77-920d-a961cfe44b3b', {
+        preview: '108x52',
+      }),
+      '742x334': src('eea46690-58e2-4b77-920d-a961cfe44b3b', {
+        preview: '742x334',
+      }),
+    },
+    from: '199 900 000 сум сум',
+    benefitUpto: '50 000 сум',
+  },
+  {
+    name: 'K5',
+    images: {
+      '108x52': src('88535d24-e913-4b4d-8389-89fdadeaa72e', {
+        preview: '108x52',
+      }),
+      '742x334': src('88535d24-e913-4b4d-8389-89fdadeaa72e', {
+        preview: '742x334',
+      }),
+    },
+    from: '292 468 000 сум',
+    benefitUpto: '64 000 000 сум',
+  },
+  {
+    name: 'Sportage',
+    from: '379 900 000 сум',
+    benefitUpto: '90 000 000 сум сум',
+
+    images: {
+      '108x52': src('275429f2-976f-41a2-ae0f-dab6ce61cf86', {
+        preview: '108x52',
+      }),
+      '742x334': src('275429f2-976f-41a2-ae0f-dab6ce61cf86', {
+        preview: '742x334',
+      }),
+    },
+  },
+  {
+    name: 'Sorento',
+    from: '675 157 000 сум',
+    benefitUpto: '90 000 000 сум',
+
+    images: {
+      '108x52': src('8616b2f3-ece5-4393-93f1-5c36377fcf0e', {
+        preview: '108x52',
+      }),
+      '742x334': src('8616b2f3-ece5-4393-93f1-5c36377fcf0e', {
+        preview: '742x334',
+      }),
+    },
+  },
+  {
+    name: 'Seltos',
+    from: '869 900 000 сум',
+    benefitUpto: '360 905 000 сум',
+
+    images: {
+      '108x52': src('ecceba26-a813-413b-8baf-d583ebb944be', {
+        preview: '108x52',
+      }),
+      '742x334': src('ecceba26-a813-413b-8baf-d583ebb944be', {
+        preview: '742x334',
+      }),
+    },
+  },
+  {
+    name: 'Carens',
+    from: '199 900 000 сум',
+    benefitUpto: '299 900 000 сум',
+
+    images: {
+      '108x52': src('3ae5b794-6cc6-4888-a321-308b41a3ebc2', {
+        preview: '108x52',
+      }),
+      '742x334': src('3ae5b794-6cc6-4888-a321-308b41a3ebc2', {
+        preview: '742x334',
+      }),
+    },
+  },
+  {
+    name: 'EV9',
+    from: '398 905 000 сум',
+    benefitUpto: '586 055 000 сум',
     electric: true,
+
     images: {
-      small:
-        'https://ucarecdn.com/548a3e08-011b-41b5-a074-a0b06917d3e9/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
-    },
-  },
-  {
-    title: 'K5',
-    electric: false,
-    images: {
-      small:
-        'https://ucarecdn.com/0573bd47-db16-48a2-b4df-ced019edc53c/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
-    },
-  },
-  {
-    title: 'Sportage',
-    electric: false,
-    images: {
-      small:
-        'https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
-    },
-  },
-  {
-    title: 'Sportage',
-    electric: false,
-    images: {
-      small:
-        'https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
-    },
-  },
-  {
-    title: 'Sportage',
-    electric: false,
-    images: {
-      small:
-        'https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
+      '108x52': src('733c3fc3-b764-434d-9235-abd6276e5b48', {
+        preview: '108x52',
+      }),
+      '742x334': src('733c3fc3-b764-434d-9235-abd6276e5b48', {
+        preview: '742x334',
+      }),
     },
   },
 
   {
-    title: 'Sportage',
-    electric: false,
+    name: 'K9',
+    from: '360 905 000 сум',
+    benefitUpto: '108 000 сум',
+
     images: {
-      small:
-        'https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
+      '108x52': src('908178f2-cbf9-49e5-a187-d494d484b599', {
+        preview: '108x52',
+      }),
+      '742x334': src('908178f2-cbf9-49e5-a187-d494d484b599', {
+        preview: '742x334',
+      }),
     },
   },
   {
-    title: 'Sportage',
-    electric: false,
+    name: 'Cerato',
+    from: '299 900 000 сум',
+    benefitUpto: '108 000 сум',
+
     images: {
-      small:
-        'https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
+      '108x52': src('952d5ff3-d5ec-416c-8c78-157b88cbc26b', {
+        preview: '108x52',
+      }),
+      '742x334': src('952d5ff3-d5ec-416c-8c78-157b88cbc26b', {
+        preview: '742x334',
+      }),
+    },
+  },
+
+  {
+    name: 'EV6',
+    benefitUpto: '108 000 сум',
+
+    images: {
+      '108x52': src('54973e2a-65b8-493d-b0d7-b1b51f67c834', {
+        preview: '108x52',
+      }),
+      '742x334': src('54973e2a-65b8-493d-b0d7-b1b51f67c834', {
+        preview: '742x334',
+      }),
+    },
+    from: '699 900 000 сум',
+    electric: true,
+  },
+  {
+    name: 'Carnival',
+    from: '999 900 000 сум',
+    benefitUpto: '108 000 сум',
+
+    images: {
+      '108x52': src('96dc5d6e-9253-402e-9f3f-5990d6f834e1', {
+        preview: '108x52',
+      }),
+      '742x334': src('96dc5d6e-9253-402e-9f3f-5990d6f834e1', {
+        preview: '742x334',
+      }),
     },
   },
   {
-    title: 'Sportage',
-    electric: false,
+    name: 'K8',
+    from: '256 405 000 сум',
+    benefitUpto: '108 000  сум',
+
     images: {
-      small:
-        'https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
+      '108x52': src('d33a1abf-7155-4b4f-977d-e384076eb2d1', {
+        preview: '108x52',
+      }),
+      '742x334': src('d33a1abf-7155-4b4f-977d-e384076eb2d1', {
+        preview: '742x334',
+      }),
     },
   },
   {
-    title: 'Sportage',
-    electric: false,
+    name: 'Bongo',
+    from: '256 405 000 сум',
+    benefitUpto: '108 000 сум',
+
     images: {
-      small:
-        'https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
-    },
-  },
-  {
-    title: 'Sportage',
-    electric: false,
-    images: {
-      small:
-        'https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
-    },
-  },
-  {
-    title: 'Sportage',
-    electric: false,
-    images: {
-      small:
-        'https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
-    },
-  },
-  {
-    title: 'Sportage',
-    electric: false,
-    images: {
-      small:
-        'https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
-    },
-  },
-  {
-    title: 'Sportage',
-    electric: false,
-    images: {
-      small:
-        'https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
-    },
-  },
-  {
-    title: 'Sportage',
-    electric: false,
-    images: {
-      small:
-        'https://ucarecdn.com/719c6d52-d429-41a8-89a3-2f7e6d29be2d/-/preview/336x160/',
-      medium:
-        'https://ucarecdn.com/ae0d4df7-3a0c-45c7-9074-9bb56ab035ab/-/preview/1000x450/',
+      '108x52': src('3debb147-b52d-4e95-845f-20b2a3ece540', {
+        preview: '108x52',
+      }),
+      '742x334': src('3debb147-b52d-4e95-845f-20b2a3ece540', {
+        preview: '742x334',
+      }),
     },
   },
 ])
