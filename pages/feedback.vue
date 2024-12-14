@@ -16,6 +16,7 @@ const requestTypes = ref([
 ])
 
 const isPrivacyDialogVisible = ref(false)
+const localePath = useLocalePath()
 
 const { data: privacyAndTerms } = useFetch('/api/terms')
 
@@ -253,7 +254,12 @@ const onSubmit = (event: FormSubmitEvent) => {
             дня, но обычно мы справляемся быстрее. Как только все будет готово,
             сотрудник службы поддержки свяжется с вами по электронной почте.
           </p>
-          <UIButton mode="full" color="secondary" label="На главную" />
+          <UIButton
+            mode="full"
+            color="secondary"
+            label="На главную"
+            @click="$router.push(localePath('/'))"
+          />
         </div>
         <hr />
         <div class="space-y-2 text-primary text-sm md:text-base">
