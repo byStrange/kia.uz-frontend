@@ -54,7 +54,6 @@ withDefaults(
       :input-id="inputId"
       :pt="{
         root: (c) => {
-          console.log(c.props.invalid)
           return {
             class: [
               { 'p-filled': c.context.filled },
