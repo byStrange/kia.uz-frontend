@@ -52,7 +52,7 @@ type SectionVariants = VariantProps<typeof sectionStyle>
 type SectionTitleVariants = VariantProps<typeof textStyle>
 
 defineProps<{
-  sectionTitle: string
+  sectionTitle?: string
   subtitle?: string
   size?: SectionVariants['size']
   align?: SectionTitleVariants['align']
@@ -72,7 +72,7 @@ defineProps<{
       <h3 v-if="subtitle" :class="subtitleStyle({ align })">
         {{ subtitle }}
       </h3>
-      <h1 :class="textStyle({ size, align })">
+      <h1 v-if="sectionTitle" :class="textStyle({ size, align })">
         {{ sectionTitle }}
       </h1>
     </slot>
