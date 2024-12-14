@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { UIInput } from '#components'
 import { Dialog, Textarea } from 'primevue'
-import { Form, FormField } from '@primevue/forms'
+import { Form, FormField, type FormSubmitEvent } from '@primevue/forms'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
 
 const requestTypes = ref([
@@ -47,8 +47,10 @@ const initialValues = ref({
 
 const resolver = ref(zodResolver(feedbackSchema))
 
-const onSubmit = (data: any) => {
-  console.log(data)
+const successfullySent = ref(false)
+
+const onSubmit = (event: FormSubmitEvent) => {
+  successfullySent.value = event.valid
 }
 </script>
 <template>
@@ -98,46 +100,54 @@ const onSubmit = (data: any) => {
       >
         Обратная связь
       </h1>
-      <Form :resolver :initial-values="initialValues" @submit="onSubmit">
-        <UISection
-          section-title=""
-          class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px]"
-        >
-          <template #title>
-            <div class="pb-8 border-b border-protection">
-              <h4 class="text-sm md:text-base">Горячая линия</h4>
-              <span class="mt-1 text-lg font-semibold md:text-2xl">1333</span>
-            </div>
-          </template>
+      <!-- Form -->
+      <UISection
+        v-show="!successfullySent"
+        class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px]"
+      >
+        <div class="pb-8 border-b border-protection">
+          <h4 class="text-sm md:text-base">Горячая линия</h4>
+          <span class="mt-1 text-lg font-semibold md:text-2xl">1333</span>
+        </div>
 
+        <Form :resolver :initial-values="initialValues" @submit="onSubmit">
           <div class="space-y-5">
             <p class="text-primary text-sm md:text-base">
               Вы можете отправить ваше обращение дилеру. Оставьте ваши контакты
               и уточните тему запроса, и мы свяжемся с вами.
             </p>
 
-            <FormField name="name">
+            <FormField name="name" v-slot="$field">
               <UIInput
                 input-id="name"
                 label="Ваше имя"
                 v-bind="commonUIInputProps"
               />
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $field.error?.message }}
+              </p>
             </FormField>
 
-            <FormField name="surname">
+            <FormField name="surname" v-slot="$field">
               <UIInput
                 input-id="surname"
                 label="Фамилия"
                 v-bind="commonUIInputProps"
               />
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $field.error?.message }}
+              </p>
             </FormField>
 
-            <FormField name="phone">
+            <FormField name="phone" v-slot="$field">
               <UIInput
                 input-id="phone"
                 label="Телефон"
                 v-bind="commonUIInputProps"
               />
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $field.error?.message }}
+              </p>
             </FormField>
 
             <FormField v-slot="$field" name="email">
@@ -220,8 +230,37 @@ const onSubmit = (data: any) => {
               class="mt-10 md:w-full 2xl:w-auto"
             />
           </div>
-        </UISection>
-      </Form>
+        </Form>
+      </UISection>
+
+      <!-- Feedback -->
+
+      <UISection
+        v-show="successfullySent"
+        class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px] md:space-y-10 2xl:space-y-12"
+      >
+        <div class="space-y-4 text-primary md:space-y-6 2xl:space-y-8">
+          <h1 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">
+            Ваше обращение успешно отправлено!
+          </h1>
+
+          <p class="text-sm md:text-base">
+            Спасибо за обращение! Рассмотрение займет не больше одного рабочего
+            дня, но обычно мы справляемся быстрее. Как только все будет готово,
+            сотрудник службы поддержки свяжется с вами по электронной почте.
+          </p>
+          <UIButton mode="full" color="secondary" label="На главную" />
+        </div>
+        <hr />
+        <div class="space-y-2 text-primary text-sm md:text-base">
+          <p>Информационная линия Kia</p>
+          <p>
+            По всем вопросам, связанным с покупкой автомобиля, сервисным
+            обслуживанием, действующими акциями и предложениями, Вы можете
+            обратиться по телефону: +998 71 215-70-07
+          </p>
+        </div>
+      </UISection>
     </div>
   </UISafeAreaView>
 </template>
