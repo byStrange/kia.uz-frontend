@@ -103,14 +103,19 @@ const onSubmit = (event: FormSubmitEvent) => {
       <!-- Form -->
       <UISection
         v-show="!successfullySent"
-        class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px]"
+        class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px]"
       >
         <div class="pb-8 border-b border-protection">
           <h4 class="text-sm md:text-base">Горячая линия</h4>
           <span class="mt-1 text-lg font-semibold md:text-2xl">1333</span>
         </div>
 
-        <Form :resolver :initial-values="initialValues" @submit="onSubmit">
+        <Form
+          :resolver
+          :initial-values="initialValues"
+          @submit="onSubmit"
+          class="space-y-8 mt-8"
+        >
           <div class="space-y-5">
             <p class="text-primary text-sm md:text-base">
               Вы можете отправить ваше обращение дилеру. Оставьте ваши контакты
@@ -221,7 +226,6 @@ const onSubmit = (event: FormSubmitEvent) => {
                 {{ $field.error?.message }}
               </p>
             </FormField>
-
             <UIButton
               type="submit"
               label="Отправить"
