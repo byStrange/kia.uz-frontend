@@ -1,27 +1,53 @@
 import { z } from 'zod'
 
 export const feedbackSchema = z.object({
-  name: z.string().min(2, 'Необходимо ввести имя'),
+  name: z
+    .string()
+    .optional()
+    .refine(
+      (val) => !val || val.length > 1,
+      'Пожалуйста, введите действительные данные',
+    ),
 
-  surname: z.string().min(2, 'Необходимо ввести фамилию'),
+  surname: z
+    .string()
+    .optional()
+    .refine(
+      (val) => !val || val.length > 1,
+      'Пожалуйста, введите действительные данные',
+    ),
 
-  phone: z.string().min(2, 'Необходимо ввести телефон'),
-
+  phone: z
+    .string()
+    .optional()
+    .refine(
+      (value) => !value || value.startsWith('+'),
+      'Пожалуйста, напишите его в международном формате (например, с префиксом +998)',
+    )
+    .refine(
+      (value) =>
+        !value ||
+        value
+          .replaceAll(' ', '')
+          .match(/^[+]998([3785]{2}|(20)|(9[013-57-9]))\d{7}$/),
+      'Необходимо ввести правильный номер телефона',
+    ),
   email: z
-    .string({ message: 'Поле обязательно для заполнения' })
+    .string()
+    .min(1, 'Поле обязательно для заполнения')
     .email({ message: 'Необходимо ввести правильный e-mail' }),
 
   city: z
-    .string({ message: 'Поле обязательно для заполнения' })
+    .string()
+    .min(1, 'Поле обязательно для заполнения')
     .min(2, 'Необходимо ввести город'),
 
   comment: z
-    .string({ message: 'Поле обязательно для заполнения' })
-    .min(25, 'Необходимо ввести комментарий'),
+    .string()
+    .min(1, 'Поле обязательно для заполнения')
+    .min(25, 'Требуется минимум 25 символов'),
 
-  requestType: z
-    .string({ message: 'Поле обязательно для заполнения' })
-    .min(1, 'Необходимо ввести тип запроса'),
+  requestType: z.string().min(1, 'Поле обязательно для заполнения'),
 
   agree: z.literal(true, {
     errorMap: () => ({ message: 'Необходимо подтвердить согласие' }),
