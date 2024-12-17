@@ -6,12 +6,12 @@ const value = defineModel<any>({ default: '' })
 
 const input = tv(
   {
-    base: 'w-full rounded-none hover:border-caption focus:border-primary border-b text-base+ text-primary focus:outline-none',
+    base: 'w-full rounded-none hover:border-disabled focus:border-primary border-b text-base+ text-primary focus:outline-none',
 
     variants: {
       theme: {
-        light: 'border-protection',
-        default: 'border-protection px-4 bg-white',
+        light: 'border-disabled',
+        default: 'border-disabled px-4 bg-white',
       },
       size: {
         large: 'pt-6 pb-3', // overally py-4.5
