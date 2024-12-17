@@ -1,18 +1,38 @@
 <script setup lang="ts">
-import { UIInput, UITickToLeft } from '#components'
-import { Dialog, DatePicker } from 'primevue'
+import { UIInput } from '#components'
+import { Dialog, Popover } from 'primevue'
 import { Form, FormField, type FormSubmitEvent } from '@primevue/forms'
-import { zodResolver } from '@primevue/forms/resolvers/zod'
+import { zodResolver } from '@primevue/forms/resolvers/zod';
 
-const requestTypes = ref([
-  { label: 'Наличие и процесс поставки автомобиля Kia', value: '1' },
-  {
-    label: 'Наличие и стоимость запасных частей и аксессуаров Kia',
-    value: '2',
-  },
-  { label: 'Сервисное обслуживание (ТО, гарантия, эксплуатация)', value: '3' },
-  { label: 'Условия кредитования и страхования', value: '4' },
-  { label: 'Прохождение тест-драйва', value: '5' },
+const resolver = ref(zodResolver(serviceForm))
+
+const initialValues = ref({
+  model: '',
+  issue_year: '',
+  region: '',
+  fillial: '',
+  work_type: '',
+  time: '',
+  name: '',
+  phone: '',
+})
+
+const touched = ref(false)
+
+const regionOptions = ref([
+  { label: 'Tashkent', value: '1' }
+])
+
+const modelOptions = ref([
+  { label: 'Sorento', value: '1' }
+])
+
+const fillialOptions = ref([
+  { label: 'Kia Sergeli', value: '1' }
+])
+
+const typeOfWork = ref([
+  { label: 'TO', value: '1' }
 ])
 
 const isPrivacyDialogVisible = ref(false)
@@ -30,31 +50,71 @@ const commonUIInputProps: Omit<
   size: 'large',
 }
 
-definePageMeta({
-  lockHover: true,
-})
+const timeChoices = ref(['10:00', '11:30', '13:00', '14:30', '16:00', '17:30'])
 
-const initialValues = ref({
-  name: '',
-  surname: '',
-  phone: '',
-  email: '',
-  city: '',
-  comment: '',
-  requestType: '',
-  agree: false,
-})
-
-const resolver = ref(zodResolver(feedbackSchema))
+const availableTimes = ref<string[]>([])
 
 const successfullySent = ref(false)
 
+const datePickerPopover = ref<InstanceType<typeof Popover> | null>(null)
+const _datePickerValue = ref<null | CalendarDay>(null)
+
+const debounce = useDebounceFn((data) => {
+  availableTimes.value = data as string[]
+}, 300)
+
+watch(_datePickerValue, () => {
+  // call api
+  availableTimes.value = [];
+  debounce(['13:00', '14:30', '16:00', '17:30'])
+})
+
+const formattedDate = computed(() => {
+  if (_datePickerValue.value && _datePickerValue.value.date) {
+    return _datePickerValue.value.date.toDateString();
+  }
+  return '';
+})
+
+const { bounding } = useContainer()
+
+const vDateFormat = {
+  updated(el: HTMLSpanElement) {
+    const input = el.querySelector('input');
+    if (!input || !input.value) return;
+
+    input.classList.add('p-filled');
+    input.value = input.value;
+  }
+}
+
+
+function toggleDatePickerPopover(event: Event) {
+  datePickerPopover.value?.toggle(event);
+}
+
+function closeDatePickerPopover() {
+  datePickerPopover.value?.hide()
+}
+
 const onSubmit = (event: FormSubmitEvent) => {
+  touched.value = true;
+  console.log(event)
   successfullySent.value = event.valid
 }
+
+definePageMeta({
+  lockHover: true,
+})
 </script>
 <template>
   <UISafeAreaView>
+    <Popover ref="datePickerPopover" unstyled class="px-[--padding-x] w-full md:max-w-[426px] md:px-0 2xl:max-w-[320px]"
+      :style="{
+        '--padding-x': bounding.x.value + 'px'
+      }">
+      <UIDatePicker v-model="_datePickerValue" @dayChange="closeDatePickerPopover()" />
+    </Popover>
     <Dialog v-model:visible="isPrivacyDialogVisible" modal :pt="{
       root: '!rounded-none 2xl:h-full 2xl:!max-h-[758px]',
       mask: 'px-3',
@@ -90,7 +150,8 @@ const onSubmit = (event: FormSubmitEvent) => {
         Запись на сервис</h1>
       <!-- Form -->
       <UISection v-show="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px]">
-        <Form :resolver :initial-values="initialValues" @submit="onSubmit" class="space-y-12.5 2xl:space-y-16">
+        <Form @submit="onSubmit" :initialValues :resolver class="space-y-12.5 2xl:space-y-16">
+
           <div class="space-y-5">
             <h2 class="font-bold text-base md:text-lg">Данные автомобиля</h2>
 
@@ -102,72 +163,96 @@ const onSubmit = (event: FormSubmitEvent) => {
               </button>
             </FormField>
 
-            <FormField>
-              <UIDropdownInput theme="light" v-model:availableOptions="requestTypes" placeholder="Модельный ряд"
-                :float-label="true" />
+            <FormField name="model" v-slot="$field">
+              <UIDropdownInput input-id="model" theme="light" v-model:availableOptions="modelOptions"
+                placeholder="Модельный ряд" :float-label="true" />
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $field.error?.message }}
+              </p>
             </FormField>
 
-            <FormField>
+            <FormField name="issue_year" v-slot="$field">
               <UIInput input-id="issue_year" v-bind="commonUIInputProps" label="Год выпуска" />
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $field.error?.message }}
+              </p>
             </FormField>
           </div>
 
           <div class="space-y-5">
             <h2 class="font-bold text-base md:text-lg">Сервисный центр</h2>
 
-            <FormField>
-              <UIDropdownInput input-id="city" theme="light" v-model:availableOptions="requestTypes" placeholder="Город"
-                :float-label="true" />
+            <FormField name="region" v-slot="$field">
+              <UIDropdownInput input-id="region" theme="light" v-model:availableOptions="regionOptions"
+                placeholder="Город" :float-label="true" />
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $field.error?.message }}
+              </p>
             </FormField>
 
-            <FormField>
-              <UIDropdownInput input-id="fillial" theme="light" v-model:availableOptions="requestTypes"
+            <FormField name="fillial" v-slot="$field">
+              <UIDropdownInput input-id="fillial" theme="light" v-model:availableOptions="fillialOptions"
                 placeholder="Филиал" :float-label="true" />
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $field.error?.message }}
+              </p>
             </FormField>
 
 
-            <FormField>
-              <UIDropdownInput input-id="work_type" theme="light" v-model:availableOptions="requestTypes"
+            <FormField name="work_type" v-slot="$field">
+              <UIDropdownInput input-id="work_type" theme="light" v-model:availableOptions="typeOfWork"
                 placeholder="Тип работы" :float-label="true" />
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $field.error?.message }}
+              </p>
             </FormField>
 
-            <FormField>
-              <DatePicker unstyled :pt="{
-                panel: 'bg-white border border-protection px-5 py-4',
-                selectYear: 'hidden',
-                selectMonth: 'text-sm+',
-                header: 'flex justify-between items-start h-5',
-                pcPrevButton: {
-                  root: 'size-5',
-                },
-                pcNextbutton: {
-                  root: 'size-5'
-                },
-                dayView: 'w-full mt-4',
-                tableBody: 'mt-7.5',
-                dayCell: 'size-7.5',
-                day: 'size-7.5 block'
-              }">
-                <template #previcon>
-                  <UITickToLeft class="size-5" />
-                </template>
-                <template #nexticon>
-                  <UITickToRight class="size-5" />
-                </template>
+            <UIInput v-date-format input-id="due_date" v-bind="commonUIInputProps" label="Date" :input-props="{
+              onFocus: (event) => toggleDatePickerPopover(event),
+              value: formattedDate,
+              readonly: true
+            }" />
 
-              </DatePicker>
+            <FormField name="time" v-slot="$field">
+              <Transition name="slide-fade" mode="in-out">
+                <div v-if="formattedDate">
+                  <div class="grid grid-cols-2 gap-2 md:grid-cols-3" v-if="availableTimes.length">
+                    <button v-for="choice in timeChoices" :key="choice"
+                      :class="[availableTimes.includes(choice) ? 'text-primary' : 'text-caption']"
+                      class="option text-center py-3 text-sm md:text-base md:py-2.5 bg-background has-[:checked]:bg-primary relative has-[:checked]:text-white transition-colors">
+                      <input v-bind="$field.props" type="radio"
+                        class="opacity-0 left-0 top-0 w-full h-full absolute cursor-pointer" :value="choice"
+                        :disabled="!availableTimes.includes(choice)" />
+                      <span class="">{{ choice }}</span>
+                    </button>
+                  </div>
+
+                  <div v-else class="flex justify-center">
+                    <div class="loader w-6"></div>
+                  </div>
+
+                  <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                    {{ $field.error?.message }}
+                  </p>
+                </div>
+              </Transition>
+
             </FormField>
+
           </div>
 
           <div class="space-y-5">
             <h2 class="font-bold text-base md:text-lg">Ваши контакты</h2>
 
-            <FormField>
+            <FormField name="name">
               <UIInput input-id="name" v-bind="commonUIInputProps" label="Имя" />
             </FormField>
 
-            <FormField>
+            <FormField name="phone" v-slot="$field">
               <UIInput input-id="phone" v-bind="commonUIInputProps" label="Телефон" />
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $field.error?.message }}
+              </p>
             </FormField>
           </div>
 
