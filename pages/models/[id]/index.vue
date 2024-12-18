@@ -175,9 +175,9 @@ const { courses } = useStore()
       <div
         class="container space-y-3 mt-6 md:grid md:grid-cols-3 md:space-y-0 md:gap-5 2xl:flex 2xl:justify-center 2xl:mt-8"
       >
-        <UIButton mode="full" label="Отправить заявку" color="secondary" />
-        <UIButton mode="full" label="Скачать прайс-лист" />
-        <UIButton mode="full" label="Контакты дилеров" />
+        <UIButton mode="full" label="Отправить заявку" color="primary" />
+        <UIButton mode="full" color="secondary" label="Скачать прайс-лист" />
+        <UIButton mode="full" color="secondary" label="Контакты дилеров" />
       </div>
     </UISection>
 
@@ -284,6 +284,7 @@ const { courses } = useStore()
           <UIButton
             label="Заказать звонок дилера"
             class="mt-6 mx-auto"
+            color="secondary"
             mode="full"
           />
           <picture>

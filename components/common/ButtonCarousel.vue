@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants'
 import type { VariantProps } from 'tailwind-variants'
 
 const cButton = tv({
-  base: 'bg-primary p-0 hoverable:bg-opacity-40 hoverable:hover:bg-opacity-100',
+  base: 'bg-primary p-0 hoverable:bg-opacity-40 hoverable:hover:bg-opacity-100 rounded-full flex items-center justify-center transition-colors',
   variants: {
     size: {
       lg: 'w-16 h-16',
@@ -41,11 +41,8 @@ withDefaults(
       'absolute -translate-y-1/2': mode === 'normal' || mode === 'free',
     }"
   >
-    <UIButton
+    <button
       :class="[cButton({ size }), { 'scale-0': hide }]"
-      corner="full"
-      color="unstyled"
-      size="unstyled"
     >
       <slot name="icon" :position="position">
         <template v-if="position === 'left'">
@@ -56,6 +53,6 @@ withDefaults(
           <UICarouselNextIcon :class="{ 'w-2.5': size === 'sm' }" />
         </template>
       </slot>
-    </UIButton>
+    </button>
   </div>
 </template>

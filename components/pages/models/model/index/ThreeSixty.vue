@@ -102,7 +102,7 @@ const { src } = useUploadcareSource()
         </div>
 
         <div class="mt-7.5 md:mt-0">
-          <UIButton label="Конфигуратор" color="secondary" mode="full" />
+          <UIButton label="Конфигуратор" color="primary" mode="full" />
         </div>
       </div>
     </div>

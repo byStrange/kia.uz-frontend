@@ -2,14 +2,14 @@
 import { type VariantProps, tv } from 'tailwind-variants'
 
 const button = tv({
-  base: 'flex items-center justify-center whitespace-nowrap transition-all outline-none font-semibold text-base+',
+  base: 'flex items-center justify-center whitespace-nowrap transition-all outline-none font-semibold text-base+ transition-colors',
   variants: {
     color: {
       unstyled: '',
-      secondary: 'bg-primary-white text-primary border border-disabled hover:border-caption hover:bg-primary hover:bg-opacity-[0.04] active:bg-ptransparent active:border-description disabled:border-protection disabled:text-disabled',
+      secondary: 'bg-primary-white text-primary border border-disabled hover:border-caption hover:[#05141F0A] active:bg-ptransparent active:border-description disabled:border-protection disabled:text-disabled',
       primary:
         'bg-primary text-primary-white hover:bg-description active:bg-[#2D3A43] active:text-protection disabled:disabled disabled:text-protection',
-      primaryDark: 'bg-transparent border-city-gray text-primary-white hover:bg-white/5 hover:border-protection active:border-city-gray active:text-protection active:bg-primary/5 disabled:opacity-40',
+      primaryDark: 'bg-transparent border border-city-gray text-primary-white hover:bg-white/5 hover:border-protection active:border-city-gray active:text-protection active:bg-primary/5 disabled:opacity-40',
       secondaryDark: 'bg-primary-white text-primary hover:bg-[#F0F1F1] active:bg-[#E0E3E4] disabled:opacity-40'
     },
     size: {
@@ -27,12 +27,12 @@ const button = tv({
     },
   },
   defaultVariants: {
-    size: 'md',
     color: 'primary',
     corner: 'normal',
     mode: 'normal',
   },
-})
+},
+  { responsiveVariants: ['md'] })
 
 type ButtonVariants = VariantProps<typeof button>
 
@@ -46,7 +46,7 @@ defineProps<{
 </script>
 
 <template>
-  <button :class="button({ color, size, mode, corner })">
+  <button :class="button({ color, size: { initial: 'sm', md: 'md' }, mode, corner })">
     <slot>{{ label }}</slot>
   </button>
 </template>
