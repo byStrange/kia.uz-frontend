@@ -39,8 +39,7 @@ export const feedbackSchema = z.object({
 
   city: z
     .string()
-    .min(1, 'Поле обязательно для заполнения')
-    .min(2, 'Необходимо ввести город'),
+    .min(1, 'Поле обязательно для заполнения'),
 
   comment: z
     .string()
@@ -52,4 +51,28 @@ export const feedbackSchema = z.object({
   agree: z.literal(true, {
     errorMap: () => ({ message: 'Необходимо подтвердить согласие' }),
   }),
+})
+
+export const serviceForm = z.object({
+  model: z.string().min(1, 'Please choose a model'),
+  issue_year: z.string().min(1, 'Please provide issue year'),
+  region: z.string().min(1, 'Please choose a region'),
+  fillial: z.string().min(1, 'Please choose a fillial'),
+  work_type: z.string().min(1, 'Please choose type of work that has to be done'),
+  time: z.boolean(),
+  name: z.string().optional(),
+  phone: z.string()
+    .refine(
+      (value) => value.startsWith('+'),
+      'Пожалуйста, напишите его в международном формате (например, с префиксом +998)',
+    )
+    .refine(
+      (value) =>
+        !value ||
+        value
+          .replaceAll(' ', '')
+          .match(/^[+]998([3785]{2}|(20)|(9[013-57-9]))\d{7}$/),
+      'Необходимо ввести правильный номер телефона',
+    ),
+
 })
