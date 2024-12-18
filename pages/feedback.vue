@@ -178,7 +178,7 @@ const onSubmit = (event: FormSubmitEvent) => {
               {{ $field.error?.message }}
             </p>
           </FormField>
-          <UIButton type="submit" label="Отправить" color="secondary" mode="full" class="mt-10 md:w-full 2xl:w-auto" size="md+" />
+          <UIButton type="submit" label="Отправить" color="secondary" mode="full" class="mt-10 md:w-full 2xl:w-auto"  />
         </div>
       </Form>
     </UISection>

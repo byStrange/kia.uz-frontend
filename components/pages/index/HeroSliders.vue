@@ -121,8 +121,8 @@ const slidesLength = computed(() => {
                   </div>
                   <UIButton
                     label="Подробнее"
-                    color="primary"
-                    size="md-"
+                    color="secondary"
+                    
                     mode="full"
                     class="mt-6 text-base"
                   />

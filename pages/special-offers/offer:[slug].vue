@@ -61,7 +61,7 @@ const { src } = useUploadcareSource()
         <UIButton
           label="Заказать обратный звонок"
           mode="full"
-          size="md+"
+          
           class="mt-4 md:mt-5 2xl:mt-10"
         />
       </div>
@@ -166,7 +166,7 @@ const { src } = useUploadcareSource()
           label="Позвонить"
           color="secondary"
           mode="full"
-          size="md+"
+          
           class="mt-6"
         />
       </div>

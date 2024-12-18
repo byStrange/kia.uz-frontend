@@ -89,7 +89,7 @@ const { headerService } = useHeaderService()
               mode="full"
               class="border border-city-gray md:!w-full"
               color="secondary"
-              size="md-"
+              
             />
           </div>
 

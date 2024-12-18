@@ -21,14 +21,14 @@ const { src } = useUploadcareSource()
         <div class="flex w-full items-start justify-end gap-6 2xl:mt-4.5">
           <UIButton
             label="Скачать прайс-лист"
-            color="primary"
-            size="md-"
+            color="secondary"
+            
             mode="full"
           />
           <UIButton
             label="Заказать звонок"
             color="secondary"
-            size="md-"
+            
             mode="full"
           />
         </div>
@@ -73,14 +73,14 @@ const { src } = useUploadcareSource()
             <div class="mt-6 space-y-4 md:hidden">
               <UIButton
                 label="Заказать звонок"
-                color="primary"
-                size="md-"
+                color="secondary"
+                
                 mode="full"
               />
               <UIButton
                 label="Скачать прайс-лист"
                 color="secondary"
-                size="md-"
+                
                 mode="full"
               />
             </div>

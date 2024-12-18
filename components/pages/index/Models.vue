@@ -166,7 +166,7 @@ onMounted(() => {
                   <UIButton
                     label="Подробнее о модели"
                     color="secondary"
-                    size="md-"
+                    
                     mode="full"
                     class="mx-auto mt-4 md:mt-8"
                   />

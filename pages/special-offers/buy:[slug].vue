@@ -100,7 +100,7 @@ const fields = [
         <UIButton
           label="Заказать обратный звонок"
           mode="full"
-          size="md+"
+          
           class="mt-4 2xl:mt-10"
         />
       </div>
@@ -155,7 +155,7 @@ const fields = [
           label="Отправить заявку"
           color="secondary"
           mode="full"
-          size="md+"
+          
         />
 
         <p class="text-caption text-xs+ md:text-xs++">

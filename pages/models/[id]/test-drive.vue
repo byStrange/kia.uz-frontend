@@ -104,7 +104,7 @@ definePageMeta({
                   {{ $field.error?.message }}
                 </p>
               </FormField>
-              <UIButton label="Отправить заявку" type="submit" color="secondary" mode="full" size="md+" />
+              <UIButton label="Отправить заявку" type="submit" color="secondary" mode="full"  />
             </div>
           </Form>
         </div>
