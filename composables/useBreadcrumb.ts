@@ -30,7 +30,7 @@ export const useBreadcrumbs = (route: any, router: any) => {
       }
     })
 
-    return crumbs
+    return crumbs.filter(c => c.title)
   })
 
   return {
