@@ -34,16 +34,16 @@ module.exports = withTV({
         ],
       },
       fontSize: {
-        'sm+': ['15px', '20px'],
-        xs: ['12px', '14px'],
-        'xs+': ['12px', '16px'],
-        'xs++': ['12px', '20px'],
-        lg: ['18px', '24px'],
-        sm: ['14px', '18px'],
-        base: ['16px', '21px'],
-        'base+': ['16px', '24px'],
+        'sm+': ['0.9375rem', '20px'], // 15px
+        xs: ['0.75rem', '14px'], // 12px
+        'xs+': ['0.75rem', '16px'], // 12px
+        'xs++': ['0.75rem', '20px'], // 12px
+        lg: ['1.125rem', '24px'], // 18px
+        sm: ['0.875rem', '18px'], // 14px
+        base: ['1rem', '21px'],
+        'base+': ['1rem', '24px'],
         '2xl': [
-          '24px',
+          '1.5rem',
           {
             lineHeight: '32px',
             fontWeight: 600,
@@ -51,7 +51,7 @@ module.exports = withTV({
           },
         ],
         '3xl': [
-          '32px',
+          '2rem', // 32px
           {
             lineHeight: '40px',
             fontWeight: 600,
@@ -59,7 +59,7 @@ module.exports = withTV({
           },
         ],
         '4xl': [
-          '36px',
+          '2.25rem', // 36px
           {
             lineHeight: '42px',
             fontWeight: 600,
@@ -67,7 +67,7 @@ module.exports = withTV({
           },
         ],
         '5xl': [
-          '42px',
+          '2.625rem', // 42px
           {
             lineHeight: '48px',
             fontWeight: 600,
@@ -75,7 +75,7 @@ module.exports = withTV({
           },
         ],
         '6xl': [
-          '48px',
+          '3rem', // 48px
           {
             lineHeight: '56px',
             fontWeight: 600,
@@ -83,7 +83,7 @@ module.exports = withTV({
           },
         ],
         '7xl': [
-          '56px',
+          '3.5rem', // 56px
           {
             lineHeight: '64px',
             fontWeight: 600,
@@ -91,7 +91,7 @@ module.exports = withTV({
           },
         ],
         '8xl': [
-          '64px',
+          '4rem', // 64px
           {
             lineHeight: '72px',
             fontWeight: 600,
@@ -99,7 +99,7 @@ module.exports = withTV({
           },
         ],
         '9xl': [
-          '72px',
+          '4.5rem', // 72px
           {
             lineHeight: '76px',
             fontWeight: 600,
