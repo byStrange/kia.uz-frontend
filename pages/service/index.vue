@@ -275,7 +275,7 @@ definePageMeta({
           </div>
 
 
-          <UIButton type="submit" label="Записаться" color="secondary" mode="full" class="md:w-full 2xl:w-auto"
+          <UIButton type="submit" label="Записаться" color="primary" mode="full" class="md:w-full 2xl:w-auto"
              />
         </Form>
       </UISection>
