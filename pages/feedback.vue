@@ -78,7 +78,7 @@ const onSubmit = (event: FormSubmitEvent) => {
         <div class="space-y-5 text-primary">
           <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
         </div>
-        <UIButton label="Понятно" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <UIButton label="Понятно" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>
