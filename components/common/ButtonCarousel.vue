@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants'
 import type { VariantProps } from 'tailwind-variants'
 
 const cButton = tv({
-  base: 'bg-primary p-0 hoverable:bg-opacity-40 hoverable:hover:bg-opacity-100 rounded-full flex items-center justify-center transition-colors',
+  base: 'bg-primary p-0 hoverable:bg-opacity-40 hoverable:hover:bg-opacity-100 rounded-full flex items-center justify-center transition-all',
   variants: {
     size: {
       lg: 'w-16 h-16',
