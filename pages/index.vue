@@ -71,7 +71,7 @@ const extraLinksCard = [
             выгоднее чем кредит, единый тариф, гибкость.
           </p>
           <UIButton
-            color="primary"
+            color="secondary"
             mode="full"
             label="Подробнее"
             class="mt-6 md:mt-14 md:leading-[24px]"

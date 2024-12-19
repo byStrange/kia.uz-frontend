@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { UIInfoIcon, UITickToRight } from '#components'
+import { type ModelGroup } from '~/types'
 
 const availableOptions = ref([
   { label: 'Carens', value: 'car' },
@@ -16,16 +17,6 @@ const availableOptions = ref([
 
 const selectedOption = ref('')
 
-type ModelGroup = {
-  label: string
-  models: {
-    name: string
-    image: string
-    from: string
-    benefitUpto?: string
-    electric?: boolean
-  }[]
-}
 const modelGroups = ref<ModelGroup[]>([
   {
     label: 'Новинки',
@@ -162,12 +153,8 @@ definePageMeta({
         <h1 class="text-3xl font-semibold text-primary md:text-5xl">
           Все модели Kia
         </h1>
-        <UIDropdownInput
-          v-model:selected-option="selectedOption"
-          v-model:available-options="availableOptions"
-          placeholder="Выберите модель"
-          class="mt-4 md:mt-7.5 md:max-w-sm"
-        />
+        <UIDropdownInput v-model:selected-option="selectedOption" v-model:available-options="availableOptions"
+          placeholder="Выберите модель" class="mt-4 md:mt-7.5 md:max-w-sm" />
       </div>
 
       <div class="pt-5 pb-10 md:pb-15 2xl:py-20">
@@ -177,11 +164,8 @@ definePageMeta({
               {{ modelGroup.label }}
             </h1>
             <div class="flex-wrap mt-4 md:mt-8 md:flex md:gap-9 2xl:mt-10">
-              <div
-                v-for="model in modelGroup.models"
-                :key="model.name"
-                class="max-w-md md:min-w-[310px] md:max-w-[310px]"
-              >
+              <div v-for="model in modelGroup.models" :key="model.name"
+                class="max-w-md md:min-w-[310px] md:max-w-[310px]">
                 <img :src="model.image" class="object-cover w-full" />
                 <div class="mt-4">
                   <h2 class="text-lg font-semibold text-primary">

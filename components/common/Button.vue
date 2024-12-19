@@ -2,24 +2,20 @@
 import { type VariantProps, tv } from 'tailwind-variants'
 
 const button = tv({
-  base: 'flex items-center justify-center whitespace-nowrap transition-all outline-none font-semibold',
+  base: 'flex items-center justify-center whitespace-nowrap transition-all outline-none font-semibold text-base+ transition-colors',
   variants: {
     color: {
       unstyled: '',
-      primary: 'bg-white text-semantic-text border border-disabled',
-      secondary:
-        'bg-primary border border-city-gray text-white hover:bg-[#434E56] active:bg-[#2D3A43] active:text-[#CDD0D2] disabled:bg-opacity-40 disabled:text-[#CDD0D2]',
-      transparent:
-        'bg-transparent text-white bg-opacity-60 hover:bg-opacity-100 border border-city-gray',
-      danger:
-        'bg-secondary text-white focus:ring focus:ring-secondary-300 ring-offset-2 ring-offset-white',
+      secondary: 'bg-primary-white text-primary border border-disabled hover:border-caption hover:[#05141F0A] active:bg-ptransparent active:border-description disabled:border-protection disabled:text-disabled',
+      primary:
+        'bg-primary text-primary-white hover:bg-description active:bg-[#2D3A43] active:text-protection disabled:disabled disabled:text-protection',
+      primaryDark: 'bg-transparent border border-city-gray text-primary-white hover:bg-white/5 hover:border-protection active:border-city-gray active:text-protection active:bg-primary/5 disabled:opacity-40',
+      secondaryDark: 'bg-primary-white text-primary hover:bg-[#F0F1F1] active:bg-[#E0E3E4] disabled:opacity-40'
     },
     size: {
       unstyled: '',
-      sm: 'px-2 py-2 text-sm md:py-3',
-      md: 'px-3  py-3 text-base md:py-4.5 md:px-10',
-      'md-': 'md:px-10 py-2.5 md:py-4.5',
-      'md+': 'px-3  py-4.5 text-base md:px-10',
+      sm: 'py-3 px-5',
+      md: 'py-4.5 px-10',
     },
     mode: {
       full: 'w-full md:w-auto',
@@ -31,12 +27,12 @@ const button = tv({
     },
   },
   defaultVariants: {
-    size: 'md',
     color: 'primary',
     corner: 'normal',
     mode: 'normal',
   },
-})
+},
+  { responsiveVariants: ['md'] })
 
 type ButtonVariants = VariantProps<typeof button>
 
@@ -50,7 +46,7 @@ defineProps<{
 </script>
 
 <template>
-  <button :class="button({ color, size, mode, corner })">
+  <button :class="button({ color, size: { initial: 'sm', md: 'md' }, mode, corner })">
     <slot>{{ label }}</slot>
   </button>
 </template>

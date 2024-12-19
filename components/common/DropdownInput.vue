@@ -18,7 +18,7 @@ const dropdown = tv({
   variants: {
     theme: {
       light: {
-        root: 'border-b-2 border-disabled has-[:focus]:border-primary bg-white px-0',
+        root: 'border-b border-disabled has-[:focus]:border-primary bg-white px-0',
         overlay:
           'bg-white border !mt-0 border-disabled bg-red-300 rounded-b-8 shadow-[0_3px_4px_0px_#05141F26] overflow-auto',
         label: {
@@ -66,11 +66,13 @@ withDefaults(
     optionValue?: string
     placeholder?: string
     inputId?: string
+    name?: string
     size?: DropdownProps['size']
     theme?: DropdownProps['theme']
   }>(),
   {
-    inputId: '',
+    inputId: undefined,
+    name: undefined,
     theme: 'default',
     size: 'default',
     optionLabel: 'label',
@@ -89,6 +91,7 @@ withDefaults(
       :option-label="optionLabel"
       :option-value="optionValue"
       :input-id="inputId"
+      :name="name ? name : inputId"
       class="w-full"
       :pt="{
         list: '!p-0',
