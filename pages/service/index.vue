@@ -262,14 +262,14 @@ definePageMeta({
               <PrimeCheckbox binary />
               <div>
                 Даю согласие на обработку своих персональных данных на условиях, указанных
-                <button class="underline">здесь</button>.
+                <span class="underline">здесь</span>.
               </div>
             </div>
             <div class="flex gap-x-2 items-start">
               <PrimeCheckbox binary />
               <div>
-                Даю согласие на получение информации рекламного характера на условиях, указанных <button
-                  class="underline">здесь</button>.
+                Даю согласие на получение информации рекламного характера на условиях, указанных <span
+                  class="underline">здесь</span>.
               </div>
             </div>
           </div>

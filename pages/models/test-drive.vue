@@ -78,15 +78,17 @@ definePageMeta({
               {{ modelGroup.label }}
             </h1>
             <div class="flex-wrap mt-4 md:mt-8 md:flex md:gap-9 2xl:mt-10">
-              <div v-for="model in modelGroup.models" :key="model.name"
-                class="max-w-md md:min-w-[310px] md:max-w-[310px]">
-                <img :src="model.image" class="object-cover w-full" />
-                <div class="mt-4">
-                  <h2 class="text-lg font-semibold text-primary">
-                    {{ model.name }}
-                  </h2>
+              <NuxtLinkLocale v-for="model in modelGroup.models" :key="model.name"
+                :to="`/models/${model.name}/test-drive`">
+                <div class="max-w-md md:min-w-[310px] md:max-w-[310px]">
+                  <img :src="model.image" class="object-cover w-full" />
+                  <div class="mt-4">
+                    <h2 class="text-lg font-semibold text-primary">
+                      {{ model.name }}
+                    </h2>
+                  </div>
                 </div>
-              </div>
+              </NuxtLinkLocale>
             </div>
           </div>
         </div>

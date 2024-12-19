@@ -33,7 +33,7 @@ const headerItems = ref<HeaderItem[]>([
       },
       {
         label: 'Тест-драйв',
-        to: '#',
+        to: '/models/test-drive',
       },
       {
         label: 'Запрос предложения',
@@ -65,7 +65,7 @@ const headerItems = ref<HeaderItem[]>([
   },
   {
     label: 'Тест-драйв',
-    to: '#',
+    to: '/models/test-drive',
   },
   {
     label: 'Владельцам',
