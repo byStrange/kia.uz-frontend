@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { src } = useUploadcareSource()
-import { FormField } from '@primevue/forms'
+import { Dialog, Textarea } from 'primevue'
+import { Form, FormField } from '@primevue/forms'
 import { UIInput } from '#components'
 
 const commonUIInputProps: Omit<
@@ -13,6 +14,8 @@ const commonUIInputProps: Omit<
   theme: 'light',
   size: 'large',
 }
+
+const { data: privacyAndTerms } = useFetch('/api/terms')
 
 const isPrivacyDialogVisible = ref(false)
 
@@ -35,6 +38,32 @@ definePageMeta({
 </script>
 <template>
   <UISafeAreaView>
+    <Dialog v-model:visible="isPrivacyDialogVisible" modal :pt="{
+      root: '!rounded-none 2xl:h-full 2xl:!max-h-[758px]',
+      mask: 'px-3',
+      header:
+        '!px-8 !pt-8 !pb-5 border-b border-protection 2xl:w-[624px] 2xl:!mx-auto 2xl:!px-0 2xl:!pt-20',
+      content: '!pt-5 2xl:!px-0 2xl:max-w-[624px] 2xl:mx-auto',
+      pcCloseButton: {
+        root: '!absolute top-3 right-3 md:top-4 md:right-4 2xl:top-6 2xl:right-6',
+      },
+    }" class="w-full md:w-[--screen-md] 2xl:w-[840px]">
+      <template #closeicon>
+        <UICloseIcon class="text-primary md:size-7.5" />
+      </template>
+      <template #header>
+        <h1 class="text-2xl text-primary font-semibold">
+          {{ privacyAndTerms?.terms.title }}
+        </h1>
+      </template>
+      <div class="relative">
+        <div class="space-y-5 text-primary">
+          <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
+        </div>
+        <UIButton label="Понятно" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+          @click="isPrivacyDialogVisible = false" />
+      </div>
+    </Dialog>
     <UIDesktopOnly>
       <UIContainer class="pt-6">
         <UIBreadcrumb theme="dark" />
