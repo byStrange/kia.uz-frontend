@@ -255,7 +255,7 @@ useHead({
                     color="secondary"
                     class="mt-5 md:py-2.5 2xl:mt-0"
                     mode="full"
-                    size="md-"
+                    
                   />
                 </div>
               </div>

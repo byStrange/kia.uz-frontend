@@ -65,7 +65,6 @@ const { models } = useStore()
           <UIButton
             mode="full"
             label="Подробнее"
-            size="md"
             class="mt-6 !text-base+"
           />
         </div>

@@ -142,6 +142,7 @@ module.exports = withTV({
             black: primitives['kia-midnight-black'].DEFAULT,
             white: primitives['kia-polar-white'],
           },
+          'ptransparent': primitives['kia-midnight-black'][10],
           'depth-blue': primitives['kia-midnight-black'][90],
           description: primitives['kia-midnight-black'][80],
           caption: primitives['kia-midnight-black'][60],
@@ -225,7 +226,7 @@ module.exports = withTV({
       },
     ),
 
-    function ({ addBase, theme }) {
+    function({ addBase, theme }) {
       const screens = theme('screens')
       const screenProperties = {}
       for (const key in screens) {

@@ -20,3 +20,14 @@ export interface Model {
   name: string
   configurations: ModelConfiguration[]
 }
+
+export type ModelGroup = {
+  label: string
+  models: {
+    name: string
+    image: string
+    from: string
+    benefitUpto?: string
+    electric?: boolean
+  }[]
+}

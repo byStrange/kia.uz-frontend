@@ -35,7 +35,7 @@ watch(bounding.x, () => {
       slidesOffsetBefore: bounding.x.value,
       slidesOffsetAfter: bounding.x.value,
       spaceBetween: 35,
-    },
+  },
   }
 })
 

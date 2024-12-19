@@ -1,17 +1,9 @@
 <script setup lang="ts">
-const defaultHeaderHeight = ref(0)
-
-onMounted(() => {
-  const headerHeight = useCssVar('--header-height')
-  if (headerHeight.value) {
-    defaultHeaderHeight.value = parseInt(headerHeight.value)
-  }
-})
-
+const { paddingTop: pt } = useSafeArea();
 const props = defineProps<{ extra?: number }>()
 
 const paddingTop = computed(() => {
-  if (props.extra) return `${defaultHeaderHeight.value + (props.extra || 0)}px`
+  if (props.extra) return (`calc(${pt.value} + ${(props.extra || 0)}px)`);
   return 'var(--header-height)'
 })
 </script>

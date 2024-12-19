@@ -83,7 +83,7 @@ const items = ref([
         <UIButton
           label="Заказать обратный звонок"
           mode="full"
-          size="md+"
+          
           class="mt-4 md:mt-5 2xl:mt-10"
         />
       </div>
@@ -158,7 +158,7 @@ const items = ref([
             color="secondary"
             class="mt-7.5"
             mode="full"
-            size="md+"
+            
           />
         </div>
       </div>
