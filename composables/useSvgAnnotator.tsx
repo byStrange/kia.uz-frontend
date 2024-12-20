@@ -106,21 +106,62 @@ export const useSvgAnnotator = (options: AnnotatorOptions = {}) => {
   }
 
   // Coordinate conversion utilities
-  const getSvgPoint = (clientX: number, clientY: number): Point | null => {
+    // Convert viewport coordinates to SVG coordinates
+  const getSvgPoint = (event: MouseEvent): Point | null => {
     if (!svgRef.value || !import.meta.client) return null
 
-    const pt = svgRef.value.createSVGPoint()
-    pt.x = clientX
-    pt.y = clientY
+    const svgElement = svgRef.value
+    const rect = svgElement.getBoundingClientRect()
     
-    const svgPoint = pt.matrixTransform(svgRef.value.getScreenCTM()?.inverse())
-    return { x: svgPoint.x, y: svgPoint.y }
+    // Get the current SVG viewBox
+    const viewBox = svgElement.viewBox.baseVal
+    
+    // Calculate the scale factors
+    const scaleX = viewBox.width / rect.width
+    const scaleY = viewBox.height / rect.height
+    
+    // Calculate relative coordinates within the SVG
+    const relativeX = event.clientX - rect.left
+    const relativeY = event.clientY - rect.top
+    
+    // Convert to SVG coordinate space
+    return {
+      x: (relativeX * scaleX) + viewBox.x,
+      y: (relativeY * scaleY) + viewBox.y
+    }
+  }
+
+  // Convert element position to SVG coordinates
+  const getElementSvgPoint = (element: HTMLElement): Point | null => {
+    if (!svgRef.value || !import.meta.client) return null
+
+    const svgElement = svgRef.value
+    const rect = svgElement.getBoundingClientRect()
+    const elementRect = element.getBoundingClientRect()
+    
+    // Get the current SVG viewBox
+    const viewBox = svgElement.viewBox.baseVal
+    
+    // Calculate the scale factors
+    const scaleX = viewBox.width / rect.width
+    const scaleY = viewBox.height / rect.height
+    
+    // Calculate element center position relative to SVG
+    const relativeX = (elementRect.left - rect.left) + (elementRect.width / 2)
+    const relativeY = (elementRect.top - rect.top) + (elementRect.height / 2)
+    
+    // Convert to SVG coordinate space
+    return {
+      x: (relativeX * scaleX) + viewBox.x,
+      y: (relativeY * scaleY) + viewBox.y
+    }
   }
 
   return {
     svgRef,
     connectors,
     addConnector,
+    getElementSvgPoint,
     removeConnector,
     updateConnectorPoints,
     getSvgPoint,
