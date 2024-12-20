@@ -36,8 +36,8 @@ export const useSvgAnnotator = (options: AnnotatorOptions = {}) => {
   
   const calculateBreakPoint = (start: Point, end: Point): Point => {
     return {
-      x: start.x,
-      y: start.y + (end.y - start.y) / 2
+      x: start.x + opts.breakPointOffset,
+      y: start.y,
     }
   }
 
