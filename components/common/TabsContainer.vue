@@ -56,7 +56,8 @@ defineExpose({
   <div class="relative">
     <div :class="[{ container: !props.isHeaderFull }, headerContainerClass]">
       <div class="flex gap-8 border-b" :class="[{ 'justify-center': props.isHeaderCenter }, props.headerClass]" :style="{
-        padding: props.isHeaderFull ? '0 ' + bounding.x.value + 'px' : '',
+        '--padding-left': bounding.x.value + 'px',
+        padding: props.isHeaderFull ? '0 var(--padding-left)'  : '',
       }">
         <template v-for="(tab, index) in tabs" :key="tab">
           <slot name="tab-button" :tab="{ tab: tab, isActive: index === activeTab }">
