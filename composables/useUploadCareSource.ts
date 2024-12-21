@@ -9,6 +9,10 @@ export const useUploadcareSource = () => {
     crop?: string
   }
 
+  type StringMap = {
+    [key: string]: any
+  }
+
   // Default options
   const defaultOption: UploadcareOption = {
     format: 'auto',
@@ -18,7 +22,7 @@ export const useUploadcareSource = () => {
   // Function to generate the Uploadcare URL
   const src = (
     uuid: string,
-    option?: UploadcareOption,
+    option?: UploadcareOption | StringMap,
     trailingSlash: boolean = true,
   ): string => {
     if (!uuid) {
@@ -35,8 +39,8 @@ export const useUploadcareSource = () => {
 
     // Build the option string
     const _optStr = Object.entries(_opt)
-      .filter(([_option, _value]) => _value !== undefined) // Ignore undefined values
-      .map(([_option, _value]) => (_value ? `/-/${_option}/${_value}` : ''))
+      .filter(([_option, _value]) => _value !== undefined || _value !== false) // Ignore undefined values
+      .map(([_option, _value]) => (_value ? `/-/${_option}/${typeof _value == 'boolean' ? '' : _value}` : ''))
       .join('')
 
     return `${UPLOADCARE_CDN_URL}/${uuid}${_optStr}${trailingSlash ? '/' : ''}`
