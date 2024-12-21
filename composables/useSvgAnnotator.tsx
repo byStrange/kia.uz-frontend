@@ -106,15 +106,13 @@ export const useSvgAnnotator = (options: AnnotatorOptions = {}) => {
   }
 
   // Coordinate conversion utilities
-  const getSvgPoint = (clientX: number, clientY: number): Point | null => {
+  const getSvgPoint = (x: number, y: number): Point | null => {
     if (!svgRef.value || !import.meta.client) return null
 
-    const pt = svgRef.value.createSVGPoint()
-    pt.x = clientX
-    pt.y = clientY
-    
-    const svgPoint = pt.matrixTransform(svgRef.value.getScreenCTM()?.inverse())
-    return { x: svgPoint.x, y: svgPoint.y }
+    return {
+      x,
+      y,
+    }
   }
 
   return {
