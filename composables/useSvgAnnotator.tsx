@@ -23,7 +23,7 @@ interface AnnotatorOptions {
 export const useSvgAnnotator = (options: AnnotatorOptions = {}) => {
   const svgRef = ref<SVGSVGElement | null>(null)
   const connectors = ref<Connector[]>([])
-  
+
   const defaultOptions = {
     breakPointOffset: 50,
     animationDuration: 500,
@@ -31,9 +31,9 @@ export const useSvgAnnotator = (options: AnnotatorOptions = {}) => {
     lineWidth: 2,
     dotRadius: 4
   }
-  
+
   const opts = { ...defaultOptions, ...options }
-  
+
   const calculateBreakPoint = (start: Point, end: Point): Point => {
     return {
       x: start.x + opts.breakPointOffset,
@@ -55,20 +55,20 @@ export const useSvgAnnotator = (options: AnnotatorOptions = {}) => {
 
     const startProgress = connector.progress
     const startTime = performance.now()
-    
+
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime
       const progress = Math.min(elapsed / opts.animationDuration, 1)
-      
+
       connector.progress = startProgress + (targetProgress - startProgress) * progress
-      
+
       if (progress < 1) {
         requestAnimationFrame(animate)
       } else if (connector.removing && targetProgress === 0) {
         connectors.value = connectors.value.filter(c => c.id !== connector.id)
       }
     }
-    
+
     requestAnimationFrame(animate)
   }
 
@@ -81,10 +81,10 @@ export const useSvgAnnotator = (options: AnnotatorOptions = {}) => {
       progress: 0,
       removing: false
     }
-    
+
     connectors.value.push(newConnector)
     animateConnector(newConnector, 1)
-    
+
     return newConnector.id
   }
 
@@ -107,6 +107,7 @@ export const useSvgAnnotator = (options: AnnotatorOptions = {}) => {
 
   // Coordinate conversion utilities
   const getSvgPoint = (x: number, y: number): Point | null => {
+    // Convert viewport coordinates to SVG coordinates
     if (!svgRef.value || !import.meta.client) return null
 
     return {
@@ -114,6 +115,7 @@ export const useSvgAnnotator = (options: AnnotatorOptions = {}) => {
       y,
     }
   }
+
 
   return {
     svgRef,
