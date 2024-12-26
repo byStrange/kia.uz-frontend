@@ -84,7 +84,7 @@ const { headerService } = useHeaderService()
           class="grid-rows-1 space-y-7.5 md:mt-12 2xl:grid 2xl:grid-cols-12 2xl:space-y-0"
         >
           <div class="order-2 2xl:col-span-3 2xl:col-start-10">
-            <UIButton
+            <AtomButton
               label="Обратная связь"
               mode="full"
               class="md:!w-full"

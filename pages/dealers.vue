@@ -137,7 +137,7 @@ useHead({
 <template>
   <UISafeAreaView>
     <div class="container pt-7.5 2xl:pt-6">
-      <UIBreadcrumb class="hidden 2xl:block" theme="dark" />
+      <MoleculeBreadcrumb class="hidden 2xl:block" theme="dark" />
       <h1 class="text-2xl font-semibold text-primary md:text-5xl 2xl:mt-10">
         Официальные дилеры Kia
       </h1>
@@ -149,7 +149,7 @@ useHead({
           class="bg-white p-5 border w-[--width] md:w-[378px] space-y-10 mt-4"
           :style="{ '--width': bounding.width.value + 'px' }"
         >
-          <UIDropdownInput
+          <AtomDropdownInput
             v-model:selected-option="selectedLocationConfirm"
             v-model:available-options="availableOptions"
             :float-label="true"
@@ -158,7 +158,7 @@ useHead({
             theme="light"
             size="large"
           />
-          <UIButton
+          <AtomButton
             label="Сохранить"
             color="secondary"
             mode="full"
@@ -176,7 +176,7 @@ useHead({
         </button>
       </div>
 
-      <UITabsContainer
+      <MoleculeTabsContainer
         :tabs="['Карта', 'Списком']"
         class="mt-7.5"
         header-container-class="w-fit  mx-0"
@@ -250,7 +250,7 @@ useHead({
                       <span>{{ dealer.phone }}</span>
                     </div>
                   </div>
-                  <UIButton
+                  <AtomButton
                     label="Показать на карте"
                     color="secondary"
                     class="mt-5 md:py-2.5 2xl:mt-0"
@@ -262,7 +262,7 @@ useHead({
             </div>
           </div>
         </template>
-      </UITabsContainer>
+      </MoleculeTabsContainer>
     </div>
   </UISafeAreaView>
 </template>

@@ -12,12 +12,12 @@ const { headerService } = useHeaderService()
         aria-label="Header"
         class="sticky top-0 z-10 flex h-[60px] items-center bg-white py-4.5 2xl:hidden"
       >
-        <UIButton
+        <AtomButton
           class="!p-0 !border-none"
           @click="headerService.extendedMenu = null"
         >
           <UITickToLeft />
-        </UIButton>
+        </AtomButton>
         <h1
           class="absolute left-1/2 -translate-x-1/2 text-center text-lg font-semibold"
         >

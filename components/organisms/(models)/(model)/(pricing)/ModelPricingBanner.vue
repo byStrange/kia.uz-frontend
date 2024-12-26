@@ -4,7 +4,7 @@ const { src } = useUploadcareSource()
 <template>
   <div data-label="Hero top"
     class="container absolute hidden w-full items-start justify-end gap-6 pt-7.5 md:block 2xl:pt-5">
-    <UIBreadcrumb class="hidden bg-transparent text-white 2xl:block" theme="dark" />
+    <MoleculeBreadcrumb class="hidden bg-transparent text-white 2xl:block" theme="dark" />
   </div>
   <UIContainer>
     <div class="py-6 md:py-15 2xl:py-16">
@@ -22,8 +22,8 @@ const { src } = useUploadcareSource()
             </p>
           </div>
           <div class="gap-4 hidden 2xl:flex">
-            <UIButton label="Скачать прайс-лист" color="secondary" mode="full" />
-            <UIButton label="Свяжитесь с нами" color="primary" mode="full" />
+            <AtomButton label="Скачать прайс-лист" color="secondary" mode="full" />
+            <AtomButton label="Свяжитесь с нами" color="primary" mode="full" />
           </div>
         </div>
       </div>
@@ -37,8 +37,8 @@ const { src } = useUploadcareSource()
         </picture>
       </div>
       <div class="space-y-2 md:grid md:grid-cols-2 md:gap-x-4 md:space-y-0 2xl:hidden">
-        <UIButton label="Свяжитесь с нами" color="secondary" mode="full" />
-        <UIButton label="Скачать прайс-лист" mode="full" />
+        <AtomButton label="Свяжитесь с нами" color="secondary" mode="full" />
+        <AtomButton label="Скачать прайс-лист" mode="full" />
       </div>
     </div>
     <div class="py-4 flex gap-9 md:py-5 2xl:gap-10">

@@ -2,7 +2,7 @@
 import {
   PrimeAccordionHeader,
   PrimeAccordionPanel,
-  UISlideView,
+  ElementSlideView,
 } from '#components'
 import type {
   ModelConfiguration,
@@ -19,7 +19,7 @@ const hasFeature = (feature: string, configuration: ModelConfiguration) => {
 }
 
 const configurationsSwiper =
-  useTemplateRef<InstanceType<typeof UISlideView>>('confSwiper')
+  useTemplateRef<InstanceType<typeof ElementSlideView>>('confSwiper')
 
 const confSwiperClientX = ref(0)
 
@@ -69,7 +69,7 @@ onMounted(() => {
 <template>
   <div class="col-span-9">
     <div class="bg-background flex w-full relative 2xl:bg-white">
-      <UISlideView
+      <ElementSlideView
         ref="confSwiper"
         class="w-full"
         :paginator="false"
@@ -110,7 +110,7 @@ onMounted(() => {
         <template #navigation>
           <UISliderShade d="right" />
         </template>
-      </UISlideView>
+      </ElementSlideView>
     </div>
 
     <UIContainer
@@ -119,7 +119,7 @@ onMounted(() => {
         '--padding-x': bounding.x.value + 'px',
       }"
     >
-      <UIAccordion
+      <MoleculeAccordion
         :default-open="true"
         :classes="{
           contentContainer: 'duration-700',
@@ -175,9 +175,9 @@ onMounted(() => {
             </div>
           </div>
         </template>
-      </UIAccordion>
+      </MoleculeAccordion>
 
-      <UIAccordion
+      <MoleculeAccordion
         :classes="{
           contentContainer: 'duration-700',
           contentWrapper: 'duration-700',
@@ -240,7 +240,7 @@ onMounted(() => {
             </div>
           </div>
         </template>
-      </UIAccordion>
+      </MoleculeAccordion>
     </UIContainer>
   </div>
 </template>

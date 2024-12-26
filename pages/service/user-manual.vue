@@ -12,7 +12,7 @@ const { models } = useStore()
     <UIContainer>
       <div class="pt-10 pb-6 md:pb-5 pt-15 2xl:pt-6 2xl:pb-0">
         <UIDesktopOnly>
-          <UIBreadcrumb theme="dark" />
+          <MoleculeBreadcrumb theme="dark" />
         </UIDesktopOnly>
         <h1 class="text-primary text-2xl md:text-4xl 2xl:mt-7.5 2xl:text-5xl">
           Руководство по эксплуатации
@@ -62,7 +62,7 @@ const { models } = useStore()
               Информируют о сервисных функциях автомобиля и их активности.
             </p>
           </div>
-          <UIButton
+          <AtomButton
             mode="full"
             label="Подробнее"
             class="mt-6 !text-base+"

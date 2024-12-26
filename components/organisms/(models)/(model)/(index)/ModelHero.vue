@@ -9,10 +9,10 @@ const { src } = useUploadcareSource()
         class="hero-slider-shade long absolute bottom-0 z-10 h-[428px] w-full md:h-[356px]" />
       <div data-label="Hero top"
         class="container absolute hidden h-[190px] w-full items-start justify-end gap-6 pt-7.5 md:block md:bg-[linear-gradient(180deg,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0)100%)] 2xl:bg-[linear-gradient(180deg,rgba(5,20,31,0.5)_24.47%,rgba(5,20,31,0)100%)] 2xl:pt-5">
-        <UIBreadcrumb class="hidden bg-transparent text-white 2xl:block" theme="light" />
+        <MoleculeBreadcrumb class="hidden bg-transparent text-white 2xl:block" theme="light" />
         <div class="flex w-full items-start justify-end gap-6 2xl:mt-4.5">
-          <UIButton label="Скачать прайс-лист" color="secondary" mode="full" />
-          <UIButton label="Заказать звонок" color="primary" mode="full" />
+          <AtomButton label="Скачать прайс-лист" color="secondary" mode="full" />
+          <AtomButton label="Заказать звонок" color="primary" mode="full" />
         </div>
       </div>
       <picture class="h-full w-full" data-label="Main Hero image">
@@ -40,8 +40,8 @@ const { src } = useUploadcareSource()
               </p>
             </div>
             <div class="mt-6 space-y-4 md:hidden">
-              <UIButton label="Заказать звонок" color="secondary" mode="full" />
-              <UIButton label="Скачать прайс-лист" color="primaryDark" mode="full" />
+              <AtomButton label="Заказать звонок" color="secondary" mode="full" />
+              <AtomButton label="Скачать прайс-лист" color="primaryDark" mode="full" />
             </div>
             <div
               class="col-span-6 mt-6 space-y-4 text-white md:mt-10 md:grid md:grid-cols-3 md:space-y-0 2xl:col-start-7 2xl:gap-10">

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <UIHeader />
-    <SectionBar />
+    <OrganismHeader />
+    <OrganismModelBar />
     <NuxtPage />
-    <UIFooter />
+    <OrganismFooter />
   </div>
 </template>

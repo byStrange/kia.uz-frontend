@@ -12,13 +12,13 @@ definePageMeta({
 <template>
   <UISafeAreaView>
     <div class="container pt-7.5 2xl:pt-6">
-      <UIBreadcrumb class="hidden 2xl:block" theme="dark" />
+      <MoleculeBreadcrumb class="hidden 2xl:block" theme="dark" />
       <h1 class="text-2xl font-semibold text-primary md:text-5xl 2xl:mt-10">
         Специальные предложения
       </h1>
 
       <div class="mt-7.5">
-        <UITabsContainer
+        <MoleculeTabsContainer
           ref="tabsContainer"
           :tabs="['Покупка', 'Сервис']"
           header-container-class="w-fit mx-0 !px-0"
@@ -30,7 +30,7 @@ definePageMeta({
                 v-if="tab.activeTab === 0"
                 class="w-4h 2xl:absolute top-0 right-0 hidden 2xl:flex"
               >
-                <UIDropdownInput
+                <AtomDropdownInput
                   v-model:available-options="options"
                   v-model:selected-option="selectedOption"
                   placeholder="Выберите спецпредложение"
@@ -41,7 +41,7 @@ definePageMeta({
           </template>
           <template #1>
             <div>
-              <UIDropdownInput
+              <AtomDropdownInput
                 v-model:available-options="options"
                 v-model:selected-option="selectedOption"
                 placeholder="Выберите спецпредложение"
@@ -110,7 +110,7 @@ definePageMeta({
               </NuxtLink>
             </div>
           </template>
-        </UITabsContainer>
+        </MoleculeTabsContainer>
       </div>
     </div>
   </UISafeAreaView>

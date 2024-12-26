@@ -181,7 +181,7 @@ definePageMeta({
       </UIDesktopOnly>
       <UIContainer class="relative z-10">
         <UIDesktopOnly class="pt-6">
-          <UIBreadcrumb theme="dark" />
+          <MoleculeBreadcrumb theme="dark" />
         </UIDesktopOnly>
         <div class="py-20 space-y-7.5 2xl:py-0 2xl:mt-6 2xl:max-w-7h">
           <div class="space-y-4">
@@ -210,7 +210,7 @@ definePageMeta({
     </div>
 
     <div class="pb-15 relative">
-      <UITabsContainer :tabs="['Оригинальные запчасти', 'Запчасти PL2',]" :is-header-center="false"
+      <MoleculeTabsContainer :tabs="['Оригинальные запчасти', 'Запчасти PL2',]" :is-header-center="false"
         header-container-class="w-fit mx-0"
         :is-content-full="true"
         header-class="overflow-x-auto no-scrollbar text-nowrap !mt-7.5 2xl:!px-0 2xl:ml-[--padding-left]"
@@ -268,7 +268,7 @@ definePageMeta({
                       </div>
                     </div>
                   </div>
-                  <UIButton color="primary" label="Позвонить" mode="full" />
+                  <AtomButton color="primary" label="Позвонить" mode="full" />
                 </div>
               </div>
             </UIContainer>
@@ -353,12 +353,12 @@ definePageMeta({
                   сервисом.
                 </p>
               </div>
-              <UIButton label="Позвонить" mode="full" color="primary" />
+              <AtomButton label="Позвонить" mode="full" color="primary" />
             </UIContainer>
           </div>
 
         </template>
-      </UITabsContainer>
+      </MoleculeTabsContainer>
 
 
     </div>

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <UIHeader />
+    <OrganismHeader />
     <NuxtPage />
-    <UIFooter />
+    <OrganismFooter />
   </div>
 </template>
