@@ -67,7 +67,7 @@ const items = ref([
         class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2xl:block z-20"
         :style="{ '--left': bounding.x.value + 'px' }"
       >
-        <UIBreadcrumb theme="light" />
+        <MoleculeBreadcrumb theme="light" />
       </div>
       <div
         class="container py-10 md:h-[360px] md:flex md:flex-col md:justify-end md:items-start 2xl:h-auto 2xl:pt-10 2xl:pb-20 relative z-20"
@@ -80,7 +80,7 @@ const items = ref([
             Предложение действует до 31/10/2024
           </p>
         </div>
-        <UIButton
+        <AtomButton
           label="Заказать обратный звонок"
           mode="full"
           
@@ -153,7 +153,7 @@ const items = ref([
               </b>
             </p>
           </div>
-          <UIButton
+          <AtomButton
             label="Оставить заявку"
             color="secondary"
             class="mt-7.5"

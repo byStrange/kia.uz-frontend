@@ -82,7 +82,7 @@ const fields = [
         class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2xl:block z-20"
         :style="{ '--left': bounding.x.value + 'px' }"
       >
-        <UIBreadcrumb theme="light" />
+        <MoleculeBreadcrumb theme="light" />
       </div>
       <div
         class="container py-10 md:h-[360px] md:flex md:flex-col md:justify-between md:items-start 2xl:h-auto 2xl:pt-10 2xl:pb-20 relative z-20"
@@ -97,7 +97,7 @@ const fields = [
             Предложение действует до 31/10/2024
           </p>
         </div>
-        <UIButton
+        <AtomButton
           label="Заказать обратный звонок"
           mode="full"
           
@@ -151,7 +151,7 @@ const fields = [
           </div>
         </div>
 
-        <UIButton
+        <AtomButton
           label="Отправить заявку"
           color="secondary"
           mode="full"

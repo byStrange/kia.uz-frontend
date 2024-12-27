@@ -24,16 +24,16 @@ watch(bounding.x, () => {
 const specialsSwiperBreakpoints = ref({})
 </script>
 <template>
-  <UISection :section-title="'Special Offers'">
+  <MoleculeSection :section-title="'Special Offers'">
     <template #title="{ sectionTitle, sectionTitleClass }">
       <h1 class="container" :class="sectionTitleClass">
         {{ sectionTitle }}
       </h1>
     </template>
 
-    <UITabsContainer :tabs="['Покупка', 'Сервис']" :is-content-full="true">
+    <MoleculeTabsContainer :tabs="['Покупка', 'Сервис']" :is-content-full="true">
       <template #1>
-        <UISlideView :data="specials">
+        <ElementSlideView :data="specials">
           <template #slide="{ item }">
             <div
               :style="{ '--padding': `0 ${bounding.x.value}px` }"
@@ -59,11 +59,11 @@ const specialsSwiperBreakpoints = ref({})
               </div>
             </div>
           </template>
-        </UISlideView>
+        </ElementSlideView>
       </template>
 
       <template #2>
-        <UISlideView :data="specials">
+        <ElementSlideView :data="specials">
           <template #slide="{ item }">
             <div
               :style="{ '--padding': `0 ${bounding.x.value}px` }"
@@ -89,7 +89,7 @@ const specialsSwiperBreakpoints = ref({})
               </div>
             </div>
           </template>
-        </UISlideView>
+        </ElementSlideView>
       </template>
       <template #default>
         <NuxtLink
@@ -104,6 +104,6 @@ const specialsSwiperBreakpoints = ref({})
           </div>
         </NuxtLink>
       </template>
-    </UITabsContainer>
-  </UISection>
+    </MoleculeTabsContainer>
+  </MoleculeSection>
 </template>

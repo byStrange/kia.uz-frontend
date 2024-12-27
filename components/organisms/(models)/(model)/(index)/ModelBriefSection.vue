@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { UISlideView, UITabsContainer } from '#components'
+import { ElementSlideView, MoleculeTabsContainer } from '#components'
 const { sections } = useStore()
 
 function is(type: 'triple' | 'double', section: any) {
   return type === section.type
 }
 
-const slides = useTemplateRef<InstanceType<typeof UISlideView>[]>('slidesRef')
-const tabs = useTemplateRef<InstanceType<typeof UITabsContainer>[]>('tabsRef')
+const slides = useTemplateRef<InstanceType<typeof ElementSlideView>[]>('slidesRef')
+const tabs = useTemplateRef<InstanceType<typeof MoleculeTabsContainer>[]>('tabsRef')
 
 const processedSections = computed(() => {
   let slidesCounter = 0
@@ -26,7 +26,7 @@ const processedSections = computed(() => {
 })
 </script>
 <template>
-  <UISection
+  <MoleculeSection
     v-for="section in processedSections"
     :key="section.title"
     :section-title="section.title"
@@ -163,7 +163,7 @@ const processedSections = computed(() => {
         </picture>
       </template>
       <template v-else-if="is('double', section)">
-        <UISlideView
+        <ElementSlideView
           v-if="section.meta.slides"
           ref="slidesRef"
           :data="section.meta.slides"
@@ -180,9 +180,9 @@ const processedSections = computed(() => {
               loading="lazy"
             />
           </template>
-        </UISlideView>
+        </ElementSlideView>
         <div v-else-if="section.meta.tabs">
-          <UITabsContainer
+          <MoleculeTabsContainer
             ref="tabsRef"
             :is-header-full="true"
             :is-header-center="false"
@@ -235,9 +235,9 @@ const processedSections = computed(() => {
                 </div>
               </div>
             </template>
-          </UITabsContainer>
+          </MoleculeTabsContainer>
         </div>
       </template>
     </div>
-  </UISection>
+  </MoleculeSection>
 </template>

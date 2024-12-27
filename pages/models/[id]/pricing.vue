@@ -7,11 +7,11 @@ definePageMeta({
 
 <template>
   <UISafeAreaView :extra="52">
-    <SectionPricingBanner />
+    <OrganismModelPricingBanner />
 
     <div class="2xl:grid 2xl:grid-cols-12 2xl:border-t border-t-protection">
-      <SectionPricingFilterSidebar class="hidden 2xl:block" />
-      <SectionPricingDetailedProperties />
+      <OrganismModelPricingFilterSidebar class="hidden 2xl:block" />
+      <OrganismModelPricingDetailedProperties />
     </div>
   </UISafeAreaView>
 </template>

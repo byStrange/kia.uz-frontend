@@ -114,7 +114,7 @@ defineExpose({
       >
         <template #container-start>
           <template v-if="navigationMode == 'normal'">
-            <UIButtonCarousel
+            <MoleculeButtonCarousel
               v-if="navigation"
               position="left"
               :hide="swiperActiveIndex === 0"
@@ -123,7 +123,7 @@ defineExpose({
               @click="swiper?.slidePrev()"
             />
 
-            <UIButtonCarousel
+            <MoleculeButtonCarousel
               v-if="navigation"
               position="right"
               :hide="swiperActiveIndex === swiperLength - 1"
@@ -136,7 +136,7 @@ defineExpose({
             <div
               class="absolute right-15 z-40 h-full flex flex-col justify-center items-center gap-2"
             >
-              <UIButtonCarousel
+              <MoleculeButtonCarousel
                 v-if="navigation"
                 position="right"
                 :hide="swiperActiveIndex === swiperLength - 2"
@@ -144,7 +144,7 @@ defineExpose({
                 :mode="navigationMode"
                 @click="swiper?.slideNext()"
               />
-              <UIButtonCarousel
+              <MoleculeButtonCarousel
                 v-if="navigation"
                 position="left"
                 :hide="swiperActiveIndex === 0"

@@ -35,7 +35,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const currentAccordionIndex = ref(props.defaultOpen ? 0 : -1)
-const container = useTemplateRef('container')
 
 const toggle = (index: number, e: Event) => {
   currentAccordionIndex.value =

@@ -3,19 +3,19 @@ const { bounding } = useContainer()
 const { courses } = useStore()
 </script>
 <template>
-  <UISection section-title="Будьте в курсе">
+  <MoleculeSection section-title="Будьте в курсе">
     <template #title="{ sectionTitle, sectionTitleClass }">
       <h1 class="container" :class="sectionTitleClass">
         {{ sectionTitle }}
       </h1>
     </template>
 
-    <UITabsContainer
+    <MoleculeTabsContainer
       :tabs="['Видео-обзоры', 'Новости']"
       :is-content-full="true"
     >
       <template #1>
-        <UISlideView :data="courses">
+        <ElementSlideView :data="courses">
           <template #slide="{ item }">
             <div
               :style="{ '--padding': `0 ${bounding.x.value}px` }"
@@ -41,11 +41,11 @@ const { courses } = useStore()
               </div>
             </div>
           </template>
-        </UISlideView>
+        </ElementSlideView>
       </template>
 
       <template #2>
-        <UISlideView :data="courses">
+        <ElementSlideView :data="courses">
           <template #slide="{ item }">
             <div
               :style="{ '--padding': `0 ${bounding.x.value}px` }"
@@ -71,7 +71,7 @@ const { courses } = useStore()
               </div>
             </div>
           </template>
-        </UISlideView>
+        </ElementSlideView>
       </template>
 
       <template #default>
@@ -86,6 +86,6 @@ const { courses } = useStore()
           </div>
         </button>
       </template>
-    </UITabsContainer>
-  </UISection>
+    </MoleculeTabsContainer>
+  </MoleculeSection>
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UIInput } from '#components'
+import { AtomInput } from '#components'
 import { Dialog, Textarea } from 'primevue'
 import { Form, FormField, type FormSubmitEvent } from '@primevue/forms'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
@@ -20,8 +20,8 @@ const localePath = useLocalePath()
 
 const { data: privacyAndTerms } = useFetch('/api/terms')
 
-const commonUIInputProps: Omit<
-  InstanceType<typeof UIInput>['$props'],
+const commonAtomInputProps: Omit<
+  InstanceType<typeof AtomInput>['$props'],
   'inputId' | 'label'
 > = {
   inputProps: {
@@ -78,13 +78,13 @@ const onSubmit = (event: FormSubmitEvent) => {
         <div class="space-y-5 text-primary">
           <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
         </div>
-        <UIButton label="Понятно" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <AtomButton label="Понятно" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>
 
     <UIContainer class="pt-6">
-      <UIBreadcrumb class="hidden 2xl:block" theme="dark" />
+      <MoleculeBreadcrumb class="hidden 2xl:block" theme="dark" />
     </UIContainer>
 
     <h1
@@ -93,7 +93,7 @@ const onSubmit = (event: FormSubmitEvent) => {
     </h1>
 
     <!-- Form -->
-    <UISection v-show="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px]">
+    <MoleculeSection v-show="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px]">
       <div class="pb-8 border-b border-protection">
         <h4 class="text-sm md:text-base">Горячая линия</h4>
         <span class="mt-1 text-lg font-semibold md:text-2xl">1333</span>
@@ -107,28 +107,28 @@ const onSubmit = (event: FormSubmitEvent) => {
           </p>
 
           <FormField name="name" v-slot="$field">
-            <UIInput input-id="name" label="Ваше имя" v-bind="commonUIInputProps" />
+            <AtomInput input-id="name" label="Ваше имя" v-bind="commonAtomInputProps" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $field.error?.message }}
             </p>
           </FormField>
 
           <FormField name="surname" v-slot="$field">
-            <UIInput input-id="surname" label="Фамилия" v-bind="commonUIInputProps" />
+            <AtomInput input-id="surname" label="Фамилия" v-bind="commonAtomInputProps" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $field.error?.message }}
             </p>
           </FormField>
 
           <FormField name="phone" v-slot="$field">
-            <UIInput input-id="phone" label="Телефон" v-bind="commonUIInputProps" />
+            <AtomInput input-id="phone" label="Телефон" v-bind="commonAtomInputProps" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $field.error?.message }}
             </p>
           </FormField>
 
           <FormField v-slot="$field" name="email">
-            <UIInput input-id="email" label="E-mail" v-bind="commonUIInputProps"
+            <AtomInput input-id="email" label="E-mail" v-bind="commonAtomInputProps"
               :input-props="{ invalid: $field.invalid }" />
 
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
@@ -137,7 +137,7 @@ const onSubmit = (event: FormSubmitEvent) => {
           </FormField>
 
           <FormField v-slot="$field" name="city">
-            <UIInput input-id="city" label="Город" v-bind="commonUIInputProps"
+            <AtomInput input-id="city" label="Город" v-bind="commonAtomInputProps"
               :input-props="{ invalid: $field.invalid }" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $field.error?.message }}
@@ -156,7 +156,7 @@ const onSubmit = (event: FormSubmitEvent) => {
         <div class="space-y-4">
           <label class="text-primary text-sm md:text-base">Тип запроса</label>
           <FormField v-slot="$field" name="requestType">
-            <UIDropdownInput v-model:available-options="requestTypes" placeholder="Выберите тип вопроса"
+            <AtomDropdownInput v-model:available-options="requestTypes" placeholder="Выберите тип вопроса"
               :float-label="true" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $field.error?.message }}
@@ -178,14 +178,14 @@ const onSubmit = (event: FormSubmitEvent) => {
               {{ $field.error?.message }}
             </p>
           </FormField>
-          <UIButton type="submit" label="Отправить" color="secondary" mode="full" class="mt-10 md:w-full 2xl:w-auto"  />
+          <AtomButton type="submit" label="Отправить" color="secondary" mode="full" class="mt-10 md:w-full 2xl:w-auto"  />
         </div>
       </Form>
-    </UISection>
+    </MoleculeSection>
 
     <!-- Feedback -->
 
-    <UISection v-show="successfullySent"
+    <MoleculeSection v-show="successfullySent"
       class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px] md:space-y-10 2xl:space-y-12">
       <div class="space-y-4 text-primary md:space-y-6 2xl:space-y-8">
         <h1 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">
@@ -197,7 +197,7 @@ const onSubmit = (event: FormSubmitEvent) => {
           дня, но обычно мы справляемся быстрее. Как только все будет готово,
           сотрудник службы поддержки свяжется с вами по электронной почте.
         </p>
-        <UIButton mode="full" color="secondary" label="На главную" @click="$router.push(localePath('/'))" />
+        <AtomButton mode="full" color="secondary" label="На главную" @click="$router.push(localePath('/'))" />
       </div>
       <hr />
       <div class="space-y-2 text-primary text-sm md:text-base">
@@ -208,6 +208,6 @@ const onSubmit = (event: FormSubmitEvent) => {
           обратиться по телефону: +998 71 215-70-07
         </p>
       </div>
-    </UISection>
+    </MoleculeSection>
   </UISafeAreaView>
 </template>
