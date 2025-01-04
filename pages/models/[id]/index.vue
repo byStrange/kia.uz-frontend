@@ -68,10 +68,10 @@ const { courses } = useStore()
 </script>
 <template>
   <div>
-    <SectionModelHero />
+    <OrganismModelHero />
 
-    <UISection section-title="Специальные предложения">
-      <UISlideView
+    <MoleculeSection section-title="Специальные предложения">
+      <ElementSlideView
         :data="courses"
         :space-between="16"
         :slides-offset-before="bounding.x.value"
@@ -100,12 +100,12 @@ const { courses } = useStore()
             </div>
           </div>
         </template>
-      </UISlideView>
-    </UISection>
+      </ElementSlideView>
+    </MoleculeSection>
 
-    <SectionThreeSixty />
+    <OrganismModelThreeSixty />
 
-    <UISection
+    <MoleculeSection
       section-title="Варианты Carnival"
       subtitle="Комплектации"
       class="bg-background"
@@ -116,7 +116,7 @@ const { courses } = useStore()
         </p>
       </template>
 
-      <UISlideView
+      <ElementSlideView
         :space-between="16"
         :slides-offset-before="bounding.x.value"
         :slides-offset-after="bounding.x.value"
@@ -171,23 +171,23 @@ const { courses } = useStore()
             </div>
           </div>
         </template>
-      </UISlideView>
+      </ElementSlideView>
       <div
         class="container space-y-3 mt-6 md:grid md:grid-cols-3 md:space-y-0 md:gap-5 2xl:flex 2xl:justify-center 2xl:mt-8"
       >
-        <UIButton mode="full" label="Отправить заявку" color="primary" />
-        <UIButton mode="full" color="secondary" label="Скачать прайс-лист" />
-        <UIButton mode="full" color="secondary" label="Контакты дилеров" />
+        <AtomButton mode="full" label="Отправить заявку" color="primary" />
+        <AtomButton mode="full" color="secondary" label="Скачать прайс-лист" />
+        <AtomButton mode="full" color="secondary" label="Контакты дилеров" />
       </div>
-    </UISection>
+    </MoleculeSection>
 
-    <SectionBriefSection />
+    <OrganismModelBriefSection />
 
-    <UISection section-title="Видео-обзоры">
+    <MoleculeSection section-title="Видео-обзоры">
       <template #title="{ sectionTitle, sectionTitleClass }">
         <h2 :class="[sectionTitleClass, 'mb-6']">{{ sectionTitle }}</h2>
       </template>
-      <UISlideView
+      <ElementSlideView
         :data="courses"
         :space-between="16"
         :slides-offset-before="bounding.x.value"
@@ -217,10 +217,10 @@ const { courses } = useStore()
             </div>
           </div>
         </template>
-      </UISlideView>
-    </UISection>
+      </ElementSlideView>
+    </MoleculeSection>
 
-    <UISection
+    <MoleculeSection
       align="left"
       section-title="Гарантия и сервис"
       subtitle="Обслуживание"
@@ -247,9 +247,9 @@ const { courses } = useStore()
           class="w-full md:w-4h mx-auto 2xl:w-full"
         />
       </div>
-    </UISection>
+    </MoleculeSection>
 
-    <UISection
+    <MoleculeSection
       section-title="Узнайте больше о Carnival"
       subtitle="Консультация"
       class="container bg-no-repeat bg-[length:100%_294px] md:bg-[length:100%_405px] 2xl:bg-[length:100%_500px] 2xl:pt-1h"
@@ -281,7 +281,7 @@ const { courses } = useStore()
             {{ sectionTitle }}
           </h2>
 
-          <UIButton
+          <AtomButton
             label="Заказать звонок дилера"
             class="mt-6 mx-auto"
             color="secondary"
@@ -323,6 +323,6 @@ const { courses } = useStore()
           </div>
         </div>
       </template>
-    </UISection>
+    </MoleculeSection>
   </div>
 </template>

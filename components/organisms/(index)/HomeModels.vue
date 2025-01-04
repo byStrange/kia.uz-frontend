@@ -31,15 +31,15 @@ onMounted(() => {
 })
 </script>
 <template>
-  <UISection section-title="Модели Kia" class="bg-background">
+  <MoleculeSection section-title="Модели Kia" class="bg-background">
     <div class="2xl:container">
       <ClientOnly>
         <Swiper :modules="[Controller]" :controller="{ control: modelsSwiper }" slides-per-view="auto"
           :centered-slides="true" :space-between="8" @swiper="modelsThumbSwiper = $event"
           @slide-change="(e) => (activeModelIndex = e.activeIndex)">
           <template #container-start>
-            <UIButtonCarousel position="left" mode="free" :hide="activeModelIndex === 0" size="sm" @click="slidePrev" />
-            <UIButtonCarousel position="right" :hide="activeModelIndex === slidesLength - 1" mode="free" size="sm"
+            <MoleculeButtonCarousel position="left" mode="free" :hide="activeModelIndex === 0" size="sm" @click="slidePrev" />
+            <MoleculeButtonCarousel position="right" :hide="activeModelIndex === slidesLength - 1" mode="free" size="sm"
               @click="slideNext" />
             <div :style="{
               background:
@@ -73,9 +73,9 @@ onMounted(() => {
             :centered-slides="true" :space-between="16" :slides-offset-after="parseInt(pagePadding + '')"
             @swiper="modelsSwiper = $event">
             <template #container-start>
-              <UIButtonCarousel position="left" :hide="activeModelIndex === 0" mode="free" @click="slidePrev" />
+              <MoleculeButtonCarousel position="left" :hide="activeModelIndex === 0" mode="free" @click="slidePrev" />
               >
-              <UIButtonCarousel position="right" :hide="activeModelIndex === slidesLength - 1" mode="free"
+              <MoleculeButtonCarousel position="right" :hide="activeModelIndex === slidesLength - 1" mode="free"
                 @click="slideNext" />
             </template>
             <SwiperSlide v-for="model in models" :key="model.name" class="container 2xl:px-0">
@@ -99,7 +99,7 @@ onMounted(() => {
                   </div>
                 </div>
                 <NuxtLinkLocale :to="`/models/${model.name}`">
-                  <UIButton label="Подробнее о модели" color="primary" mode="full" class="mx-auto mt-4 md:mt-8" />
+                  <AtomButton label="Подробнее о модели" color="primary" mode="full" class="mx-auto mt-4 md:mt-8" />
                 </NuxtLinkLocale>
               </div>
             </SwiperSlide>
@@ -107,5 +107,5 @@ onMounted(() => {
         </ClientOnly>
       </div>
     </div>
-  </UISection>
+  </MoleculeSection>
 </template>

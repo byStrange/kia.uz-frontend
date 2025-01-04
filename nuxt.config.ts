@@ -23,15 +23,36 @@ export default defineNuxtConfig({
 
   components: [
     {
-      path: '~/components',
+      path: '~/components/icons',
       pathPrefix: false,
       prefix: 'UI',
     },
     {
-      path: '~/components/pages/',
+      path: '~/components/atoms',
       pathPrefix: false,
-      prefix: 'Section',
+      prefix: 'Atom'
     },
+    {
+      path: '~/components/elements',
+      pathPrefix: false,
+      prefix: 'Element'
+    },
+    {
+      path: '~/components/molecules',
+
+      pathPrefix: false,
+      prefix: 'Molecule'
+    },
+    {
+      path: '~/components/organisms',
+      pathPrefix: false,
+      prefix: 'Organism'
+    },
+    {
+      path: '~/components/layout',
+      pathPrefix: false,
+      prefix: 'UI'
+    }
   ],
 
   i18n: {
@@ -86,4 +107,5 @@ export default defineNuxtConfig({
       yandexMapApiKey: process.env.YANDEX_MAP_API_KEY,
     },
   },
+
 })

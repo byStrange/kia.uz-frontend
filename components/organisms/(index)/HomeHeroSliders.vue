@@ -54,9 +54,9 @@ const slidesLength = computed(() => {
       <Swiper ref="heroSwiper" :slides-per-view="1" class="dark-pagination h-screen" :modules="[Pagination]"
         :free-mode="true" :pagination="{ clickable: true }" @swiper="onSwiper">
         <template #container-start>
-          <UIButtonCarousel position="left" :hide="currentIndex === 0" @click="prev" />
+          <MoleculeButtonCarousel position="left" :hide="currentIndex === 0" @click="prev" />
 
-          <UIButtonCarousel position="right" :hide="currentIndex === slidesLength - 1" @click="next" />
+          <MoleculeButtonCarousel position="right" :hide="currentIndex === slidesLength - 1" @click="next" />
         </template>
         <SwiperSlide v-for="i in 3" :key="i">
           <div class="h-full">
@@ -88,7 +88,7 @@ const slidesLength = computed(() => {
                       {{ slides[0].description }}
                     </p>
                   </div>
-                  <UIButton @click="$router.push(localePath('/models/sonet'))" label="Подробнее" color="secondary"
+                  <AtomButton @click="$router.push(localePath('/models/sonet'))" label="Подробнее" color="secondary"
                     mode="full" class="mt-6 text-base" />
                 </div>
               </div>

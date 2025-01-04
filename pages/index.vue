@@ -26,10 +26,10 @@ const extraLinksCard = [
 
 <template>
   <div>
-    <SectionHeroSliders />
-    <SectionModels />
-    <SectionSpecialOffers />
-    <SectionCourses />
+    <OrganismHomeHeroSliders/>
+    <OrganismHomeModels />
+    <OrganismHomeSpecialOffers />
+    <OrganismHomeCourses />
 
     <div class="container pb-12 md:pb-15">
       <div
@@ -70,7 +70,7 @@ const extraLinksCard = [
             Аренда автомобилей Kia по подписке. Всё включено в единый платёж —
             выгоднее чем кредит, единый тариф, гибкость.
           </p>
-          <UIButton
+          <AtomButton
             color="secondary"
             mode="full"
             label="Подробнее"

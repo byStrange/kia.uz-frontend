@@ -66,7 +66,7 @@ definePageMeta({
 <template>
   <UISafeAreaView class="bg-white">
     <div class="container">
-      <UIBreadcrumb class="hidden mt-6 2xl:block" theme="dark" />
+      <MoleculeBreadcrumb class="hidden mt-6 2xl:block" theme="dark" />
       <div class="pt-10 pb-5 md:pt-15 2xl:pt-9">
         <h1 class="text-3xl font-semibold text-primary md:text-5xl">Запись на тест-драйв</h1>
       </div>

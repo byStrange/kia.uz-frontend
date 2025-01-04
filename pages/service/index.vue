@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UIInput } from '#components'
+import { AtomInput } from '#components'
 import { Dialog, Popover } from 'primevue'
 import { Form, FormField, type FormSubmitEvent } from '@primevue/forms'
 import { zodResolver } from '@primevue/forms/resolvers/zod';
@@ -39,8 +39,8 @@ const isPrivacyDialogVisible = ref(false)
 
 const { data: privacyAndTerms } = useFetch('/api/terms')
 
-const commonUIInputProps: Omit<
-  InstanceType<typeof UIInput>['$props'],
+const commonAtomInputProps: Omit<
+  InstanceType<typeof AtomInput>['$props'],
   'inputId' | 'label'
 > = {
   inputProps: {
@@ -113,7 +113,7 @@ definePageMeta({
       :style="{
         '--padding-x': bounding.x.value + 'px'
       }">
-      <UIDatePicker v-model="_datePickerValue" @dayChange="closeDatePickerPopover()" />
+      <MoleculeDatePickr v-model="_datePickerValue" @dayChange="closeDatePickerPopover()" />
     </Popover>
     <Dialog v-model:visible="isPrivacyDialogVisible" modal :pt="{
       root: '!rounded-none 2xl:h-full 2xl:!max-h-[758px]',
@@ -137,26 +137,26 @@ definePageMeta({
         <div class="space-y-5 text-primary">
           <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
         </div>
-        <UIButton label="Понятно" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <AtomButton label="Понятно" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>
     <UIContainer class="pt-6">
-      <UIBreadcrumb class="hidden 2xl:block" theme="dark" />
+      <MoleculeBreadcrumb class="hidden 2xl:block" theme="dark" />
     </UIContainer>
     <div>
       <h1
         class="text-primary text-2xl font-semibold py-7.5 border-b border-protection md:text-4xl container 2xl:text-7xl 2xl:py-10">
         Запись на сервис</h1>
       <!-- Form -->
-      <UISection v-show="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px]">
+      <MoleculeSection v-show="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px]">
         <Form @submit="onSubmit" :initialValues :resolver class="space-y-12.5 2xl:space-y-16">
 
           <div class="space-y-5">
             <h2 class="font-bold text-base md:text-lg">Данные автомобиля</h2>
 
             <FormField class="flex w-full">
-              <UIInput inputId="vin_number" label="VIN-номер" v-bind="commonUIInputProps"
+              <AtomInput inputId="vin_number" label="VIN-номер" v-bind="commonAtomInputProps"
                 class="flex-1 -translate-y-[1px]" />
               <button class="bg-primary size-12 2xl:size-15 text-white flex justify-center items-center">
                 <UITickToRight class="size-5 text-white" />
@@ -164,7 +164,7 @@ definePageMeta({
             </FormField>
 
             <FormField name="model" v-slot="$field">
-              <UIDropdownInput input-id="model" theme="light" v-model:availableOptions="modelOptions"
+              <AtomDropdownInput input-id="model" theme="light" v-model:availableOptions="modelOptions"
                 placeholder="Модельный ряд" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
@@ -172,7 +172,7 @@ definePageMeta({
             </FormField>
 
             <FormField name="issue_year" v-slot="$field">
-              <UIInput input-id="issue_year" v-bind="commonUIInputProps" label="Год выпуска" />
+              <AtomInput input-id="issue_year" v-bind="commonAtomInputProps" label="Год выпуска" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
               </p>
@@ -183,7 +183,7 @@ definePageMeta({
             <h2 class="font-bold text-base md:text-lg">Сервисный центр</h2>
 
             <FormField name="region" v-slot="$field">
-              <UIDropdownInput input-id="region" theme="light" v-model:availableOptions="regionOptions"
+              <AtomDropdownInput input-id="region" theme="light" v-model:availableOptions="regionOptions"
                 placeholder="Город" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
@@ -191,7 +191,7 @@ definePageMeta({
             </FormField>
 
             <FormField name="fillial" v-slot="$field">
-              <UIDropdownInput input-id="fillial" theme="light" v-model:availableOptions="fillialOptions"
+              <AtomDropdownInput input-id="fillial" theme="light" v-model:availableOptions="fillialOptions"
                 placeholder="Филиал" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
@@ -200,14 +200,14 @@ definePageMeta({
 
 
             <FormField name="work_type" v-slot="$field">
-              <UIDropdownInput input-id="work_type" theme="light" v-model:availableOptions="typeOfWork"
+              <AtomDropdownInput input-id="work_type" theme="light" v-model:availableOptions="typeOfWork"
                 placeholder="Тип работы" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
               </p>
             </FormField>
 
-            <UIInput v-date-format input-id="due_date" v-bind="commonUIInputProps" label="Date" :input-props="{
+            <AtomInput v-date-format input-id="due_date" v-bind="commonAtomInputProps" label="Date" :input-props="{
               onFocus: (event) => toggleDatePickerPopover(event),
               value: formattedDate,
               readonly: true
@@ -245,11 +245,11 @@ definePageMeta({
             <h2 class="font-bold text-base md:text-lg">Ваши контакты</h2>
 
             <FormField name="name">
-              <UIInput input-id="name" v-bind="commonUIInputProps" label="Имя" />
+              <AtomInput input-id="name" v-bind="commonAtomInputProps" label="Имя" />
             </FormField>
 
             <FormField name="phone" v-slot="$field">
-              <UIInput input-id="phone" v-bind="commonUIInputProps" label="Телефон" />
+              <AtomInput input-id="phone" v-bind="commonAtomInputProps" label="Телефон" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
               </p>
@@ -275,14 +275,14 @@ definePageMeta({
           </div>
 
 
-          <UIButton type="submit" label="Записаться" color="primary" mode="full" class="md:w-full 2xl:w-auto"
+          <AtomButton type="submit" label="Записаться" color="primary" mode="full" class="md:w-full 2xl:w-auto"
              />
         </Form>
-      </UISection>
+      </MoleculeSection>
 
       <!-- Feedback -->
 
-      <UISection v-show="successfullySent"
+      <MoleculeSection v-show="successfullySent"
         class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px] md:space-y-10 2xl:space-y-12">
         <div class="space-y-4 text-primary md:space-y-6 2xl:space-y-8">
           <h1 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">
@@ -294,7 +294,7 @@ definePageMeta({
             дня, но обычно мы справляемся быстрее. Как только все будет готово,
             сотрудник службы поддержки свяжется с вами по электронной почте.
           </p>
-          <UIButton mode="full" color="secondary" label="На главную" />
+          <AtomButton mode="full" color="secondary" label="На главную" />
         </div>
         <hr />
         <div class="space-y-2 text-primary text-sm md:text-base">
@@ -305,7 +305,7 @@ definePageMeta({
             обратиться по телефону: +998 71 215-70-07
           </p>
         </div>
-      </UISection>
+      </MoleculeSection>
     </div>
   </UISafeAreaView>
 </template>

@@ -197,7 +197,7 @@ const indicatorGroups = [
         :style="{ '--safe-area-top': paddingTop }"
       >
         <UIDesktopOnly>
-          <UIBreadcrumb theme="light" />
+          <MoleculeBreadcrumb theme="light" />
         </UIDesktopOnly>
 
         <div class="space-y-4 md:max-w-[360px] 2xl:mt-2.5">
@@ -248,7 +248,7 @@ const indicatorGroups = [
             <p class="text-caption">{{ group.description }}</p>
           </div>
 
-          <UIAccordion
+          <MoleculeAccordion
             :items="group.indicators"
             :classes="{
               contentContainerExpanded: 'mt-5',
@@ -278,7 +278,7 @@ const indicatorGroups = [
                 </button>
               </div>
             </template>
-          </UIAccordion>
+          </MoleculeAccordion>
         </div>
       </UIContainer>
     </div>

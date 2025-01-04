@@ -2,10 +2,10 @@
 const { src } = useUploadcareSource()
 import { Dialog, Textarea } from 'primevue'
 import { Form, FormField } from '@primevue/forms'
-import { UIInput } from '#components'
+import { AtomInput } from '#components'
 
-const commonUIInputProps: Omit<
-  InstanceType<typeof UIInput>['$props'],
+const commonAtomInputProps: Omit<
+  InstanceType<typeof AtomInput>['$props'],
   'inputId' | 'label'
 > = {
   inputProps: {
@@ -60,13 +60,13 @@ definePageMeta({
         <div class="space-y-5 text-primary">
           <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
         </div>
-        <UIButton label="Понятно" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <AtomButton label="Понятно" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>
     <UIDesktopOnly>
       <UIContainer class="pt-6">
-        <UIBreadcrumb theme="dark" />
+        <MoleculeBreadcrumb theme="dark" />
       </UIContainer>
     </UIDesktopOnly>
 
@@ -75,7 +75,7 @@ definePageMeta({
       Обратная связь
     </h1>
 
-    <UISection>
+    <MoleculeSection>
       <UIContainer class="2xl:grid 2xl:grid-cols-12 2xl:gap-grid-12-gap">
         <div class="col-span-5">
           <div class="text-primary">
@@ -97,17 +97,17 @@ definePageMeta({
             <Form :initial-values>
               <div class="space-y-7.5">
                 <FormField name="name" v-slot="$field">
-                  <UIInput :input-id="$field.props?.name" label="Имя" v-bind="commonUIInputProps" />
+                  <AtomInput :input-id="$field.props?.name" label="Имя" v-bind="commonAtomInputProps" />
                 </FormField>
                 <FormField name="region" v-slot="$field">
-                  <UIDropdownInput input-id="region" theme="light" v-model:availableOptions="regionOptions"
+                  <AtomDropdownInput input-id="region" theme="light" v-model:availableOptions="regionOptions"
                     placeholder="Город" :float-label="true" />
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                     {{ $field?.error?.message }}
                   </p>
                 </FormField>
                 <FormField name="phone" v-slot="$field">
-                  <UIInput input-id="phone" v-bind="commonUIInputProps" label="Телефон" />
+                  <AtomInput input-id="phone" v-bind="commonAtomInputProps" label="Телефон" />
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                     {{ $field.error?.message }}
                   </p>
@@ -134,12 +134,12 @@ definePageMeta({
                     {{ $field.error?.message }}
                   </p>
                 </FormField>
-                <UIButton label="Отправить заявку" type="submit" color="primary" mode="full" />
+                <AtomButton label="Отправить заявку" type="submit" color="primary" mode="full" />
               </div>
             </Form>
           </div>
         </div>
       </UIContainer>
-    </UISection>
+    </MoleculeSection>
   </UISafeAreaView>
 </template>
