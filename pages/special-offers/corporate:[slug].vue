@@ -83,7 +83,7 @@ const items = ref([
         <AtomButton
           label="Заказать обратный звонок"
           mode="full"
-          
+          color="secondary"
           class="mt-4 md:mt-5 2xl:mt-10"
         />
       </div>
