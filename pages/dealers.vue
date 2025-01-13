@@ -160,7 +160,7 @@ useHead({
           />
           <AtomButton
             label="Сохранить"
-            color="secondary"
+            color="primary"
             mode="full"
             class="md:w-full"
             @click="saveLocation"
@@ -252,10 +252,9 @@ useHead({
                   </div>
                   <AtomButton
                     label="Показать на карте"
-                    color="secondary"
+                    color="primary"
                     class="mt-5 md:py-2.5 2xl:mt-0"
                     mode="full"
-                    
                   />
                 </div>
               </div>

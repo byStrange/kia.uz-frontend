@@ -178,7 +178,7 @@ const onSubmit = (event: FormSubmitEvent) => {
               {{ $field.error?.message }}
             </p>
           </FormField>
-          <AtomButton type="submit" label="Отправить" color="secondary" mode="full" class="mt-10 md:w-full 2xl:w-auto"  />
+          <AtomButton type="submit" label="Отправить" color="primary" mode="full" class="mt-10 md:w-full 2xl:w-auto"  />
         </div>
       </Form>
     </MoleculeSection>
@@ -197,7 +197,7 @@ const onSubmit = (event: FormSubmitEvent) => {
           дня, но обычно мы справляемся быстрее. Как только все будет готово,
           сотрудник службы поддержки свяжется с вами по электронной почте.
         </p>
-        <AtomButton mode="full" color="secondary" label="На главную" @click="$router.push(localePath('/'))" />
+        <AtomButton mode="full" color="primary" label="На главную" @click="$router.push(localePath('/'))" />
       </div>
       <hr />
       <div class="space-y-2 text-primary text-sm md:text-base">
