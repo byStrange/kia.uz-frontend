@@ -71,8 +71,8 @@ export default defineEventHandler(async () => {
       workingHours: 'Пн.–Вс.: 9:00–20:00',
       phone: '1333',
       location: {
-        lat: 69.356152,
-        lng: 41.251554,
+        lat: 69.196436,
+        lng: 41.322610,
       },
     },
     {
