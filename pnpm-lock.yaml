@@ -53,6 +53,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      lenis:
+        specifier: ^1.1.19
+        version: 1.1.19(vue@3.5.12(typescript@5.6.3))
       lodash.clonedeep:
         specifier: ^4.5.0
         version: 4.5.0
@@ -3245,6 +3248,17 @@ packages:
   lazystream@1.0.1:
     resolution: {integrity: sha512-b94GiNHQNy6JNTrt5w6zNyffMrNkXZb3KTkCZJb2V1xaEGCk093vkZ2jk3tpaeP33/OiXC+WvK9AxUebnf5nbw==}
     engines: {node: '>= 0.6.3'}
+
+  lenis@1.1.19:
+    resolution: {integrity: sha512-EWRYEqMMcnsQgFtr67jEKaVx1mn9Dgw1rM5iT4VxxUV6ln++Cq2nahglBko2aEiD4Lik357wkLBjOjdIwjnmdQ==}
+    peerDependencies:
+      react: '>=17.0.0'
+      vue: '>=3.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+      vue:
+        optional: true
 
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
@@ -8809,6 +8823,10 @@ snapshots:
   lazystream@1.0.1:
     dependencies:
       readable-stream: 2.3.8
+
+  lenis@1.1.19(vue@3.5.12(typescript@5.6.3)):
+    optionalDependencies:
+      vue: 3.5.12(typescript@5.6.3)
 
   levn@0.4.1:
     dependencies:

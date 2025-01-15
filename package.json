@@ -50,6 +50,7 @@
     "@vueuse/nuxt": "^11.2.0",
     "@yandex/ymaps3-clusterer": "^0.0.10",
     "dotenv": "^16.4.5",
+    "lenis": "^1.1.19",
     "lodash.clonedeep": "^4.5.0",
     "lodash.groupby": "^4.6.0",
     "lodash.mapvalues": "^4.6.0",
