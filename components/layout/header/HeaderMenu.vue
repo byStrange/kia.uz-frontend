@@ -2,9 +2,6 @@
 import { UIMenuItem } from '#components'
 
 const { headerService, closeExtendedMenu } = useHeaderService()
-
-// Calculates the overall height of the menu excluding the #header height
-const { height } = useDynamicHeight(['#header'])
 </script>
 
 <template>
@@ -12,7 +9,7 @@ const { height } = useDynamicHeight(['#header'])
     <div
       v-if="headerService.isMenuOpen"
       :key="headerService.extendedMenu?.label"
-      :style="{ height: `${height}px` }"
+      :style="{ height: `calc(100dvh - var(--header-height))` }"
       class="fixed top-[--header-height] z-20 w-full overflow-auto bg-black bg-opacity-20"
       @click.self="closeExtendedMenu"
     >
