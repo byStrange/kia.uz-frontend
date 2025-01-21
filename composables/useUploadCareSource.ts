@@ -7,6 +7,7 @@ export const useUploadcareSource = () => {
     format?: string
     quality?: string
     crop?: string
+    progressive?: 'yes' | 'no'
   }
 
   type StringMap = {
@@ -24,6 +25,7 @@ export const useUploadcareSource = () => {
     uuid: string,
     option?: UploadcareOption | StringMap,
     trailingSlash: boolean = true,
+    useDefault: boolean = true
   ): string => {
     if (!uuid) {
       throw new Error('UUID is required to generate the Uploadcare URL.')
@@ -31,7 +33,7 @@ export const useUploadcareSource = () => {
 
     // format/quality/crop options only work when preview is set
     let _opt
-    if (option?.preview) {
+    if (option?.preview && useDefault && option.progressive !== 'yes') {
       _opt = { ...defaultOption, ...option }
     } else {
       _opt = { ...option }

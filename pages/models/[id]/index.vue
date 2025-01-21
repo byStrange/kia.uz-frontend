@@ -3,7 +3,7 @@ import { useContainer } from '@/composables/useContainer'
 
 const { bounding } = useContainer()
 const { src } = useUploadcareSource()
-
+const { gsap } = useGsap()
 definePageMeta({
   layout: 'model-layout',
   lockHover: true,
@@ -64,31 +64,41 @@ const variants = ref([
   },
 ])
 
+const pageAnimations = {
+  default() {
+    gsap.from('.model-id_variants_action-buttons button', {
+      opacity: 0,
+      xPercent: -30,
+      stagger: 0.02,
+      scrollTrigger: {
+        trigger: '#shit',
+        start: 'center center',
+      }
+    })
+
+  }
+}
+
 const { courses } = useStore()
+
+onMounted(() => {
+  nextTick(() => {
+    pageAnimations.default()
+  })
+})
 </script>
 <template>
   <div>
     <OrganismModelHero />
 
     <MoleculeSection section-title="Специальные предложения">
-      <ElementSlideView
-        :data="courses"
-        :space-between="16"
-        :slides-offset-before="bounding.x.value"
-        :slides-offset-after="bounding.x.value"
-        swiper-slide-class="!w-fit"
-      >
+      <ElementSlideView :data="courses" :space-between="16" :slides-offset-before="bounding.x.value"
+        :slides-offset-after="bounding.x.value" swiper-slide-class="!w-fit">
         <template #slide="{ item }">
           <div class="h-[408px] md:w-[310px] md:!px-0">
             <div class="mx-auto h-full max-w-[310px] bg-background">
-              <div
-                class="relative flex h-[222px] w-full items-center justify-center bg-gray-200"
-              >
-                <img
-                  loading="lazy"
-                  :src="item.thumbnail"
-                  class="h-full w-full object-cover"
-                />
+              <div class="relative flex h-[222px] w-full items-center justify-center bg-gray-200">
+                <img loading="lazy" :src="item.thumbnail" class="h-full w-full object-cover" />
                 <UIPlayIcon2 class="absolute" />
               </div>
 
@@ -105,32 +115,20 @@ const { courses } = useStore()
 
     <OrganismModelThreeSixty />
 
-    <MoleculeSection
-      section-title="Варианты Carnival"
-      subtitle="Комплектации"
-      class="bg-background"
-    >
+    <MoleculeSection section-title="Варианты Carnival" subtitle="Комплектации"
+      class="bg-background model-id_variants border" id="shit">
       <template #after-title="{ align }">
         <p class="text-[15px] text-primary" :class="align">
           5 доступных комплектаций
         </p>
       </template>
 
-      <ElementSlideView
-        :space-between="16"
-        :slides-offset-before="bounding.x.value"
-        :slides-offset-after="bounding.x.value"
-        swiper-slide-class="!w-fit"
-        :navigation="false"
-        :data="variants"
-        class="mt-6 2xl:mt-8"
-        :paginator="false"
-      >
+      <ElementSlideView :space-between="16" :slides-offset-before="bounding.x.value"
+        :slides-offset-after="bounding.x.value" swiper-slide-class="!w-fit" :navigation="false" :data="variants"
+        class="mt-6 2xl:mt-8" :paginator="false">
         <template #slide="{ item }">
-          <div
-            class="max-w-[425px] w-[--width] md:!px-0 2xl:h-[512px] 2xl:w-4h md:h-[448px]"
-            :style="{ '--width': bounding.width.value + 'px' }"
-          >
+          <div class="max-w-[425px] w-[--width] md:!px-0 2xl:h-[512px] 2xl:w-4h md:h-[448px]"
+            :style="{ '--width': bounding.width.value + 'px' }">
             <div class="w-full bg-white h-full flex flex-col">
               <div class="bg-primary px-6 py-4">
                 <h1 class="text-2xl font-semibold text-white">
@@ -149,20 +147,14 @@ const { courses } = useStore()
                   <div class="pb-5">
                     <b class="text-sm">Основные опции</b>
                     <div class="mt-2 space-y-2 text-sm">
-                      <p
-                        v-for="option in item.mainOptions"
-                        :key="option"
-                        class="md:text-base text-sm"
-                      >
+                      <p v-for="option in item.mainOptions" :key="option" class="md:text-base text-sm">
                         {{ option }}
                       </p>
                     </div>
                   </div>
                   <div class="border-t border-t-protection pt-5">
                     <button class="flex">
-                      <span class="text-base font-semibold text-primary"
-                        >Комплектации и цены</span
-                      >
+                      <span class="text-base font-semibold text-primary">Комплектации и цены</span>
                       <UITickToRight />
                     </button>
                   </div>
@@ -173,8 +165,7 @@ const { courses } = useStore()
         </template>
       </ElementSlideView>
       <div
-        class="container space-y-3 mt-6 md:grid md:grid-cols-3 md:space-y-0 md:gap-5 2xl:flex 2xl:justify-center 2xl:mt-8"
-      >
+        class="container space-y-3 mt-6 md:grid md:grid-cols-3 md:space-y-0 md:gap-5 2xl:flex 2xl:justify-center 2xl:mt-8 model-id_variants_action-buttons">
         <AtomButton mode="full" label="Отправить заявку" color="primary" />
         <AtomButton mode="full" color="secondary" label="Скачать прайс-лист" />
         <AtomButton mode="full" color="secondary" label="Контакты дилеров" />
@@ -187,25 +178,14 @@ const { courses } = useStore()
       <template #title="{ sectionTitle, sectionTitleClass }">
         <h2 :class="[sectionTitleClass, 'mb-6']">{{ sectionTitle }}</h2>
       </template>
-      <ElementSlideView
-        :data="courses"
-        :space-between="16"
-        :slides-offset-before="bounding.x.value"
-        :slides-offset-after="bounding.x.value"
-        swiper-slide-class="!w-fit !h-auto"
-        :style="{ '--swiper-pagination-mt': '24px' }"
-      >
+      <ElementSlideView :data="courses" :space-between="16" :slides-offset-before="bounding.x.value"
+        :slides-offset-after="bounding.x.value" swiper-slide-class="!w-fit !h-auto"
+        :style="{ '--swiper-pagination-mt': '24px' }">
         <template #slide="{ item }">
           <div class="md:w-[310px] md:!px-0 h-full">
             <div class="mx-auto h-full max-w-[310px] bg-background">
-              <div
-                class="relative flex h-[190px] w-full items-center justify-center bg-gray-200"
-              >
-                <img
-                  loading="lazy"
-                  :src="item.thumbnail"
-                  class="h-full w-full object-cover"
-                />
+              <div class="relative flex h-[190px] w-full items-center justify-center bg-gray-200">
+                <img loading="lazy" :src="item.thumbnail" class="h-full w-full object-cover" />
                 <UIPlayIcon2 class="absolute" />
               </div>
 
@@ -220,18 +200,10 @@ const { courses } = useStore()
       </ElementSlideView>
     </MoleculeSection>
 
-    <MoleculeSection
-      align="left"
-      section-title="Гарантия и сервис"
-      subtitle="Обслуживание"
-      class="flex flex-col-reverse gap-10 2xl:grid-cols-12 2xl:grid 2xl:gap-grid-12-gap container rtl"
-    >
-      <template
-        #title="{ sectionTitle, sectionTitleClass, subtitle, subtitleClass }"
-      >
-        <div
-          class="2xl:col-span-4 2xl:col-start-3 2xl:px-0 ltr flex flex-col justify-center"
-        >
+    <MoleculeSection align="left" section-title="Гарантия и сервис" subtitle="Обслуживание"
+      class="flex flex-col-reverse gap-10 2xl:grid-cols-12 2xl:grid 2xl:gap-grid-12-gap container rtl">
+      <template #title="{ sectionTitle, sectionTitleClass, subtitle, subtitleClass }">
+        <div class="2xl:col-span-4 2xl:col-start-3 2xl:px-0 ltr flex flex-col justify-center">
           <h3 :class="[subtitleClass, 'mb-2 md:mb-2.5']">{{ subtitle }}</h3>
           <h2 :class="[sectionTitleClass, '!mb-0']">{{ sectionTitle }}</h2>
           <p class="mt-3 text-sm text-primary 2xl:mt-7.5 md:text-base">
@@ -242,76 +214,47 @@ const { courses } = useStore()
         </div>
       </template>
       <div class="2xl:col-start-8 2xl:col-span-4 2xl:px-0">
-        <img
-          src="@/assets/fiveyear-guarantee.svg"
-          class="w-full md:w-4h mx-auto 2xl:w-full"
-        />
+        <img src="@/assets/fiveyear-guarantee.svg" class="w-full md:w-4h mx-auto 2xl:w-full" />
       </div>
     </MoleculeSection>
 
-    <MoleculeSection
-      section-title="Узнайте больше о Carnival"
-      subtitle="Консультация"
+    <MoleculeSection section-title="Узнайте больше о Carnival" subtitle="Консультация"
       class="container bg-no-repeat bg-[length:100%_294px] md:bg-[length:100%_405px] 2xl:bg-[length:100%_500px] 2xl:pt-1h"
       :style="{
         '--background-image-url': url(
           src('a1c7c1cf-4da7-4d94-99c6-875d0ae2c0b8'),
         ),
         backgroundImage: 'var(--background-image-url)',
-      }"
-    >
-      <template
-        #title="{ sectionTitle, sectionTitleClass, subtitle, subtitleClass }"
-      >
+      }">
+      <template #title="{ sectionTitle, sectionTitleClass, subtitle, subtitleClass }">
         <div>
-          <h3
-            :class="[
-              subtitleClass,
-              'mb-2 md:mb-2.5 !text-kia-polar-white 2xl:text-sm+',
-            ]"
-          >
+          <h3 :class="[
+            subtitleClass,
+            'mb-2 md:mb-2.5 !text-kia-polar-white 2xl:text-sm+',
+          ]">
             {{ subtitle }}
           </h3>
-          <h2
-            :class="[
-              sectionTitleClass,
-              '!mb-0 !text-kia-polar-white md:!text-5xl',
-            ]"
-          >
+          <h2 :class="[
+            sectionTitleClass,
+            '!mb-0 !text-kia-polar-white md:!text-5xl',
+          ]">
             {{ sectionTitle }}
           </h2>
 
-          <AtomButton
-            label="Заказать звонок дилера"
-            class="mt-6 mx-auto"
-            color="secondary"
-            mode="full"
-          />
+          <AtomButton label="Заказать звонок дилера" class="mt-6 mx-auto" color="secondary" mode="full" />
           <picture>
-            <source
-              media="(min-width: 1440px)"
-              :srcset="
-                src('8a65cac6-38ee-423e-b2ff-a0956b9e931a', {
-                  preview: '1090x432',
-                })
-              "
-            />
-            <source
-              :srcset="
-                src('883cdd7b-0dd4-497f-b7b2-851a82681f6f', {
-                  preview: '543x247',
-                })
-              "
-              media="(min-width: 768px)"
-            />
-            <img
-              class="w-full my-4 md:my-6 2xl:mb-1.5 2xl:mt-5"
-              :src="
-                src('bb0d5bc2-3996-48bd-8e7e-249b03311384', {
-                  preview: '313x143',
-                })
-              "
-            />
+            <source media="(min-width: 1440px)" :srcset="src('8a65cac6-38ee-423e-b2ff-a0956b9e931a', {
+              preview: '1090x432',
+            })
+              " />
+            <source :srcset="src('883cdd7b-0dd4-497f-b7b2-851a82681f6f', {
+              preview: '543x247',
+            })
+              " media="(min-width: 768px)" />
+            <img class="w-full my-4 md:my-6 2xl:mb-1.5 2xl:mt-5" :src="src('bb0d5bc2-3996-48bd-8e7e-249b03311384', {
+              preview: '313x143',
+            })
+              " />
           </picture>
           <div class="2xl:grid 2xl:grid-cols-12 2xl:gap-grid-12-gap">
             <p class="text-xs text-caption 2xl:col-start-3 col-span-9">

@@ -140,6 +140,8 @@ const modelGroups = ref<ModelGroup[]>([
   },
 ])
 
+
+
 definePageMeta({
   lockHover: true,
 })
@@ -180,7 +182,7 @@ definePageMeta({
                     выгода до {{ model.benefitUpto }}
                   </p>
                 </div>
-                <button class="flex items-center mt-1">
+                <button class="flex items-center mt-1 link-hover link-hover-dark" :style="{ '--l-bottom': '-2px' }">
                   <span class="text-base font-semibold text-primary">Цены</span>
                   <UITickToRight />
                 </button>

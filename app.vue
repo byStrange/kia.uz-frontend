@@ -79,8 +79,13 @@ useHead({
   ],
 })
 
+const { gsap } = useGsap()
 onMounted(() => {
   new Lenis({ autoRaf: true, overscroll: true })
   isLoading.value = false
+
+  setTimeout(() => {
+    gsap.globalTimeline.restart()
+  }, 3000)
 })
 </script>

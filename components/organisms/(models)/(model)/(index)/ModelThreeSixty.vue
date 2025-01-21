@@ -25,23 +25,81 @@ const data = use360View(threeSixtyViewRef, {
 
 })
 
-const { src } = useUploadcareSource()
+const { gsap } = useGsap()
+
+onMounted(() => {
+  nextTick(() => {
+    gsap.from('.three-sixty_title', {
+      duration: 1,
+      y: 50,
+      opacity: 0,
+      ease: 'power3.out',
+      delay: 0.5,
+      scrollTrigger: {
+        trigger: '.organism-three-sixty',
+        start: 'top bottom'
+      }
+    });
+
+    gsap.from('.three-sixty_tagline', {
+      duration: 1,
+      y: 30,
+      opacity: 0,
+      ease: 'power3.out',
+      delay: 0.8,
+      scrollTrigger: {
+        trigger: '.organism-three-sixty',
+        start: 'top bottom',
+      }
+    });
+
+    gsap.from('.three-sixty_image', {
+      opacity: 0,
+      yPercent: -20,
+      duration: 1,
+      scrollTrigger: {
+        trigger: '.three-sixty_image',
+        start: 'top 60%',
+      }
+    })
+
+    gsap.from('.three-sixty_bottom-row_left input[type="radio"], .three-sixty_bottom-row_left label, .three-sixty_bottom-row_left > div:last-child > div:first-child > *, .three-sixty_bottom-row_left > div:last-child > div:last-child > div', {
+      opacity: 0,
+      yPercent: 30,
+      duration: 0.3,
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: '.three-sixty_bottom-row_left',
+        start: 'top bottom',
+      }
+    })
+
+    const threeSixtyImageSplitText = useSplitText('.three-sixty_bottom-row_center p')
+
+    gsap.from(threeSixtyImageSplitText, {
+      opacity: 0,
+      stagger: 0.05, duration: 1,
+      scrollTrigger: '.three-sixty_bottom-row_center'
+    })
+
+  })
+})
 </script>
 <template>
-  <div data-label="360 view" class="container py-10 md:py-15 2xl:py-20">
+  <div data-label="360 view" class="container py-10 md:py-15 2xl:py-20 organism-three-sixty">
     <div>
-      <p class="text-sm text-primary font-semibold">Просмотр 360°</p>
-      <h2 class="mt-2.5 text-4xl font-semibold text-primary 2xl:text-5xl">
+      <p class="text-sm text-primary font-semibold three-sixty_tagline">Просмотр 360°</p>
+      <h2 class="mt-2.5 text-4xl font-semibold text-primary 2xl:text-5xl three-sixty_title">
         Carnival
       </h2>
     </div>
     <div ref="threeSixtyViewRef">
-      <img :draggable="false" loading="lazy" :src="data.currentSrc.value"
-        class="w-full my-4 2xl:mt-8 md:mt-6 2xl:mb-0 2xl:w-auto 2xl:mx-auto" />
+      <img :draggable="false" :src="data.currentSrc.value"
+        class="w-full my-4 2xl:mt-8 md:mt-6 2xl:mb-0 2xl:w-auto 2xl:mx-auto three-sixty_image" />
     </div>
     <div class="md:mt-6 2xl:mt-12 relative">
       <div
-        class="flex flex-col items-center gap-2.5 2xl:absolute 2xl:-top-10 2xl:left-1/2 2xl:-translate-x-1/2 2xl:max-w-6h mx-auto 2xl:px-20">
+        class="flex flex-col items-center gap-2.5 2xl:absolute 2xl:-top-10 2xl:left-1/2 2xl:-translate-x-1/2 2xl:max-w-6h mx-auto 2xl:px-20 three-sixty_bottom-row_center">
         <UIIcon360 />
         <p class="text-xs+ text-disabled md:text-center">
           Изображение может не соответствовать выбранной комплектации. <br />
@@ -49,7 +107,7 @@ const { src } = useUploadcareSource()
         </p>
       </div>
       <div class="mt-6 md:mt-10 md:flex justify-between items-end">
-        <div>
+        <div class="three-sixty_bottom-row_left">
           <div class="flex gap-5 text-base+">
             <div class="flex items-center gap-2.5">
               <PrimeRadioButton v-model="modelType" value="exterior" input-id="exterior" name="type" :pt="{
