@@ -57,29 +57,73 @@ defineProps<{
   size?: SectionVariants['size']
   align?: SectionTitleVariants['align']
 }>()
+
+const { gsap } = useGsap()
+const moleculeSection = useTemplateRef('moleculeSection')
+
+const pageAnimations = {
+  default: () => {
+    if (!moleculeSection.value) return;
+
+    let title = moleculeSection.value.querySelector('.molecule-section_title')
+
+    if (title) {
+      gsap.fromTo(title, {
+        opacity: 0,
+        yPercent: -40
+      }, {
+        ease: 'power2.inOut',
+        opacity: 1,
+        yPercent: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: moleculeSection.value,
+          start: 'top 80%',
+          end: '+=300',
+        },
+      })
+    }
+
+
+    let subtitle = moleculeSection.value.querySelector('.molecule-section_subtitle')
+    if (subtitle) {
+      gsap.fromTo(subtitle, {
+        opacity: 0,
+        yPercent: -40
+      }, {
+        opacity: 1,
+        duration: 1,
+        yPercent: 0,
+        scrollTrigger: {
+          trigger: moleculeSection.value,
+          start: 'top 80%',
+          end: '+=300',
+        },
+      })
+    }
+  }
+}
+
+onMounted(() => {
+  pageAnimations.default()
+})
 </script>
 <template>
-  <section :class="sectionStyle({ size })">
-    <slot
-      name="title"
-      v-bind="{
-        sectionTitle,
-        sectionTitleClass: textStyle({ size, align }),
-        subtitle,
-        subtitleClass: subtitleStyle({ align }),
-      }"
-    >
-      <h3 v-if="subtitle" :class="subtitleStyle({ align })">
+  <section :class="sectionStyle({ size })" class="molecule-section" ref="moleculeSection">
+    <slot name="title" v-bind="{
+      sectionTitle,
+      sectionTitleClass: textStyle({ size, align }),
+      subtitle,
+      subtitleClass: subtitleStyle({ align }),
+    }">
+      <h3 v-if="subtitle" :class="subtitleStyle({ align })" class="molecule-section_subtitle">
         {{ subtitle }}
       </h3>
-      <h1 v-if="sectionTitle" :class="textStyle({ size, align })">
+      <h1 v-if="sectionTitle" :class="textStyle({ size, align })" class="molecule-section_title">
         {{ sectionTitle }}
       </h1>
     </slot>
-    <slot
-      name="after-title"
-      :align="textStyle.variants.align[align || 'center']"
-    />
+    <slot name="after-title" :align="textStyle.variants.align[align || 'center']" />
     <slot />
   </section>
 </template>

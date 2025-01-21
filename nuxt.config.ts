@@ -19,7 +19,7 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2024-07-16',
-  css: ['~/assets/css/fonts.css', '~/assets/css/transitions.css'],
+  css: ['~/assets/css/fonts.css', '~/assets/css/transitions.css', 'lenis/dist/lenis.css'],
 
   components: [
     {

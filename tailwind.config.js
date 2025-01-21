@@ -162,6 +162,7 @@ module.exports = withTV({
       },
 
       spacing: {
+        '1px': '1px',
         'page-padding': '1rem',
         'page-padding-2': '31px',
         1.25: '0.3125rem',
