@@ -82,6 +82,14 @@ module.exports = withTV({
             letterSpacing: '-0.96px',
           },
         ],
+        '6xl+': [
+          '3.25rem', // 52px
+          {
+            lineHeight: '64px',
+            fontWeight: 600,
+            letterSpacing: '1.04'
+          },
+        ],
         '7xl': [
           '3.5rem', // 56px
           {
