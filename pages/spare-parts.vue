@@ -176,8 +176,8 @@ definePageMeta({
       '--gradient': 'linear-gradient(90deg, #EBEBEB 0%, #FEFEFE 100%)'
     }">
       <UIDesktopOnly>
-        <img :src="src('695cfb0a-1c18-45fa-9022-25a078fa4ccf')"
-          class="absolute -right-20 w-[934px] h-[332px] top-1/2 -translate-y-1/2">
+        <img :src="src('400b9c57-a122-4415-acff-6c0ad5a17705')"
+          class="absolute -right-0 w-[934px] h-[332px] top-1/2 -translate-y-1/2">
       </UIDesktopOnly>
       <UIContainer class="relative z-10">
         <UIDesktopOnly class="pt-6">
@@ -281,7 +281,7 @@ definePageMeta({
               <svg ref="svgRef" width="100%" height="738" class="absolute left-0 top-2h">
                 <Transition name="slide-fade_long" mode="out-in">
                   <image :key="isSvgReversed.toString()" transform="rotate(0, 0, 0)" :x="isSvgReversed ? 330 * 2 : 330"
-                    :href="src('b928385d-4dd2-4940-bfc3-a3496a44a672', { mirror: isSvgReversed })" width="1679px"
+                    :href="src('1e56e2da-0386-480a-8d33-ff9ec976ba39', { mirror: isSvgReversed })" width="1679px"
                     height="100%" />
                 </Transition>
                 <template v-for="connector in connectors" :key="connector.id">
