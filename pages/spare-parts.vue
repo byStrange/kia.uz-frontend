@@ -176,8 +176,8 @@ definePageMeta({
       '--gradient': 'linear-gradient(90deg, #EBEBEB 0%, #FEFEFE 100%)'
     }">
       <UIDesktopOnly>
-        <img :src="src('695cfb0a-1c18-45fa-9022-25a078fa4ccf')"
-          class="absolute -right-20 w-[934px] h-[332px] top-1/2 -translate-y-1/2">
+        <img :src="src('400b9c57-a122-4415-acff-6c0ad5a17705')"
+          class="absolute -right-0 w-[934px] h-[332px] top-1/2 -translate-y-1/2">
       </UIDesktopOnly>
       <UIContainer class="relative z-10">
         <UIDesktopOnly class="pt-6">
