@@ -281,7 +281,7 @@ definePageMeta({
               <svg ref="svgRef" width="100%" height="738" class="absolute left-0 top-2h">
                 <Transition name="slide-fade_long" mode="out-in">
                   <image :key="isSvgReversed.toString()" transform="rotate(0, 0, 0)" :x="isSvgReversed ? 330 * 2 : 330"
-                    :href="src('b928385d-4dd2-4940-bfc3-a3496a44a672', { mirror: isSvgReversed })" width="1679px"
+                    :href="src('1e56e2da-0386-480a-8d33-ff9ec976ba39', { mirror: isSvgReversed })" width="1679px"
                     height="100%" />
                 </Transition>
                 <template v-for="connector in connectors" :key="connector.id">
