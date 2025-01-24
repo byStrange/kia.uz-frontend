@@ -3,10 +3,10 @@ const { headerService } = useHeaderService()
 </script>
 <template>
   <div
-    class="flex justify-center bg-primary py-4.5 fixed top-0 w-full transition-all z-10 duration-300"
+    class="flex justify-center bg-primary py-4.5 fixed top-0 w-full transition-all z-20 duration-300"
     :class="{
       '!top-[--header-height]': headerService.isHeaderFixed,
-      '!z-10': headerService.isMenuOpen,
+      '!z-30': headerService.isMenuOpen,
     }"
   >
     <div class="flex gap-x-7.5">
