@@ -63,7 +63,8 @@
   }
 
   .link-hover {
-    @apply relative after:content-[''] after:absolute after:left-0 after:bottom-0 
+    --l-bottom: 0;
+    @apply relative after:content-[''] after:absolute after:left-0 after:bottom-[--l-bottom] 
          after:w-full after:h-0.5  after:scale-x-0 
          after:origin-left after:transition-transform after:duration-300 
          after:ease-out;
