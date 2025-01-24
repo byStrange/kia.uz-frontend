@@ -36,6 +36,7 @@ module.exports = withTV({
       fontSize: {
         'sm+': ['0.9375rem', '20px'], // 15px
         xs: ['0.75rem', '14px'], // 12px
+        'xs-long': ['0.75rem', { letterSpacing: '1.44', lineHeight: '15px' }],
         'xs+': ['0.75rem', '16px'], // 12px
         'xs++': ['0.75rem', '20px'], // 12px
         lg: ['1.125rem', '24px'], // 18px
@@ -87,7 +88,7 @@ module.exports = withTV({
           {
             lineHeight: '64px',
             fontWeight: 600,
-            letterSpacing: '1.04'
+            letterSpacing: '1.04',
           },
         ],
         '7xl': [
@@ -150,7 +151,7 @@ module.exports = withTV({
             black: primitives['kia-midnight-black'].DEFAULT,
             white: primitives['kia-polar-white'],
           },
-          'ptransparent': primitives['kia-midnight-black'][10],
+          ptransparent: primitives['kia-midnight-black'][10],
           'depth-blue': primitives['kia-midnight-black'][90],
           description: primitives['kia-midnight-black'][80],
           caption: primitives['kia-midnight-black'][60],
@@ -199,7 +200,8 @@ module.exports = withTV({
         'grid-12-gap': '2.5rem',
         '6h-10': '640px',
         '1k': '1000px',
-        '1.06k': '1060px'
+        '1.06k': '1060px',
+        'half-screen': '50vw',
       },
     },
   },
@@ -238,7 +240,7 @@ module.exports = withTV({
       },
     ),
 
-    function({ addBase, theme }) {
+    function ({ addBase, theme }) {
       const screens = theme('screens')
       const screenProperties = {}
       for (const key in screens) {
