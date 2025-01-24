@@ -39,6 +39,9 @@ definePageMeta({
 </script>
 <template>
   <div>
+    <UIDesktopOnly>
+      <OrganismBrandBar />
+    </UIDesktopOnly>
     <div class="pt-[--padding-top]" :style="{ '--padding-top': paddingTop }">
       <div class="relative flex items-center justify-center">
         <img
