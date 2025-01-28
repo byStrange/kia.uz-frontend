@@ -134,7 +134,7 @@ async function initMap() {
 
   function generateClusterCircle(length: number, coordinates: any) {
     let template = `
-      <div class="p-4 flex items-center rounded-full text-white bg-primary">${length}</div>
+      <div class="flex items-center justify-center text-xs rounded-full text-white bg-primary w-6 h-6">${length}</div>
     `
     const circle = document.createElement('div');
 

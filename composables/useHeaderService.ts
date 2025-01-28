@@ -45,7 +45,7 @@ const headerItems = ref<HeaderItem[]>([
       },
       {
         label: 'Корпоративные продажи',
-        to: '#',
+        to: '/special-offers/corporate:programmee-trade-in',
       },
       {
         label: 'Сравнение авто',
@@ -78,7 +78,7 @@ const headerItems = ref<HeaderItem[]>([
     children: [
       {
         label: 'Запись на сервис',
-        to: '/feedback',
+        to: '/service',
       },
       {
         label: 'Запчасти',
