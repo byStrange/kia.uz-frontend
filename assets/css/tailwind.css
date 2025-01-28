@@ -15,6 +15,14 @@
     font-family: 'Kia Signature';
   }
 
+  mark {
+    @apply bg-transparent text-kia-afternoon-yellow;
+  }
+
+  mark[light] {
+    @apply text-forest-green;
+  }
+
   @media screen(2xl) {
     :root {
       --header-height: 80px;
