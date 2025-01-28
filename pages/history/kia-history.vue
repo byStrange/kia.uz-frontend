@@ -88,7 +88,7 @@ definePageMeta({
       </div>
 
       <div
-        class="relative z-20 py-7.5 container space-y-4 text-primary bg-background md:absolute md:bottom-0 md:bg-transparent md:text-white md:pb-10 2xl:top-15 2xl:pt-2.5">
+        class="relative z-10 py-7.5 container space-y-4 text-primary bg-background md:absolute md:bottom-0 md:bg-transparent md:text-white md:pb-10 2xl:top-15 2xl:pt-2.5">
         <h1 class="text-2xl md:text-4xl 2xl:text-9xl">История Kia</h1>
         <p class="text-base md:text-base+ 2xl:text-lg">75 лет прогресса и инноваций</p>
       </div>
@@ -107,7 +107,7 @@ definePageMeta({
         <StackAndSplitLayout :class-names="{
           'container': 'flex flex-col-reverse !p-0',
           'topContainer': 'row-start-2 row-end-3 2xl:mt-5h md:mt-10 mt-12 2xl:col-start-3 2xl:!col-end-11 relative z-10',
-          bottomContainer: 'col-start-3 col-end-11 row-start-1 row-end-2  2xl:!mt-0 !mt-0'
+          bottomContainer: 'col-start-3 col-end-11 row-start-1 row-end-2  2xl:!mt-0 !mt-0 2xl:!col-end-11'
         }">
           <template #right>
             <div class="2xl:pt-10 2xl:pb-16">
@@ -233,7 +233,7 @@ definePageMeta({
         <StackAndSplitLayout :class-names="{
           'container': 'flex flex-col-reverse !p-0',
           'topContainer': 'row-start-2 row-end-3 2xl:mt-5h md:mt-10 mt-12 2xl:col-start-3 2xl:!col-end-11 relative z-10',
-          bottomContainer: 'col-start-3 col-end-11 row-start-1 row-end-2  2xl:!mt-0 !mt-0'
+          bottomContainer: 'col-start-3 col-end-11 row-start-1 row-end-2  2xl:!mt-0 !mt-0 2xl:!col-end-11'
         }">
           <template #right>
             <div class="2xl:pt-10 2xl:pb-16">
