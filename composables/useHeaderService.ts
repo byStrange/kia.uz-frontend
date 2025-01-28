@@ -82,15 +82,15 @@ const headerItems = ref<HeaderItem[]>([
       },
       {
         label: 'Запчасти',
-        to: '#',
+        to: '/spare-parts',
       },
       {
         label: 'Техническое обслуживание',
-        to: '#',
+        to: '/owners/technical-maintenance',
       },
       {
         label: 'Гарантия',
-        to: '#',
+        to: '/service/warranty',
       },
       {
         label: 'Спецпредложения',

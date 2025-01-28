@@ -18,11 +18,11 @@ const footerItems = ref<FooterItem[]>([
   },
   {
     label: 'Спецпредложения',
-    to: '#',
+    to: '/special-offers',
   },
   {
     label: 'Дилеры',
-    to: '#',
+    to: '/dealers',
   },
   {
     label: 'Владельцам',
@@ -33,7 +33,7 @@ const footerItems = ref<FooterItem[]>([
     children: [
       {
         label: 'Запись на тест-драйв',
-        to: '#',
+        to: '/models/test-drive',
       },
       {
         label: 'Трейд-ин',
@@ -50,7 +50,7 @@ const footerItems = ref<FooterItem[]>([
 
       {
         label: 'Корпоративные продажи',
-        to: '#',
+        to: '/special-offers/corporate:programmee-trade-in',
       },
     ],
   },
@@ -59,13 +59,13 @@ const footerItems = ref<FooterItem[]>([
     children: [
       {
         label: 'Новый бренд Kia',
-        to: '#',
+        to: '/branding',
       },
       { label: 'Дизайн', to: '#' },
 
       {
         label: 'История Kia',
-        to: '#',
+        to: '/history/kia-history',
       },
       {
         label: 'Технологии',
@@ -82,16 +82,16 @@ const footerItems = ref<FooterItem[]>([
       },
       {
         label: 'Преимущества дистрибьютера',
-        to: '#',
+        to: '/distributor-advantages',
       },
       {
         label: 'Стать дилером',
-        to: '#',
+        to: '/dealers',
       },
 
       {
         label: 'Новост',
-        to: '#',
+        to: '/news',
       },
     ],
   },
