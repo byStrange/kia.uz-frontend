@@ -20,9 +20,15 @@ const { headerService } = useHeaderService()
       <div aria-hidden="true" class="my-8 border-b border-b-description" />
 
       <div aria-label="Footer menu">
-        <div class="logo">
-          <img src="@/assets/logo/main-logo.svg" alt="Logo" aria-label="Logo" />
-        </div>
+        <NuxtLinkLocale to="/">
+          <div class="logo">
+            <img
+              src="@/assets/logo/main-logo.svg"
+              alt="Logo"
+              aria-label="Logo"
+            />
+          </div>
+        </NuxtLinkLocale>
 
         <div
           class="md:md:mt-12 md:grid md:grid-cols-6 md:gap-9 2xl:grid-cols-12"
@@ -38,7 +44,7 @@ const { headerService } = useHeaderService()
                     (i) => !i.children?.length,
                   )"
                   :key="item.label"
-                  to="/"
+                  :to="item.to"
                   class="font-semibold text-white"
                 >
                   {{ item.label }}
