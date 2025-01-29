@@ -3,12 +3,40 @@ import { Popover } from 'primevue'
 import type { Dealer } from '~/server/api/dealers'
 
 declare const ymaps3: any
+type Feature = {
+  id: number
+  type: string
+  geometry: {
+    coordinates: [number, number]
+  }
+  properties: {
+    name: string
+  }
+}
+
+
+const tabsContainer = useTemplateRef('tabsContainer')
 
 const runtimeConfig = useRuntimeConfig()
 
 const { data } = await useFetch('/api/dealers')
 
 const { bounding } = useContainer()
+
+const handlers: Record<string, any> = {
+  onFeatureClick: (dealer: Dealer) => {
+    tabsContainer.value?.changeTab(0)
+    handlers.onMarkerClick({
+      properties: {
+        name: dealer.name,
+      },
+      geometry: {
+        coordinates: [dealer.location.lat, dealer.location.lng],
+      },
+      type: 'Feature',
+    })
+  },
+}
 
 const locationPopover = ref<InstanceType<typeof Popover> | null>(null)
 
@@ -35,6 +63,7 @@ const fetchIcon = async (src: string) => {
       return text
     })
 }
+
 
 const generateMarkerTemplate = (name: string, id: string, icon?: string) => {
   const iconWrapper = document.createElement('div')
@@ -74,12 +103,15 @@ async function initMap() {
   const icon = await fetchIcon('/icons/map-pin.svg')
   await ymaps3.ready
 
-  ymaps3.strictMode = true;
+  ymaps3.strictMode = true
 
-  const { YMap, YMapDefaultSchemeLayer, YMapFeatureDataSource, YMapMarker, YMapLayer, YMapListener } =
-    ymaps3
-
-
+  const {
+    YMap,
+    YMapDefaultSchemeLayer,
+    YMapFeatureDataSource,
+    YMapMarker,
+    YMapLayer,
+  } = ymaps3
 
   const map = new YMap(
     document.getElementById('map'),
@@ -97,29 +129,36 @@ async function initMap() {
 
   map.addChild(new YMapDefaultSchemeLayer())
   map.addChild(new YMapFeatureDataSource({ id: 'my-source' }))
-  map.addChild(new YMapLayer({ source: 'my-source', type: 'markers', zIndex: 1800 }))
+  map.addChild(
+    new YMapLayer({ source: 'my-source', type: 'markers', zIndex: 1800 }),
+  )
 
+  const onMarkerClick = (feature: Feature) => {
+    const dealerName = feature.properties.name
+    const result = data.value?.dealers.find((d) => d.name === dealerName)
+    map.setLocation({
+      center: feature.geometry.coordinates,
+      zoom: 15,
+    })
+    if (result) currentSelectedDealer.value = result
+  }
 
-  const marker = (feature: any) => {
+  handlers.onMarkerClick = onMarkerClick
+
+  const marker = (feature: Feature) => {
     const content = document.createElement('div')
-    content.onclick = (event) => {
-      const target = event.currentTarget as HTMLElement
-      const dealerId = target?.dataset.dealerId || ''
-      const dealerName = dealerId.split('-').join(' ').slice(1)
-      const result = data.value?.dealers.find((d) => d.name === dealerName)
-      map.setLocation({
-        center: feature.geometry.coordinates,
-        zoom: 15
-      })
-      if (result) currentSelectedDealer.value = result
-    }
+    content.onclick = () => handlers.onMarkerClick(feature)
     const id = 'd' + feature.properties.name.split(' ').join('-')
     content.dataset.dealerId = id
-    content.innerHTML = generateMarkerTemplate(feature.properties.name, id, icon)
+    content.innerHTML = generateMarkerTemplate(
+      feature.properties.name,
+      id,
+      icon,
+    )
     return new YMapMarker(
       {
         coordinates: feature.geometry.coordinates,
-        source: 'my-source'
+        source: 'my-source',
       },
       content,
     )
@@ -128,7 +167,7 @@ async function initMap() {
   const cluster = (coordinates: any, features: any[]) => {
     return new YMapMarker(
       { coordinates, source: 'my-source' },
-      generateClusterCircle(features.length, coordinates)
+      generateClusterCircle(features.length, coordinates),
     )
   }
 
@@ -136,43 +175,43 @@ async function initMap() {
     let template = `
       <div class="p-4 flex items-center rounded-full text-white bg-primary">${length}</div>
     `
-    const circle = document.createElement('div');
+    const circle = document.createElement('div')
 
-    circle.classList.add('cl-circle');
-    circle.innerHTML = template;
+    circle.classList.add('cl-circle')
+    circle.innerHTML = template
 
     circle.onclick = () => {
       map.setLocation({
         center: coordinates,
-        zoom: 11
+        zoom: 11,
       })
     }
 
     return circle
   }
 
-
   const points = data.value?.dealers.map((dealer, i) => {
     return {
       type: 'Feature',
       id: Math.floor(Math.random() * (i + 50) + i * Math.random()),
       geometry: { coordinates: [dealer.location.lat, dealer.location.lng] },
-      properties: { name: dealer.name }
+      properties: { name: dealer.name },
     }
   })
 
   if (import.meta.client) {
-    import('@yandex/ymaps3-clusterer').then(({ YMapClusterer, clusterByGrid }) => {
-      const clusterer = new YMapClusterer({
-        method: clusterByGrid({ gridSize: 64 }),
-        features: points ? points : [],
-        marker,
-        cluster
-      })
-      map.addChild(clusterer)
-    })
+    import('@yandex/ymaps3-clusterer').then(
+      ({ YMapClusterer, clusterByGrid }) => {
+        const clusterer = new YMapClusterer({
+          method: clusterByGrid({ gridSize: 64 }),
+          features: points ? points : [],
+          marker,
+          cluster,
+        })
+        map.addChild(clusterer)
+      },
+    )
   }
-
 }
 
 onMounted(() => {
@@ -204,12 +243,26 @@ useHead({
 
     <div class="mt-5 2xl:mt-10">
       <Popover ref="locationPopover" unstyled>
-        <div class="bg-white p-5 border w-[--width] md:w-[378px] space-y-10 mt-4"
-          :style="{ '--width': bounding.width.value + 'px' }">
-          <AtomDropdownInput v-model:selected-option="selectedLocationConfirm"
-            v-model:available-options="availableOptions" :float-label="true" input-id="locationDropdown"
-            placeholder="Ваш город" theme="light" size="large" />
-          <AtomButton label="Сохранить" color="primary" mode="full" class="md:w-full" @click="saveLocation" />
+        <div
+          class="bg-white p-5 border w-[--width] md:w-[378px] space-y-10 mt-4"
+          :style="{ '--width': bounding.width.value + 'px' }"
+        >
+          <AtomDropdownInput
+            v-model:selected-option="selectedLocationConfirm"
+            v-model:available-options="availableOptions"
+            :float-label="true"
+            input-id="locationDropdown"
+            placeholder="Ваш город"
+            theme="light"
+            size="large"
+          />
+          <AtomButton
+            label="Сохранить"
+            color="primary"
+            mode="full"
+            class="md:w-full"
+            @click="saveLocation"
+          />
         </div>
       </Popover>
       <div class="container">
@@ -217,23 +270,33 @@ useHead({
           <UICompassIcon />
           <span class="text-primary text-base">{{
             selectedLocation.label
-            }}</span>
+          }}</span>
         </button>
       </div>
 
-      <MoleculeTabsContainer :tabs="['Карта', 'Списком']" class="mt-7.5" header-container-class="w-fit  mx-0"
-        content-container-class="!px-0 mx-0 !max-w-none !mt-10" :cache="true">
+      <MoleculeTabsContainer
+        :tabs="['Карта', 'Списком']"
+        class="mt-7.5"
+        header-container-class="w-fit  mx-0"
+        content-container-class="!px-0 mx-0 !max-w-none !mt-10"
+        :cache="true"
+        ref="tabsContainer"
+      >
         <template #1>
           <div class="relative">
             <Transition name="slide-fade">
-              <div v-if="currentSelectedDealer"
+              <div
+                v-if="currentSelectedDealer"
                 class="border-2 absolute z-[1000] left-[--x] top-5 border-primary p-7.5 text-primray bg-white w-[--width] 2xl:w-[320px]"
                 :style="{
                   '--width': bounding.width.value + 'px',
                   '--x': bounding.x.value + 'px',
-                }">
-                <button class="absolute top-3 right-3 text-primary cursor-pointer"
-                  @click="closeDealerPopover(currentSelectedDealer.name)">
+                }"
+              >
+                <button
+                  class="absolute top-3 right-3 text-primary cursor-pointer"
+                  @click="closeDealerPopover(currentSelectedDealer.name)"
+                >
                   <UIXIcon class="size-5" />
                 </button>
                 <h1 class="text-base font-semibold 2xl:text-lg">
@@ -247,7 +310,7 @@ useHead({
                     <UIPhoneIcon class="size-5" />
                     <span class="text-xs md:text-base+">{{
                       currentSelectedDealer.phone
-                      }}</span>
+                    }}</span>
                   </div>
                   <p class="text-caption text-xs md:text-sm">
                     {{ currentSelectedDealer.workingHours }}
@@ -262,14 +325,22 @@ useHead({
         <template #2>
           <div class="container pb-10">
             <div class="divide-y divide-protection space-y-7.5">
-              <div v-for="(dealer, index) in data?.dealers" :key="dealer.name"
-                class="md:grid md:grid-cols-2 2xl:grid-cols-12 md:gap-x-grid-12-gap" :class="{ 'pt-7.5': index !== 0 }">
+              <div
+                v-for="(dealer, index) in data?.dealers"
+                :key="dealer.name"
+                class="md:grid md:grid-cols-2 2xl:grid-cols-12 md:gap-x-grid-12-gap"
+                :class="{ 'pt-7.5': index !== 0 }"
+                @click="handlers.onFeatureClick(dealer)"
+              >
                 <h2 class="font-semibold 2xl:col-span-2 2xl:text-lg">
                   {{ dealer.name }}
                 </h2>
-                <div class="2xl:col-start-4 2xl:col-end-13 2xl:flex 2xl:justify-between 2xl:items-start">
+                <div
+                  class="2xl:col-start-4 2xl:col-end-13 2xl:flex 2xl:justify-between 2xl:items-start"
+                >
                   <div
-                    class="text-primary text-base mt-4 md:mt-0 space-y-2 2xl:flex 2xl:gap-x-grid-12-gap 2xl:space-y-0">
+                    class="text-primary text-base mt-4 md:mt-0 space-y-2 2xl:flex 2xl:gap-x-grid-12-gap 2xl:space-y-0"
+                  >
                     <div class="2xl:w-4h 2xl:space-y-2">
                       <p>{{ dealer.address }}</p>
                       <p class="text-caption">{{ dealer.workingHours }}</p>
@@ -279,7 +350,12 @@ useHead({
                       <span>{{ dealer.phone }}</span>
                     </div>
                   </div>
-                  <AtomButton label="Показать на карте" color="primary" class="mt-5 md:py-2.5 2xl:mt-0" mode="full" />
+                  <AtomButton
+                    label="Показать на карте"
+                    color="primary"
+                    class="mt-5 md:py-2.5 2xl:mt-0"
+                    mode="full"
+                  />
                 </div>
               </div>
             </div>
