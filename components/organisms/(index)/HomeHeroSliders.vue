@@ -67,7 +67,10 @@ data-label="Hero shadow bottom" aria-hidden="true"
               }">
               <div class="flex w-full">
                 <div class="w-full md:px-0">
-                  <div class="space-y-1 text-white md:space-y-2" v-html="slide.body">
+                  <div class="space-y-1 text-white md:space-y-2">
+                    <p class="text-sm text-white md:text-lg">{{ slide.pre_title }}</p>
+                    <h1 class="text-2xl font-semibold md:text-4xl">{{ slide.title }}</h1>
+                    <p class="text-sm md:text-lg">{{ slide.post_title }}</p>
 
                   </div>
                   <AtomButton

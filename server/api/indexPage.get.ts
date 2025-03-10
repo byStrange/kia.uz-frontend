@@ -3,7 +3,8 @@ import { getCookie } from 'h3'
 
 export interface IndexPageSlider extends CommonMediaModel {
   title: string
-  body: HtmlText
+  pre_title: string
+  post_title: string
   target_url: AbsoluteUrl
   order: number
 }
