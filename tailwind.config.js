@@ -253,5 +253,6 @@ module.exports = withTV({
         },
       })
     },
+    require("@tailwindcss/typography")
   ],
 })

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import { useCssVar } from '@vueuse/core'
 import { Pagination } from 'swiper/modules'
 import type { Swiper } from 'swiper/types'
@@ -43,7 +43,7 @@ const swiperBreakpoints = ref({})
 
 const props = withDefaults(
   defineProps<{
-    data: any[]
+    data: T[]
     spaceBetween?: number
     slidesOffsetBefore?: number
     slidesOffsetAfter?: number

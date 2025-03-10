@@ -20,9 +20,6 @@ const themeColour = '#05141F'
 const i18nHead = useLocaleHead()
 
 useHead({
-  titleTemplate(titleChunk) {
-    return titleChunk ? `${titleChunk} | ${title}` : `${title}`
-  },
   bodyAttrs: {
     class: 'min-h-full font-body antialiased',
   },
@@ -41,10 +38,6 @@ useHead({
     { property: 'og:image', content: '/img/opengraph.jpg' },
     { property: 'og:image:width', content: '1200' },
     { property: 'og:image:height', content: '630' },
-    { name: 'twitter:card', content: 'summary_image_large' },
-    { name: 'twitter:url', content: url },
-    { name: 'twitter:title', content: title },
-    { name: 'twitter:description', content: description },
     { name: 'apple-mobile-web-app-title', content: title },
     { name: 'msapplication-TileColor', content: themeColour },
     { name: 'msapplication-config', content: '/browserconfig.xml' },

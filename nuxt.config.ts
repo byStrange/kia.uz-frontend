@@ -1,8 +1,13 @@
-const { SITE_NAME, SITE_URL } = process.env
+const {
+  SITE_NAME,
+  SITE_URL,
+  NUXT_API_BASE_URL = 'https://adminkia.triger.uz',
+  NUXT_API_DEFAULT_LANG = 'uz'
+} = process.env
 
 export default defineNuxtConfig({
   imports: {
-    dirs: ['./composables', './utils', './schemas'],
+    dirs: ['./composables', './utils', './schemas', './types'],
   },
   experimental: {
     defaults: {
@@ -19,7 +24,11 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2024-07-16',
-  css: ['~/assets/css/fonts.css', '~/assets/css/transitions.css', 'lenis/dist/lenis.css'],
+  css: [
+    '~/assets/css/fonts.css',
+    '~/assets/css/transitions.css',
+    'lenis/dist/lenis.css',
+  ],
 
   components: [
     {
@@ -30,29 +39,29 @@ export default defineNuxtConfig({
     {
       path: '~/components/atoms',
       pathPrefix: false,
-      prefix: 'Atom'
+      prefix: 'Atom',
     },
     {
       path: '~/components/elements',
       pathPrefix: false,
-      prefix: 'Element'
+      prefix: 'Element',
     },
     {
       path: '~/components/molecules',
 
       pathPrefix: false,
-      prefix: 'Molecule'
+      prefix: 'Molecule',
     },
     {
       path: '~/components/organisms',
       pathPrefix: false,
-      prefix: 'Organism'
+      prefix: 'Organism',
     },
     {
       path: '~/components/layout',
       pathPrefix: false,
-      prefix: 'UI'
-    }
+      prefix: 'UI',
+    },
   ],
 
   i18n: {
@@ -105,7 +114,8 @@ export default defineNuxtConfig({
       siteName: SITE_NAME,
       siteUrl: SITE_URL,
       yandexMapApiKey: process.env.YANDEX_MAP_API_KEY,
+      apiBaseUrl: NUXT_API_BASE_URL,
+      apiDefaultLang: NUXT_API_DEFAULT_LANG
     },
   },
-
 })

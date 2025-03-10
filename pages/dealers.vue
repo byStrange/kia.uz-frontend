@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Popover } from 'primevue'
-import type { Dealer } from '~/server/api/dealers'
+import type { Dealer } from '~/server/api/dealers.get'
 
 declare const ymaps3: any
+
 type Feature = {
   id: number
   type: string
@@ -172,7 +173,7 @@ async function initMap() {
   }
 
   function generateClusterCircle(length: number, coordinates: any) {
-    let template = `
+    const template = `
       <div class="flex items-center justify-center text-xs rounded-full text-white bg-primary w-6 h-6">${length}</div>
     `
     const circle = document.createElement('div')
@@ -275,12 +276,12 @@ useHead({
       </div>
 
       <MoleculeTabsContainer
+        ref="tabsContainer"
         :tabs="['Карта', 'Списком']"
         class="mt-7.5"
         header-container-class="w-fit  mx-0"
         content-container-class="!px-0 mx-0 !max-w-none !mt-10"
         :cache="true"
-        ref="tabsContainer"
       >
         <template #1>
           <div class="relative">
@@ -330,7 +331,6 @@ useHead({
                 :key="dealer.name"
                 class="md:grid md:grid-cols-2 2xl:grid-cols-12 md:gap-x-grid-12-gap"
                 :class="{ 'pt-7.5': index !== 0 }"
-                @click="handlers.onFeatureClick(dealer)"
               >
                 <h2 class="font-semibold 2xl:col-span-2 2xl:text-lg">
                   {{ dealer.name }}
@@ -355,6 +355,7 @@ useHead({
                     color="primary"
                     class="mt-5 md:py-2.5 2xl:mt-0"
                     mode="full"
+                    @click="handlers.onFeatureClick(dealer)"
                   />
                 </div>
               </div>

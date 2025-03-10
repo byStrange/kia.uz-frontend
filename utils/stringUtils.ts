@@ -4,3 +4,7 @@ export function toTitleCase(str: string) {
     (text) => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase(),
   )
 }
+
+export function formatPrice(price: number, currency: string = "UZS") {
+  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + " " + currency;
+}
