@@ -22,7 +22,7 @@ defineProps<{ news: IndexPageNews[] }>()
               class="h-[408px] p-[--padding] md:w-[310px] md:px-0">
               <div class="mx-auto h-full max-w-[310px] bg-background">
                 <div class="relative flex h-[222px] w-full items-center justify-center bg-gray-200">
-                  <img :src="item.banner_image" loading="lazy" class="h-full w-full object-cover" />
+                  <img :src="item.default_image" loading="lazy" class="h-full w-full object-cover" />
                   <UIPlayIcon2 class="absolute" />
                 </div>
 
@@ -45,7 +45,7 @@ defineProps<{ news: IndexPageNews[] }>()
               class="h-[408px] p-[--padding] md:w-[310px] md:!px-0">
               <div class="mx-auto h-full max-w-[310px] bg-background">
                 <div class="relative flex h-[222px] w-full items-center justify-center bg-gray-200">
-                  <img :src="item.banner_image" loading="lazy" class="h-full w-full object-cover" />
+                  <img :src="item.default_image" loading="lazy" class="h-full w-full object-cover" />
                   <UIPlayIcon2 class="absolute" />
                 </div>
 

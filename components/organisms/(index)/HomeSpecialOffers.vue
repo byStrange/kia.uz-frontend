@@ -40,7 +40,7 @@ defineProps<{ offers: IndexPageSpecialOffers[] }>()
             <div :style="{ '--padding': `0 ${bounding.x.value}px` }"
               class="h-[408px] p-[--padding] md:w-[310px] md:px-0">
               <div class="mx-auto h-full max-w-[310px] bg-background">
-                <img :src="item.banner_image" class="h-[222px] w-full" loading="lazy" />
+                <img :src="item.default_image" class="h-[222px] w-full object-cover" loading="lazy" />
 
                 <div class="p-4">
                   <div class="text-left">
@@ -64,7 +64,7 @@ defineProps<{ offers: IndexPageSpecialOffers[] }>()
             <div :style="{ '--padding': `0 ${bounding.x.value}px` }"
               class="h-[408px] p-[--padding] md:w-[310px] md:px-0">
               <div class="mx-auto h-full max-w-[310px] bg-background">
-                <img :src="item.banner_image" class="h-[222px] w-full" loading="lazy" />
+                <img :src="item.default_image" class="h-[222px] w-full object-cover" loading="lazy" />
 
                 <div class="p-4">
                   <div class="text-left">

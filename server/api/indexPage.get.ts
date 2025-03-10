@@ -23,7 +23,6 @@ export interface IndexPageNews extends CommonMediaModel {
   content: HtmlText
   type: 'news' | 'review'
   subtitle: string
-  banner_image: string
   video_url: string
 }
 
@@ -33,7 +32,6 @@ export interface IndexPageSpecialOffers extends CommonMediaModel {
   content: HtmlText
   type: 'buy' | 'service'
   subtitle: string
-  banner_image: string
 }
 
 export interface IndexPage {
