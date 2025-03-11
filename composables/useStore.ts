@@ -61,6 +61,7 @@ const _specials = ref([
 ])
 
 export type Model = {
+  id: uuid
   name: string
   electric?: boolean
   images: {

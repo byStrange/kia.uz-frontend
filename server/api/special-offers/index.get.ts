@@ -1,15 +1,23 @@
-import type { IndexPageNews } from '../indexPage.get'
+import { useFetchApi } from '~/composables/useFetchApi'
+import type { Model } from '~/composables/useStore'
 
-type SpecialOffersPageSpecialOffer = IndexPageNews
-
-interface SpecialOffersPage extends SEOPage {
-  news: SpecialOffersPageSpecialOffer[]
+interface SpecialOffersPage {
+  seo: SEO['seo'],
+  offers: SpecialOffer[],
+  models: Pick<Model, 'name' | 'id'>[]
 }
 
 export default defineEventHandler(async (event) => {
   const locale = getCookie(event, 'i18n_redirected')
 
-  const response = await useFetchApi<SpecialOffersPage>('/buy/special', locale)
+  const offers = await useFetchApi<SpecialOffer[]>('/special-offers', locale)
+  const seo = await useFetchApi<SEO>('/pages/~special-offers', locale)
+  const models = await useFetchApi<SpecialOffersPage['models']>('/models?fields=name,id')
 
-  return response
+
+  const pageData: SpecialOffersPage = {
+    offers, seo: seo['seo'], models
+  }
+
+  return pageData;
 })

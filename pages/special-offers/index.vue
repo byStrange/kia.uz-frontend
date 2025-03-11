@@ -1,9 +1,40 @@
 <script setup lang="ts">
-const options = ref([{ label: 'model', value: 'model' }])
+const modelOptions = ref();
 const selectedOption = ref()
 
-const { specials } = useStore()
-const { src } = useUploadcareSource()
+
+const { data: pageData } = await useFetch('/api/special-offers')
+
+const typeBuyOffers = computed(() => {
+  const data = pageData.value?.offers.filter((offer) => offer.type == 'buy')
+
+  if (selectedOption.value) {
+    return data?.filter((offer) => offer.referenced_models.find((md) => md.id == selectedOption.value))
+  }
+
+  return data;
+})
+
+function loadSeo() {
+  useSeoMeta({
+    title: pageData.value?.seo.title,
+    description: pageData.value?.seo.description,
+    keywords: pageData.value?.seo.keywords,
+  })
+}
+
+loadSeo()
+
+watch(pageData, () => {
+  loadSeo()
+})
+
+onMounted(() => {
+  modelOptions.value = pageData.value?.models.map((model) => ({
+    value: model.id,
+    label: model.name
+  }))
+})
 
 definePageMeta({
   lockHover: true,
@@ -18,51 +49,28 @@ definePageMeta({
       </h1>
 
       <div class="mt-7.5">
-        <MoleculeTabsContainer
-          ref="tabsContainer"
-          :tabs="['Покупка', 'Сервис']"
-          header-container-class="w-fit mx-0 !px-0"
-          content-container-class="!px-0 mx-0 !max-w-none !mt-10"
-        >
+        <MoleculeTabsContainer ref="tabsContainer" :tabs="['Покупка', 'Сервис']"
+          header-container-class="w-fit mx-0 !px-0" content-container-class="!px-0 mx-0 !max-w-none !mt-10">
           <template #tab-button-right="{ tab }">
             <Transition name="slide-fade">
-              <div
-                v-if="tab.activeTab === 0"
-                class="w-4h 2xl:absolute top-0 right-0 hidden 2xl:flex"
-              >
-                <AtomDropdownInput
-                  v-model:available-options="options"
-                  v-model:selected-option="selectedOption"
-                  placeholder="Выберите спецпредложение"
-                  class="w-full"
-                />
+              <div v-if="tab.activeTab === 0" class="w-4h 2xl:absolute top-0 right-0 hidden 2xl:flex">
+                <AtomDropdownInput v-model:available-options="modelOptions" v-model:selected-option="selectedOption"
+                  placeholder="Выберите модель" class="w-full" />
               </div>
             </Transition>
           </template>
           <template #1>
             <div>
-              <AtomDropdownInput
-                v-model:available-options="options"
-                v-model:selected-option="selectedOption"
-                placeholder="Выберите спецпредложение"
-                class="max-w-4h 2xl:!hidden"
-              />
+              <AtomDropdownInput v-model:available-options="modelOptions" v-model:selected-option="selectedOption"
+                placeholder="Выберите модель" class="max-w-4h 2xl:!hidden" />
 
-              <div
-                class="space-y-7.5 pt-10 pb-11 md:grid md:grid-cols-2 md:space-y-0 md:gap-7.5 md:place-content-center 2xl:grid-cols-4"
-              >
-                <NuxtLink
-                  v-for="item in specials"
-                  :key="item.title"
-                  to="/special-offers/buy:benefit-up-to-94880000-sum-sorento-k8-cerato-seltos-and-bongo"
-                >
+              <TransitionGroup tag="div" name="list"
+                class="space-y-7.5 pt-10 pb-11 md:grid md:grid-cols-2 md:space-y-0 md:gap-7.5 md:place-content-center 2xl:grid-cols-4">
+                <NuxtLink v-for="item in typeBuyOffers" :key="item.title"
+                  :to="`/special-offers/${item.id}`">
                   <div class="w-full max-w-[420px] mx-auto">
                     <div class="mx-auto h-full bg-background">
-                      <img
-                        :src="item.thumbnail"
-                        class="h-[190px] w-full object-cover"
-                        loading="lazy"
-                      />
+                      <img :src="item.default_image" class="h-[190px] w-full object-cover" loading="lazy" />
 
                       <div class="p-4">
                         <div class="text-left h-[86px]">
@@ -70,40 +78,27 @@ definePageMeta({
                             {{ item.title }}
                           </h2>
                           <p class="mt-1 text-sm text-primary">
-                            {{ item.description }}
+                            {{ item.subtitle }}
                           </p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </NuxtLink>
-              </div>
+              </TransitionGroup>
             </div>
           </template>
           <template #2>
             <div
-              class="space-y-7.5 pt-10 pb-11 md:grid md:grid-cols-2 md:space-y-0 md:gap-7.5 md:place-content-center 2xl:grid-cols-4"
-            >
-              <NuxtLink
-                to="/special-offers/offer:months-or-mileage-whichever-comes-first-initial-payment-25"
-              >
+              class="space-y-7.5 pt-10 pb-11 md:grid md:grid-cols-2 md:space-y-0 md:gap-7.5 md:place-content-center 2xl:grid-cols-4">
+              <NuxtLink v-for="item in pageData?.offers.filter((offer) => offer.type == 'service')" :key="item.title"
+                :to="`/special-offers/${item.id}`">
                 <div class="w-full max-w-[420px] mx-auto">
                   <div class="mx-auto h-full bg-background">
-                    <img
-                      :src="
-                        src('b91b27cd-b3b8-4dd9-84df-622c45ed82b0', {
-                          preview: '313x190',
-                        })
-                      "
-                      class="h-[190px] w-full object-cover"
-                      loading="lazy"
-                    />
+                    <img :src="item.default_image" class="h-[190px] w-full object-cover" loading="lazy" />
 
                     <div class="2xl:p-7.5 p-4">
-                      <p class="font-semibold">
-                        Количество месяцев или пробег — в зависимости от того,
-                        что наступит раньше Первоначальный взнос от 25%
-                      </p>
+                      <p class="font-semibold">{{ item.title }}</p>
                     </div>
                   </div>
                 </div>
@@ -115,3 +110,21 @@ definePageMeta({
     </div>
   </UISafeAreaView>
 </template>
+
+
+<style>
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+}
+
+.list-leave-active {
+  position: absolute;
+}
+</style>

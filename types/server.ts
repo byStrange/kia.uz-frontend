@@ -40,5 +40,6 @@ export interface SpecialOffer extends CommonMediaModel {
   content: HtmlText
   type: 'buy' | 'service'
   subtitle: string
-
+  referenced_models: { id: string, name: string, main_image: AbsoluteUrl }[]
 }
+

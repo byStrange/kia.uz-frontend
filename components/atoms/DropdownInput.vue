@@ -84,16 +84,8 @@ withDefaults(
 
 <template>
   <FloatLabel variant="in" :class="'theme-' + theme">
-    <Select
-      v-model="selectedOption"
-      unstyled
-      :options="availableOptions"
-      :option-label="optionLabel"
-      :option-value="optionValue"
-      :input-id="inputId"
-      :name="name ? name : inputId"
-      class="w-full"
-      :pt="{
+    <Select v-model="selectedOption" unstyled :options="availableOptions" :option-label="optionLabel"
+      :option-value="optionValue" :input-id="inputId" :name="name ? name : inputId" class="w-full" :pt="{
         list: '!p-0',
         optionLabel: 'w-[240px] text-balance md:w-auto block',
         dropdown: (props) => {
@@ -140,8 +132,7 @@ withDefaults(
             dropdown.variants.size[size].overlay,
           ],
         },
-      }"
-    />
+      }" />
     <label :for="inputId">{{ placeholder }}</label>
   </FloatLabel>
 </template>
