@@ -37,23 +37,26 @@ defineProps<{ offers: IndexPageSpecialOffers[] }>()
       <template #1>
         <ElementSlideView :data="offers.filter((offer) => offer.type == 'buy')">
           <template #slide="{ item }">
-            <div :style="{ '--padding': `0 ${bounding.x.value}px` }"
-              class="h-[408px] p-[--padding] md:w-[310px] md:px-0">
-              <div class="mx-auto h-full max-w-[310px] bg-background">
-                <img :src="item.default_image" class="h-[222px] w-full object-cover" loading="lazy" />
+            <NuxtLinkLocale :to="`/special-offers/${item.id}`">
+              <div
+:style="{ '--padding': `0 ${bounding.x.value}px` }"
+                class="h-[408px] p-[--padding] md:w-[310px] md:px-0">
+                <div class="mx-auto h-full max-w-[310px] bg-background">
+                  <img :src="item.default_image" class="h-[222px] w-full object-cover" loading="lazy" />
 
-                <div class="p-4">
-                  <div class="text-left">
-                    <h2 class="text-sm font-semibold">
-                      {{ item.title }}
-                    </h2>
-                    <p class="mt-1 text-sm text-primary">
-                      {{ item.subtitle }}
-                    </p>
+                  <div class="p-4">
+                    <div class="text-left">
+                      <h2 class="text-sm font-semibold">
+                        {{ item.title }}
+                      </h2>
+                      <p class="mt-1 text-sm text-primary">
+                        {{ item.subtitle }}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </NuxtLinkLocale>
           </template>
         </ElementSlideView>
       </template>
@@ -61,7 +64,8 @@ defineProps<{ offers: IndexPageSpecialOffers[] }>()
       <template #2>
         <ElementSlideView :data="offers.filter((offer) => offer.type == 'service')">
           <template #slide="{ item }">
-            <div :style="{ '--padding': `0 ${bounding.x.value}px` }"
+            <div
+:style="{ '--padding': `0 ${bounding.x.value}px` }"
               class="h-[408px] p-[--padding] md:w-[310px] md:px-0">
               <div class="mx-auto h-full max-w-[310px] bg-background">
                 <img :src="item.default_image" class="h-[222px] w-full object-cover" loading="lazy" />
@@ -82,7 +86,8 @@ defineProps<{ offers: IndexPageSpecialOffers[] }>()
         </ElementSlideView>
       </template>
       <template #default>
-        <NuxtLink to="/special-offers"
+        <NuxtLink
+to="/special-offers"
           class="container mt-4 flex items-center gap-2.5 text-primary md:absolute md:right-[--right] md:top-0 md:mt-0 md:w-auto md:px-0"
           :style="{ '--right': bounding.x.value + 'px' }">
           <UIServiceRegistrationIcon class="md:hidden" />

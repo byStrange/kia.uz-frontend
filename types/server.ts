@@ -33,3 +33,12 @@ export interface ResponsiveImageMixin {
 export type CommonMediaModel = UUIDMixin & TimeStampMixin & ResponsiveImageMixin
 
 export type CommonModel = UUIDMixin & TimeStampMixin
+
+export interface SpecialOffer extends CommonMediaModel {
+  seo: SEO
+  title: string
+  content: HtmlText
+  type: 'buy' | 'service'
+  subtitle: string
+
+}
