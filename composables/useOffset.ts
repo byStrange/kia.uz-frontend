@@ -2,6 +2,10 @@ export function useOffset(element: HTMLElement | undefined | null) {
   const offsetLeft = ref(0)
   const offsetTop = ref(0)
 
+  if (import.meta.server) {
+    return { offsetLeft, offsetTop }
+  }
+
   const updateOffsetLeft = () => {
     if (element) {
       offsetLeft.value = element.offsetLeft

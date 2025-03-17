@@ -1,14 +1,13 @@
 <script setup lang="ts">
-const { sections } = useStore()
-
-function is(type: 'triple' | 'double', section: any) {
+function is(type: ModelBlock['type'], section: ModelBlock) {
   return type === section.type
 }
+
+defineProps<{ blocks: ModelBlock[] }>()
 </script>
 <template>
-  <template v-for="section in sections">
-    <OrganismModelUIDoubleTab v-if="is('double', section) && section?.meta?.tabs" :section />
-    <OrganismModelUIDoubleSlides v-if="is('double', section) && section?.meta?.slides" :section />
-    <OrganismModelUITriple v-if="is('triple', section)" :section />
+  <template v-for="section in blocks">
+    <OrganismModelUIDoubleSlides v-if="is('doubleSlide', section)" :key="section.title" :section />
+    <OrganismModelUITriple v-if="is('triple', section)" :key="section.title" :section />
   </template>
 </template>

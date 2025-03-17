@@ -317,7 +317,7 @@ export const use360View = (
   })
 
   return {
-    ...toRefs(state),
+    ...state.value,
     currentSrc,
     preloadImages,
     loadedImages,

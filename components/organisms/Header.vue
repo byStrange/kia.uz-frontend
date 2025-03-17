@@ -50,7 +50,7 @@ watch(
       id="header"
       :key="headerService.isHeaderFixed + ''"
       :data-isHover="headerService.isHover"
-      class="bg-semantic-header-bg absolute top-0 z-40 w-full border-b border-b-white border-opacity-20 transition-all duration-300"
+      class="bg-semantic-header-bg absolute top-0 z-40 w-full border-b border-b-white border-opacity-20 transition-all duration-300 backdrop-blur-sm"
       :class="{
         hover:
           headerService.isHover ||

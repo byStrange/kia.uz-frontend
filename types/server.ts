@@ -39,7 +39,31 @@ export interface SpecialOffer extends CommonMediaModel {
   title: string
   content: HtmlText
   type: 'buy' | 'service'
+  slug: string
   subtitle: string
   referenced_models: { id: string, name: string, main_image: AbsoluteUrl }[]
 }
 
+export interface ModelBlockSlide extends CommonMediaModel {
+  title: string
+}
+
+export interface ModelBlock extends CommonMediaModel {
+  title: string
+  description: string
+  label: string
+  type: "heroIcon" | "doubleSlide" | "triple" | "footerContent"
+  footer_background_image: string | null
+  direction: "left" | "right"
+  subtitle: string | null
+  slides: ModelBlockSlide[]
+}
+
+export interface News extends CommonMediaModel {
+  seo: SEO,
+  title: string
+  content: HtmlText
+  type: 'news' | 'review'
+  subtitle: string
+  video_url: string
+}

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { IndexPageSpecialOffers } from '~/server/api/indexPage.get';
-
 const { bounding } = useContainer()
 
 const md = useCssVar('--screen-md')
@@ -23,7 +21,7 @@ watch(bounding.x, () => {
 
 const specialsSwiperBreakpoints = ref({})
 
-defineProps<{ offers: IndexPageSpecialOffers[] }>()
+defineProps<{ offers: SpecialOffer[] }>()
 </script>
 <template>
   <MoleculeSection :section-title="'Special Offers'">
@@ -37,12 +35,12 @@ defineProps<{ offers: IndexPageSpecialOffers[] }>()
       <template #1>
         <ElementSlideView :data="offers.filter((offer) => offer.type == 'buy')">
           <template #slide="{ item }">
-            <NuxtLinkLocale :to="`/special-offers/${item.id}`">
+            <NuxtLinkLocale :to="`/special-offers/${item.slug}`">
               <div
 :style="{ '--padding': `0 ${bounding.x.value}px` }"
                 class="h-[408px] p-[--padding] md:w-[310px] md:px-0">
                 <div class="mx-auto h-full max-w-[310px] bg-background">
-                  <img :src="item.default_image" class="h-[222px] w-full object-cover" loading="lazy" />
+                  <img :src="item.desktop_image" class="h-[222px] w-full object-cover" loading="lazy" />
 
                   <div class="p-4">
                     <div class="text-left">

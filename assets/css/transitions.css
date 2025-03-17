@@ -121,6 +121,32 @@
 }
 
 
+/**
+* Used in:
+* ThreeSixty
+* */
+.blur-fade-enter-active,
+.blur-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.blur-fade-enter-from {
+  opacity: 0;
+  filter: blur(12px);
+}
+
+.blur-fade-leave-to {
+  opacity: 0;
+  filter: blur(12px);
+}
+
+.blur-fade-enter-to,
+.blur-fade-leave-from {
+  opacity: 1;
+  filter: blur(0);
+}
+
+
 .layout-enter-active,
 .layout-leave-active,
 .page-enter-active,
@@ -131,5 +157,4 @@
 .layout-enter,
 .layout-leave-to,
 .page-enter,
-.page-leave-to {
-}
+.page-leave-to {}

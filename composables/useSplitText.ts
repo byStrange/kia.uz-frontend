@@ -1,10 +1,8 @@
 function _replace(el: HTMLElement, tg: string) {
   if (!el.textContent) return;
   el.innerHTML = el.textContent.replace(/\p{L}/gmu, `<${tg}>$&</${tg}>`);
-  console.log(el.textContent)
-  console.log(el.innerHTML)
-  var bugs = el.querySelectorAll(tg);
-  for (var bad of bugs) {
+  const bugs = el.querySelectorAll(tg);
+  for (const bad of bugs) {
     if (!bad.textContent) bad.innerHTML = ("&nbsp");
   }
 };

@@ -11,7 +11,13 @@ export const useHTMLRenderer = (htmlString: string) => {
     html: string;
   };
 
-  type Block = TableBlock | HtmlBlock;
+  type AnchorBlock = {
+    type: 'link';
+    link: string | null;
+    text: string | null;
+  }
+
+  type Block = TableBlock | HtmlBlock | AnchorBlock;
 
   const parser = new DOMParser();
   const blocks: Block[] = []
@@ -21,7 +27,15 @@ export const useHTMLRenderer = (htmlString: string) => {
     if (el.localName == 'table') blocks.push({
       type: 'table',
       options: useTableRenderer(el.outerHTML)
-    }); else {
+    });
+    else if (el.localName == 'a') {
+      blocks.push({
+        type: 'link',
+        link: el.getAttribute('href'),
+        text: el.textContent
+      })
+    }
+    else {
       blocks.push({
         type: 'html',
         html: el.outerHTML

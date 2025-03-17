@@ -67,10 +67,10 @@ definePageMeta({
               <TransitionGroup tag="div" name="list"
                 class="space-y-7.5 pt-10 pb-11 md:grid md:grid-cols-2 md:space-y-0 md:gap-7.5 md:place-content-center 2xl:grid-cols-4">
                 <NuxtLink v-for="item in typeBuyOffers" :key="item.title"
-                  :to="`/special-offers/${item.id}`">
+                  :to="`/special-offers/${item.slug}`">
                   <div class="w-full max-w-[420px] mx-auto">
                     <div class="mx-auto h-full bg-background">
-                      <img :src="item.default_image" class="h-[190px] w-full object-cover" loading="lazy" />
+                      <img :src="item.desktop_image" class="h-[190px] w-full object-cover" loading="lazy" />
 
                       <div class="p-4">
                         <div class="text-left h-[86px]">
@@ -92,10 +92,10 @@ definePageMeta({
             <div
               class="space-y-7.5 pt-10 pb-11 md:grid md:grid-cols-2 md:space-y-0 md:gap-7.5 md:place-content-center 2xl:grid-cols-4">
               <NuxtLink v-for="item in pageData?.offers.filter((offer) => offer.type == 'service')" :key="item.title"
-                :to="`/special-offers/${item.id}`">
+                :to="`/special-offers/${item.slug}`">
                 <div class="w-full max-w-[420px] mx-auto">
                   <div class="mx-auto h-full bg-background">
-                    <img :src="item.default_image" class="h-[190px] w-full object-cover" loading="lazy" />
+                    <img :src="item.desktop_image" class="h-[190px] w-full object-cover" loading="lazy" />
 
                     <div class="2xl:p-7.5 p-4">
                       <p class="font-semibold">{{ item.title }}</p>

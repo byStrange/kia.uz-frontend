@@ -1,7 +1,8 @@
 <script setup lang="ts">
-defineProps<{ section: any }>()
+defineProps<{ section: ModelBlock }>()
 
 const { gsap } = useGsap()
+const { safe } = useSafeAccessMedia()
 
 const sectionRef = useTemplateRef('section')
 
@@ -56,9 +57,10 @@ const pageAnimations = {
 onMounted(() => {
   pageAnimations.default()
 })
+
 </script>
 <template>
-  <UIStackAndSplitLayout :title="section.title" :subtitle="section.subtitle" ref="section">
+  <UIStackAndSplitLayout ref="section" :title="section.title" :subtitle="section.subtitle || ''">
     <template #left="{ sectionTitle, sectionTitleClass, subtitle, subtitleClass }">
       <div>
         <p v-if="section.subtitle" :class="subtitleClass">{{ subtitle }}</p>
@@ -80,10 +82,10 @@ onMounted(() => {
       </p>
     </template>
     <template #bottom>
-      <picture v-if="section.images">
-        <source v-if="section.images.lg" :srcset="section.images.lg?.src" media="(min-width: 1440px)" />
-        <source v-if="section.images.md" :srcset="section.images.md?.src" media="(min-width: 768px)" />
-        <img :src="section.images.default?.src" class="w-full" />
+      <picture v-if="section.default_image">
+        <source v-if="section.desktop_image" :srcset="safe(section.desktop_image)" media="(min-width: 1440px)" />
+        <source v-if="section.tablet_image" :srcset="safe(section.tablet_image)" media="(min-width: 768px)" />
+        <img :src="safe(section.default_image)" class="w-full" />
       </picture>
     </template>
   </UIStackAndSplitLayout>

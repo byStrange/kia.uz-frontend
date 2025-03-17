@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { ModelColor } from '~/server/api/model/carnival.get';
+
 const modelType = ref('exterior')
-const selectedColor = ref()
+const selectedColor = ref<ModelColor | null>(null)
 
 const availableColors = ref([
   '#F3F3F3',
@@ -84,63 +86,89 @@ onMounted(() => {
 
   })
 })
+
+defineProps<{ modelName?: string, colors: ModelColor[] }>()
 </script>
 <template>
-  <div data-label="360 view" class="container py-10 md:py-15 2xl:py-20 organism-three-sixty">
-    <div>
-      <p class="text-sm text-primary font-semibold three-sixty_tagline">Просмотр 360°</p>
-      <h2 class="mt-2.5 text-4xl font-semibold text-primary 2xl:text-5xl three-sixty_title">
-        Carnival
-      </h2>
+  <div data-label="360 view" class="container py-10 md:py-15 2xl:py-20 organism-three-sixty relative">
+    <div class="relative z-10">
+      <p
+class="text-sm text-primary font-semibold three-sixty_tagline"
+        :class="{ 'text-white': modelType === 'interior' }">Просмотр 360°</p>
+      <h2
+class="mt-2.5 text-4xl font-semibold text-primary 2xl:text-5xl three-sixty_title"
+        :class="{ 'text-white': modelType === 'interior' }">{{ modelName }}</h2>
     </div>
-    <div ref="threeSixtyViewRef">
-      <img :draggable="false" :src="data.currentSrc.value"
+
+    <div v-if="modelType === 'interior'" class="absolute w-full left-0 top-0 h-full">
+
+      <iframe
+src="http://localhost:8000/pano/?pano_xml=http://localhost:8000/media/seltos/1K/pano.xml" width="100%"
+        height="880px" frameborder="0"></iframe>
+    </div>
+
+    <div v-show="modelType == 'exterior'" ref="threeSixtyViewRef">
+      <img
+:draggable="false" :src="data.currentSrc.value"
         class="w-full my-4 2xl:mt-8 md:mt-6 2xl:mb-0 2xl:w-auto 2xl:mx-auto three-sixty_image" />
     </div>
+
+    <div v-show="modelType === 'interior'" class="h-[500px]">
+    </div>
+
     <div class="md:mt-6 2xl:mt-12 relative">
-      <div
-        class="flex flex-col items-center gap-2.5 2xl:absolute 2xl:-top-10 2xl:left-1/2 2xl:-translate-x-1/2 2xl:max-w-6h mx-auto 2xl:px-20 three-sixty_bottom-row_center">
-        <UIIcon360 />
-        <p class="text-xs+ text-disabled md:text-center">
-          Изображение может не соответствовать выбранной комплектации. <br />
-          Цвет автомобиля может отличаться от представленного на данном сайте.
-        </p>
-      </div>
+
+      <Transition name="blur-fade">
+        <div
+v-if="modelType == 'exterior'"
+          class="flex flex-col items-center gap-2.5 2xl:absolute 2xl:-top-10 2xl:left-1/2 2xl:-translate-x-1/2 2xl:max-w-6h mx-auto 2xl:px-20 three-sixty_bottom-row_center">
+          <UIIcon360 />
+          <p class="text-xs+ text-disabled md:text-center">
+            Изображение может не соответствовать выбранной комплектации. <br />
+            Цвет автомобиля может отличаться от представленного на данном сайте.
+          </p>
+        </div>
+      </Transition>
       <div class="mt-6 md:mt-10 md:flex justify-between items-end">
         <div class="three-sixty_bottom-row_left">
           <div class="flex gap-5 text-base+">
             <div class="flex items-center gap-2.5">
-              <PrimeRadioButton v-model="modelType" value="exterior" input-id="exterior" name="type" :pt="{
+              <PrimeRadioButton
+v-model="modelType" value="exterior" input-id="exterior" name="type" :pt="{
                 icon: 'hidden',
                 box: (state) => {
                   return state.context.checked ? '!border-[6px] ' : '0'
                 },
               }" />
-              <label for="exterior">Экстерьер</label>
+              <label for="exterior" :class="{ 'text-white': modelType === 'interior' }">Экстерьер</label>
             </div>
             <div class="flex items-center gap-2.5">
-              <PrimeRadioButton v-model="modelType" value="interior" input-id="interior" name="type" :pt="{
+              <PrimeRadioButton
+v-model="modelType" value="interior" input-id="interior" name="type" :pt="{
                 icon: 'hidden',
                 box: (state) => {
                   return state.context.checked ? '!border-[6px] ' : '0'
                 },
               }" />
-              <label for="interior">Интерьер</label>
+              <label for="interior" :class="{ 'text-white': modelType === 'interior' }">Интерьер</label>
             </div>
           </div>
-          <div class="mt-4">
-            <div class="flex gap-1.5 text-base">
-              <span class="text-disabled">Цвет:</span>
-              <b class="text-primary">Snow White Pearl (SWP)</b>
-            </div>
-            <div class="mt-4 flex gap-2.5">
-              <div v-for="color in availableColors" :key="color"
-                class="color flex size-[35px] items-center justify-center rounded-full border border-disabled"
-                :style="{ backgroundColor: color }" @click="selectedColor = color">
-                <UICheckIcon v-if="color === selectedColor" class="text-white" />
+          <Transition name="blur-fade">
+            <div v-if="modelType === 'exterior'" class="mt-4">
+              <div v-if="selectedColor" class="flex gap-1.5 text-base">
+                <span class="text-disabled">Цвет:</span>
+                <b class="text-primary">{{ selectedColor.name }}</b>
+              </div>
+              <div class="mt-4 flex gap-2.5">
+                <div
+v-for="color in colors" :key="color.id"
+                  class="color flex size-[35px] items-center justify-center rounded-full border border-disabled"
+                  :style="{ backgroundColor: color.code }" @click="selectedColor = color">
+                  <UICheckIcon v-if="color.id === selectedColor?.id" class="text-white" />
+                </div>
               </div>
             </div>
-          </div>
+          </Transition>
         </div>
 
         <div class="mt-7.5 md:mt-0">

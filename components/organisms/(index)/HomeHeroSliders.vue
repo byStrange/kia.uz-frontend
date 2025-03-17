@@ -75,7 +75,7 @@ data-label="Hero shadow bottom" aria-hidden="true"
                   </div>
                   <AtomButton
 label="Подробнее" color="secondary" mode="full" class="mt-6 text-base"
-                    @click="$router.push(slide.target_url)" />
+                    @click="$router.push(localePath(slide.target_url))" />
                 </div>
               </div>
             </div>

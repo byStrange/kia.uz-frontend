@@ -33,7 +33,7 @@ onMounted(() => {
 
         <source :srcset="pageData?.desktop_image" media="(min-width: 1440px)" />
         <source :srcset="pageData?.tablet_image" media="(min-width: 768px)" />
-        <img class="w-full absolute top-0 left-0 h-2/3 object-cover md:h-auto" :src="pageData?.default_image" />
+        <img class="w-full absolute top-0 left-0 h-2/3 object-cover md:h-full" :src="pageData?.default_image" />
       </picture>
       <div
 class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2xl:block z-20"
@@ -53,9 +53,14 @@ class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2x
         <AtomButton label="Заказать обратный звонок" color="secondary" mode="full" class="mt-4 2xl:mt-10" />
       </div>
     </div>
-    <UIContainer class="prose pt-10 2xl:pt-20 pb-10">
+    <UIContainer class="prose pt-10 2xl:pt-20 pb-10 html-rendered-content">
       <template v-for="(block, index) in blocks">
         <div v-if="block.type == 'html'" :key="index + block.type" class="!max-w-[1060px] mx-auto" v-html="block.html">
+        </div>
+        <div v-if="block.type == 'link'" :key="index + block.type" class="inline-block">
+          <a :href="block.link">
+            <AtomButton :label="block.text" />
+          </a>
         </div>
         <div v-else-if="block.type == 'table'" :key="index">
           <DataTable

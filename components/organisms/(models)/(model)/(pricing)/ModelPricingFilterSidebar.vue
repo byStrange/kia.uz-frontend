@@ -1,46 +1,112 @@
 <script setup lang="ts">
+import type { ModelLandingPage } from '~/server/api/model/carnival.get';
+import type { ModelPricingAndDetailsPage } from '~/server/api/model/features.get';
+
 const { bounding } = useContainer()
+const modelData = useSharedPageData<ModelLandingPage>()
+
+const props = defineProps<{
+  pageData: ModelPricingAndDetailsPage | null,
+  showOnlyDifferingConfigurations: boolean
+}>()
+
+const emit = defineEmits(['update:filteredData'])
+
+const selectedEngines = ref<string[]>([])
+const selectedConfigurations = ref<uuid[]>([])
+const selectedFeatures = ref<uuid[]>([])
+
+// Combined watcher that handles all filters together
+watch([selectedEngines, selectedConfigurations, selectedFeatures], () => {
+  if (!props.pageData) return
+
+  let filteredConfigurations = [...props.pageData.filtered_configurations]
+  const groupedFeatures = { ...props.pageData.grouped_features }
+
+  // Apply engine filter if any engines are selected
+  if (selectedEngines.value.length > 0) {
+    filteredConfigurations = filteredConfigurations.filter(config =>
+      selectedEngines.value.includes(config.engine || '')
+    )
+  }
+
+  // Apply configuration filter if any configurations are selected
+  if (selectedConfigurations.value.length > 0) {
+    filteredConfigurations = filteredConfigurations.filter(config =>
+      selectedConfigurations.value.includes(config.id || '')
+    )
+  }
+
+  if (selectedFeatures.value.length > 0) {
+    filteredConfigurations = filteredConfigurations.filter((config) => {
+      // Get all feature IDs from this configuration
+      const configFeatureIds = config.feature_groups
+        .flatMap(group => group.features) // Flatten all features from all groups
+        .map(feature => feature.id); // Extract just the IDs
+
+      // Check if ANY of our selected features exist in this config's features
+      return selectedFeatures.value.every(selectedId =>
+        configFeatureIds.includes(selectedId)
+      );
+    });
+  }
+
+  if (showOnlyDifferingConfigurations.value && filteredConfigurations.length > 1) {
+    // First, collect all feature IDs and their occurrence counts
+    const featureOccurrences = new Map();
+
+    filteredConfigurations.forEach(config => {
+      config.feature_groups.forEach(group => {
+        group.features.forEach(feature => {
+          const count = featureOccurrences.get(feature.id) || 0;
+          featureOccurrences.set(feature.id, count + 1);
+        });
+      });
+    });
+
+    // Find features that don't appear in all configurations
+    const differingFeatureIds = Array.from(featureOccurrences.entries())
+      .filter(([_, count]) => count < filteredConfigurations.length)
+      .map(([id, _]) => id);
+
+    // Keep only configurations that have at least one differing feature
+    filteredConfigurations = filteredConfigurations.filter(config => {
+      const configFeatureIds = config.feature_groups
+        .flatMap(group => group.features)
+        .map(feature => feature.id);
+
+      return configFeatureIds.some(id => differingFeatureIds.includes(id));
+    });
+  }
+
+  // Emit the filtered data to the parent
+  emit('update:filteredData', filteredConfigurations)
+})
+
 </script>
 <template>
   <div
-    class="col-span-3 bg-background border-r border-r-protection pl-[--padding-x] pb-15"
-    :style="{ '--padding-x': bounding.x.value + 'px' }"
-  >
+class="col-span-3 bg-background border-r border-r-protection pl-[--padding-x] pb-15"
+    :style="{ '--padding-x': bounding.x.value + 'px' }">
     <div class="py-5">
       <h3 class="text-base font-semibold">Двигатель</h3>
       <ul class="space-y-2.5 mt-4">
-        <li
-          v-for="item in [
-            '1.5 GDI / 170 л.с., Бензин',
-            '2.0 GDI / 240 л.с., Бензин',
-          ]"
-          :key="item"
-          class="flex gap-2"
-        >
-          <PrimeCheckbox />
-          <label class="text-base">{{ item }}</label>
+        <li v-for="engine in modelData?.model.engines" :key="engine.id" class="flex gap-2">
+          <PrimeCheckbox
+v-model="selectedEngines" :input-id="'engineInput' + engine.id"
+            :value="engine.name + ' / ' + engine.desc" />
+          <label :for="'engineInput' + engine.id" class="text-base">{{ engine.name + " / " + engine.desc }}</label>
         </li>
       </ul>
     </div>
     <div class="py-5">
       <h3 class="text-base font-semibold">Комплектация</h3>
       <ul class="space-y-2.5 mt-4">
-        <li
-          v-for="item in [
-            'Comfort',
-            'Comfort+',
-            'Prestige',
-            'Style Light T',
-            'Style Light',
-            'Style T',
-            'Style',
-            'Premium',
-          ]"
-          :key="item"
-          class="flex gap-2"
-        >
-          <PrimeCheckbox />
-          <label class="text-base">{{ item }}</label>
+        <li v-for="configuration in modelData?.configurations" :key="configuration.id" class="flex gap-2">
+          <PrimeCheckbox
+v-model="selectedConfigurations" :input-id="'configurationInput' + configuration.id"
+            :value="configuration.id" />
+          <label :for="'configurationInput' + configuration.id" class="text-base">{{ configuration.name }}</label>
         </li>
       </ul>
     </div>
@@ -56,30 +122,22 @@ const { bounding } = useContainer()
           </template>
 
           <PrimeAccordionPanel
-            v-for="tab in [
-              'Пакет «Тёплые опции»',
-              'Экстерьер',
-              'Интерьер',
-              'Безопасность',
-              'Комфорт',
-              'Мультимедиа',
-              'Современные системы помощи водителю',
-            ]"
-            :key="tab"
-            :value="tab"
-            unstyled
-          >
+            v-for="group in Object.entries(pageData?.grouped_features || {}).map(([groupName, features]) => ({ label: groupName, content: features })) || []"
+            :key="group.label" :value="group.label" unstyled>
             <PrimeAccordionHeader
-              unstyled
-              class="py-5 w-full justify-between items-center flex text-left text-base font-semibold"
-              >{{ tab }}</PrimeAccordionHeader
-            >
+unstyled
+              class="py-5 w-full justify-between items-center flex text-left text-base font-semibold">{{ group.label }}
+            </PrimeAccordionHeader>
             <PrimeAccordionContent unstyled>
-              <div
-                class="w-full h-1h bg-protection flex justify-center items-center"
-              >
-                Content
-              </div>
+              <ul class="space-y-2.5 mt-4">
+                <li v-for="feature in group.content" :key="feature.id" class="flex gap-2">
+                  <PrimeCheckbox
+v-model="selectedFeatures" :input-id="'featureInput' + feature.id"
+                    :value="feature.id" />
+                  <label :for="'featureInput' + feature.id" class="text-base">{{ feature.name
+                    }}</label>
+                </li>
+              </ul>
             </PrimeAccordionContent>
           </PrimeAccordionPanel>
         </PrimeAccordion>

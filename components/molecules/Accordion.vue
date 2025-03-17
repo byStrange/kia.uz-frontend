@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 interface AccordionClasses {
   root: string
   rootExpanded: string
@@ -20,7 +20,7 @@ interface AccordionClasses {
 
 interface AccordionItem {
   label: string | any
-  content: string | any | any[]
+  content: T
   icon?: Component | null
 }
 
