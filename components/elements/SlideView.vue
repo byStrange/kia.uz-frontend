@@ -88,14 +88,14 @@ watch(swiper, () => {
   }
 })
 
-const { gsap } = useGsap()
+// const { gsap } = useGsap()
 const slideView = useTemplateRef('slideView')
 
 onMounted(() => {
   nextTick(() => {
     if (!slideView.value) return;
-
-    gsap.fromTo(slideView.value.querySelectorAll('.swiper-slide > div'), {
+    /*
+gsap.fromTo(slideView.value.querySelectorAll('.swiper-slide > div'), {
       opacity: 0,
       yPercent: -15,
     }, {
@@ -109,7 +109,10 @@ onMounted(() => {
       }
     })
 
-  })
+
+    */
+
+      })
 })
 
 defineExpose({

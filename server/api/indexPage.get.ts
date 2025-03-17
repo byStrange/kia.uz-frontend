@@ -17,14 +17,7 @@ export type IndexPageModel = {
   bg: AbsoluteUrl
 }
 
-export interface IndexPageNews extends CommonMediaModel {
-  seo: SEO,
-  title: string
-  content: HtmlText
-  type: 'news' | 'review'
-  subtitle: string
-  video_url: string
-}
+
 
 type IndexPageSpecialOffer = SpecialOffer;
 
@@ -41,13 +34,14 @@ export default defineEventHandler(async (event) => {
   const sliders = await useFetchApi<IndexPageSlider[]>('/sliders', locale)
   const seo = await useFetchApi<SEO>(`/pages/~index`, locale)
   const specialOffers = await useFetchApi<IndexPageSpecialOffer[]>('/special-offers', locale)
-  const news = await useFetchApi<IndexPageNews[]>('/news', locale)
+  const news = await useFetchApi<News[]>('/news', locale)
+  const models = await useFetchApi<Model[]>('/models', locale)
 
   const pageData: IndexPage = {
     sliders,
     specialOffers,
     news,
-    models: [],
+    models,
     seo: seo['seo'],
   }
 

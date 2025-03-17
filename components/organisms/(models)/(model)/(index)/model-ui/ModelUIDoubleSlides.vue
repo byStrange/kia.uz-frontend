@@ -76,7 +76,7 @@ const pageAnimations = {
 }
 
 onMounted(() => {
-  pageAnimations.default()
+  // pageAnimations.default()
 })
 
 const { stop } = useIntersectionObserver(sectionRef, ([entry], _) => {

@@ -5,8 +5,15 @@ import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
 const { bounding } = useContainer()
 const { gsap } = useGsap()
 const { safe } = useSafeAccessMedia()
+const route = useRoute()
 
 const pageData = useSharedPageData<ModelLandingPage>()
+
+if (!pageData.value) {
+  const data = await useFetch(`/api/models/${route.params.id}`)
+
+  pageData.value = data.data;
+}
 
 const footerContent = computed(() => {
   return pageData.value?.model.blocks.find((block) => block.type === 'footerContent')
@@ -39,7 +46,7 @@ const pageAnimations = {
 
 onMounted(() => {
   nextTick(() => {
-    pageAnimations.default()
+    // pageAnimations.default()
   })
 })
 
