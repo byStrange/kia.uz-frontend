@@ -70,15 +70,17 @@ export default defineNuxtConfig({
     locales: [
       {
         code: 'ru',
+        file: 'ru.ts',
         language: 'ru-RU',
       },
       {
         code: 'uz',
+        file: 'uz.ts',
         language: 'uz-UZ',
       },
     ],
+    lazy: true,
     defaultLocale: 'uz',
-    vueI18n: '~/i18n.config.ts',
   },
 
   modules: [

@@ -5,6 +5,7 @@ import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
 const { bounding } = useContainer()
 const { gsap } = useGsap()
 const { safe } = useSafeAccessMedia()
+const { t } = useI18n()
 const route = useRoute()
 
 const pageData = useSharedPageData<ModelLandingPage>()
@@ -12,6 +13,7 @@ const pageData = useSharedPageData<ModelLandingPage>()
 if (!pageData.value) {
   const data = await useFetch(`/api/models/${route.params.id}`)
 
+  // @ts-expect-error
   pageData.value = data.data;
 }
 
@@ -55,7 +57,7 @@ onMounted(() => {
   <div>
     <OrganismModelHero />
 
-    <MoleculeSection section-title="Специальные предложения">
+    <MoleculeSection :section-title="t('index.special_offers')">
       <ElementSlideView
 :data="pageData?.specialOffers || []" :space-between="16"
         :slides-offset-before="bounding.x.value" :slides-offset-after="bounding.x.value" swiper-slide-class="!w-fit">

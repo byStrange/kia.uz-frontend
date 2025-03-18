@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { bounding } = useContainer()
+const { t } = useI18n()
 
 const md = useCssVar('--screen-md')
 const lg = useCssVar('--screen-2xl')
@@ -24,7 +25,7 @@ const specialsSwiperBreakpoints = ref({})
 defineProps<{ offers: SpecialOffer[] }>()
 </script>
 <template>
-  <MoleculeSection :section-title="'Special Offers'">
+  <MoleculeSection :section-title="t('index.special_offers')">
     <template #title="{ sectionTitle, sectionTitleClass }">
       <h1 class="container" :class="sectionTitleClass">
         {{ sectionTitle }}
@@ -90,7 +91,7 @@ to="/special-offers"
           :style="{ '--right': bounding.x.value + 'px' }">
           <UIServiceRegistrationIcon class="md:hidden" />
           <div class="flex">
-            <p class="text-base font-semibold">Все спецпредложения</p>
+            <p class="text-base font-semibold">{{ t('index.all_offers') }}</p>
             <UITickToRight />
           </div>
         </NuxtLink>

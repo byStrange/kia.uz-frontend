@@ -6,6 +6,8 @@ const { safe } = useSafeAccessMedia()
 
 const sectionRef = useTemplateRef('section')
 
+console.log('print SOMeting on SSR PLS')
+
 const pageAnimations = {
   default() {
     if (!sectionRef.value) return;
@@ -73,18 +75,21 @@ onMounted(() => {
       </div>
     </template>
     <template #right>
-      <p class="text-sm md:text-base+ text-primary organism-modelui-triple_desc">
-        Откройте мир инноваций вместе с Kia Carnival — бесспорным лидером в
-        своем классе. Новый дизайн добавляет семейному кроссвэну изысканность,
-        роскошный интерьер обеспечивает комфорт, отличная управляемость
-        гарантирует уверенность на любой дороге. Новый Kia Carnival наполнит
-        вашу повседневную жизнь новыми впечатлениями.
-      </p>
+      <p class="text-sm md:text-base+ text-primary organism-modelui-triple_desc">{{
+        section.description
+      }}</p>
     </template>
     <template #bottom>
       <picture v-if="section.default_image">
-        <source v-if="section.desktop_image" :srcset="safe(section.desktop_image)" media="(min-width: 1440px)" />
-        <source v-if="section.tablet_image" :srcset="safe(section.tablet_image)" media="(min-width: 768px)" />
+        <source v-if="section.desktop_image" :srcset="safe(section.desktop_image, 'avif')"
+          media="(min-width: 1440px)" />
+        <source v-if="section.desktop_image" :srcset="safe(section.desktop_image, 'webp')"
+          media="(min-width: 1440px)" />
+        <source v-if="section.tablet_image" :srcset="safe(section.tablet_image, 'avif')" media="(min-width: 768px)" />
+        <source v-if="section.tablet_image" :srcset="safe(section.tablet_image, 'webp')" media="(min-width: 768px)" />
+
+
+        <source v-if="section.default_image" :srcset="safe(section.tablet_image, 'webp')" media="(max-width: 768px)" />
         <img :src="safe(section.default_image)" class="w-full" />
       </picture>
     </template>

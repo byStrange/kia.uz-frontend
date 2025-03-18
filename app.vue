@@ -75,6 +75,5 @@ useHead({
 onMounted(() => {
   new Lenis({ autoRaf: true, overscroll: true })
   isLoading.value = false
-
 })
 </script>

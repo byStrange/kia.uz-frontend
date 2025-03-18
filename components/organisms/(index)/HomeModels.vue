@@ -3,6 +3,8 @@ import { Controller } from 'swiper/modules'
 import type { Swiper } from 'swiper/types'
 import type { Model } from '~/server/api/models/[id]/index.get';
 
+const { t } = useI18n()
+
 defineProps<{
   models: Model[]
 }>()
@@ -35,7 +37,7 @@ onMounted(() => {
 })
 </script>
 <template>
-  <MoleculeSection section-title="Модели Kia" class="bg-background">
+  <MoleculeSection :section-title="t('index.models_of_kia')" class="bg-background">
     <div class="2xl:container">
       <ClientOnly>
         <Swiper :initial-slide="6" :modules="[Controller]" :controller="{ control: modelsSwiper }"
@@ -100,7 +102,7 @@ onMounted(() => {
                     </p>
                   </div>
                 </div>
-                <NuxtLinkLocale :to="`/models/${model.slug}/`">
+                <NuxtLinkLocale :to="`/models/${model.slug}/`" :prefetch="false" no-client>
                   <AtomButton label="Подробнее о модели" color="primary" mode="full" class="mx-auto mt-4 md:mt-8" />
                 </NuxtLinkLocale>
               </div>

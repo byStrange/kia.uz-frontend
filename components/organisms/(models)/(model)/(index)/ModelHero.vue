@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
 
-const { safe } = useSafeAccessMedia()
+const { safe, quality, stripExt } = useSafeAccessMedia()
 const { offset } = useContainer()
 const { gsap } = useGsap()
 const { downloadFile } = useDownload()
@@ -9,15 +9,15 @@ const { downloadFile } = useDownload()
 const modelData = useSharedPageData<ModelLandingPage>()
 
 const pageData = computed(() => ({
-  priceList: safe(modelData.value?.model.price_list),
+  priceList: safe('/pdf-outputs/' + modelData.value?.model.price_list),
   title: modelData.value?.model.name,
   preTitle: modelData.value?.model.pre_title,
   postTitle: modelData.value?.model.post_title,
   blocks: modelData.value?.model.blocks.filter((block) => block.type === 'heroIcon'),
   images: {
-    defaultImage: safe(modelData.value?.model.default_image),
-    tabletImage: safe(modelData.value?.model.tablet_image),
-    desktopImage: safe(modelData.value?.model.desktop_image),
+    defaultImage: modelData.value?.model.default_image,
+    tabletImage: (modelData.value?.model.tablet_image),
+    desktopImage: (modelData.value?.model.desktop_image),
   }
 }))
 
@@ -100,19 +100,24 @@ label="Скачать прайс-лист" color="secondary" mode="full"
       </div>
 
       <picture
-class="h-full w-full" data-label="Main Hero image" :style="{
+class="h-full w-full bg-blue-400" data-label="Main Hero image" :style="{
         '--image-2xl': `url(${pageData.images.desktopImage})`,
         '--image-md': `url(${pageData.images.tabletImage})`,
-        '--image': `url(${pageData.images.defaultImage})`
+        '--image': `url(${stripExt(quality(pageData.images.defaultImage, 'mid'), 'avif')})`
       }">
+
+        <source :srcset="safe(pageData.images.desktopImage, 'avif')" media="(min-width: 1024px)" />
+        <source :srcset="safe(pageData.images.desktopImage, 'webp')" media="(min-width: 1024px)" />
         <source :srcset="pageData.images.desktopImage" media="(min-width: 1024px)" />
 
+        <source :srcset="safe(pageData.images.tabletImage, 'avif')" media="(min-width: 768px)" />
+        <source :srcset="safe(pageData.images.tabletImage, 'webp')" media="(min-width: 768px)" />
         <source :srcset="pageData.images.tabletImage" media="(min-width: 768px)" />
 
-        <!-- src('7697fb74-fadd-4192-8a5e-5f0491567ff6') -->
+
         <img
-:src="pageData.images.defaultImage"
-          class="w-full object-cover 2xl:h-full md:h-[73%] model-id_model-hero-img" />
+:src="safe(pageData.images.defaultImage, 'webp')"
+          class="w-full object-cover 2xl:h-full md:h-[73%] model-id_model-hero-img bg-[image:--image] bg-cover" />
       </picture>
 
       <div

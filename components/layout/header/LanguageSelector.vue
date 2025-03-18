@@ -66,12 +66,12 @@ onUnmounted(() => {
       >
         <ul>
           <li
-            v-for="ln in $i18n.availableLocales"
+            v-for="ln in $i18n.locales"
             :key="ln"
             class="cursor-pointer px-6 py-4 text-base hover:bg-gray-100"
-            @click="selectLocale(ln)"
+            @click="selectLocale(ln.code)"
           >
-            {{ ln.toUpperCase() }}
+            {{ ln.code.toUpperCase() }}
           </li>
         </ul>
       </div>

@@ -95,27 +95,20 @@ defineProps<{ section: ModelBlock }>()
     <template #left="{ sectionTitle, sectionTitleClass, subtitle, subtitleClass }">
       <div>
         <p v-if="subtitle" :class="subtitleClass" class="split-left__subtitle">{{ subtitle }}</p>
-        <h1
-:class="[
+        <h1 :class="[
           sectionTitleClass,
           'mt-2 2xl:mt-2.5',
         ]" class="!mb-0">
           {{ sectionTitle }}
         </h1>
-        <p
-:class="{
+        <p :class="{
         }" class="text-sm text-primary mt-4 2xl:mt-7.5 split-left__description">
-          Откройте мир инноваций вместе с Kia Carnival — бесспорным лидером в
-          своем классе. Новый дизайн добавляет семейному кроссвэну изысканность,
-          роскошный интерьер обеспечивает комфорт, отличная управляемость
-          гарантирует уверенность на любой дороге. Новый Kia Carnival наполнит
-          вашу повседневную жизнь новыми впечатлениями.
+          {{ section.description }}
         </p>
         <div v-if="section.slides.length" class="hidden 2xl:block border-t border-t-protection mt-7.5 pt-7.5">
           <div>
             <ul class="space-y-3.5 text-base ml-3.5 split-right__list">
-              <li
-v-for="(slide, _index) in section.slides" :key="slide.id" class="cursor-pointer" :class="{
+              <li v-for="(slide, _index) in section.slides" :key="slide.id" class="cursor-pointer" :class="{
                 'font-semibold list-disc': activeSlides[section.id]
                   ? _index === activeSlides[section.id]
                   : _index === 0,
@@ -135,12 +128,11 @@ v-for="(slide, _index) in section.slides" :key="slide.id" class="cursor-pointer"
       </div>
     </template>
     <template #right>
-      <ElementSlideView
-v-if="section.slides.length" ref="slidesRef" :data="section.slides"
+      <ElementSlideView v-if="section.slides.length" ref="slidesRef" :data="section.slides"
         class="2xl:pointer-events-none 2xl:max-w-[620px]" paginator-class="2xl:hidden mt-4" :space-between="0"
         :breakpoints-enabled="false" :navigation="false">
         <template #slide="{ item }">
-          <img class="max-h-[620px] md:w-[656px] md:h-[645px] object-cover w-full " :src="safe(item.default_image)" />
+          <img class="max-h-[620px] md:w-[656px] md:h-[645px] object-cover w-full " :src="safe(item.default_image, 'avif')" />
         </template>
       </ElementSlideView>
     </template>
