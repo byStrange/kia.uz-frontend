@@ -18,6 +18,7 @@ const description = 'Официальный сайт KIA в Узбекистан
 const url = config.public.siteUrl
 const themeColour = '#05141F'
 const i18nHead = useLocaleHead()
+// 2xl:inline-flex
 
 useHead({
   bodyAttrs: {
