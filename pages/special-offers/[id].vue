@@ -62,7 +62,7 @@ class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2x
             <AtomButton :label="block.text" />
           </a>
         </div>
-        <div v-else-if="block.type == 'table'" :key="index">
+        <div v-else-if="block.type == 'table'" :key="index" class="!max-w-[1060px] mx-auto">
           <DataTable
 :value="block.options.body" striped-rows
             :style="{ '--container-width': bounding.width.value + 'px' }">

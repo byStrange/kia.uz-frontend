@@ -45,10 +45,6 @@
     @apply bg-[image:--gradient] md:bg-[image:--gradient-md] 2xl:h-[329px] 2xl:bg-[image:--gradient-2xl];
   }
 
-  .html-rendered-content a:not([target="_blank"]) {
-    @apply inline-flex decoration-transparent items-center justify-center whitespace-nowrap outline-none font-semibold transition-colors bg-primary text-primary-white hover:bg-description active:bg-[#2D3A43] active:text-protection disabled:text-protection md:py-4.5 md:px-10 py-3 px-5 md:w-auto
-  }
-
   #header a,
   #header button {
     @apply text-white transition-colors;
