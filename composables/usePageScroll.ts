@@ -33,7 +33,6 @@ export function usePageScroll() {
     // Determine if the header should be fixed
     if (currentScrollY === 0) {
       if (!headerService.value.lockHover) {
-        console.log(headerService.value.lockHover)
         headerService.value.isHeaderFixed = false
       }
     } else if (scrollDirection.value === 'up' && speed > speedThreshold) {

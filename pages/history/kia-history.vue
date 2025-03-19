@@ -3,26 +3,25 @@ import StackAndSplitLayout from '~/components/layout/StackAndSplitLayout.vue';
 
 
 const { src } = useUploadcareSource()
-const { bounding } = useContainer()
 
 const mainBodyRef = useTemplateRef('mainBody')
 
 type StopPoints = string[]
 
 function getCoords(elem: HTMLElement) { // crossbrowser version
-  var box = elem.getBoundingClientRect();
+  const box = elem.getBoundingClientRect();
 
-  var body = document.body;
-  var docEl = document.documentElement;
+  const body = document.body;
+  const docEl = document.documentElement;
 
-  var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
-  var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+  const scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+  const scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
 
-  var clientTop = docEl.clientTop || body.clientTop || 0;
-  var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+  const clientTop = docEl.clientTop || body.clientTop || 0;
+  const clientLeft = docEl.clientLeft || body.clientLeft || 0;
 
-  var top = box.top + scrollTop - clientTop;
-  var left = box.left + scrollLeft - clientLeft;
+  const top = box.top + scrollTop - clientTop;
+  const left = box.left + scrollLeft - clientLeft;
 
   return { top: Math.round(top), left: Math.round(left) };
 }
@@ -34,7 +33,6 @@ const stops = computed<StopPoints>(() => {
 
   mainBodyRef.value.querySelectorAll('img').forEach((img: HTMLElement) => {
     const bounding = getCoords(img);
-    console.log(img)
     _stops.push((bounding.top - window.innerHeight) + offset + 'px')
   })
 
@@ -60,10 +58,6 @@ const extraLinksCard = [
     }),
   },
 ]
-
-onMounted(() => {
-  console.log(stops.value)
-})
 
 definePageMeta({
   lockHover: true
@@ -96,11 +90,12 @@ definePageMeta({
     </div>
 
 
-    <div class="py-12 md:py-15 2xl:py-1h" ref="mainBody">
+    <div ref="mainBody" class="py-12 md:py-15 2xl:py-1h">
       <div class="relative">
         <div class="center-line-path absolute left-1/2 top-0 w-1px h-full -translate-x-1/2 hidden 2xl:block">
-          <div class="stop absolute w-5 h-0.5 bg-forest-green top-[--position-y] -translate-x-1/2 z-[1]" :key="stop"
-            v-for="stop in stops" :style="{ '--position-y': stop }"></div>
+          <div v-for="stop in stops" :key="stop"
+            class="stop absolute w-5 h-0.5 bg-forest-green top-[--position-y] -translate-x-1/2 z-[1]"
+            :style="{ '--position-y': stop }"></div>
           <div class="center-line absolute w-full h-full bg-protection z-0"></div>
         </div>
 

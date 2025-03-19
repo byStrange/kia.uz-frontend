@@ -25,9 +25,7 @@ const pageAnimations = {
     // if (this.animateOnce && this.animated) return;
 
     const $el = sectionRef.value.$el;
-    console.log($el)
 
-    console.log($el.querySelectorAll('.split-left > div > *:not(div)'))
     gsap.fromTo($el.querySelectorAll('.split-left > div > *:not(div)'), {
       autoAlpha: 0,
       y: -30,

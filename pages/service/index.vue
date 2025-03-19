@@ -99,7 +99,6 @@ function closeDatePickerPopover() {
 
 const onSubmit = (event: FormSubmitEvent) => {
   touched.value = true;
-  console.log(event)
   successfullySent.value = event.valid
 }
 

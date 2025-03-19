@@ -46,7 +46,6 @@ const handlePartClick = (x: number, y: number) => {
     for (let i = 0; i < connectorIds.value.length; i++) {
       removeConnector(connectorIds.value[i])
     }
-    console.log(Math.abs(x), Math.abs(y))
     const connectorId = addConnector(
       { x: startingPoint.left, y: startingPoint.top }, // Start point (from part list)
       targetPoint // End point (on car image)
@@ -142,7 +141,6 @@ const originalSparePartGroups = ref<{ name: string, parts: SparePart[] }[]>([
 const selectedPart = ref(originalSparePartGroups.value[0].parts[0]);
 
 watch(selectedPart, () => {
-  console.log('hi')
   const [startX, startY] = selectedPart.value.imageCoordinates;
   if (startX < 0 && startY < 0) {
     isSvgReversed.value = true;

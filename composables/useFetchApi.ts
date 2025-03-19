@@ -5,6 +5,5 @@ export const useFetchApi = <T>(
 ) => {
   const config = useRuntimeConfig()
   const url = `${config.public.apiBaseUrl}/${locale ? locale + '/' : ''}api/v1${endpoint}`
-  console.log(url)
   return $fetch<T>(url, options)
 }

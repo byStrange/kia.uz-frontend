@@ -7,11 +7,9 @@ export const useGrid = (
   let screenWidth = window.innerWidth
 
   if (options.useContainer) {
-    console.log(useContainer().bounding.width.value)
     screenWidth = useContainer().bounding.width.value
   }
 
-  console.log(screenWidth)
 
   const columnWidth =
     (screenWidth - (options.columns - 1) * options.gap) / options.columns

@@ -43,7 +43,5 @@ export const useHTMLRenderer = (htmlString: string) => {
     }
   })
 
-  console.log(blocks)
-
   return blocks
 }

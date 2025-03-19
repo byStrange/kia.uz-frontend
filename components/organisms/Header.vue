@@ -39,7 +39,6 @@ watch(
 watch(
   () => headerService.value.lockHover,
   () => {
-    console.log('i fucking changed nigga')
     headerService.value.isHover = headerService.value.lockHover
   },
 )

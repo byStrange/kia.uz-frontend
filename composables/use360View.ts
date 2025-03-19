@@ -181,7 +181,6 @@ export const use360View = (
   }
 
   const updateIndex = (deltaX: number) => {
-    console.log('i should be moving')
 
     const movement = deltaX / sensitivity
     const total = totalImages.value
@@ -192,14 +191,12 @@ export const use360View = (
     newIndex -= Math.floor(movement) * direction
 
 
-    console.log('deltaX:', deltaX, 'sensitivity:', sensitivity, 'movement:', movement);
     // Normalize index to stay within bounds
     while (newIndex < 0) newIndex += total
     while (newIndex >= total) newIndex -= total
 
     state.value.currentIndex = newIndex
     state.value.direction = deltaX > 0 ? 'left' : 'right'
-    console.log(state.value.currentIndex)
   }
 
   const handleDragStart = (x: number) => {
@@ -243,11 +240,9 @@ export const use360View = (
   }
 
   const startAutoRotate = () => {
-    console.log('atutor')
     if (autoRotateInterval.value) {
       clearInterval(autoRotateInterval.value)
     }
-    console.log('hi')
 
     autoRotateInterval.value = setInterval(() => {
       updateIndex(reverse ? -1 : 1)

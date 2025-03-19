@@ -6,14 +6,12 @@ const { safe } = useSafeAccessMedia()
 
 const sectionRef = useTemplateRef('section')
 
-console.log('print SOMeting on SSR PLS')
 
 const pageAnimations = {
   default() {
     if (!sectionRef.value) return;
 
     const $el = sectionRef.value.$el;
-    console.log($el.querySelector('.organism-modelui-triple_title'))
 
     gsap.from($el.querySelector('.organism-modelui-triple_title'), {
       autoAlpha: 0,
