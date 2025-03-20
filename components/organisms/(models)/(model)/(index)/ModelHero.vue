@@ -15,9 +15,9 @@ const pageData = computed(() => ({
   postTitle: modelData.value?.model.post_title,
   blocks: modelData.value?.model.blocks.filter((block) => block.type === 'heroIcon'),
   images: {
-    defaultImage: modelData.value?.model.default_image,
-    tabletImage: (modelData.value?.model.tablet_image),
-    desktopImage: (modelData.value?.model.desktop_image),
+    defaultImage: safe(modelData.value?.model.default_image),
+    tabletImage: safe(modelData.value?.model.tablet_image),
+    desktopImage: safe(modelData.value?.model.desktop_image),
   }
 }))
 
@@ -99,27 +99,8 @@ label="Скачать прайс-лист" color="secondary" mode="full"
         </div>
       </div>
 
-      <picture
-class="h-full w-full bg-blue-400" data-label="Main Hero image" :style="{
-        '--image-2xl': `url(${pageData.images.desktopImage})`,
-        '--image-md': `url(${pageData.images.tabletImage})`,
-        '--image': `url(${stripExt(quality(pageData.images.defaultImage, 'mid'), 'avif')})`
-      }">
-
-        <source :srcset="safe(pageData.images.desktopImage, 'avif')" media="(min-width: 1024px)" />
-        <source :srcset="safe(pageData.images.desktopImage, 'webp')" media="(min-width: 1024px)" />
-        <source :srcset="pageData.images.desktopImage" media="(min-width: 1024px)" />
-
-        <source :srcset="safe(pageData.images.tabletImage, 'avif')" media="(min-width: 768px)" />
-        <source :srcset="safe(pageData.images.tabletImage, 'webp')" media="(min-width: 768px)" />
-        <source :srcset="pageData.images.tabletImage" media="(min-width: 768px)" />
-
-
-        <img
-:src="safe(pageData.images.defaultImage, 'webp')"
-          class="w-full object-cover 2xl:h-full md:h-[73%] model-id_model-hero-img bg-[image:--image] bg-cover" />
-      </picture>
-
+      <MoleculeResponsiveImage class="w-full object-cover 2xl:h-full md:h-[73%] model-id_model-hero-img bg-[image:--image] bg-cover" :default-image="pageData.images.defaultImage"
+      :desktop-image="pageData.images.desktopImage" :tablet-image="pageData.images.tabletImage"/>
       <div
 data-label="Hero bottom"
         class="absolute !left-0 bottom-[31px] z-10 flex w-full items-end justify-center md:!left-auto md:bottom-15 md:justify-start md:pb-0 2xl:bottom-16"

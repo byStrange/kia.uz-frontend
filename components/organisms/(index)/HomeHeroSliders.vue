@@ -6,6 +6,7 @@ import type { IndexPageSlider } from '~/server/api/indexPage.get'
 defineProps<{ slides: IndexPageSlider[] }>()
 
 const { offset } = useContainer()
+const { safe } = useSafeAccessMedia()
 
 const localePath = useLocalePath()
 
@@ -51,12 +52,9 @@ const slidesLength = computed(() => {
         <SwiperSlide v-for="slide in slides" :key="slide.id">
           <div class="h-full">
             <div data-label="Hero shadow bottom" aria-hidden="true"
-              class="hero-slider-shade absolute bottom-0 z-10 h-[356px] w-full" />
-            <picture class="h-full w-full">
-              <source v-if="slide.desktop_image" :srcset="slide.desktop_image" media="(min-width: 1440px)" />
-              <source v-if="slide.tablet_image" :srcset="slide.tablet_image" media="(min-width: 768px)" />
-              <img :src="slide.default_image" class="h-[75%] w-full object-cover md:h-[80%] 2xl:h-full" />
-            </picture>
+              class="hero-slider-shade absolute bottom-0 z-20 h-[356px] w-full" />
+            <MoleculeResponsiveImage class="h-[75%] w-full object-cover md:h-[80%] 2xl:h-full" :default-image="safe(slide.default_image)" :desktop-image="safe(slide.desktop_image)" :tablet-image="safe(slide.tablet_image)" />
+            
             <div
               class="absolute container 2xl:px-0 left-0 bottom-[88px] z-40 flex w-full max-w-[540px] items-end justify-center md:bottom-[100px] md:justify-start md:pb-0 2xl:left-[--left]"
               :style="{

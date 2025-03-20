@@ -67,7 +67,7 @@ onMounted(() => {
           <div class="h-[408px] md:w-[310px] md:!px-0">
             <div class="mx-auto h-full max-w-[310px] bg-background">
               <div class="relative flex h-[222px] w-full items-center justify-center bg-gray-200">
-                <img loading="lazy" :src="item.default_image" class="h-full w-full object-cover" />
+                <MoleculeImage :base-url="item.desktop_image || ''" class="h-[222px] w-full object-cover" />
               </div>
 
               <div class="p-7.5">
@@ -119,7 +119,7 @@ class="max-w-[425px] w-[--width] md:!px-0 2xl:h-[512px] 2xl:w-4h md:h-[448px]"
                     <b class="text-sm">Основные опции</b>
                     <div class="mt-2 space-y-2 text-sm">
                       <p
-v-for="option in item.feature_groups.map((f) => f.features).flat().slice(0, 5)"
+v-for="option in item.feature_groups.map((f) => f.features).flat().slice(0, 4)"
                         :key="option.name" class="md:text-base text-sm">
                         {{ option.name }}
                       </p>
