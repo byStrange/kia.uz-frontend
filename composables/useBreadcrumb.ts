@@ -1,15 +1,47 @@
-export const useBreadcrumbs = (route: any, router: any) => {
-  const crumbs = computed(() => {
+
+
+interface BreadcrumbsOptions {
+  dynamicTitles?: Record<string, string | Ref<string>>
+}
+
+const options: BreadcrumbsOptions = {
+  dynamicTitles: {}
+}
+
+const dynamicTitles = ref<Record<string, string>>(
+  options.dynamicTitles ?
+    Object.entries(options.dynamicTitles).reduce((acc, [key, value]) => {
+      acc[key] = typeof value === 'string' ? value : value.value
+      return acc
+    }, {} as Record<string, string>) :
+    {}
+)
+
+export const useBreadcrumbs = (
+  route: any,
+  router: any,
+) => {
+  const updateBreadcrumbTitle = (path: string, title: string) => {
+    dynamicTitles.value[path] = title
+  }
+  const _crumbs = ref<any[]>([])
+
+  watch(dynamicTitles, () => {
+    generateCrumb()
+  })
+
+  const generateCrumb = () => {
     const fullPath = route.fullPath
     const params = fullPath.startsWith('/')
       ? fullPath.substring(1).split('/')
       : fullPath.split('/')
-    const crumbs: any[] = []
 
-    crumbs.push({
+    _crumbs.value.push({
       title: 'Home',
       ...router.resolve('/'),
     })
+
+
 
     const { locale } = useI18n()
 
@@ -19,21 +51,23 @@ export const useBreadcrumbs = (route: any, router: any) => {
       path = `${path}/${param}`
       const match = router.resolve(path)
       if (match.name !== null && param !== locale.value) {
-        crumbs.push({
-          title: toTitleCase(
-            param.split(':').length > 1
-              ? param.split(':')[1].replace(/-/g, ' ')
-              : param.replace(/-/g, ' '),
-          ),
+        const title = dynamicTitles.value[path] || toTitleCase(param.replace(/-/g, ' '))
+        _crumbs.value.push({
+          title,
           ...match,
         })
       }
     })
 
-    return crumbs.filter(c => c.title)
-  })
+    console.log(dynamicTitles)
+
+    _crumbs.value = _crumbs.value.filter(c => c.title)
+  }
+
+  generateCrumb()
 
   return {
-    breadcrumbs: crumbs,
+    breadcrumbs: _crumbs,
+    updateBreadcrumbTitle
   }
 }

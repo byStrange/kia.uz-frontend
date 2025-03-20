@@ -97,13 +97,13 @@ onMounted(() => {
                   </h2>
                   <div class="mt-2">
                     <p class="flex justify-center gap-x-1 text-sm text-primary md:text-base">
-                      {{ formatPrice(model.starting_price) }}
+                      {{ formatPrice(model.starting_price, $t('prefixes.sum')) }}
                       <UIInfoIcon class="text-disabled" />
                     </p>
                   </div>
                 </div>
                 <NuxtLinkLocale :to="`/models/${model.slug}/`" :prefetch="false" no-client>
-                  <AtomButton label="Подробнее о модели" color="primary" mode="full" class="mx-auto mt-4 md:mt-8" />
+                  <AtomButton :label="$t('index.more_about_model')" color="primary" mode="full" class="mx-auto mt-4 md:mt-8" />
                 </NuxtLinkLocale>
               </div>
             </SwiperSlide>

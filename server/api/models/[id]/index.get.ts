@@ -54,7 +54,7 @@ export interface Configuration extends CommonModel {
   engine?: string
 }
 
-interface ModelEngine extends CommonModel {
+export interface ModelEngine extends CommonModel {
   name: string
   desc: string
   power: number

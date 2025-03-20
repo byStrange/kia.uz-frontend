@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ModelLandingPage } from '~/server/api/model/carnival.get';
+import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
 
 const route = useRoute()
 const data = useSharedPageData<ModelLandingPage>()
@@ -9,7 +9,7 @@ const is = (r: string) => {
   return route.name?.toString().split('-')[2]?.split('___')[0] === r
 }
 
-const isHome = () => !is('pricing')
+const isHome = () => !is('pricing') && !is('properties')
 
 const { headerService } = useHeaderService()
 const { gsap } = useGsap()
@@ -29,7 +29,7 @@ onMounted(() => {
     stagger: 0.2,
   })
     .from('.model-bar .divider', {
-      top: -14, height: 52, duration: 0.4, stagger: .3, ease: 'elastic.inOut'
+      top: -14, height: 52, duration: 0.4, stagger: .3,
     })
 })
 
@@ -47,9 +47,9 @@ data-label="Model bar"
           <span class="2xl:text-lg">{{ data?.model.name }}</span>
           <UITickToBottom class="text-white 2xl:hidden" />
         </button>
-        <div class="divider w-1px left-11 h-full bg-caption 2xl:block hidden absolute"></div>
-        <UIDesktopOnly flex class="gap-2 pl-5 text-white">
-          <p class="text-base">от {{ data?.model.starting_price }} сум</p>
+        <UIDesktopOnly flex class="gap-2 pl-5 text-white relative">
+          <div class="divider w-1px h-full bg-caption 2xl:block hidden left-0 absolute"></div>
+          <p class="text-base">{{ $t("prefixes.from", { price: formatPrice(data?.model.starting_price, $t('prefixes.sum')) }) }}</p>
           <button>
             <UIInfoIcon />
           </button>
@@ -61,21 +61,26 @@ data-label="Model bar"
             <li v-if="data?.model.slug">
               <NuxtLinkLocale
 :to="`/models/${data.model.slug}`" class="text-base text-white link-hover py-1"
-                :class="{ hover: isHome() }">Обзор
+                :class="{ hover: isHome() }">{{ $t('common.review') }}
               </NuxtLinkLocale>
             </li>
             <li v-if="data?.model.slug">
               <NuxtLinkLocale
-:to="`/models/${data.model.slug}/pricing`" class="text-base text-white py-1 link-hover" :class="{
-                hover: is('pricing')
-              }">Комплектации и
-                цены</NuxtLinkLocale>
+:to="`/models/${data.model.slug}/pricing`" class="text-base text-white py-1 link-hover"
+                :class="{
+                  hover: is('pricing')
+                }">{{ $t('common.pricing') }}</NuxtLinkLocale>
             </li>
-            <li>
-              <a href="#" class="text-base text-white py-1 link-hover">Характеристики</a>
+            <li v-if="data?.model.slug">
+              <NuxtLinkLocale
+:to="`/models/${data.model.slug}/properties`" class="text-base text-white py-1 link-hover"
+                :class="{
+                  hover: is('properties')
+                }">{{ $t('common.properties') }}</NuxtLinkLocale>
             </li>
             <li v-if="data?.model.brochure">
-              <a :href="safe(data.model.brochure)" download class="text-base text-white py-1 link-hover">Брошюра</a>
+              <a :href="safe(data.model.brochure)" download class="text-base text-white py-1 link-hover">{{
+                $t('common.brochure') }}</a>
             </li>
             <li class="flex items-center">
               <button class="text-white">
@@ -84,9 +89,9 @@ data-label="Model bar"
             </li>
           </ul>
         </UIDesktopOnly>
-        <div class="divider w-1px right-[138px] h-full bg-caption 2xl:block hidden absolute"></div>
-        <div class="pl-5">
-          <button class="text-white link-hover ">Конфигуратор</button>
+        <div class="pl-5 relative">
+          <div class="divider w-1px h-full left-0 bg-caption 2xl:block hidden absolute"></div>
+          <button class="text-white link-hover ">{{ $t('common.configurator') }}</button>
         </div>
       </div>
     </div>

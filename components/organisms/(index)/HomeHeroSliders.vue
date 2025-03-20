@@ -35,15 +35,13 @@ const slidesLength = computed(() => {
 
 <template>
   <div class="relative w-full bg-no-repeat">
-    <div
-data-label="Hero shadow top" aria-hidden="true" class="absolute top-0 z-10 h-[140px] w-full" :style="{
+    <div data-label="Hero shadow top" aria-hidden="true" class="absolute top-0 z-10 h-[140px] w-full" :style="{
       background:
         'linear-gradient(180deg, rgba(5, 20, 31, 0.5) 24.47%, rgba(5, 20, 31, 0) 100%)',
     }" />
 
     <ClientOnly>
-      <Swiper
-ref="heroSwiper" :slides-per-view="1" class="dark-pagination h-screen" :modules="[Pagination]"
+      <Swiper ref="heroSwiper" :slides-per-view="1" class="dark-pagination h-screen" :modules="[Pagination]"
         :free-mode="true" :pagination="{ clickable: true }" @swiper="onSwiper">
         <template #container-start>
           <MoleculeButtonCarousel position="left" :hide="currentIndex === 0" @click="prev" />
@@ -52,8 +50,7 @@ ref="heroSwiper" :slides-per-view="1" class="dark-pagination h-screen" :modules=
         </template>
         <SwiperSlide v-for="slide in slides" :key="slide.id">
           <div class="h-full">
-            <div
-data-label="Hero shadow bottom" aria-hidden="true"
+            <div data-label="Hero shadow bottom" aria-hidden="true"
               class="hero-slider-shade absolute bottom-0 z-10 h-[356px] w-full" />
             <picture class="h-full w-full">
               <source v-if="slide.desktop_image" :srcset="slide.desktop_image" media="(min-width: 1440px)" />
@@ -73,8 +70,7 @@ data-label="Hero shadow bottom" aria-hidden="true"
                     <p class="text-sm md:text-lg">{{ slide.post_title }}</p>
 
                   </div>
-                  <AtomButton
-label="Подробнее" color="secondary" mode="full" class="mt-6 text-base"
+                  <AtomButton :label="$t('common.more')" color="secondary" mode="full" class="mt-6 text-base"
                     @click="$router.push(localePath(slide.target_url))" />
                 </div>
               </div>

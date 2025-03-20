@@ -7,19 +7,22 @@ const { gsap } = useGsap()
 const { safe } = useSafeAccessMedia()
 const { t } = useI18n()
 const route = useRoute()
+const router = useRouter()
+const { updateBreadcrumbTitle, breadcrumbs } = useBreadcrumbs(route, router)
 
 const pageData = useSharedPageData<ModelLandingPage>()
 
 if (!pageData.value) {
   const data = await useFetch(`/api/models/${route.params.id}`)
 
-  // @ts-expect-error
   pageData.value = data.data;
 }
 
 const footerContent = computed(() => {
   return pageData.value?.model.blocks.find((block) => block.type === 'footerContent')
 })
+
+updateBreadcrumbTitle(route.fullPath, pageData.value?.model.name || '')
 
 
 definePageMeta({
@@ -51,7 +54,6 @@ onMounted(() => {
     // pageAnimations.default()
   })
 })
-
 </script>
 <template>
   <div>
@@ -104,7 +106,7 @@ class="max-w-[425px] w-[--width] md:!px-0 2xl:h-[512px] 2xl:w-4h md:h-[448px]"
                   {{ item.name }}
                 </h1>
                 <p class="mt-1 text-base font-semibold text-white">
-                  <span>от</span> {{ item.price }} <span>сум</span>
+                  {{ $t("prefixes.from", { price: formatPrice(item.price, $t('prefixes.sum'))}) }}
                 </p>
               </div>
               <div class="px-6 py-4 2xl:p-8 flex flex-col flex-1">

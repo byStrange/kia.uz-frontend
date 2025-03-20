@@ -16,11 +16,11 @@ export type HeaderItem = {
 
 const headerItems = ref<HeaderItem[]>([
   {
-    label: 'Модели',
+    label: 'common.models',
     to: '/models',
   },
   {
-    label: 'Выбор и покупка',
+    label: 'common.select_and_purchase',
     to: '#',
     children: [
       {
@@ -28,11 +28,11 @@ const headerItems = ref<HeaderItem[]>([
         to: '#',
       },
       {
-        label: 'Конфигуратор',
+        label: 'common.configurator',
         to: '#',
       },
       {
-        label: 'Тест-драйв',
+        label: 'common.test_drive',
         to: '/models/test-drive',
       },
       {
@@ -40,11 +40,11 @@ const headerItems = ref<HeaderItem[]>([
         to: '#',
       },
       {
-        label: 'Трейд-ин',
+        label: 'common.trade_in',
         to: '#',
       },
       {
-        label: 'Корпоративные продажи',
+        label: 'common.corporate_sales',
         to: '/special-offers/corporate:programmee-trade-in',
       },
       {
@@ -60,15 +60,15 @@ const headerItems = ref<HeaderItem[]>([
     },
   },
   {
-    label: 'Спецпредложения',
+    label: 'common.special_offers',
     to: '/special-offers',
   },
   {
-    label: 'Тест-драйв',
+    label: 'common.test_drive',
     to: '/models/test-drive',
   },
   {
-    label: 'Владельцам',
+    label: 'common.for_owners',
     to: '#',
     meta: {
       sideImage:
@@ -93,7 +93,7 @@ const headerItems = ref<HeaderItem[]>([
         to: '/service/warranty',
       },
       {
-        label: 'Спецпредложения',
+        label: 'common.special_offers',
         to: '/special-offers',
       },
       {
@@ -103,7 +103,7 @@ const headerItems = ref<HeaderItem[]>([
     ],
   },
   {
-    label: 'Дилеры',
+    label: 'common.dealers',
     to: '/dealers',
   },
 ])
