@@ -52,6 +52,7 @@ export interface ModelBlock extends CommonMediaModel {
   title: string
   description: string
   label: string
+  icon: string
   type: "heroIcon" | "doubleSlide" | "triple" | "footerContent"
   footer_background_image: string | null
   direction: "left" | "right"

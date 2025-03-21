@@ -130,7 +130,7 @@ label="Скачать прайс-лист" color="primaryDark" mode="full"
               <div
 v-for="block in pageData.blocks" :key="block.id"
                 class="flex items-center gap-2.5 md:flex-col md:items-start">
-                <img :src="safe(block.default_image)" class="w-10 md:size-12.5" />
+                <img :src="safe(block.icon)" class="w-10 md:size-12.5" />
                 <p class="text-xs text-protection">
                   {{ block.title }}
                 </p>
