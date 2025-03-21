@@ -110,7 +110,7 @@ const onImageLoaded = () => {
 const getImageUrl = (baseUrl: string, format: string, lowRes: boolean = false): string => {
   if (!baseUrl) return ''
   
-  const baseWithoutExt = baseUrl.replace(/\.(avif|webp|png)$/, '')
+  const baseWithoutExt = baseUrl.replace(/\.(avif|webp|png|jpg)$/, '')
   const lowResSuffix = lowRes ? '_low' : ''
   
   return `${baseWithoutExt}${lowResSuffix}.${format}`

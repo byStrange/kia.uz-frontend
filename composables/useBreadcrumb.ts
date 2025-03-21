@@ -50,7 +50,7 @@ export const useBreadcrumbs = (
     params.forEach((param: any) => {
       path = `${path}/${param}`
       const match = router.resolve(path)
-      if (match.name !== null && param !== locale.value) {
+      if (match.name !== null && param !== locale.value && !dynamicTitles.value[path]) {
         const title = dynamicTitles.value[path] || toTitleCase(param.replace(/-/g, ' '))
         _crumbs.value.push({
           title,

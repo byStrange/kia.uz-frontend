@@ -76,7 +76,7 @@ const onImageLoaded = () => {
 
 // Generate URL for specific size and format
 const generateUrl = (size: string, format: string): string => {
-  const baseWithoutExt = props.baseUrl.replace(/\.(avif|webp|png)$/, '')
+  const baseWithoutExt = props.baseUrl.replace(/\.(avif|webp|png|jpg)$/, '')
   const sizeString = size ? `_${size}` : ''
   return `${baseWithoutExt}${sizeString}.${format}`
 }
