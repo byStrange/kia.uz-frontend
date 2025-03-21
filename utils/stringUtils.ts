@@ -5,6 +5,7 @@ export function toTitleCase(str: string) {
   )
 }
 
-export function formatPrice(price: number, currency: string = "UZS") {
+export function formatPrice(price: number | undefined, currency: string = "UZS") {
+  if (!price) return;
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + " " + currency;
 }

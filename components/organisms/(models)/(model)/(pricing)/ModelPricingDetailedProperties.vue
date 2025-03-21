@@ -2,8 +2,9 @@
 import {
   ElementSlideView,
 } from '#components'
-import type { Configuration } from '~/server/api/model/carnival.get';
-import type { ModelPricingAndDetailsPage } from '~/server/api/model/features.get';
+import type { Configuration } from '~/server/api/models/[id]/index.get';
+import type { ModelPricingAndDetailsPage } from '~/server/api/models/[id]/features.get';
+
 
 const { bounding } = useContainer()
 
@@ -32,28 +33,26 @@ defineProps<{ pageData: ModelPricingAndDetailsPage | null }>()
 <template>
   <div class="col-span-9">
     <div class="bg-background flex w-full relative 2xl:bg-white">
-      <ElementSlideView
-ref="confSwiper" class="w-full" :paginator="false"
+      <ElementSlideView ref="confSwiper" class="w-full" :paginator="false"
         :data="pageData?.filtered_configurations || []" navigation-mode="oneside-left" navigation-type="sm"
         :breakpoints-enabled="false" :breakpoints="{
           768: { slidesOffsetBefore: 37, slidesOffsetAfter: 37 },
           1440: { slidesOFfsetBefore: 20, slidesOffsetAfter: 20 },
         }" :slides-offset-before="15" :slides-offset-after="15" swiper-slide-class="!w-fit">
-        <template #slide="{ item }">
+        <template #slide="{ item: configuration }">
           <div
             class="p-4 md:p-5 w-[172px] md:w-[232px] 2xl:w-[220px] hoverable:border hoverable:border-transparent hoverable:hover:border-primary hoverable:transition-colors cursor-pointer">
             <div>
               <h1 class="flex items-center font-semibold">
-                <span class="text-primary text-base">{{ item.name }}</span>
+                <span class="text-primary text-base">{{ configuration.name }}</span>
                 <UITickToRight class="text-pretty" />
               </h1>
               <p class="mt-1 text-caption text-xs">
-                {{ item.engine }}
+                {{ configuration.engine }}
               </p>
             </div>
             <h2 class="space-x-1 md:mt-4 mt-3 text-base font-semibold text-primary">
-              <span>{{ item.price }}</span>
-              <span>сум</span>
+              <span>{{ formatPrice(configuration.price, $t('prefixes.sum')) }}</span>
             </h2>
           </div>
         </template>
@@ -64,13 +63,11 @@ ref="confSwiper" class="w-full" :paginator="false"
       </ElementSlideView>
     </div>
 
-    <UIContainer
-class="pt-5 pb-12 md:pt-10 md:pb-15 2xl:px-0 2xl:max-w-none 2xl:pl-grid-12-gap 2xl:pr-[--padding-x]"
+    <UIContainer class="pt-5 pb-12 md:pt-10 md:pb-15 2xl:px-0 2xl:max-w-none 2xl:pl-grid-12-gap 2xl:pr-[--padding-x]"
       :style="{
         '--padding-x': bounding.x.value + 'px',
       }">
-      <MoleculeAccordion
-:default-open="true" :classes="{
+      <MoleculeAccordion :default-open="true" :classes="{
         contentContainer: 'duration-700',
         contentWrapper: 'duration-700',
       }" :items="[{ label: 'Стандартное оборудование', content: '' }]">
@@ -106,8 +103,7 @@ class="pt-5 pb-12 md:pt-10 md:pb-15 2xl:px-0 2xl:max-w-none 2xl:pl-grid-12-gap 2
         </template>
       </MoleculeAccordion>
 
-      <MoleculeAccordion
-:classes="{
+      <MoleculeAccordion :classes="{
         contentContainer: 'duration-700',
         contentWrapper: 'duration-700',
       }"
@@ -125,8 +121,7 @@ class="pt-5 pb-12 md:pt-10 md:pb-15 2xl:px-0 2xl:max-w-none 2xl:pl-grid-12-gap 2
               {{ item.label }}
             </span>
             <button @click="toggle">
-              <UITickToBottom
-class="text-primary transition-transform duration-700"
+              <UITickToBottom class="text-primary transition-transform duration-700"
                 :class="{ '!rotate-180': expanded }" />
             </button>
           </div>
@@ -137,16 +132,14 @@ class="text-primary transition-transform duration-700"
             <div v-for="feature in content" :key="feature.id" class="py-4">
               <p class="text-sm">{{ feature.name }}</p>
               <div class="mt-3.5 overflow-hidden">
-                <div
-class="flex translate-x-[--translate-x] transition-transform" :style="{
+                <div class="flex translate-x-[--translate-x] transition-transform" :style="{
                   '--translate-x':
                     (confSwiperClientX ? confSwiperClientX - 15 : 0) + 'px',
                 }">
                   <div v-if="!pageData?.filtered_configurations.length" class="">
                     <p class="text-sm">-</p>
                   </div>
-                  <div
-v-for="config in pageData?.filtered_configurations || []" :key="config.name"
+                  <div v-for="config in pageData?.filtered_configurations || []" :key="config.name"
                     class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px]">
                     <div v-if="hasFeature(feature.id, config)" class="size-2.5 bg-primary rounded-full" />
                     <div v-else>-</div>

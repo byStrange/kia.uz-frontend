@@ -1,7 +1,5 @@
 <script setup lang="ts">
 const { bounding } = useContainer()
-const { t, messages } = useI18n()
-
 const { src } = useUploadcareSource()
 
 const { data: pageData } = useFetch('/api/indexPage')

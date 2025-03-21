@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { UIHeaderLink } from '#components'
 
-const { toggleMenu, headerService } = useHeaderService()
+const { t } = useI18n();
+const { toggleMenu, headerService } = useHeaderService(t)
 
 usePageScroll()
 

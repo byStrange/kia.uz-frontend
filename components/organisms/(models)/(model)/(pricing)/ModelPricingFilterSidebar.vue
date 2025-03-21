@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { ModelLandingPage } from '~/server/api/model/carnival.get';
-import type { ModelPricingAndDetailsPage } from '~/server/api/model/features.get';
+import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
+import type { ModelPricingAndDetailsPage } from '~/server/api/models/[id]/features.get';
 
 const { bounding } = useContainer()
 const modelData = useSharedPageData<ModelLandingPage>()
@@ -21,7 +21,6 @@ watch([selectedEngines, selectedConfigurations, selectedFeatures], () => {
   if (!props.pageData) return
 
   let filteredConfigurations = [...props.pageData.filtered_configurations]
-  const groupedFeatures = { ...props.pageData.grouped_features }
 
   // Apply engine filter if any engines are selected
   if (selectedEngines.value.length > 0) {
@@ -51,7 +50,7 @@ watch([selectedEngines, selectedConfigurations, selectedFeatures], () => {
     });
   }
 
-  if (showOnlyDifferingConfigurations.value && filteredConfigurations.length > 1) {
+  if (props.showOnlyDifferingConfigurations && filteredConfigurations.length > 1) {
     // First, collect all feature IDs and their occurrence counts
     const featureOccurrences = new Map();
 

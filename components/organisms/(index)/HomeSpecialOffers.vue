@@ -34,14 +34,14 @@ defineProps<{ offers: SpecialOffer[] }>()
 
     <MoleculeTabsContainer :tabs="['Покупка', 'Сервис']" :is-content-full="true">
       <template #1>
-        <ElementSlideView :data="offers.filter((offer) => offer.type == 'buy')">
+        <ElementSlideView :data="offers.filter((offer) => offer.type == 'buy').slice(0, 8)">
           <template #slide="{ item }">
             <NuxtLinkLocale :to="`/special-offers/${item.slug}`">
               <div
 :style="{ '--padding': `0 ${bounding.x.value}px` }"
                 class="h-[408px] p-[--padding] md:w-[310px] md:px-0">
                 <div class="mx-auto h-full max-w-[310px] bg-background">
-                  <img :src="item.desktop_image" class="h-[222px] w-full object-cover" loading="lazy" />
+                  <MoleculeImage :base-url="item.desktop_image || ''" class="h-[222px] w-full object-cover" />
 
                   <div class="p-4">
                     <div class="text-left">
@@ -61,7 +61,7 @@ defineProps<{ offers: SpecialOffer[] }>()
       </template>
 
       <template #2>
-        <ElementSlideView :data="offers.filter((offer) => offer.type == 'service')">
+        <ElementSlideView :data="offers.filter((offer) => offer.type == 'service').slice(0, 8)">
           <template #slide="{ item }">
             <div
 :style="{ '--padding': `0 ${bounding.x.value}px` }"

@@ -2,7 +2,6 @@
 import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
 
 const { safe } = useSafeAccessMedia()
-const { price } = useFormat()
 const { downloadFile } = useDownload()
 const modelData = defineModel<ModelLandingPage | null>()
 const showOnlyDifferingConfigurations = defineModel<boolean>("diffConf")
@@ -21,15 +20,21 @@ data-label="Hero top"
         </h1>
         <div class="mt-3 md:mt-4 text-center 2xl:text-left 2xl:flex justify-between">
           <div>
-            <span class="text-caption text-sm md:text-base">Цена от</span>
+            <span class="text-caption text-sm md:text-base">{{ $t('common.price') }} <UILocaleRuOnly>
+                {{ $t('prefixes.from') }}</UILocaleRuOnly> </span>
             <p
               class="flex gap-x-2 mt-1 md:mt-2 justify-center text-base font-semibold md:text-lg items-center 2xl:text-2xl 2xl:justify-start">
-              {{ price(modelData?.model.starting_price) }}
+              {{ formatPrice(modelData?.model.starting_price) }}
               <UIInfoIcon class="text-disabled" />
             </p>
+            <UILocaleUzOnly>
+              <span class="text-caption text-sm md:text-base">{{ $t('prefixes.from') }}</span>
+            </UILocaleUzOnly>
           </div>
-          <div class="gap-4 hidden 2xl:flex">
-            <AtomButton @click="downloadFile(safe(modelData?.model.price_list))" label="Скачать прайс-лист" color="secondary" mode="full" />
+          <div class="gap-4 hidden 2xl:flex items-center">
+            <AtomButton
+label="Скачать прайс-лист" color="secondary" mode="full"
+              @click="downloadFile(safe(modelData?.model.price_list))" />
             <AtomButton label="Свяжитесь с нами" color="primary" mode="full" />
           </div>
         </div>
@@ -42,7 +47,7 @@ data-label="Hero top"
       </div>
       <div class="space-y-2 md:grid md:grid-cols-2 md:gap-x-4 md:space-y-0 2xl:hidden">
         <AtomButton label="Свяжитесь с нами" color="secondary" mode="full" />
-        <AtomButton @click="downloadFile(safe(modelData?.model.price_list))" label="Скачать прайс-лист" mode="full" />
+        <AtomButton label="Скачать прайс-лист" mode="full" @click="downloadFile(safe(modelData?.model.price_list))" />
       </div>
     </div>
     <div class="py-4 flex gap-9 md:py-5 2xl:gap-10">
