@@ -17,17 +17,55 @@ export const useHTMLRenderer = (htmlString: string) => {
     text: string | null;
   }
 
-  type Block = TableBlock | HtmlBlock | AnchorBlock;
+  type ImageBlock = {
+    type: 'image',
+    src: string
+    alt?: string
+  }
+
+  type HeadingBlock = {
+    type: 'heading',
+    level: 'h1' | 'h2' | 'h3' | 'h4',
+    text: string | null
+  }
+
+  type TextBlock = {
+    type: 'text',
+    text: string | null
+  }
+
+  type Block = TableBlock | HtmlBlock | AnchorBlock | ImageBlock | HeadingBlock | TextBlock
 
   const parser = new DOMParser();
   const blocks: Block[] = []
   const doc = parser.parseFromString(htmlString, "text/html");
   const elements = doc.querySelectorAll('body > *:not(:empty)')
   elements.forEach((el) => {
+    const img = el.querySelector('img')
     if (el.localName == 'table') blocks.push({
       type: 'table',
       options: useTableRenderer(el.outerHTML)
     });
+    else if (img) {
+      blocks.push({
+        type: 'image',
+        src: img.src,
+        alt: img.alt
+      })
+    }
+    else if (['h1', 'h2', 'h3', 'h4'].includes(el.localName)) {
+      blocks.push({
+        type: 'heading',
+        level: el.localName as HeadingBlock['level'],
+        text: el.textContent
+      })
+    }
+    else if (el.localName === 'p' && el.querySelector('*') == null) {
+      blocks.push({
+        type: 'text',
+        text: el.textContent
+      })
+    }
     else if (el.localName == 'a') {
       blocks.push({
         type: 'link',

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
 
-const { safe, quality, stripExt } = useSafeAccessMedia()
+const { safe } = useSafeAccessMedia()
 const { offset } = useContainer()
 const { gsap } = useGsap()
 const { downloadFile } = useDownload()

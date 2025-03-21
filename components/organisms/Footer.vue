@@ -1,6 +1,7 @@
 <script setup lang="tsx">
 const { footerLinks } = useFooterService()
 const { headerService } = useHeaderService()
+const locale = useLocalePath()
 </script>
 <template>
   <footer class="bg-primary py-[60px]">
@@ -95,6 +96,7 @@ const { headerService } = useHeaderService()
               mode="full"
               class="md:!w-full"
               color="primaryDark"
+              @click="$router.push(locale('/feedback'))"
             />
           </div>
 

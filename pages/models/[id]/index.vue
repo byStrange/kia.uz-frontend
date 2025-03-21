@@ -59,7 +59,7 @@ onMounted(() => {
   <div>
     <OrganismModelHero />
 
-    <MoleculeSection :section-title="t('index.special_offers')">
+    <MoleculeSection v-if="pageData?.specialOffers.length" :section-title="t('index.special_offers')">
       <ElementSlideView
 :data="pageData?.specialOffers || []" :space-between="16"
         :slides-offset-before="bounding.x.value" :slides-offset-after="bounding.x.value" swiper-slide-class="!w-fit">
