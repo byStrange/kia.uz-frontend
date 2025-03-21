@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { ElementSlideView } from '#components'
+import { ElementSlideView, MoleculeImage } from '#components'
 
 const slider = useTemplateRef<InstanceType<typeof ElementSlideView>>('slidesRef')
 const sectionRef = useTemplateRef('section')
@@ -130,7 +130,7 @@ defineProps<{ section: ModelBlock }>()
         class="2xl:pointer-events-none 2xl:max-w-[620px]" paginator-class="2xl:hidden mt-4" :space-between="0"
         :breakpoints-enabled="false" :navigation="false">
         <template #slide="{ item }">
-          <img class="max-h-[620px] md:w-[656px] md:h-[645px] object-cover w-full " :src="safe(item.default_image, 'avif')" />
+          <MoleculeImage :base-url="safe(item.default_image)" class="max-h-[620px] md:w-[656px] md:h-[645px] object-cover w-full " />
         </template>
       </ElementSlideView>
     </template>
