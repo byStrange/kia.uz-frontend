@@ -64,6 +64,7 @@ export interface News extends CommonMediaModel {
   title: string
   content: HtmlText
   type: 'news' | 'review'
+  slug: 'string'
   subtitle: string
   video_url: string
 }

@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const { src } = useUploadcareSource()
+const route = useRoute()
+const { data: pageData } = await useFetch(`/api/news/${route.params.slug}`)
+
 definePageMeta({
   lockHover: true
 })
@@ -15,9 +18,7 @@ definePageMeta({
       <UIContainer class="relative text-primary 2xl:max-w-1.06k 2xl:px-0">
         <div class="space-y-6 pt-12 pb-6 md:space-y-5 md:pt-15 md:pb-7.5 2xl:space-y-4 2xl:pt-10 2xl:pb-8">
           <p class="text-center text-sm md:text-base+">31 Июля 2024</p>
-          <h1 class="text-2xl text-center md:text-4xl 2xl:text-5xl">В Узбекистане стартовали продажи обновленного
-            бизнес-седана Kia
-            К5</h1>
+          <h1 class="text-2xl text-center md:text-4xl 2xl:text-5xl">{{ pageData?.news.title }}</h1>
         </div>
 
         <div class="-mx-page-padding-2 py-6 md:-mx-0 md:py-7.5 2xl:py-8">
