@@ -90,8 +90,8 @@ const footerItems = ref<FooterItem[]>([
       },
 
       {
-        label: 'Новост',
-        to: '/news',
+        label: 'Новости',
+        to: '/media-center',
       },
     ],
   },
