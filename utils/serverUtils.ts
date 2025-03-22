@@ -3,11 +3,11 @@ import type { Model } from "~/server/api/models/[id]/index.get";
 export interface GroupedModels {
   [categoryId: string]: {
     categoryName: string;
-    models: Model[];
+    models: ModelWithLessData[];
   };
 }
 
-export function groupModelsByCategory(models: Model[]): GroupedModels {
+export function groupModelsByCategory(models: ModelWithLessData[]): GroupedModels {
 
   return models.reduce((acc: GroupedModels, model) => {
     const categoryId = model.category.id.toString();

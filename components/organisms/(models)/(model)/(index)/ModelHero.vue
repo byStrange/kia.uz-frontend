@@ -93,13 +93,14 @@ data-label="Hero top" :style="{
         <MoleculeBreadcrumb class="hidden bg-transparent text-white 2xl:block" theme="light" />
         <div class="flex w-full items-start justify-end gap-6 2xl:mt-4.5">
           <AtomButton
-label="Скачать прайс-лист" color="secondary" mode="full"
+:label="$t('common.download_price_list')" color="secondary" mode="full"
             @click="downloadFile(pageData.priceList)" />
           <AtomButton label="Заказать звонок" color="primary" mode="full" />
         </div>
       </div>
 
-      <MoleculeResponsiveImage class="w-full object-cover 2xl:h-full md:h-[73%] model-id_model-hero-img bg-[image:--image] bg-cover" :default-image="pageData.images.defaultImage"
+      <MoleculeResponsiveImage
+class="w-full object-cover 2xl:h-full md:h-[73%] model-id_model-hero-img bg-[image:--image] bg-cover" :default-image="pageData.images.defaultImage"
       :desktop-image="pageData.images.desktopImage" :tablet-image="pageData.images.tabletImage"/>
       <div
 data-label="Hero bottom"
@@ -122,7 +123,7 @@ data-label="Hero bottom"
             <div class="mt-6 space-y-4 md:hidden">
               <AtomButton label="Заказать звонок" color="secondary" mode="full" />
               <AtomButton
-label="Скачать прайс-лист" color="primaryDark" mode="full"
+:label="$t('common.download_price_list')" color="primaryDark" mode="full"
                 @click="downloadFile(pageData.priceList)" />
             </div>
             <div

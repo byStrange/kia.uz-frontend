@@ -1,8 +1,14 @@
 <script setup lang="ts">
-const { src } = useUploadcareSource()
 import { Dialog, Textarea } from 'primevue'
-import { Form, FormField } from '@primevue/forms'
+import { Form, FormField, type FormSubmitEvent } from '@primevue/forms'
 import { AtomInput } from '#components'
+import { zodResolver } from '@primevue/forms/resolvers/zod';
+import { testDriveSchema } from '~/schemas/forms';
+
+const { safe } = useSafeAccessMedia()
+const route = useRoute()
+const { data: pageData } = useFetch(`/api/models/${route.params.id}/test-drive`)
+const resolver = ref(zodResolver(testDriveSchema))
 
 const commonAtomInputProps: Omit<
   InstanceType<typeof AtomInput>['$props'],
@@ -18,6 +24,7 @@ const commonAtomInputProps: Omit<
 const { data: privacyAndTerms } = useFetch('/api/terms')
 
 const isPrivacyDialogVisible = ref(false)
+const showSuccessModal = ref(false)
 
 const initialValues = ref({
   name: '',
@@ -31,6 +38,15 @@ const regionOptions = ref([
   { label: 'Tashkent', value: '1' }
 ])
 
+const onSubmit = ({ values }: FormSubmitEvent) => {
+  $fetch(`/api/models/${route.params.id}/test-drive`, {
+    method: 'post',
+    body: JSON.stringify(values)
+  }).then(() => {
+    showSuccessModal.value = true;
+  })
+}
+
 definePageMeta({
   lockHover: true
 })
@@ -38,6 +54,12 @@ definePageMeta({
 </script>
 <template>
   <UISafeAreaView>
+    <Dialog v-model:visible="showSuccessModal" modal>
+      <template #closeicon>
+        <UICloseIcon class="text-primary md:size-7.5" />
+      </template>
+      <p>Thanks! Your request successfully sent. We will be in touch with you as soon as possible</p>
+    </Dialog>
     <Dialog v-model:visible="isPrivacyDialogVisible" modal :pt="{
       root: '!rounded-none 2xl:h-full 2xl:!max-h-[758px]',
       mask: 'px-3',
@@ -79,41 +101,44 @@ definePageMeta({
       <UIContainer class="2xl:grid 2xl:grid-cols-12 2xl:gap-grid-12-gap">
         <div class="col-span-5">
           <div class="text-primary">
-            <h2 class="text-lg font-semibold py-2 md:py-1 md:text-2xl 2xl:py-0">Seltos</h2>
-            <img class="w-full h-2.5h object-contain" :src="src('ecceba26-a813-413b-8baf-d583ebb944be')"
-              alt="Sel images">
+            <h2 class="text-lg font-semibold py-2 md:py-1 md:text-2xl 2xl:py-0">{{ pageData?.model.name }}</h2>
+            <img class="w-full h-2.5h object-contain" :src="safe(pageData?.model.main_image)" alt="Sel images">
             <div class="space-y-1 py-4 md:flex md:justify-between md:space-y-0 md:py-4.5 2xl:pt-5 2xl:pb-2.5">
-              <p class="text-sm md:text-base">Стоимость авто</p>
-              <p class="font-semibold text-base md:text-lg">от 360 905 000 сум</p>
+              <p class="text-sm md:text-base">{{ $t('common.car_price') }}</p>
+              <p class="font-semibold text-base md:text-lg">{{ $t('prefixes.from', {
+                price:
+                  formatPrice(pageData?.model.starting_price)
+              }) }}</p>
             </div>
           </div>
         </div>
         <div class="col-span-7 2xl:grid 2xl:grid-cols-8">
           <div class="space-y-7.5 2xl:col-start-2 2xl:col-end-8">
             <div class="space-y-1">
-              <h2 class="font-semibold text-sm md:text-base">Ваши контакты</h2>
-              <p class="text-disabled text-sm md:text-base pb-1">Поля, отмеченные *, обязательны для заполнения</p>
+              <h2 class="font-semibold text-sm md:text-base">{{ $t('common_form.your_contacts') }}</h2>
+              <p class="text-disabled text-sm md:text-base pb-1">{{ $t('common_form.fields_required_notice') }}</p>
             </div>
-            <Form :initial-values>
+            <Form :key="showSuccessModal" :initial-values :resolver @submit="onSubmit">
               <div class="space-y-7.5">
-                <FormField name="name" v-slot="$field">
-                  <AtomInput :input-id="$field.props?.name" label="Имя" v-bind="commonAtomInputProps" />
+                <FormField v-slot="$field" name="name">
+                  <AtomInput :input-id="$field.props?.name" :label="$t('common_form.name')"
+                    v-bind="commonAtomInputProps" />
                 </FormField>
-                <FormField name="region" v-slot="$field">
-                  <AtomDropdownInput input-id="region" theme="light" v-model:availableOptions="regionOptions"
-                    placeholder="Город" :float-label="true" />
+                <FormField v-slot="$field" name="region">
+                  <AtomDropdownInput v-model:available-options="regionOptions" input-id="region" theme="light"
+                    :placeholder="$t('common_form.city')" :float-label="true" />
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                     {{ $field?.error?.message }}
                   </p>
                 </FormField>
-                <FormField name="phone" v-slot="$field">
-                  <AtomInput input-id="phone" v-bind="commonAtomInputProps" label="Телефон" />
+                <FormField v-slot="$field" name="phone">
+                  <AtomInput v-bind="commonAtomInputProps" input-id="phone" :label="$t('common_form.phone')" />
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                     {{ $field.error?.message }}
                   </p>
                 </FormField>
                 <FormField v-slot="$field" name="comment">
-                  <Textarea unstyled input-id="comment" placeholder="Ваш комментарий или вопрос"
+                  <Textarea unstyled input-id="comment" :placeholder="$t('common_form.your_comment_or_question')"
                     class="border focus:outline-none resize-none border-disabled hover:border-protection focus:border-primary w-full py-4.5 px-4 text-sm md:text-base+ placeholder:text-caption" />
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                     {{ $field.error.message }}
@@ -122,19 +147,21 @@ definePageMeta({
                 <FormField v-slot="$field" name="agree">
                   <div class="flex gap-x-2">
                     <PrimeCheckbox input-id="agree" binary />
-                    <label for="agree" class="text-xs text-primary md:text-base">Даю согласие на обработку своих
-                      персональных
-                      данных на
-                      условиях, указанных
-                      <button type="button" class="underline" @click="isPrivacyDialogVisible = true">
-                        здесь.
-                      </button></label>
+                    <label for="agree" class="text-xs text-primary md:text-base">
+                      <i18n-t keypath="common_form.consent_personal_data_processing">
+                        <template #button>
+                          <button type="button" class="underline" @click="isPrivacyDialogVisible = true">
+                            {{ $t('common_form.consent_personal_data_processing_button_text') }}
+                          </button>
+                        </template>
+                      </i18n-t>
+                    </label>
                   </div>
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                     {{ $field.error?.message }}
                   </p>
                 </FormField>
-                <AtomButton label="Отправить заявку" type="submit" color="primary" mode="full" />
+                <AtomButton :label="$t('common_form.submit_application')" type="submit" color="primary" mode="full" />
               </div>
             </Form>
           </div>

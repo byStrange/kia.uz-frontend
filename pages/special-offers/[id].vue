@@ -3,17 +3,19 @@ import { DataTable, Column } from 'primevue'
 
 const { paddingTop } = useSafeArea()
 
+const router = useRouter()
+
 const { bounding } = useContainer()
 
 const route = useRoute()
-
-const blocks = ref()
+const { locale } = useI18n()
 
 const { data: pageData } = await useFetch(`/api/special-offers/${route.params.id}`)
 
-onMounted(() => {
-  blocks.value = useHTMLRenderer(pageData.value?.content || '')
-})
+
+const { updateBreadcrumbTitle } = useBreadcrumbs(route, router, locale.value)
+
+updateBreadcrumbTitle(route.fullPath, pageData.value?.title || '')
 </script>
 
 <template>
@@ -35,8 +37,7 @@ onMounted(() => {
         <source :srcset="pageData?.tablet_image" media="(min-width: 768px)" />
         <img class="w-full absolute top-0 left-0 h-2/3 object-cover md:h-full" :src="pageData?.default_image" />
       </picture>
-      <div
-class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2xl:block z-20"
+      <div class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2xl:block z-20"
         :style="{ '--left': bounding.x.value + 'px' }">
         <MoleculeBreadcrumb theme="light" />
       </div>
@@ -50,24 +51,40 @@ class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2x
             {{ pageData?.subtitle }}
           </p>
         </div>
-        <AtomButton label="Заказать обратный звонок" color="secondary" mode="full" class="mt-4 2xl:mt-10" />
+        <a href="tel:1303">
+          <AtomButton label="Заказать обратный звонок" color="secondary" mode="full" class="mt-4 2xl:mt-10" />
+        </a>
       </div>
     </div>
     <UIContainer class="prose pt-10 2xl:pt-20 pb-10 html-rendered-content">
-      <template v-for="(block, index) in blocks">
+      <template v-for="(block, index) in useHTMLRenderer(pageData?.content || '')">
         <div v-if="block.type == 'html'" :key="index + block.type" class="!max-w-[1060px] mx-auto" v-html="block.html">
         </div>
-        <div v-if="block.type == 'link'" :key="index + block.type" class="inline-block">
-          <a :href="block.link">
-            <AtomButton :label="block.text" />
-          </a>
-        </div>
+
+        <template v-if="block.type === 'text'">
+          <div :key="block.type" class="max-w-[1060px] mx-auto">
+            <p class="text-sm md:text-base">{{ block.text }}</p>
+          </div>
+        </template>
+
+        <template v-if="block.type == 'list'">
+          <div :key="block.type" class="max-w-[1060px]">
+            <ul class="space-y-2.5">
+              <li v-for="item in block.items" :key="item" class="text-sm md:text-base">{{ item }}</li>
+            </ul>
+          </div>
+        </template>
+
+        <template v-if="block.type == 'heading'">
+          <div :key="block.type" class="max-w-[1060px] mx-auto">
+            <h1 v-if="block.level == 'h1'" class="text-lg font-semibold md:text-2xl 2xl:text-5xl">{{ block.text }}</h1>
+          </div>
+        </template>
+
         <div v-else-if="block.type == 'table'" :key="index" class="!max-w-[1060px] mx-auto">
-          <DataTable
-:value="block.options.body" striped-rows
+          <DataTable :value="block.options?.body" striped-rows
             :style="{ '--container-width': bounding.width.value + 'px' }">
-            <Column
-v-for="field in block.options.fields" :key="field.field" :field="field.field" :header="field.label"
+            <Column v-for="field in block.options?.fields" :key="field.field" :field="field.field" :header="field.label"
               header-class="min-w-[calc(var(--container-width)/2)] md:min-w-[calc(var(--container-width)/3)] 2xl:min-w-[213px]" />
           </DataTable>
         </div>

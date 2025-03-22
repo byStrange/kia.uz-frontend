@@ -1,5 +1,5 @@
 export const useHTMLRenderer = (htmlString: string) => {
-  if (!import.meta.client) return;
+  if (!import.meta.client) return [];
 
   type TableBlock = {
     type: 'table';
@@ -29,12 +29,17 @@ export const useHTMLRenderer = (htmlString: string) => {
     text: string | null
   }
 
+  type ListBlock = {
+    type: 'list',
+    items: string[]
+  }
+
   type TextBlock = {
     type: 'text',
     text: string | null
   }
 
-  type Block = TableBlock | HtmlBlock | AnchorBlock | ImageBlock | HeadingBlock | TextBlock
+  type Block = TableBlock | HtmlBlock | AnchorBlock | ImageBlock | HeadingBlock | TextBlock | ListBlock
 
   const parser = new DOMParser();
   const blocks: Block[] = []
@@ -42,6 +47,7 @@ export const useHTMLRenderer = (htmlString: string) => {
   const elements = doc.querySelectorAll('body > *:not(:empty)')
   elements.forEach((el) => {
     const img = el.querySelector('img')
+    const list = el.querySelector('ul')
     if (el.localName == 'table') blocks.push({
       type: 'table',
       options: useTableRenderer(el.outerHTML)
@@ -53,6 +59,18 @@ export const useHTMLRenderer = (htmlString: string) => {
         alt: img.alt
       })
     }
+    else if (list) {
+      blocks.push({
+        type: 'list',
+        items: Array.from(list.querySelectorAll('li')).map((li) => li.textContent || '')
+      })
+    }
+    else if (el.localName === 'ul') {
+      blocks.push({
+        type: 'list',
+        items: Array.from(el.querySelectorAll('li')).map((li) => li.textContent || '')
+      })
+    }
     else if (['h1', 'h2', 'h3', 'h4'].includes(el.localName)) {
       blocks.push({
         type: 'heading',
@@ -60,7 +78,7 @@ export const useHTMLRenderer = (htmlString: string) => {
         text: el.textContent
       })
     }
-    else if (el.localName === 'p' && el.querySelector('*') == null) {
+    else if (el.localName === 'p' && el.querySelector('*:not(br)') == null) {
       blocks.push({
         type: 'text',
         text: el.textContent

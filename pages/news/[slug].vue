@@ -41,10 +41,21 @@ onMounted(() => {
           </template>
 
           <template v-if="content.type == 'heading'">
-            <h2 class="text-xl text-center md:text-4xl 2xl:text-2xl">{{ content.text }}</h2>
+            <div :key="content.type"
+              class="py-6 space-y-6 md:py-7.5 md:space-y-8 2xl:py-8 2xl:space-y-8 2xl:max-w-7h 2xl:mx-auto">
+              <h2 class="text-xl md:text-4xl 2xl:text-2xl">{{ content.text }}</h2>
+            </div>
           </template>
-        </template>
 
+          <template v-if="content.type == 'list'">
+            <div :key="content.type" class="pb-6  md:pb-7.5  2xl:pb-8 2xl:space-y-8 2xl:max-w-7h 2xl:mx-auto">
+              <ul class="text-sm list-disc md:text-base+ pl-6">
+                <li v-for="item in content.items" :key="item">{{ item }}</li>
+              </ul>
+            </div>
+          </template>
+
+        </template>
       </UIContainer>
     </UISafeAreaView>
   </div>

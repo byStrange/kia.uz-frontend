@@ -42,14 +42,18 @@ const items = ref([
             'linear-gradient(180deg, rgba(8, 20, 30, 0.4) 0%, rgba(8, 20, 30, 0.589696) 40.99%, #08141E 65.6%)',
         }"></div>
       <picture>
-        <source :srcset="src('baac8213-4129-40cb-ae4f-f601d90e61af', { preview: '1440x492' })
+        <source
+:srcset="src('baac8213-4129-40cb-ae4f-f601d90e61af', { preview: '1440x492' })
           " media="(min-width: 1440px)" />
-        <source :srcset="src('78a7f64a-3b98-4d00-bac1-ae1be3de15bd', { preview: '768x420' })
+        <source
+:srcset="src('78a7f64a-3b98-4d00-bac1-ae1be3de15bd', { preview: '768x420' })
           " media="(min-width: 768px)" />
-        <img class="w-full absolute top-0 left-0 h-2/3 object-cover md:h-auto 2xl:h-full" :src="src('28607f12-4f02-4823-a9d1-afc0edb84f0d', { preview: '375x490' })
+        <img
+class="w-full absolute top-0 left-0 h-2/3 object-cover md:h-auto 2xl:h-full" :src="src('28607f12-4f02-4823-a9d1-afc0edb84f0d', { preview: '375x490' })
           " />
       </picture>
-      <div class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2xl:block z-20"
+      <div
+class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2xl:block z-20"
         :style="{ '--left': bounding.x.value + 'px' }">
         <MoleculeBreadcrumb theme="light" />
       </div>
@@ -80,7 +84,8 @@ const items = ref([
           </div>
 
           <div class="divide-y divide-protection mt-12.5 border-y border-protection">
-            <div v-for="(item, index) in items" :key="item.title"
+            <div
+v-for="(item, index) in items" :key="item.title"
               class="py-5 space-y-2.5 md:grid md:grid-cols-6 md:gap-grid-12-gap md:space-y-0">
               <div class="flex gap-x-4 md:col-span-2">
                 <span class="text-forest-green font-semibold text-sm">0{{ index + 1 }}</span>

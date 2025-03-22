@@ -1,5 +1,3 @@
-
-
 interface BreadcrumbsOptions {
   dynamicTitles?: Record<string, string | Ref<string>>
 }
@@ -20,17 +18,14 @@ const dynamicTitles = ref<Record<string, string>>(
 export const useBreadcrumbs = (
   route: any,
   router: any,
+  locale: string
 ) => {
   const updateBreadcrumbTitle = (path: string, title: string) => {
     dynamicTitles.value[path] = title
   }
-  const _crumbs = ref<any[]>([])
 
-  watch(dynamicTitles, () => {
-    generateCrumb()
-  })
-
-  const generateCrumb = () => {
+  const generateCrumb = computed(() => {
+    const _crumbs = ref<any[]>([])
     const fullPath = route.fullPath
     const params = fullPath.startsWith('/')
       ? fullPath.substring(1).split('/')
@@ -41,16 +36,12 @@ export const useBreadcrumbs = (
       ...router.resolve('/'),
     })
 
-
-
-    const { locale } = useI18n()
-
     let path = ''
 
     params.forEach((param: any) => {
       path = `${path}/${param}`
       const match = router.resolve(path)
-      if (match.name !== null && param !== locale.value && !dynamicTitles.value[path]) {
+      if (match.name !== null && param !== locale) {
         const title = dynamicTitles.value[path] || toTitleCase(param.replace(/-/g, ' '))
         _crumbs.value.push({
           title,
@@ -59,15 +50,13 @@ export const useBreadcrumbs = (
       }
     })
 
-    console.log(dynamicTitles)
+    return _crumbs.value.filter(c => c.title)
+  })
 
-    _crumbs.value = _crumbs.value.filter(c => c.title)
-  }
-
-  generateCrumb()
 
   return {
-    breadcrumbs: _crumbs,
-    updateBreadcrumbTitle
+    breadcrumbs: generateCrumb,
+    updateBreadcrumbTitle,
+    dynamicTitles,
   }
 }

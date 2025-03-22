@@ -1,3 +1,4 @@
+import type { Model } from "~/server/api/models/[id]/index.get"
 export type AbsoluteUrl = string
 export type HtmlText = string
 export type RelativeUrl = string
@@ -69,3 +70,5 @@ export interface News extends CommonMediaModel {
   subtitle: string
   video_url: string
 }
+
+export type ModelWithLessData = Pick<Model, 'name' | 'id' | 'category' | 'main_image' | 'starting_price' | 'slug'>

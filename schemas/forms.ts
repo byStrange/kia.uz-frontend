@@ -76,3 +76,43 @@ export const serviceForm = z.object({
     ),
 
 })
+
+
+export const testDriveSchema = z.object({
+  name: z
+    .string()
+    .optional()
+    .refine(
+      (val) => !val || val.length > 1,
+      'Пожалуйста, введите действительные данные',
+    ),
+
+  phone: z
+    .string()
+    .refine(value => value, 'Поле обязательно для заполнения')
+    .refine(
+      (value) => !value || value.startsWith('+'),
+      'Пожалуйста, напишите его в международном формате (например, с префиксом +998)',
+    )
+    .refine(
+      (value) =>
+        !value ||
+        value
+          .replaceAll(' ', '')
+          .match(/^[+]998([3785]{2}|(20)|(9[013-57-9]))\d{7}$/),
+      'Необходимо ввести правильный номер телефона',
+    ),
+
+  region: z
+    .string()
+    .min(1, 'Поле обязательно для заполнения'),
+
+  comment: z
+    .string()
+    .min(1, 'Поле обязательно для заполнения')
+    .min(25, 'Требуется минимум 25 символов'),
+
+  agree: z.literal(true, {
+    errorMap: () => ({ message: 'Необходимо подтвердить согласие' }),
+  }),
+})

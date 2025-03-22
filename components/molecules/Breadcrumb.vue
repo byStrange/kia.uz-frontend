@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <ul class="flex items-center">
+    <ul class="flex items-center text-primary">
       <li v-for="(crumb, index) in breadcrumbs" :key="index">
         <slot name="item">
           <div v-if="index !== breadcrumbs.length - 1" class="flex items-center">
@@ -46,12 +46,12 @@ defineProps<{ theme: StyleProps['theme'] }>()
 
 const route = useRoute()
 const router = useRouter()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
-const { breadcrumbs } = useBreadcrumbs(route, router)
+const { breadcrumbs } = useBreadcrumbs(route, router, locale.value)
 
 const getBreadcrumbTitle = (crumb: any) => {
-  const translationKey = `common.${crumb.title.toLowerCase()}`
+  const translationKey = `common.${crumb.title.toLowerCase().replaceAll(' ', '_')}`
   const translated = t(translationKey)
 
   // Check if the translation exists and isn't just returning the key
