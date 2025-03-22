@@ -42,31 +42,21 @@ withDefaults(
 )
 </script>
 <template>
-  <FloatLabel
-    variant="in"
-    :class="'theme-' + theme"
-    :pt="{ root: { style: '--p-floatlabel-position-x: 16px' } }"
-  >
-    <InputText
-      v-bind="inputProps"
-      v-model="value"
-      unstyled
-      :input-id="inputId"
-      :pt="{
-        root: (c) => {
-          return {
-            class: [
-              { 'p-filled': c.context.filled },
-              {
-                'p-invalid !border-kia-live-red !text-kia-live-red':
-                  c.props.invalid,
-              },
-              input({ theme, size: { initial: 'default', '2xl': 'large' } }),
-            ],
-          }
-        },
-      }"
-    />
+  <FloatLabel variant="in" :class="'theme-' + theme" :pt="{ root: { style: '--p-floatlabel-position-x: 16px' } }">
+    <InputText v-bind="inputProps" v-model="value" unstyled :input-id="inputId" :pt="{
+      root: (c) => {
+        return {
+          class: [
+            { 'p-filled': c.context.filled },
+            {
+              'p-invalid !border-kia-live-red !text-kia-live-red':
+                c.props.invalid,
+            },
+            input({ theme, size: { initial: 'default', '2xl': 'large' } }),
+          ],
+        }
+      },
+    }" />
     <label :for="inputId" class="!text-caption">{{ label }}</label>
   </FloatLabel>
 </template>

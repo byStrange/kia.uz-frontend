@@ -8,6 +8,7 @@ const router = useRouter()
 const { bounding } = useContainer()
 
 const route = useRoute()
+
 const { locale } = useI18n()
 
 const { data: pageData } = await useFetch(`/api/special-offers/${route.params.id}`)

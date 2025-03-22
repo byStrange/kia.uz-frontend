@@ -5,10 +5,8 @@ import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
 const { bounding } = useContainer()
 const { gsap } = useGsap()
 const { safe } = useSafeAccessMedia()
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const route = useRoute()
-const router = useRouter()
-const { updateBreadcrumbTitle } = useBreadcrumbs(route, router, locale.value)
 
 const pageData = useSharedPageData<ModelLandingPage>()
 
@@ -21,9 +19,6 @@ if (!pageData.value) {
 const footerContent = computed(() => {
   return pageData.value?.model.blocks.find((block) => block.type === 'footerContent')
 })
-
-updateBreadcrumbTitle(route.fullPath, pageData.value?.model.name || '')
-
 
 definePageMeta({
   layout: 'model-layout',
@@ -82,11 +77,11 @@ onMounted(() => {
 
     <OrganismModelThreeSixty :model-name="pageData?.model.name" :colors="pageData?.model.colors || []" />
 
-    <MoleculeSection id="shit" section-title="Варианты Carnival" subtitle="Комплектации"
-      class="bg-background model-id_variants border">
+    <MoleculeSection id="shit" :section-title="$t('common.model_variants', { model: pageData?.model.name })"
+      :subtitle="$t('common.configurations')" class="bg-background model-id_variants border">
       <template #after-title="{ align }">
         <p class="text-[15px] text-primary" :class="align">
-          {{ pageData?.configurations.length }} доступных комплектаций
+          {{ $t('common.available_configurations_count', { count: pageData?.configurations.length }) }}
         </p>
       </template>
 
@@ -107,12 +102,12 @@ onMounted(() => {
               </div>
               <div class="px-6 py-4 2xl:p-8 flex flex-col flex-1">
                 <div>
-                  <b class="text-sm">Двигатель</b>
+                  <b class="text-sm">{{ $t('common.engine') }}</b>
                   <p class="mt-2.5 text-sm">{{ item.engine }}</p>
                 </div>
                 <div class="flex flex-col mt-6 2xl:mt-8 flex-1 justify-between">
                   <div class="pb-5">
-                    <b class="text-sm">Основные опции</b>
+                    <b class="text-sm">{{ $t('common.main_options') }}</b>
                     <div class="mt-2 space-y-2 text-sm">
                       <p v-for="option in item.feature_groups.map((f) => f.features).flat().slice(0, 4)"
                         :key="option.name" class="md:text-base text-sm">
@@ -121,10 +116,12 @@ onMounted(() => {
                     </div>
                   </div>
                   <div class="border-t border-t-protection pt-5">
-                    <button class="flex">
-                      <span class="text-base font-semibold text-primary">Комплектации и цены</span>
-                      <UITickToRight />
-                    </button>
+                    <NuxtLinkLocale :to="`/models/${pageData?.model.slug}/pricing`">
+                      <div class="flex">
+                        <span class="text-base font-semibold text-primary">{{ $t('common.pricing') }}</span>
+                        <UITickToRight />
+                      </div>
+                    </NuxtLinkLocale>
                   </div>
                 </div>
               </div>
@@ -134,15 +131,15 @@ onMounted(() => {
       </ElementSlideView>
       <div
         class="container space-y-3 mt-6 md:grid md:grid-cols-3 md:space-y-0 md:gap-5 2xl:flex 2xl:justify-center 2xl:mt-8 model-id_variants_action-buttons">
-        <AtomButton mode="full" label="Отправить заявку" color="primary" />
-        <AtomButton mode="full" color="secondary" label="Скачать прайс-лист" />
-        <AtomButton mode="full" color="secondary" label="Контакты дилеров" />
+        <AtomButton mode="full" :label="$t('common_form.submit_application')" color="primary" />
+        <AtomButton mode="full" color="secondary" :label="$t('common.download_price_list')" />
+        <AtomButton mode="full" color="secondary" :label="$t('common.contact_dealers')" />
       </div>
     </MoleculeSection>
 
     <OrganismModelBriefSection :blocks="pageData?.model.blocks || []" />
 
-    <MoleculeSection section-title="Видео-обзоры">
+    <MoleculeSection v-if="pageData?.news.length" :section-title="$t('common.video_reviews')">
       <template #title="{ sectionTitle, sectionTitleClass }">
         <h2 :class="[sectionTitleClass, 'mb-6']">{{ sectionTitle }}</h2>
       </template>
