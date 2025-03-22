@@ -73,8 +73,28 @@ useHead({
   ],
 })
 
+
+
 onMounted(() => {
-  new Lenis({ autoRaf: true, overscroll: true })
+  const lenis = new Lenis({ autoRaf: true, overscroll: true })
+
+  function handleAnchorLinks() {
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', (event) => {
+        event.preventDefault()
+        const targetId = anchor.getAttribute('href')
+        if (targetId) {
+          const targetElement = document.querySelector(targetId)
+          if (targetElement) {
+            lenis.scrollTo(targetId)
+          }
+        }
+      })
+    })
+  }
+
+  handleAnchorLinks()
+
   isLoading.value = false
 })
 </script>
