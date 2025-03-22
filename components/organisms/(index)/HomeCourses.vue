@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import type { IndexPageNews } from '~/server/api/indexPage.get';
-
 const { bounding } = useContainer()
 
-defineProps<{ news: IndexPageNews[] }>()
+defineProps<{ news: News[] }>()
 </script>
 <template>
-  <MoleculeSection section-title="Будьте в курсе">
+  <MoleculeSection :section-title="$t('index.be_notified')">
     <template #title="{ sectionTitle, sectionTitleClass }">
       <h1 class="container" :class="sectionTitleClass">
         {{ sectionTitle }}

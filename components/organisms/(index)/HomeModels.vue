@@ -30,10 +30,13 @@ const activeModelIndex = ref(0)
 const pagePadding = useCssVar('--page-padding')
 
 onMounted(() => {
-  modelsThumbSwiper.value?.on('click', (swiper) => {
-    const index = swiper.clickedIndex
-    swiper.slideTo(index)
+  nextTick(() => {
+    modelsThumbSwiper.value?.on('click', (swiper) => {
+      const index = swiper.clickedIndex
+      swiper.slideTo(index)
+    })
   })
+
 })
 </script>
 <template>
@@ -103,7 +106,8 @@ onMounted(() => {
                   </div>
                 </div>
                 <NuxtLinkLocale :to="`/models/${model.slug}/`" :prefetch="false" no-client>
-                  <AtomButton :label="$t('index.more_about_model')" color="primary" mode="full" class="mx-auto mt-4 md:mt-8" />
+                  <AtomButton :label="$t('index.more_about_model')" color="primary" mode="full"
+                    class="mx-auto mt-4 md:mt-8" />
                 </NuxtLinkLocale>
               </div>
             </SwiperSlide>
