@@ -76,7 +76,7 @@ const getIntervalBody = (index: number) => (rowData: any) =>
         <MoleculeBreadcrumb theme="light" />
       </UIContainer>
       <div
-        class="container py-10 md:flex md:flex-col md:justify-between md:items-start 2xl:h-auto 2xl:pt-10 2xl:pb-20 relative z-20 2xl:mt-8">
+        class="container py-10 md:flex md:flex-col md:justify-between md:items-start 2xl:h-auto 2xl:pt-10 2xl:pb-20 relative z-10 2xl:mt-8">
         <div class="text-white space-y-3 md:max-w-5h md:space-y-3 2xl:max-w-7.25h">
           <h1 class="text-2xl md:text-4xl 2xl:text-7xl">
             {{ $t('common.technical_maintenance') }}
