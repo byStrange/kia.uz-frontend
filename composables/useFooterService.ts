@@ -2,95 +2,71 @@ import type { RouteLocationRaw } from 'vue-router'
 
 export type FooterItem =
   | {
-      label: string
-      to: RouteLocationRaw
-      children?: never // Ensures no `children` when `to` is present
-    }
+    label: string
+    to: RouteLocationRaw
+    children?: never // Ensures no `children` when `to` is present
+  }
   | {
-      label: string
-      to?: never // Ensures `to` is not set when `children` is present
-      children: FooterItem[]
-    }
+    label: string
+    to?: never // Ensures `to` is not set when `children` is present
+    children: FooterItem[]
+  }
 const footerItems = ref<FooterItem[]>([
   {
-    label: 'Модели',
+    label: 'common.models',
     to: '/models',
   },
   {
-    label: 'Спецпредложения',
+    label: 'common.special_offers',
     to: '/special-offers',
   },
   {
-    label: 'Дилеры',
+    label: 'common.dealers',
     to: '/dealers',
   },
   {
-    label: 'Владельцам',
+    label: 'common.for_owners',
     to: '#',
   },
   {
-    label: 'Выбор и покупка',
+    label: 'common.select_and_purchase',
     children: [
       {
-        label: 'Запись на тест-драйв',
+        label: 'common.test_drive',
         to: '/models/test-drive',
       },
       {
-        label: 'Трейд-ин',
-        to: '#',
-      },
-      {
-        label: 'Конфигуратор',
-        to: '#',
-      },
-      {
-        label: 'Подбор авто',
-        to: '#',
-      },
-
-      {
-        label: 'Корпоративные продажи',
+        label: 'common.corporate_sales',
         to: '/special-offers/corporate:programmee-trade-in',
       },
     ],
   },
   {
-    label: 'Бренд Kia',
+    label: 'common.brand_kia',
     children: [
       {
-        label: 'Новый бренд Kia',
+        label: 'common.new_brand_kia',
         to: '/branding',
       },
-      { label: 'Дизайн', to: '#' },
-
       {
-        label: 'История Kia',
+        label: 'common.kia_history',
         to: '/history/kia-history',
       },
       {
-        label: 'Технологии',
-        to: '#',
-      },
+        label: 'common.kia_sponsorships',
+        to: '/history/sponsorships'
+      }
     ],
   },
   {
-    label: 'Kia в Узбекистане',
+    label: 'common.kia_in_uzbekistan',
     children: [
       {
-        label: 'О нас',
-        to: '#',
-      },
-      {
-        label: 'Преимущества дистрибьютера',
+        label: 'common.distributor_advantages',
         to: '/distributor-advantages',
       },
       {
-        label: 'Стать дилером',
-        to: '/dealers',
-      },
-
-      {
-        label: 'Новости',
+        label: 'common.news',
         to: '/media-center',
       },
     ],

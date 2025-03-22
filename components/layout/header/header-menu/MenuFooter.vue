@@ -10,19 +10,19 @@ const { headerService } = useHeaderService()
   >
     <div class="container space-y-7.5">
       <div class="space-y-2.5">
-        <h3 class="text-sm+ text-caption">Горячая линия Kia</h3>
+        <h3 class="text-sm+ text-caption">{{ $t('menu.kia_hotline')}}</h3>
         <p class="font-semibold text-primary">
           {{ headerService.phoneLine1 }}
         </p>
       </div>
       <div class="space-y-2.5">
-        <h3 class="text-sm+ text-caption">Информационная линия Kia</h3>
+        <h3 class="text-sm+ text-caption">{{ $t('menu.kia_information_line')}}</h3>
         <p class="font-semibold text-primary">
           {{ headerService.phoneLine2 }}
         </p>
       </div>
       <div class="space-y-2.5">
-        <h3 class="text-sm+ text-caption">Kia в соцсетях</h3>
+        <h3 class="text-sm+ text-caption">{{ $t('menu.kia_in_social_networks')}}</h3>
         <div class="flex gap-2">
           <a
             v-for="item in headerService.socials"

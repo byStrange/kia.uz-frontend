@@ -7,17 +7,13 @@ const commonClasses =
 </script>
 
 <template>
-  <button
-    v-if="item.children?.length"
-    :class="commonClasses"
-    @click="() => (headerService.extendedMenu = item)"
-  >
+  <button v-if="item.children?.length" :class="commonClasses" @click="() => (headerService.extendedMenu = item)">
     <div class="container flex items-center justify-between">
-      {{ item.label }}
+      {{ $t(item.label) }}
       <UITickToRight />
     </div>
   </button>
   <NuxtLinkLocale v-else :class="commonClasses" :to="item.to">
-    <span class="container block">{{item.label}}</span>
+    <span class="container block">{{ $t(item.label) }}</span>
   </NuxtLinkLocale>
 </template>

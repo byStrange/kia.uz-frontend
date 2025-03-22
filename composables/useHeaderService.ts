@@ -24,32 +24,12 @@ const headerItems = ref<HeaderItem[]>([
     to: '#',
     children: [
       {
-        label: 'Авто в наличии',
-        to: '#',
-      },
-      {
-        label: 'common.configurator',
-        to: '#',
-      },
-      {
         label: 'common.test_drive',
         to: '/models/test-drive',
       },
       {
-        label: 'Запрос предложения',
-        to: '#',
-      },
-      {
-        label: 'common.trade_in',
-        to: '#',
-      },
-      {
         label: 'common.corporate_sales',
         to: '/special-offers/corporate:programmee-trade-in',
-      },
-      {
-        label: 'Сравнение авто',
-        to: '#',
       },
     ],
     meta: {
@@ -77,19 +57,19 @@ const headerItems = ref<HeaderItem[]>([
     },
     children: [
       {
-        label: 'Запись на сервис',
+        label: 'common.service_appointment',
         to: '/service',
       },
       {
-        label: 'Запчасти',
+        label: 'common.spare_parts',
         to: '/spare-parts',
       },
       {
-        label: 'Техническое обслуживание',
+        label: 'common.technical_maintenance',
         to: '/owners/technical-maintenance',
       },
       {
-        label: 'Гарантия',
+        label: 'common.warranty',
         to: '/service/warranty',
       },
       {
@@ -97,8 +77,8 @@ const headerItems = ref<HeaderItem[]>([
         to: '/special-offers',
       },
       {
-        label: 'Руководство по эксплуатации',
-        to: '#',
+        label: 'common.user_manual',
+        to: '/service/user-manual',
       },
     ],
   },

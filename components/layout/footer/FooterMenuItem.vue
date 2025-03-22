@@ -4,7 +4,7 @@
     :class="footerMenuItemCommonClasses + ' ' + 'order-1'"
   >
     <div class="flex items-center justify-between" @click.self="openMenu(item)">
-      {{ item.label }}
+      {{ $t(item.label) }}
       <UITickToBottom
         :class="[
           'text-white transition-transform md:hidden',
@@ -31,7 +31,7 @@
           :to="child.to"
           class="font-normal text-disabled py-1.25 w-fit link-hover"
         >
-          {{ child.label }}
+          {{ $t(child.label) }}
         </NuxtLinkLocale>
       </div>
     </div>
