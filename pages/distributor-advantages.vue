@@ -2,22 +2,22 @@
 const { paddingTop } = useSafeArea()
 
 const { bounding } = useContainer()
+const { headerService } = useHeaderService()
 
 const { src } = useUploadcareSource()
 
 const extraNavLinks = [
-  { label: "Гарантия", link: "" },
-  { label: "Адаптация к локальным условиям", link: "" },
-  { label: "Поддержка клиентов", link: "" },
-  { label: "Юридическая чистота", link: "" },
-  { label: "Диагностика", link: "" },
-  { label: "Запчасти", link: "" },
+  { label: "common.warranty", link: "#warranty" },
+  { label: "distributor_advantages.local_adaptation", link: "#local-adaptation" },
+  { label: "distributor_advantages.customer_support", link: "#customer-support" },
+  { label: "common.legal_clarity", link: "#legal-clarity" },
+  { label: "common.diagnostics", link: "#diagnostics" },
+  { label: "common.spare_parts", link: "#spare-parts" },
 ]
 </script>
 
 <template>
   <div>
-
     <div
       class="h-5h overflow-hidden grid place-items-end md:place-items-start md:pt-[--safe-area-padding-top] md:h-[420px] 2xl:h-6h 2xl:place-items-end relative"
       :style="{
@@ -54,8 +54,9 @@ const extraNavLinks = [
       <div
         class="container py-10 md:h-[360px] md:flex md:flex-col md:justify-end md:items-start 2xl:h-auto 2xl:pt-10 2xl:pb-20 relative z-20">
         <div class="text-white space-y-4 md:max-w-5.5h md:space-y-3 2xl:max-w-7.25h">
-          <h1 class="text-3xl md:text-4xl 2xl:text-6xl+">Преимущества официального
-            дистрибьютора</h1>
+          <h1 class="text-3xl md:text-4xl 2xl:text-6xl+">{{ $t('distributor_advantages.official_distributor_benefits')
+            }}
+          </h1>
         </div>
       </div>
     </div>
@@ -64,15 +65,15 @@ const extraNavLinks = [
       class="py-7.5 bg-primary flex gap-x-4 overflow-auto w-full px-[--padding-x] md:gap-x-10 justify-between" :style="{
         '--padding-x': bounding.x.value + 'px'
       }">
-      <NuxtLink to="https://google.com" class="link-hover" v-for="link in extraNavLinks" :key="link.label">
+      <a v-for="link in extraNavLinks" :key="link.label" :href="link.link" class="link-hover">
         <div class="shrink-0 pb-1">
-          <p class="text-base whitespace-nowrap font-semibold text-white">{{ link.label }}</p>
+          <p class="text-base whitespace-nowrap font-semibold text-white">{{ $t(link.label) }}</p>
         </div>
-      </NuxtLink>
+      </a>
     </div>
 
     <div data-label="main">
-      <UISplitLayout direction="left" title="Гарантия">
+      <UISplitLayout id="warranty" direction="left" :title="$t('common.warranty')">
         <template #left="{ sectionTitle, sectionTitleClass }">
           <div class="space-y-5 md:space-y-6 2xl:space-y-10">
             <div>
@@ -83,15 +84,12 @@ const extraNavLinks = [
                 {{ sectionTitle }}
               </h1>
               <p :class="{
-              }" class="text-sm text-primary mt-4 2xl:mt-7.5 split-left__description">Гарантия от производителя
-                предоставляется только на автомобили, поставляемые официальным дистрибьютором. На автомобили,
-                приобретенные у неофициальных дилеров или ввезенные частным образом, гарантия не распространяется.
-                В официальных дилерских центрах установлено профессиональное сервисное оборудование и работают
-                квалифицированные сотрудники. В случае поломки по гарантии, вы можете быть уверены, что ремонт будет
-                выполнен качественно и с использованием оригинальных запчастей и за счет официального дистрибьютора.</p>
+              }" class="text-sm text-primary mt-4 2xl:mt-7.5 split-left__description">
+                {{ $t('distributor_advantages.warranty_desc') }}
+              </p>
 
             </div>
-            <AtomButton label="Подробнее о гарантии" color="secondary" />
+            <AtomLink to="/service/warranty" :label="$t('common.more_about_warranty')" color="secondary" />
           </div>
         </template>
         <template #right>
@@ -102,7 +100,7 @@ const extraNavLinks = [
         </template>
       </UISplitLayout>
 
-      <UIStackAndSplitLayout title="Адаптация к локальным условиям">
+      <UIStackAndSplitLayout id="local-adaptation" :title="$t('distributor_advantages.local_adaptation')">
         <template #left="{ sectionTitle, sectionTitleClass }">
           <h1 :class="[
             sectionTitleClass,
@@ -112,9 +110,7 @@ const extraNavLinks = [
         </template>
 
         <template #right>
-          <p class="text-sm md:text-base+ text-primary">Можно с уверенностью утверждать, что автомобиль от официального
-            дистрибьютора укомплектован и настроен для эксплуатации с учетом местного климата и состояния дорог.
-            Максимум надежности и комфорта на весь срок использования автомобиля.</p>
+          <p class="text-sm md:text-base+ text-primary">{{ $t('distributor_advantages.local_adaptation_desc') }}</p>
         </template>
         <template #bottom>
           <picture>
@@ -125,8 +121,8 @@ const extraNavLinks = [
         </template>
       </UIStackAndSplitLayout>
 
-      <UIStackAndSplitLayout title="Поддержка клиентов" class="bg-background"
-        :classNames="{ bottomContainer: '2xl:!mt-24 md:!mt-20 !mt-10' }">
+      <UIStackAndSplitLayout id="customer-support" :title="$t('distributor_advantages.customer_support')"
+        class="bg-background" :class-names="{ bottomContainer: '2xl:!mt-24 md:!mt-20 !mt-10' }">
         <template #left="{ sectionTitle, sectionTitleClass }">
           <h1 :class="[
             sectionTitleClass,
@@ -136,9 +132,9 @@ const extraNavLinks = [
         </template>
 
         <template #right>
-          <p class="text-sm md:text-base+ text-primary">Официальный дистрибьютор предоставляет клиентам широкую
-            информационную поддержку. Вы можете получить консультацию по любым вопросам, связанным с приобретением и
-            эксплуатацией вашего автомобиля.</p>
+          <p class="text-sm md:text-base+ text-primary">{{
+            $t('distributor_advantages.customer_support_desc')
+          }}</p>
         </template>
         <template #bottom="{ containerClasses }">
           <div :class="containerClasses.container" class="md:flex md:justify-between relative text-primary">
@@ -146,18 +142,18 @@ const extraNavLinks = [
               '--width': `calc(100% - ${bounding.x.value * 2 + 'px'})`
             }"></div>
             <div :class="containerClasses.left" class="space-y-1 2xl:space-y-3">
-              <h2 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">1333</h2>
-              <p class="text-sm md:text-base+">Горячая линия Kia</p>
+              <h2 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">{{ headerService.phoneLine1 }}</h2>
+              <p class="text-sm md:text-base+">{{ $t('menu.kia_hotline') }}</p>
             </div>
             <div :class="containerClasses.right" class="md:!mt-0 mt-5 space-y-1 2xl:space-y-3">
-              <h2 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">+998 71 215-70-07</h2>
-              <p class="text-sm md:text-base+">Информационная линия Kia</p>
+              <h2 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">{{ headerService.phoneLine2 }}</h2>
+              <p class="text-sm md:text-base+">{{ $t('menu.kia_information_line') }}</p>
             </div>
           </div>
         </template>
       </UIStackAndSplitLayout>
 
-      <UISplitLayout title="Юридическая чистота">
+      <UISplitLayout id="legal-clarity" :title="$t('common.legal_clarity')">
         <template #left="{ sectionTitle, sectionTitleClass }">
           <div class="space-y-5 md:space-y-6 2xl:space-y-10">
             <div>
@@ -168,14 +164,12 @@ const extraNavLinks = [
                 {{ sectionTitle }}
               </h1>
               <p :class="{
-              }" class="text-sm text-primary mt-4 2xl:mt-7.5 split-left__description">Покупая новый автомобиль у
-                официального дилера, вы можете быть уверены, что автомобиль прошел все необходимые таможенные процедуры,
-                не находится в угоне и не находится в залоге. При покупке вы получите все необходимые документы.
-                Дилерская сеть контролируется официальным дистрибьютором, а дилер несёт ответственность перед
-                покупателем.</p>
+              }" class="text-sm text-primary mt-4 2xl:mt-7.5 split-left__description">
+                {{ $t("distributor_advantages.legal_clarity_desc") }}
+              </p>
 
             </div>
-            <AtomButton label="К модельному ряду Kia" color="secondary" />
+            <AtomLink to="/models" :label="$t('common.to_kia_models')" color="secondary" />
           </div>
         </template>
         <template #right>
@@ -186,7 +180,7 @@ const extraNavLinks = [
         </template>
       </UISplitLayout>
 
-      <UISplitLayout title="Качественная диагностика" direction="left">
+      <UISplitLayout id="diagnostics" :title="$t('distributor_advantages.diagnostics')" direction="left">
         <template #left="{ sectionTitle, sectionTitleClass }">
           <div class="space-y-5 md:space-y-6 2xl:space-y-10">
             <div>
@@ -197,13 +191,12 @@ const extraNavLinks = [
                 {{ sectionTitle }}
               </h1>
               <p :class="{
-              }" class="text-sm text-primary mt-4 2xl:mt-7.5 split-left__description">Официальные дилеры проводят
-                регулярное техническое обслуживание автомобилей в соответствии с рекомендациями производителя и с
-                использованием специального оборудования. Автомобили, ввезенные в страну не через официального
-                дистрибьютора, имеют отличные характеристики. Диагностика и ремонт могут быть затруднены.</p>
+              }" class="text-sm text-primary mt-4 2xl:mt-7.5 split-left__description">
+                {{ $t('distributor_advantages.diagnostics_desc') }}
+              </p>
 
             </div>
-            <AtomButton label="Записаться на сервис" color="secondary" />
+            <AtomLink to="/service" :label="$t('common.service_appointment')" color="secondary" />
           </div>
         </template>
         <template #right>
@@ -214,7 +207,7 @@ const extraNavLinks = [
         </template>
       </UISplitLayout>
 
-      <UISplitLayout title="Оригинальные запчасти">
+      <UISplitLayout id="spare-parts" :title="$t('distributor_advantages.spare_parts')">
         <template #left="{ sectionTitle, sectionTitleClass }">
           <div class="space-y-5 md:space-y-6 2xl:space-y-10">
             <div>
@@ -225,12 +218,12 @@ const extraNavLinks = [
                 {{ sectionTitle }}
               </h1>
               <p :class="{
-              }" class="text-sm text-primary mt-4 2xl:mt-7.5 split-left__description">Официальный дистрибьютор
-                обеспечивает поставку запасных частей, деталей и комплектующих для профессионального ремонта.
-                Оригинальные запасные части являются залогом высокого качества ремонтных и сервисных работ.</p>
+              }" class="text-sm text-primary mt-4 2xl:mt-7.5 split-left__description">
+                {{ $t('distributor_advantages.spare_parts_desc') }}
+              </p>
 
             </div>
-            <AtomButton label="К запчастям" color="secondary" />
+            <AtomLink to="/spare-parts" :label="$t('common.to_spare_parts')" color="secondary" />
           </div>
         </template>
         <template #right>
@@ -243,6 +236,4 @@ const extraNavLinks = [
     </div>
 
   </div>
-
-
 </template>
