@@ -26,7 +26,7 @@ export const useBreadcrumbs = (
 
   const generateCrumb = computed(() => {
     const _crumbs = ref<any[]>([])
-    const fullPath = route.fullPath
+    const fullPath = route.fullPath.split('#')[0] // Remove hash and everything after it
     const params = fullPath.startsWith('/')
       ? fullPath.substring(1).split('/')
       : fullPath.split('/')
