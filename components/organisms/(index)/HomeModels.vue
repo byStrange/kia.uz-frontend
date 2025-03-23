@@ -62,7 +62,7 @@ onMounted(() => {
           </template>
           <SwiperSlide v-for="model in models" :key="model.name" class="!w-fit">
             <div :class="[
-              'relative w-fit rounded-xl border border-transparent px-1 py-2 transition-colors md:px-1.5 md:py-3',
+              'relative w-fit rounded-xl border border-transparent px-1 py-2 transition-colors md:px-1.5 md:py-3 cursor-pointer',
               {
                 '!border-primary': activeModelIndex === models.indexOf(model),
               },

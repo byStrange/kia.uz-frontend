@@ -30,6 +30,7 @@ watch(pageData, () => {
 })
 
 onMounted(() => {
+  console.log(pageData)
   modelOptions.value = pageData.value?.models.map((model) => ({
     value: model.id,
     label: model.name

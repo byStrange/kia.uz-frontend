@@ -1,25 +1,48 @@
 import type { Model } from "~/server/api/models/[id]/index.get";
 
-export interface GroupedModels {
-  [categoryId: string]: {
-    categoryName: string;
-    models: ModelWithLessData[];
+// Define a generic interface for any item with a category
+export interface ItemWithCategory {
+  category: {
+    id: number | string;
+    name: string;
   };
 }
 
-export function groupModelsByCategory(models: ModelWithLessData[]): GroupedModels {
+// Generic grouped items interface
+export interface GroupedItems<T extends ItemWithCategory> {
+  [categoryId: string]: {
+    categoryName: string;
+    items: T[];
+  };
+}
 
-  return models.reduce((acc: GroupedModels, model) => {
-    const categoryId = model.category.id.toString();
+// Generic grouping function
+export function groupByCategory<T extends ItemWithCategory>(items: T[]): GroupedItems<T> {
+  return items.reduce((acc: GroupedItems<T>, item) => {
+    const categoryId = item.category?.id.toString();
 
     if (!acc[categoryId]) {
       acc[categoryId] = {
-        categoryName: model.category.name,
-        models: []
+        categoryName: item.category?.name,
+        items: []
       };
     }
 
-    acc[categoryId].models.push(model);
+    acc[categoryId].items.push(item);
     return acc;
   }, {});
+}
+
+export const emptySeo: SEO = { seo: { title: '', description: '', keywords: '', }, url: '', name: '' }
+
+export type GroupedModels = GroupedItems<ModelWithLessData>;
+export type GroupedSpecialOffer = GroupedItems<SpecialOffer>;
+
+// If you need to keep the original function names for backwards compatibility:
+export function groupModelsByCategory(models: ModelWithLessData[]): GroupedModels {
+  return groupByCategory(models);
+}
+
+export function groupSpecialOffersByCategory(offers: SpecialOffer[]): GroupedSpecialOffer {
+  return groupByCategory(offers);
 }

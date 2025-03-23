@@ -20,13 +20,15 @@ const tabsContainer = useTemplateRef('tabsContainer')
 
 const runtimeConfig = useRuntimeConfig()
 
-const { data } = await useFetch('/api/dealers')
+const { data } = await useFetch('/api/dealers');
+
 
 const { bounding } = useContainer()
 
 const handlers: Record<string, any> = {
   onFeatureClick: (dealer: Dealer) => {
     tabsContainer.value?.changeTab(0)
+    console.log(dealer.location)
     handlers.onMarkerClick({
       properties: {
         name: dealer.name,
@@ -71,12 +73,12 @@ const generateMarkerTemplate = (name: string, id: string, icon?: string) => {
   iconWrapper.className = 'absolute left-0 -translate-x-1/2'
   iconWrapper.innerHTML = icon || ''
   return `
-    <label class="bg-white rounded-r py-2 pr-2.5 pl-5 relative flex items-center bg-opacity-90 text-primary has-[:checked]:text-forest-green" id="${id}">
-     <input type="radio" name="dealer" value="${id}" class="sr-only hidden">
-     ${iconWrapper.outerHTML}
-     <span class="text-nowrap text-xs text-primary">${name}</span>
-    </label>
-  `
+        <label class="bg-white rounded-r py-2 pr-2.5 pl-5 relative flex items-center bg-opacity-90 text-primary has-[:checked]:text-forest-green" id="${id}">
+            <input type="radio" name="dealer" value="${id}" class="sr-only hidden">
+            ${iconWrapper.outerHTML}
+            <span class="text-nowrap text-xs text-primary">${name}</span>
+        </label>
+    `
 }
 
 function toggleLocationPopover(event: Event) {
@@ -135,13 +137,16 @@ async function initMap() {
   )
 
   const onMarkerClick = (feature: Feature) => {
-    const dealerName = feature.properties.name
-    const result = data.value?.dealers.find((d) => d.name === dealerName)
+    const dealerName = feature.properties.name;
+    const result = data.value?.dealers.find((d) => d.name === dealerName);
+
     map.setLocation({
       center: feature.geometry.coordinates,
       zoom: 15,
-    })
-    if (result) currentSelectedDealer.value = result
+    });
+    if (result) {
+      currentSelectedDealer.value = result;
+    }
   }
 
   handlers.onMarkerClick = onMarkerClick
@@ -174,8 +179,8 @@ async function initMap() {
 
   function generateClusterCircle(length: number, coordinates: any) {
     const template = `
-      <div class="flex items-center justify-center text-xs rounded-full text-white bg-primary w-6 h-6">${length}</div>
-    `
+            <div class="flex items-center justify-center text-xs rounded-full text-white bg-primary w-6 h-6">${length}</div>
+        `
     const circle = document.createElement('div')
 
     circle.classList.add('cl-circle')
@@ -191,21 +196,23 @@ async function initMap() {
     return circle
   }
 
-  const points = data.value?.dealers.map((dealer, i) => {
+  const points = data.value?.dealers.map((dealer) => {
     return {
       type: 'Feature',
-      id: Math.floor(Math.random() * (i + 50) + i * Math.random()),
-      geometry: { coordinates: [dealer.location.lat, dealer.location.lng] },
+      id: dealer.id,
+      geometry: { coordinates: [dealer.location.lng, dealer.location.lat] },
       properties: { name: dealer.name },
     }
-  })
+  }) || [];
+
+  console.log(points)
 
   if (import.meta.client) {
     import('@yandex/ymaps3-clusterer').then(
       ({ YMapClusterer, clusterByGrid }) => {
         const clusterer = new YMapClusterer({
           method: clusterByGrid({ gridSize: 64 }),
-          features: points ? points : [],
+          features: points,
           marker,
           cluster,
         })
@@ -216,15 +223,31 @@ async function initMap() {
 }
 
 onMounted(() => {
-  initMap()
+  nextTick(() => {
+    initMap();
+  })
 })
 
 definePageMeta({
   lockHover: true,
 })
 
+function loadSeo() {
+  useSeoMeta({
+    title: data.value?.seo.title,
+    description: data.value?.seo.description,
+    keywords: data.value?.seo.keywords,
+  })
+}
+
+loadSeo()
+
+watch(data, () => {
+  loadSeo()
+})
+
+
 useHead({
-  title: 'Официальные дилеры Kia',
   script: [
     {
       src: `https://api-maps.yandex.ru/v3/?apikey=${runtimeConfig.public.yandexMapApiKey}&lang=en_US`,
@@ -238,35 +261,21 @@ useHead({
     <div class="container pt-7.5 2xl:pt-6">
       <MoleculeBreadcrumb class="hidden 2xl:block" theme="dark" />
       <h1 class="text-2xl font-semibold text-primary md:text-5xl 2xl:mt-10">
-        Официальные дилеры Kia
+        {{ $t('dealers.offical_kia_dealers') }}
       </h1>
     </div>
 
     <div class="mt-5 2xl:mt-10">
       <Popover ref="locationPopover" unstyled>
-        <div
-          class="bg-white p-5 border w-[--width] md:w-[378px] space-y-10 mt-4"
-          :style="{ '--width': bounding.width.value + 'px' }"
-        >
-          <AtomDropdownInput
-            v-model:selected-option="selectedLocationConfirm"
-            v-model:available-options="availableOptions"
-            :float-label="true"
-            input-id="locationDropdown"
-            placeholder="Ваш город"
-            theme="light"
-            size="large"
-          />
-          <AtomButton
-            label="Сохранить"
-            color="primary"
-            mode="full"
-            class="md:w-full"
-            @click="saveLocation"
-          />
+        <div class="bg-white p-5 border w-[--width] md:w-[378px] space-y-10 mt-4"
+          :style="{ '--width': bounding.width.value + 'px' }">
+          <AtomDropdownInput v-model:selected-option="selectedLocationConfirm"
+            v-model:available-options="availableOptions" :float-label="true" input-id="locationDropdown"
+            :placeholder="$t('dealers.your_city')" theme="light" size="large" />
+          <AtomButton :label="$t('common.save')" color="primary" mode="full" class="md:w-full" @click="saveLocation" />
         </div>
       </Popover>
-      <div class="container">
+      <div class="container hidden">
         <button class="space-x-2.5 flex" @click="toggleLocationPopover">
           <UICompassIcon />
           <span class="text-primary text-base">{{
@@ -275,29 +284,19 @@ useHead({
         </button>
       </div>
 
-      <MoleculeTabsContainer
-        ref="tabsContainer"
-        :tabs="['Карта', 'Списком']"
-        class="mt-7.5"
-        header-container-class="w-fit  mx-0"
-        content-container-class="!px-0 mx-0 !max-w-none !mt-10"
-        :cache="true"
-      >
+      <MoleculeTabsContainer ref="tabsContainer" :tabs="[$t('common.map'), $t('common.list')]" class="mt-7.5"
+        header-container-class="w-fit  mx-0" content-container-class="!px-0 mx-0 !max-w-none !mt-10" :cache="true">
         <template #1>
           <div class="relative">
             <Transition name="slide-fade">
-              <div
-                v-if="currentSelectedDealer"
+              <div v-if="currentSelectedDealer"
                 class="border-2 absolute z-[1000] left-[--x] top-5 border-primary p-7.5 text-primray bg-white w-[--width] 2xl:w-[320px]"
                 :style="{
                   '--width': bounding.width.value + 'px',
                   '--x': bounding.x.value + 'px',
-                }"
-              >
-                <button
-                  class="absolute top-3 right-3 text-primary cursor-pointer"
-                  @click="closeDealerPopover(currentSelectedDealer.name)"
-                >
+                }">
+                <button class="absolute top-3 right-3 text-primary cursor-pointer"
+                  @click="closeDealerPopover(currentSelectedDealer.name)">
                   <UIXIcon class="size-5" />
                 </button>
                 <h1 class="text-base font-semibold 2xl:text-lg">
@@ -326,21 +325,14 @@ useHead({
         <template #2>
           <div class="container pb-10">
             <div class="divide-y divide-protection space-y-7.5">
-              <div
-                v-for="(dealer, index) in data?.dealers"
-                :key="dealer.name"
-                class="md:grid md:grid-cols-2 2xl:grid-cols-12 md:gap-x-grid-12-gap"
-                :class="{ 'pt-7.5': index !== 0 }"
-              >
+              <div v-for="(dealer, index) in data?.dealers" :key="dealer.name"
+                class="md:grid md:grid-cols-2 2xl:grid-cols-12 md:gap-x-grid-12-gap" :class="{ 'pt-7.5': index !== 0 }">
                 <h2 class="font-semibold 2xl:col-span-2 2xl:text-lg">
                   {{ dealer.name }}
                 </h2>
-                <div
-                  class="2xl:col-start-4 2xl:col-end-13 2xl:flex 2xl:justify-between 2xl:items-start"
-                >
+                <div class="2xl:col-start-4 2xl:col-end-13 2xl:flex 2xl:justify-between 2xl:items-start">
                   <div
-                    class="text-primary text-base mt-4 md:mt-0 space-y-2 2xl:flex 2xl:gap-x-grid-12-gap 2xl:space-y-0"
-                  >
+                    class="text-primary text-base mt-4 md:mt-0 space-y-2 2xl:flex 2xl:gap-x-grid-12-gap 2xl:space-y-0">
                     <div class="2xl:w-4h 2xl:space-y-2">
                       <p>{{ dealer.address }}</p>
                       <p class="text-caption">{{ dealer.workingHours }}</p>
@@ -350,13 +342,8 @@ useHead({
                       <span>{{ dealer.phone }}</span>
                     </div>
                   </div>
-                  <AtomButton
-                    label="Показать на карте"
-                    color="primary"
-                    class="mt-5 md:py-2.5 2xl:mt-0"
-                    mode="full"
-                    @click="handlers.onFeatureClick(dealer)"
-                  />
+                  <AtomButton :label="$t('dealers.show_in_maps')" color="primary" class="mt-5 md:py-2.5 2xl:mt-0"
+                    mode="full" @click="handlers.onFeatureClick(dealer)" />
                 </div>
               </div>
             </div>

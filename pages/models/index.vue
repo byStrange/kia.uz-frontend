@@ -5,47 +5,90 @@ const { data: pageData } = useFetch('/api/models/')
 const locale = useLocalePath()
 const { safe } = useSafeAccessMedia()
 
-const availableOptions = ref([
-  { label: 'Carens', value: 'car' },
-  { label: 'Carnival', value: 'carnival' },
-  { label: 'Ceed', value: 'ceed' },
-  { label: 'Ceed GT', value: 'ceed-gt' },
-  { label: 'Ceed SW', value: 'ceed-sw' },
-  { label: 'Carnival', value: 'carnival' },
-  { label: 'Seed', value: 'seed' },
-  { label: 'Seed', value: 'seed' },
-  { label: 'Seed', value: 'seed' },
-  { label: 'Seed', value: 'seed' },
-])
-
+const availableOptions = ref(pageData.value?.models.map((model) => ({ label: model.name, value: model.id })))
 const selectedOption = ref('')
+
+const filteredGroupedModels = computed(() => {
+  if (!selectedOption.value || !pageData.value?.groupedModels) {
+    return pageData.value?.groupedModels || {}
+  }
+
+  const result = {}
+
+  for (const [id, group] of Object.entries(pageData.value.groupedModels)) {
+    const filteredItems = group.items.filter(model => model.id === selectedOption.value)
+
+    if (filteredItems.length > 0) {
+      result[id] = {
+        ...group,
+        items: filteredItems
+      }
+    }
+  }
+
+  return result
+})
+
+// Reset filter function
+const resetFilter = () => {
+  selectedOption.value = ''
+}
+
+function loadSeo() {
+  useHead({
+    title: pageData.value?.seo.title,
+    meta: [
+      { name: 'description', content: pageData.value?.seo.description || '' },
+      { name: 'keywords', content: pageData.value?.seo.keywords || '' }
+    ],
+  })
+
+  console.log(pageData)
+}
+
+loadSeo()
+
+watch(pageData, () => {
+  loadSeo()
+})
 
 definePageMeta({
   lockHover: true,
 })
 </script>
-
 <template>
   <UISafeAreaView class="bg-white">
     <div class="container">
       <MoleculeBreadcrumb class="hidden mt-6 2xl:block" theme="dark" />
       <div class="pt-10 pb-5 md:pt-15 2xl:pt-9">
-        <h1 class="text-3xl font-semibold text-primary md:text-5xl">
-          Все модели Kia
-        </h1>
-        <AtomDropdownInput v-model:selected-option="selectedOption" v-model:available-options="availableOptions"
-          placeholder="Выберите модель" class="mt-4 md:mt-7.5 md:max-w-sm" />
-      </div>
+        <h1 class="text-3xl font-semibold text-primary md:text-5xl">{{ $t('common.kia_all_models') }}</h1>
+        <div class="flex items-center md:mt-7.5 max-w-4h gap-x-4">
+          <div class="flex-grow">
+            <AtomDropdownInput
+v-model:selected-option="selectedOption" v-model:available-options="availableOptions"
+              placeholder="Выберите модель" class="mt-4 md:mt-0 md:max-w-sm" />
 
+          </div>
+          <AtomButton v-if="selectedOption" @click="resetFilter">{{ $t('common.reset_filter') }}</AtomButton>
+        </div>
+      </div>
       <div class="pt-5 pb-10 md:pb-15 2xl:py-20">
-        <div class="space-y-10 md:space-y-12 2xl:space-y-15">
-          <div v-for="[id, group] in Object.entries(pageData?.groupedModels || {})" :key="id">
+        <div v-if="Object.keys(filteredGroupedModels).length === 0" class="text-center py-10">
+          <p class="text-xl text-primary">Модели не найдены</p>
+          <AtomButton @click="resetFilter">
+            Показать все модели
+          </AtomButton>
+        </div>
+        <div v-else class="space-y-10 md:space-y-12 2xl:space-y-15">
+          <div v-for="[id, group] in Object.entries(filteredGroupedModels)" :key="id">
             <h1 class="text-2xl font-semibold text-primary md:text-3xl">
               {{ group.categoryName }}
             </h1>
             <div class="flex-wrap mt-4 md:mt-8 md:flex md:gap-9 2xl:mt-10">
-              <div v-for="model in group.models" :key="model.name" class="max-w-md md:min-w-[310px] md:max-w-[310px]">
-                <img :src="safe(model.main_image)" class="object-cover w-full" />
+              <div v-for="model in group.items" :key="model.name" class="max-w-md md:min-w-[310px] md:max-w-[310px]">
+                <NuxtLinkLocale :to="`/models/${model.slug}`">
+                  <img :src="safe(model.main_image)" class="object-cover w-full" />
+                </NuxtLinkLocale>
                 <div class="mt-4">
                   <h2 class="text-lg font-semibold text-primary">
                     {{ model.name }}
@@ -55,7 +98,8 @@ definePageMeta({
                     <UIInfoIcon class="text-disabled" />
                   </p>
                 </div>
-                <button class="flex items-center mt-1 link-hover link-hover-dark" :style="{ '--l-bottom': '-2px' }"
+                <button
+class="flex items-center mt-1 link-hover link-hover-dark" :style="{ '--l-bottom': '-2px' }"
                   @click="$router.push(locale(`/models/${model.slug}`))">
                   <span class="text-base font-semibold text-primary">Цены</span>
                   <UITickToRight />

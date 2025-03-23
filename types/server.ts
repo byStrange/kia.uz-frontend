@@ -35,9 +35,14 @@ export type CommonMediaModel = UUIDMixin & TimeStampMixin & ResponsiveImageMixin
 
 export type CommonModel = UUIDMixin & TimeStampMixin
 
+export interface SpecialOfferCategory extends CommonModel {
+  name: string
+}
+
 export interface SpecialOffer extends CommonMediaModel {
   seo: SEO
   title: string
+  category: SpecialOfferCategory | null
   content: HtmlText
   type: 'buy' | 'service'
   slug: string
@@ -61,9 +66,16 @@ export interface ModelBlock extends CommonMediaModel {
   slides: ModelBlockSlide[]
 }
 
+export interface NewsCategory extends CommonModel {
+  name: string
+}
+
+
+
 export interface News extends CommonMediaModel {
   seo: SEO,
   title: string
+  category: NewsCategory | null
   content: HtmlText
   type: 'news' | 'review'
   slug: 'string'
