@@ -2,7 +2,6 @@
 const modelOptions = ref();
 const selectedOption = ref()
 
-
 const { data: pageData } = await useFetch('/api/special-offers')
 
 const typeBuyOffers = computed(() => {
@@ -15,18 +14,10 @@ const typeBuyOffers = computed(() => {
   return data;
 })
 
-function loadSeo() {
-  useSeoMeta({
-    title: pageData.value?.seo.title,
-    description: pageData.value?.seo.description,
-    keywords: pageData.value?.seo.keywords,
-  })
-}
-
-loadSeo()
-
-watch(pageData, () => {
-  loadSeo()
+useSeoMeta({
+  title: pageData.value?.seo.title,
+  description: pageData.value?.seo.description,
+  keywords: pageData.value?.seo.keywords,
 })
 
 onMounted(() => {
@@ -67,8 +58,7 @@ definePageMeta({
 
               <TransitionGroup tag="div" name="list"
                 class="space-y-7.5 pt-10 pb-11 md:grid md:grid-cols-2 md:space-y-0 md:gap-7.5 md:place-content-center 2xl:grid-cols-4">
-                <NuxtLinkLocale v-for="item in typeBuyOffers" :key="item.title"
-                  :to="`/special-offers/${item.slug}`">
+                <NuxtLinkLocale v-for="item in typeBuyOffers" :key="item.title" :to="`/special-offers/${item.slug}`">
                   <div class="w-full max-w-[420px] mx-auto">
                     <div class="mx-auto h-full bg-background">
                       <img :src="item.desktop_image" class="h-[190px] w-full object-cover" loading="lazy" />
@@ -92,8 +82,8 @@ definePageMeta({
           <template #2>
             <div
               class="space-y-7.5 pt-10 pb-11 md:grid md:grid-cols-2 md:space-y-0 md:gap-7.5 md:place-content-center 2xl:grid-cols-4">
-              <NuxtLinkLocale v-for="item in pageData?.offers.filter((offer) => offer.type == 'service')" :key="item.title"
-                :to="`/special-offers/${item.slug}`">
+              <NuxtLinkLocale v-for="item in pageData?.offers.filter((offer) => offer.type == 'service')"
+                :key="item.title" :to="`/special-offers/${item.slug}`">
                 <div class="w-full max-w-[420px] mx-auto">
                   <div class="mx-auto h-full bg-background">
                     <img :src="item.desktop_image" class="h-[190px] w-full object-cover" loading="lazy" />

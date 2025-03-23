@@ -21,6 +21,9 @@ const i18nHead = useLocaleHead()
 // 2xl:inline-flex
 
 useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} - ${config.public.siteName}` : config.public.siteName
+  },
   bodyAttrs: {
     class: 'min-h-full font-body antialiased',
   },
@@ -32,11 +35,10 @@ useHead({
     { charset: 'utf-8' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { name: 'description', content: description },
-    { property: 'og:title', content: title },
     { property: 'og:site_name', content: title },
     { property: 'og:description', content: description },
     { property: 'og:url', content: url },
-    { property: 'og:image', content: '/img/opengraph.jpg' },
+    { property: 'og:image', content: '/img/opengraph.png' },
     { property: 'og:image:width', content: '1200' },
     { property: 'og:image:height', content: '630' },
     { name: 'apple-mobile-web-app-title', content: title },

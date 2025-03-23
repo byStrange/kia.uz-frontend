@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { UIInfoIcon, UITickToRight } from '#components'
+import type { ModelWithLessData } from '~/types/server';
+import type { GroupedItems } from '~/utils/serverUtils';
 
 const { data: pageData } = useFetch('/api/models/')
 const locale = useLocalePath()
@@ -13,7 +15,7 @@ const filteredGroupedModels = computed(() => {
     return pageData.value?.groupedModels || {}
   }
 
-  const result = {}
+  const result: GroupedItems<ModelWithLessData> = {}
 
   for (const [id, group] of Object.entries(pageData.value.groupedModels)) {
     const filteredItems = group.items.filter(model => model.id === selectedOption.value)
@@ -34,22 +36,10 @@ const resetFilter = () => {
   selectedOption.value = ''
 }
 
-function loadSeo() {
-  useHead({
-    title: pageData.value?.seo.title,
-    meta: [
-      { name: 'description', content: pageData.value?.seo.description || '' },
-      { name: 'keywords', content: pageData.value?.seo.keywords || '' }
-    ],
-  })
-
-  console.log(pageData)
-}
-
-loadSeo()
-
-watch(pageData, () => {
-  loadSeo()
+useSeoMeta({
+  title: pageData.value?.seo.title,
+  description: pageData.value?.seo.description,
+  keywords: pageData.value?.seo.keywords,
 })
 
 definePageMeta({
@@ -64,8 +54,7 @@ definePageMeta({
         <h1 class="text-3xl font-semibold text-primary md:text-5xl">{{ $t('common.kia_all_models') }}</h1>
         <div class="flex items-center md:mt-7.5 max-w-4h gap-x-4">
           <div class="flex-grow">
-            <AtomDropdownInput
-v-model:selected-option="selectedOption" v-model:available-options="availableOptions"
+            <AtomDropdownInput v-model:selected-option="selectedOption" v-model:available-options="availableOptions"
               placeholder="Выберите модель" class="mt-4 md:mt-0 md:max-w-sm" />
 
           </div>
@@ -98,8 +87,7 @@ v-model:selected-option="selectedOption" v-model:available-options="availableOpt
                     <UIInfoIcon class="text-disabled" />
                   </p>
                 </div>
-                <button
-class="flex items-center mt-1 link-hover link-hover-dark" :style="{ '--l-bottom': '-2px' }"
+                <button class="flex items-center mt-1 link-hover link-hover-dark" :style="{ '--l-bottom': '-2px' }"
                   @click="$router.push(locale(`/models/${model.slug}`))">
                   <span class="text-base font-semibold text-primary">Цены</span>
                   <UITickToRight />
