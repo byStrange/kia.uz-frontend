@@ -27,6 +27,7 @@ import {
 
 const { src } = useUploadcareSource()
 const { paddingTop } = useSafeArea()
+const { data: pageData } = await useFetch('/api/owners/car-info/warning-indicators')
 
 const indicatorGroups = [
   {
@@ -166,24 +167,29 @@ const indicatorGroups = [
     ],
   },
 ]
+
+
+useSeoMeta({
+  title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
+  description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
+  keywords: () => pageData.value?.seo.keywords || '',
+})
 </script>
 <template>
   <div class="bg-black">
     <div>
       <picture>
-        <source
-:srcset="src('dc1cf959-5d73-40f2-989f-0ff684613b16', { preview: '1440x560' })
+        <source :srcset="src('dc1cf959-5d73-40f2-989f-0ff684613b16', { preview: '1440x560' })
           " media="(min-width: 1440px)" />
 
-        <source
-media="(min-width: 768px)" :srcset="src('393188e3-1559-4ef9-9079-1f1be8106772', { preview: '768x420' })
+        <source media="(min-width: 768px)" :srcset="src('393188e3-1559-4ef9-9079-1f1be8106772', { preview: '768x420' })
           " />
-        <img
-:src="src('ad49fc6a-e846-4096-bacf-3ee441219c46', { preview: '375x260' })
+        <img :src="src('ad49fc6a-e846-4096-bacf-3ee441219c46', { preview: '375x260' })
           " class="w-full h-[260px] md:h-full object-cover" alt="" />
       </picture>
-      <UIContainer
-class="text-white md:absolute md:top-[--safe-area-top] md:w-full py-7.5 md:py-10 2xl:py-0 2xl:pt-6"
+      <UIContainer class="text-white md:absolute md:top-[--safe-area-top] md:w-full py-7.5 md:py-10 2xl:py-0 2xl:pt-6"
         :style="{ '--safe-area-top': paddingTop }">
         <UIDesktopOnly>
           <MoleculeBreadcrumb theme="light" />
@@ -216,7 +222,7 @@ class="text-white md:absolute md:top-[--safe-area-top] md:w-full py-7.5 md:py-10
         <div class="flex gap-2 items-center">
           <div class="w-2 h-2 bg-disabled rounded-full shrink-0"></div>
           <p class="text-sm+ text-caption text-nowrap 2xl:text-wrap 2xl:text-base">{{
-            $t('warning_indicators.readiness_indicators')}}</p>
+            $t('warning_indicators.readiness_indicators') }}</p>
         </div>
       </UIContainer>
 
@@ -227,14 +233,12 @@ class="text-white md:absolute md:top-[--safe-area-top] md:w-full py-7.5 md:py-10
             <p class="text-caption">{{ $t(group.description) }}</p>
           </div>
 
-          <MoleculeAccordion
-:items="group.indicators" :classes="{
+          <MoleculeAccordion :items="group.indicators" :classes="{
             contentContainerExpanded: 'mt-5',
             root: 'mt-9 md:mt-4',
           }">
             <template #header="{ item, toggle, expanded }">
-              <div
-class="py-5 cursor-pointer flex items-center justify-between w-full gap-4 transition-colors" :class="{
+              <div class="py-5 cursor-pointer flex items-center justify-between w-full gap-4 transition-colors" :class="{
                 'border-white border-b-2': expanded,
                 'border-description border-b': !expanded,
               }" @click="toggle">
@@ -253,7 +257,7 @@ class="py-5 cursor-pointer flex items-center justify-between w-full gap-4 transi
               </div>
             </template>
             <template #content="{ content }">
-              <p>{{ $t('warning_indicators.' + content)}}</p>
+              <p>{{ $t('warning_indicators.' + content) }}</p>
             </template>
           </MoleculeAccordion>
         </div>

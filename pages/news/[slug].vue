@@ -1,10 +1,20 @@
 <script setup lang="ts">
-const { src } = useUploadcareSource()
+import { withOptions } from 'tailwindcss/plugin';
+
 const route = useRoute()
+const router = useRouter()
+const { locale } = useI18n()
 const { data: pageData } = await useFetch(`/api/news/${route.params.slug}`)
+const { updateBreadcrumbTitle } = useBreadcrumbs(route, router, locale.value)
+
+updateBreadcrumbTitle(route.fullPath, pageData.value?.news.title || '')
 
 definePageMeta({
   lockHover: true
+})
+
+useSeoMeta({
+  title: () => pageData.value?.news.title || ''
 })
 
 onMounted(() => {
@@ -22,7 +32,7 @@ onMounted(() => {
       </UIContainer>
       <UIContainer class="relative text-primary 2xl:max-w-1.06k 2xl:px-0">
         <div class="space-y-6 pt-12 pb-6 md:space-y-5 md:pt-15 md:pb-7.5 2xl:space-y-4 2xl:pt-10 2xl:pb-8">
-          <p class="text-center text-sm md:text-base+">31 Июля 2024</p>
+          <p class="text-center text-sm md:text-base+">{{ $d(new Date(pageData?.news.created_at || ''))}}</p>
           <h1 class="text-2xl text-center md:text-4xl 2xl:text-5xl">{{ pageData?.news.title }}</h1>
         </div>
 

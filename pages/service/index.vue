@@ -5,6 +5,7 @@ import { Form, FormField, type FormSubmitEvent } from '@primevue/forms'
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 
 const resolver = ref(zodResolver(serviceForm))
+const { data: pageData } = useFetch('/api/service')
 
 const initialValues = ref({
   model: '',
@@ -23,13 +24,11 @@ const regionOptions = ref([
   { label: 'Tashkent', value: '1' }
 ])
 
-const modelOptions = ref([
-  { label: 'Sorento', value: '1' }
-])
+const modelOptions = ref(pageData.value?.models.map((m) => ({ label: m.name, value: m.id })))
 
-const fillialOptions = ref([
-  { label: 'Kia Sergeli', value: '1' }
-])
+const fillialOptions = ref(
+  pageData.value?.dealers.map((d) => ({ label: d.name, value: d.id }))
+)
 
 const typeOfWork = ref([
   { label: 'TO', value: '1' }
@@ -84,7 +83,6 @@ const vDateFormat = {
     if (!input || !input.value) return;
 
     input.classList.add('p-filled');
-    input.value = input.value;
   }
 }
 
@@ -99,8 +97,17 @@ function closeDatePickerPopover() {
 
 const onSubmit = (event: FormSubmitEvent) => {
   touched.value = true;
+  console.log(event.values)
   successfullySent.value = event.valid
 }
+
+useSeoMeta({
+  title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
+  description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
+  keywords: () => pageData.value?.seo.keywords || '',
+})
 
 definePageMeta({
   lockHover: true,
@@ -112,7 +119,7 @@ definePageMeta({
       :style="{
         '--padding-x': bounding.x.value + 'px'
       }">
-      <MoleculeDatePickr v-model="_datePickerValue" @dayChange="closeDatePickerPopover()" />
+      <MoleculeDatePicker v-model="_datePickerValue" @day-change="closeDatePickerPopover()" />
     </Popover>
     <Dialog v-model:visible="isPrivacyDialogVisible" modal :pt="{
       root: '!rounded-none 2xl:h-full 2xl:!max-h-[758px]',
@@ -149,28 +156,28 @@ definePageMeta({
         Запись на сервис</h1>
       <!-- Form -->
       <MoleculeSection v-show="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px]">
-        <Form @submit="onSubmit" :initialValues :resolver class="space-y-12.5 2xl:space-y-16">
+        <Form :initial-values :resolver class="space-y-12.5 2xl:space-y-16" @submit="onSubmit">
 
           <div class="space-y-5">
             <h2 class="font-bold text-base md:text-lg">Данные автомобиля</h2>
 
             <FormField class="flex w-full">
-              <AtomInput inputId="vin_number" label="VIN-номер" v-bind="commonAtomInputProps"
+              <AtomInput input-id="vin_number" label="VIN-номер" v-bind="commonAtomInputProps"
                 class="flex-1 -translate-y-[1px]" />
               <button class="bg-primary size-12 2xl:size-15 text-white flex justify-center items-center">
                 <UITickToRight class="size-5 text-white" />
               </button>
             </FormField>
 
-            <FormField name="model" v-slot="$field">
-              <AtomDropdownInput input-id="model" theme="light" v-model:availableOptions="modelOptions"
+            <FormField v-slot="$field" name="model">
+              <AtomDropdownInput v-model:available-options="modelOptions" input-id="model" theme="light"
                 placeholder="Модельный ряд" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
               </p>
             </FormField>
 
-            <FormField name="issue_year" v-slot="$field">
+            <FormField v-slot="$field" name="issue_year">
               <AtomInput input-id="issue_year" v-bind="commonAtomInputProps" label="Год выпуска" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
@@ -181,16 +188,16 @@ definePageMeta({
           <div class="space-y-5">
             <h2 class="font-bold text-base md:text-lg">Сервисный центр</h2>
 
-            <FormField name="region" v-slot="$field">
-              <AtomDropdownInput input-id="region" theme="light" v-model:availableOptions="regionOptions"
+            <FormField v-slot="$field" name="region">
+              <AtomDropdownInput v-model:available-options="regionOptions" input-id="region" theme="light"
                 placeholder="Город" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
               </p>
             </FormField>
 
-            <FormField name="fillial" v-slot="$field">
-              <AtomDropdownInput input-id="fillial" theme="light" v-model:availableOptions="fillialOptions"
+            <FormField v-slot="$field" name="fillial">
+              <AtomDropdownInput v-model:available-options="fillialOptions" input-id="fillial" theme="light"
                 placeholder="Филиал" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
@@ -198,8 +205,8 @@ definePageMeta({
             </FormField>
 
 
-            <FormField name="work_type" v-slot="$field">
-              <AtomDropdownInput input-id="work_type" theme="light" v-model:availableOptions="typeOfWork"
+            <FormField v-slot="$field" name="work_type">
+              <AtomDropdownInput v-model:available-options="typeOfWork" input-id="work_type" theme="light"
                 placeholder="Тип работы" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
@@ -212,10 +219,10 @@ definePageMeta({
               readonly: true
             }" />
 
-            <FormField name="time" v-slot="$field">
+            <FormField v-slot="$field" name="time">
               <Transition name="slide-fade" mode="in-out">
                 <div v-if="formattedDate">
-                  <div class="grid grid-cols-2 gap-2 md:grid-cols-3" v-if="availableTimes.length">
+                  <div v-if="availableTimes.length" class="grid grid-cols-2 gap-2 md:grid-cols-3">
                     <button v-for="choice in timeChoices" :key="choice"
                       :class="[availableTimes.includes(choice) ? 'text-primary' : 'text-caption']"
                       class="option text-center py-3 text-sm md:text-base md:py-2.5 bg-background has-[:checked]:bg-primary relative has-[:checked]:text-white transition-colors">
@@ -247,7 +254,7 @@ definePageMeta({
               <AtomInput input-id="name" v-bind="commonAtomInputProps" label="Имя" />
             </FormField>
 
-            <FormField name="phone" v-slot="$field">
+            <FormField v-slot="$field" name="phone">
               <AtomInput input-id="phone" v-bind="commonAtomInputProps" label="Телефон" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
@@ -274,8 +281,7 @@ definePageMeta({
           </div>
 
 
-          <AtomButton type="submit" label="Записаться" color="primary" mode="full" class="md:w-full 2xl:w-auto"
-             />
+          <AtomButton type="submit" label="Записаться" color="primary" mode="full" class="md:w-full 2xl:w-auto" />
         </Form>
       </MoleculeSection>
 

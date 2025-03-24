@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 const { bounding } = useContainer()
 
 const props = withDefaults(
@@ -7,10 +7,10 @@ const props = withDefaults(
     isContentFull?: boolean
     isHeaderFull?: boolean
     isHeaderCenter?: boolean
-    headerKey?: string
+    headerKey?: keyof T
     contentContainerClass?: string
     headerContainerClass?: string
-    tabs: string[] | any[]
+    tabs: T[]
     headerClass?: string
     cache?: boolean
     animated?: boolean

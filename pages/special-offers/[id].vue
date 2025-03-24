@@ -17,6 +17,7 @@ const { data: pageData } = await useFetch(`/api/special-offers/${route.params.id
 const { updateBreadcrumbTitle } = useBreadcrumbs(route, router, locale.value)
 
 updateBreadcrumbTitle(route.fullPath, pageData.value?.title || '')
+console.log(useHTMLRenderer(pageData.value?.content))
 </script>
 
 <template>
@@ -53,7 +54,7 @@ updateBreadcrumbTitle(route.fullPath, pageData.value?.title || '')
           </p>
         </div>
         <a href="tel:1303">
-          <AtomButton label="Заказать обратный звонок" color="secondary" mode="full" class="mt-4 2xl:mt-10" />
+          <AtomButton :label="$t('common.request_a_callback')" color="secondary" mode="full" class="mt-4 2xl:mt-10" />
         </a>
       </div>
     </div>
@@ -78,7 +79,9 @@ updateBreadcrumbTitle(route.fullPath, pageData.value?.title || '')
 
         <template v-if="block.type == 'heading'">
           <div :key="block.type" class="max-w-[1060px] mx-auto">
-            <h1 v-if="block.level == 'h1'" class="text-lg font-semibold md:text-2xl 2xl:text-5xl">{{ block.text }}</h1>
+            <h1 v-if="block.level == 'h1'" class="text-lg font-semibold md:text-2xl 2xl:text-5xl" v-html="block.text">
+            </h1>
+            <h6 v-if="block.level == 'h6'" class="text-xs md:text-sm text-caption" v-html="block.text"></h6>
           </div>
         </template>
 
@@ -89,7 +92,12 @@ updateBreadcrumbTitle(route.fullPath, pageData.value?.title || '')
               header-class="min-w-[calc(var(--container-width)/2)] md:min-w-[calc(var(--container-width)/3)] 2xl:min-w-[213px]" />
           </DataTable>
         </div>
+
+
+        <div v-else-if="block.type === 'divider'" :key="block.type"
+          class="divider w-full h-[1px] bg-caption 2xl:block opacity-30 left-0 max-w-[1060px] mx-auto"></div>
       </template>
+
 
     </UIContainer>
   </div>

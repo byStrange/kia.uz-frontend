@@ -59,7 +59,7 @@ export const serviceForm = z.object({
   region: z.string().min(1, 'Please choose a region'),
   fillial: z.string().min(1, 'Please choose a fillial'),
   work_type: z.string().min(1, 'Please choose type of work that has to be done'),
-  time: z.boolean(),
+  time: z.string(),
   name: z.string().optional(),
   phone: z.string()
     .refine(

@@ -232,20 +232,13 @@ definePageMeta({
   lockHover: true,
 })
 
-function loadSeo() {
-  useSeoMeta({
-    title: data.value?.seo.title,
-    description: data.value?.seo.description,
-    keywords: data.value?.seo.keywords,
-  })
-}
-
-loadSeo()
-
-watch(data, () => {
-  loadSeo()
+useSeoMeta({
+  title: () => data.value?.seo.title || '',
+  ogTitle: () => data.value?.seo.title || '',
+  description: () => data.value?.seo.description || '',
+  ogDescription: () => data.value?.seo.description || '',
+  keywords: () => data.value?.seo.keywords || '',
 })
-
 
 useHead({
   script: [
@@ -280,7 +273,7 @@ useHead({
           <UICompassIcon />
           <span class="text-primary text-base">{{
             selectedLocation.label
-          }}</span>
+            }}</span>
         </button>
       </div>
 
@@ -310,7 +303,7 @@ useHead({
                     <UIPhoneIcon class="size-5" />
                     <span class="text-xs md:text-base+">{{
                       currentSelectedDealer.phone
-                    }}</span>
+                      }}</span>
                   </div>
                   <p class="text-caption text-xs md:text-sm">
                     {{ currentSelectedDealer.workingHours }}

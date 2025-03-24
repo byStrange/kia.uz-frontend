@@ -1,3 +1,5 @@
+import PDFIcon from "~/components/icons/20x20/PDFIcon.vue";
+
 export const useHTMLRenderer = (htmlString: string) => {
   if (!import.meta.client) return [];
 
@@ -25,7 +27,7 @@ export const useHTMLRenderer = (htmlString: string) => {
 
   type HeadingBlock = {
     type: 'heading',
-    level: 'h1' | 'h2' | 'h3' | 'h4',
+    level: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
     text: string | null
   }
 
@@ -39,16 +41,42 @@ export const useHTMLRenderer = (htmlString: string) => {
     text: string | null
   }
 
-  type Block = TableBlock | HtmlBlock | AnchorBlock | ImageBlock | HeadingBlock | TextBlock | ListBlock
+  type SectionBlock = {
+    type: 'section'
+    blocks: Block[]
+  }
+
+  type DividerBlock = {
+    type: 'divider',
+  }
+
+  type Block = TableBlock | HtmlBlock | AnchorBlock | ImageBlock | HeadingBlock | TextBlock | ListBlock | SectionBlock | DividerBlock
+
+
 
   const parser = new DOMParser();
   const blocks: Block[] = []
   const doc = parser.parseFromString(htmlString, "text/html");
-  const elements = doc.querySelectorAll('body > *:not(:empty)')
+
+  const elements = doc.querySelectorAll('body > *:not(:empty), body > br, body > hr');
   elements.forEach((el) => {
     const img = el.querySelector('img')
     const list = el.querySelector('ul')
-    if (el.localName == 'table') blocks.push({
+    console.log('encountered', el.localName)
+    if (el.classList.contains('section')) {
+      blocks.push({
+        type: 'section',
+        blocks: useHTMLRenderer(el.innerHTML)
+      })
+    }
+
+    else if (el.localName == 'hr') {
+      blocks.push({
+        type: 'divider',
+      })
+    }
+
+    else if (el.localName == 'table') blocks.push({
       type: 'table',
       options: useTableRenderer(el.outerHTML)
     });
@@ -71,7 +99,7 @@ export const useHTMLRenderer = (htmlString: string) => {
         items: Array.from(el.querySelectorAll('li')).map((li) => li.textContent || '')
       })
     }
-    else if (['h1', 'h2', 'h3', 'h4'].includes(el.localName)) {
+    else if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(el.localName)) {
       blocks.push({
         type: 'heading',
         level: el.localName as HeadingBlock['level'],

@@ -1,12 +1,21 @@
 import type { Model } from "../models/[id]/index.get"
 import { useFetchApi } from "~/composables/useFetchApi"
+import { emptySeo } from "~/utils/serverUtils"
 
 export default defineEventHandler(async (event) => {
   const locale = getCookie(event, 'i18n_redirected')
 
   const models = await useFetchApi<Model[]>('/models', locale)
-  const hasUserManual = models.filter((model) => model.user_manual);
-  console.log(hasUserManual)
+  let seo: SEO;
 
-  return { models: hasUserManual }
+  try {
+    seo = await useFetchApi<SEO>('/pags/~service~user-manual', locale)
+  }
+  catch {
+    seo = emptySeo
+  }
+
+  const hasUserManual = models.filter((model) => model.user_manual);
+
+  return { models: hasUserManual, seo: seo['seo'] }
 })

@@ -15,13 +15,14 @@ const typeBuyOffers = computed(() => {
 })
 
 useSeoMeta({
-  title: pageData.value?.seo.title,
-  description: pageData.value?.seo.description,
-  keywords: pageData.value?.seo.keywords,
+  title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
+  description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
+  keywords: () => pageData.value?.seo.keywords || '',
 })
 
 onMounted(() => {
-  console.log(pageData)
   modelOptions.value = pageData.value?.models.map((model) => ({
     value: model.id,
     label: model.name

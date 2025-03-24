@@ -4,18 +4,12 @@ const { src } = useUploadcareSource()
 
 const { data: pageData } = useFetch('/api/indexPage')
 
-function loadSeo() {
-  useSeoMeta({
-    title: pageData.value?.seo.title,
-    description: pageData.value?.seo.description,
-    keywords: pageData.value?.seo.keywords,
-  })
-}
-
-loadSeo()
-
-watch(pageData, () => {
-  loadSeo()
+useSeoMeta({
+  title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
+  description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
+  keywords: () => pageData.value?.seo.keywords || '',
 })
 
 const extraLinksCard = [
@@ -52,12 +46,13 @@ const extraLinksCard = [
         </picture>
         <div class="px-4 py-8 md:w-1/2 md:px-6 2xl:px-12 2xl:py-14">
           <h2 class="text-lg font-semibold text-white md:text-2xl 2xl:text-5xl">
-            {{ $t('index.kia_0_interest')}}
+            {{ $t('index.kia_0_interest') }}
           </h2>
           <p class="mt-2 text-base text-white 2xl:mt-4 md:leading-[24px]">
-            {{ $t('index.kia_flexible_rental')}}
+            {{ $t('index.kia_flexible_rental') }}
           </p>
-          <AtomButton color="secondary" mode="full" :label="$t('common.more')" class="mt-6 md:mt-14 md:leading-[24px]" />
+          <AtomButton color="secondary" mode="full" :label="$t('common.more')"
+            class="mt-6 md:mt-14 md:leading-[24px]" />
         </div>
       </div>
     </div>

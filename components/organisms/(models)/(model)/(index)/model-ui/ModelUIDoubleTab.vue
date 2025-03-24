@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { MoleculeTabsContainer } from '#components'
+import type { DoubleTabBlock } from '../ModelBriefSection.vue';
 const tabRef = useTemplateRef<InstanceType<typeof MoleculeTabsContainer>>('tabsRef')
 
 const sectionRef = useTemplateRef('section')
@@ -57,15 +58,14 @@ onMounted(() => {
 })
 
 
-defineProps<{ section: any }>()
+defineProps<{ section: DoubleTabBlock }>()
 </script>
 <template>
-  <UISplitLayout ref="section" :title="section.title" :subtitle="section.subtitle" :direction="section.direction">
+  <UISplitLayout ref="section" :title="section.title" :subtitle="section.subtitle || ''" :direction="section.direction">
     <template #left="{ sectionTitle, sectionTitleClass, subtitle, subtitleClass }">
       <div>
         <p v-if="section.subtitle" :class="subtitleClass">{{ subtitle }}</p>
-        <h1
-:class="[
+        <h1 :class="[
           sectionTitleClass,
           {
             'mt-2 2xl:mt-2.5': true,
@@ -73,8 +73,7 @@ defineProps<{ section: any }>()
         ]" class="!mb-0">
           {{ sectionTitle }}
         </h1>
-        <p
-:class="{
+        <p :class="{
           'mt-4 2xl:mt-7.5': true,
         }" class="text-sm text-primary">
           Откройте мир инноваций вместе с Kia Carnival — бесспорным лидером в
@@ -83,13 +82,11 @@ defineProps<{ section: any }>()
           гарантирует уверенность на любой дороге. Новый Kia Carnival наполнит
           вашу повседневную жизнь новыми впечатлениями.
         </p>
-        <div
-v-if="section.meta && section.meta.tabs"
+        <div v-if="section.meta && section.meta.tabs"
           class="hidden 2xl:block border-t border-t-protection mt-7.5 pt-7.5">
           <div>
             <ul class="space-y-3.5 text-base ml-3.5 split__list">
-              <li
-v-for="(tab, _index) in section.meta.tabs" :key="_index" class="cursor-pointer" :class="{
+              <li v-for="(tab, _index) in section.meta.tabs" :key="_index" class="cursor-pointer" :class="{
                 'font-semibold list-disc': section.meta.activeTabIndex
                   ? _index === section.meta.activeTabIndex
                   : _index === 0,
@@ -107,22 +104,20 @@ v-for="(tab, _index) in section.meta.tabs" :key="_index" class="cursor-pointer" 
     </template>
     <template #right>
       <div v-if="section.meta.tabs">
-        <MoleculeTabsContainer
-ref="tabsRef" :is-header-full="true" :is-header-center="false"
+        <MoleculeTabsContainer ref="tabsRef" :is-header-full="true" :is-header-center="false"
           content-container-class="2xl:mt-0 2xl:px-0" header-class="2xl:hidden" header-key="title"
           :tabs="section.meta.tabs">
           <template #1="{ tab }">
             <div
               class="grid grid-cols-3 md:gap-2.5 2xl:flex 2xl:flex-col 2xl:divide-y divide-protection 2xl:gap-0 split__list">
-              <div
-v-for="(item, index) in tab.items" :key="item.label"
+              <div v-for="(item, index) in tab.items" :key="item.label"
                 class="space-y-2 2xl:flex justify-between items-center"
                 :class="index === 0 ? '2xl:pb-10' : '2xl:py-10'">
                 <p class="text-primary text-lg font-semibold">
-                  <span class="2xl:text-9xl">{{ item.count.number }}</span>
+                  <span class="2xl:text-9xl">{{ item.value }}</span>
                   <span class="ml-1 text-xs md:text-sm md:ml-2.5">{{
-                    item.count.unit
-                  }}</span>
+                    item.unit
+                    }}</span>
                 </p>
                 <p class="text-caption text-xs md:text-sm 2xl:max-w-2h">
                   {{ item.label }}
@@ -133,15 +128,14 @@ v-for="(item, index) in tab.items" :key="item.label"
           <template #2="{ tab }">
             <div
               class="grid grid-cols-3 md:gap-2.5 2xl:flex 2xl:flex-col 2xl:divide-y divide-protection 2xl:gap-0 split__list">
-              <div
-v-for="(item, index) in tab.items" :key="item.label"
+              <div v-for="(item, index) in tab.items" :key="item.label"
                 class="space-y-2 2xl:flex justify-between items-center"
                 :class="index === 0 ? '2xl:pb-10' : '2xl:py-10'">
                 <p class="text-primary text-lg font-semibold">
-                  <span class="2xl:text-9xl">{{ item.count.number }}</span>
+                  <span class="2xl:text-9xl">{{ item.value }}</span>
                   <span class="ml-1 text-xs md:text-sm md:ml-2.5">{{
-                    item.count.unit
-                  }}</span>
+                    item.unit
+                    }}</span>
                 </p>
                 <p class="text-caption text-xs md:text-sm 2xl:max-w-2h">
                   {{ item.label }}

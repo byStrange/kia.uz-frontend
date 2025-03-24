@@ -2,12 +2,17 @@
 import { DataTable, Column } from 'primevue'
 
 const { paddingTop } = useSafeArea()
+const { data: pageData } = await useFetch('/api/owners/technical-maintenance')
+
+useSeoMeta({
+  title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
+  description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
+  keywords: () => pageData.value?.seo.keywords || '',
+})
 
 const { src } = useUploadcareSource()
-
-const exampleRow = {
-  month: 'Моторное масло и масляный фильтр *1',
-}
 
 const months = ['6', '12', '18', '24', '30', '36', '42', '48'] // Month intervals
 const maintenanceData = reactive([
@@ -52,14 +57,12 @@ const getIntervalBody = (index: number) => (rowData: any) =>
             'linear-gradient(180deg, #05141F -8.93%, rgba(5, 20, 31, 0) 16.55%), radial-gradient(44.38% 112.58% at 72.19% 50%, rgba(0, 0, 0, 0) 25%, #08141E 100%)',
         }"></div>
       <picture>
-        <source
-:srcset="src('83410439-5208-44d2-bb4e-74771941e38f', {
+        <source :srcset="src('83410439-5208-44d2-bb4e-74771941e38f', {
           crop: '1440x864/0,0',
           preview: '1440x600',
         })
           " media="(min-width: 1440px)" />
-        <source
-:srcset="src('83410439-5208-44d2-bb4e-74771941e38f', {
+        <source :srcset="src('83410439-5208-44d2-bb4e-74771941e38f', {
           crop: '1556x1032/0,0',
           preview: '768x420',
         })
@@ -82,24 +85,23 @@ const getIntervalBody = (index: number) => (rowData: any) =>
             {{ $t('common.technical_maintenance') }}
           </h1>
           <p class="text-base md:text-base+ 2xl:text-lg">
-            {{ $t('technical_maintenance.kia_driving_enjoyment_tips')}}
+            {{ $t('technical_maintenance.kia_driving_enjoyment_tips') }}
           </p>
         </div>
-        <AtomButton
-:label="$t('common.online_booking')" color="secondary" mode="full"
+        <AtomButton :label="$t('common.online_booking')" color="secondary" mode="full"
           class="mt-6 md:mt-7.5 2xl:mt-10" />
       </div>
     </div>
 
     <UIContainer class="py-16 space-y-7.5 md:bg-background md:space-y-8 2xl:py-1h 2xl:space-y-[70px]">
       <h1 class="text-2xl text-center 2xl:text-3xl">
-        {{ $t('technical_maintenance.kia_service_benefits')}}
+        {{ $t('technical_maintenance.kia_service_benefits') }}
       </h1>
       <div class="section-1-content-container">
         <div class="text-primary flex gap-x-9 md:py-3 md:gap-x-6 2xl:py-0">
           <UIServiceIcon />
           <div class="text-base+ border-b border-protection pb-3 flex-1 md:pb-0 md:border-none">
-            <b class="h-12.5 inline-block md:h-auto">{{ $t('technical_maintenance.kia_technical_specialists')}}</b>
+            <b class="h-12.5 inline-block md:h-auto">{{ $t('technical_maintenance.kia_technical_specialists') }}</b>
           </div>
         </div>
 
@@ -107,7 +109,7 @@ const getIntervalBody = (index: number) => (rowData: any) =>
           <UISparePartsIcon />
           <div class="text-base+ border-b border-protection pb-3 flex-1 md:pb-0 md:border-none">
             <b class="h-12.5 inline-block md:h-auto">
-              {{ $t('technical_maintenance.original_parts')}}
+              {{ $t('technical_maintenance.original_parts') }}
             </b>
           </div>
         </div>
@@ -116,7 +118,7 @@ const getIntervalBody = (index: number) => (rowData: any) =>
           <UIEducationalAndMedicalInfoIcon />
           <div class="text-base+ border-b border-protection pb-3 flex-1 md:pb-0 md:border-none">
             <b class="h-12.5 inline-block md:h-auto">
-              {{ $t('technical_maintenance.car_diagnostics')}}
+              {{ $t('technical_maintenance.car_diagnostics') }}
             </b>
           </div>
         </div>
@@ -125,7 +127,7 @@ const getIntervalBody = (index: number) => (rowData: any) =>
           <UIGuaranteeIcon />
           <div class="text-base+ border-b border-protection pb-3 flex-1 md:pb-0 md:border-none">
             <b class="h-12.5 inline-block md:h-auto">
-              {{ $t('technical_maintenance.quality_and_best_price_guarantee')}}
+              {{ $t('technical_maintenance.quality_and_best_price_guarantee') }}
             </b>
           </div>
         </div>
@@ -135,7 +137,7 @@ const getIntervalBody = (index: number) => (rowData: any) =>
     <UIContainer class="py-10 space-y-12.5 md:py-[70px] 2xl:py-1h 2xl:space-y-7.5">
       <div>
         <h1 class="text-2xl 2xl:text-3xl">
-          {{ $t('technical_maintenance.scheduled_maintenance')}}
+          {{ $t('technical_maintenance.scheduled_maintenance') }}
         </h1>
 
         <div class="mt-2.5 2xl:mt-7.5">
