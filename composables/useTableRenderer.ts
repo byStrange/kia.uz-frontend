@@ -45,14 +45,99 @@ export const useTableRenderer = (htmlString: string) => {
     };
   });
 
-  // Parse the data rows using the unique header keys
-  const rows = Array.from(table.querySelectorAll("tbody tr")).map(tr => {
-    const cells = Array.from(tr.querySelectorAll("td")).map(td => td.textContent?.trim());
-    return Object.fromEntries(headers.map((header, index) => [
-      generateFieldKey(header || ''), 
-      cells[index]
-    ]));
+  // Parse the data rows, handling merged cells using rowspans and colspans
+  let rows: Record<string, string | number>[] = [];
+  let previousRowValues: Record<string, any> = {};
+  
+  // Process each row in the table body
+  Array.from(table.querySelectorAll("tbody tr")).forEach((tr, rowIndex) => {
+    const rowData: Record<string, string | number> = {};
+    let cellIndex = 0;
+    
+    // Get all cells in this row
+    const cells = Array.from(tr.querySelectorAll("td"));
+    
+    // Process each header
+    headers.forEach((header, headerIndex) => {
+      const fieldKey = generateFieldKey(header || '');
+      
+      // If we have a cell for this column
+      if (cellIndex < cells.length) {
+        const cell = cells[cellIndex];
+        const cellContent = cell.textContent?.trim() || '';
+        
+        // Check if this is an empty cell that might be part of a merged cell
+        if (cellContent === '') {
+          // Try to use value from previous row if this appears to be a merged cell
+          if (previousRowValues[fieldKey] !== undefined) {
+            rowData[fieldKey] = previousRowValues[fieldKey];
+          } else {
+            rowData[fieldKey] = '';
+          }
+        } else {
+          // This is a regular cell with content
+          rowData[fieldKey] = cellContent;
+          
+          // Store this value for potential use in future rows (merged cells)
+          previousRowValues[fieldKey] = cellContent;
+        }
+        
+        cellIndex++;
+      } else {
+        // If we don't have a cell for this column, use previous value if available
+        rowData[fieldKey] = previousRowValues[fieldKey] || '';
+      }
+    });
+    
+    rows.push(rowData);
+  });
+  
+  // Post-process rows to properly handle hierarchical data
+  // Fill empty cells with values from previous rows for continuity
+  const processedRows = rows.map((row, rowIndex) => {
+    const processedRow = { ...row };
+    
+    // Loop through each field
+    fields.forEach(({ field }) => {
+      // If current cell is empty and we have previous rows
+      if ((!processedRow[field] || processedRow[field] === '') && rowIndex > 0) {
+        // Fill with the most recent non-empty value from previous rows
+        for (let i = rowIndex - 1; i >= 0; i--) {
+          if (rows[i][field] && rows[i][field] !== '') {
+            processedRow[field] = rows[i][field];
+            break;
+          }
+        }
+      }
+    });
+    
+    return processedRow;
   });
 
-  return { fields, body: rows };
+  return { fields, body: processedRows };
+};
+
+// Helper function to normalize table data (if needed)
+export const normalizeTableData = (data: Record<string, any>[]) => {
+  if (!data || data.length === 0) return [];
+  
+  // Process numeric values for calculation
+  return data.map(row => {
+    const normalizedRow = { ...row };
+    
+    // Convert values that appear to be numbers to actual numbers
+    Object.keys(normalizedRow).forEach(key => {
+      const value = normalizedRow[key];
+      
+      if (typeof value === 'string') {
+        // Try to parse numeric values (handles currency formatting)
+        const numericValue = value.replace(/[^\d.-]/g, '');
+        if (/^-?\d+(\.\d+)?$/.test(numericValue)) {
+          normalizedRow[key] = parseFloat(numericValue);
+        }
+      }
+    });
+    
+    return normalizedRow;
+  });
 };
