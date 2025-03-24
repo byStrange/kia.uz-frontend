@@ -53,9 +53,7 @@ console.log(useHTMLRenderer(pageData.value?.content))
             {{ pageData?.subtitle }}
           </p>
         </div>
-        <a href="tel:1303">
-          <AtomButton :label="$t('common.request_a_callback')" color="secondary" mode="full" class="mt-4 2xl:mt-10" />
-        </a>
+          <AtomLink to="/feedback" :label="$t('common.request_a_callback')" color="secondary" mode="full" class="mt-4 2xl:mt-10" />
       </div>
     </div>
     <UIContainer class="prose pt-10 2xl:pt-20 pb-10 html-rendered-content">
