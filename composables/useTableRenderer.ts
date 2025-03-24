@@ -45,76 +45,116 @@ export const useTableRenderer = (htmlString: string) => {
     };
   });
 
+  // Track which cells have rowspan applied and their values
+  const rowspanTracker: Record<number, Record<string, { value: string | number, remainingRows: number }>> = {};
+  
   // Parse the data rows, handling merged cells using rowspans and colspans
-  let rows: Record<string, string | number>[] = [];
-  let previousRowValues: Record<string, any> = {};
+  let rows: Record<string, any>[] = [];
   
   // Process each row in the table body
   Array.from(table.querySelectorAll("tbody tr")).forEach((tr, rowIndex) => {
-    const rowData: Record<string, string | number> = {};
-    let cellIndex = 0;
+    const rowData: Record<string, any> = {};
+    const rowspanData: Record<string, boolean> = {}; // Track fields with rowspan in current row
+    let colIndex = 0;
+    
+    // First apply any active rowspans from previous rows
+    if (rowspanTracker[rowIndex]) {
+      Object.keys(rowspanTracker[rowIndex]).forEach(fieldKey => {
+        const { value, remainingRows } = rowspanTracker[rowIndex][fieldKey];
+        rowData[fieldKey] = value;
+        
+        // Mark this field as having an active rowspan
+        rowspanData[fieldKey] = true;
+        
+        // Update tracker for next row if rowspan continues
+        if (remainingRows > 1) {
+          rowspanTracker[rowIndex + 1] = rowspanTracker[rowIndex + 1] || {};
+          rowspanTracker[rowIndex + 1][fieldKey] = { 
+            value, 
+            remainingRows: remainingRows - 1 
+          };
+        }
+      });
+    }
     
     // Get all cells in this row
     const cells = Array.from(tr.querySelectorAll("td"));
     
-    // Process each header
+    // Process each header/column
     headers.forEach((header, headerIndex) => {
       const fieldKey = generateFieldKey(header || '');
       
+      // Skip if this cell is already filled by a rowspan from a previous row
+      if (rowspanData[fieldKey]) {
+        return;
+      }
+      
       // If we have a cell for this column
-      if (cellIndex < cells.length) {
-        const cell = cells[cellIndex];
+      if (colIndex < cells.length) {
+        const cell = cells[colIndex];
         const cellContent = cell.textContent?.trim() || '';
         
-        // Check if this is an empty cell that might be part of a merged cell
-        if (cellContent === '') {
-          // Try to use value from previous row if this appears to be a merged cell
-          if (previousRowValues[fieldKey] !== undefined) {
-            rowData[fieldKey] = previousRowValues[fieldKey];
-          } else {
-            rowData[fieldKey] = '';
-          }
-        } else {
-          // This is a regular cell with content
-          rowData[fieldKey] = cellContent;
+        // Check for rowspan attribute
+        const rowspan = parseInt(cell.getAttribute('rowspan') || '1', 10);
+        
+        // Add the cell content to the current row
+        rowData[fieldKey] = cellContent;
+        
+        // If this cell has rowspan > 1, track it for future rows
+        if (rowspan > 1) {
+          // Mark this field as having rowspan in the current row
+          rowspanData[fieldKey] = true;
           
-          // Store this value for potential use in future rows (merged cells)
-          previousRowValues[fieldKey] = cellContent;
+          // Setup tracking for subsequent rows
+          for (let i = 1; i < rowspan; i++) {
+            const targetRowIndex = rowIndex + i;
+            rowspanTracker[targetRowIndex] = rowspanTracker[targetRowIndex] || {};
+            rowspanTracker[targetRowIndex][fieldKey] = {
+              value: cellContent,
+              remainingRows: rowspan - i
+            };
+          }
         }
         
-        cellIndex++;
+        colIndex++;
       } else {
-        // If we don't have a cell for this column, use previous value if available
-        rowData[fieldKey] = previousRowValues[fieldKey] || '';
+        // If we don't have a cell for this column (due to colspan in other cells)
+        rowData[fieldKey] = '';
       }
     });
+    
+    // Store which fields have rowspan set
+    rowData._rowspanFields = Object.keys(rowspanData).length > 0 ? rowspanData : undefined;
     
     rows.push(rowData);
   });
   
   // Post-process rows to properly handle hierarchical data
-  // Fill empty cells with values from previous rows for continuity
+  // and ensure all rows have consistent structure
   const processedRows = rows.map((row, rowIndex) => {
     const processedRow = { ...row };
     
-    // Loop through each field
+    // Loop through each field to ensure all fields are present
     fields.forEach(({ field }) => {
-      // If current cell is empty and we have previous rows
-      if ((!processedRow[field] || processedRow[field] === '') && rowIndex > 0) {
-        // Fill with the most recent non-empty value from previous rows
-        for (let i = rowIndex - 1; i >= 0; i--) {
-          if (rows[i][field] && rows[i][field] !== '') {
-            processedRow[field] = rows[i][field];
-            break;
-          }
-        }
+      // If current cell is empty and not part of a rowspan
+      if ((!processedRow[field] || processedRow[field] === '') && 
+          (!processedRow._rowspanFields || !processedRow._rowspanFields[field])) {
+        // Set a default empty value
+        processedRow[field] = '';
       }
     });
     
     return processedRow;
   });
 
-  return { fields, body: processedRows };
+  return { 
+    fields, 
+    body: processedRows,
+    // Add metadata about which fields have rowspan attributes
+    metadata: {
+      hasRowspans: Object.keys(rowspanTracker).length > 0
+    }
+  };
 };
 
 // Helper function to normalize table data (if needed)
@@ -125,8 +165,11 @@ export const normalizeTableData = (data: Record<string, any>[]) => {
   return data.map(row => {
     const normalizedRow = { ...row };
     
+    // Skip non-data properties
+    const dataKeys = Object.keys(normalizedRow).filter(key => !key.startsWith('_'));
+    
     // Convert values that appear to be numbers to actual numbers
-    Object.keys(normalizedRow).forEach(key => {
+    dataKeys.forEach(key => {
       const value = normalizedRow[key];
       
       if (typeof value === 'string') {
