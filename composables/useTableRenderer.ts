@@ -152,7 +152,7 @@ export const useTableRenderer = (htmlString: string) => {
     body: processedRows,
     // Add metadata about which fields have rowspan attributes
     metadata: {
-      hasRowspans: Object.keys(rowspanTracker).length > 0
+      rowspans: Object.keys(rowspanTracker)
     }
   };
 };
