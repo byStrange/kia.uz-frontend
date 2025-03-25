@@ -20,9 +20,10 @@ const themeColour = '#05141F'
 const i18nHead = useLocaleHead()
 // 2xl:inline-flex
 
+
 useHead({
   titleTemplate: (titleChunk) => {
-    return titleChunk ? `${titleChunk} - ${config.public.siteName}` : config.public.siteName
+    return titleChunk ? `${titleChunk} - ${config.public.siteName}` : config.public.siteName;
   },
   bodyAttrs: {
     class: 'min-h-full font-body antialiased',
@@ -49,33 +50,14 @@ useHead({
   ],
   link: [
     ...(i18nHead.value.link || []),
-    {
-      rel: 'apple-touch-icon',
-      sizes: '180x180',
-      href: '/favicon/apple-touch-icon.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '32x32',
-      href: '/favicon/favicon-32x32.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '16x16',
-      href: '/favicon/favicon-16x16.png',
-    },
-    { rel: 'manifest', href: '/site.webmanifest' },
-    {
-      rel: 'mask-icon',
-      href: '/favicon/safari-pinned-tab.svg',
-      color: themeColour,
-    },
+    { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon/apple-touch-icon.png' },
+    { rel: 'icon', type: 'image/png', sizes: '96x96', href: '/favicon/favicon-96x96.png' },
+    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+    { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+    { rel: 'manifest', href: '/favicon/web-app-manifest-512x512.json' },
+    { rel: 'mask-icon', href: '/favicon/favicon.svg', color: themeColour },
   ],
-})
-
-
+});
 
 onMounted(() => {
   const lenis = new Lenis({ autoRaf: true, overscroll: true })
