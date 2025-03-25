@@ -37,7 +37,7 @@ console.log(useHTMLRenderer(pageData.value?.content))
 
         <source :srcset="pageData?.desktop_image" media="(min-width: 1440px)" />
         <source :srcset="pageData?.tablet_image" media="(min-width: 768px)" />
-        <img class="w-full absolute top-0 left-0 h-2/3 object-cover md:h-full" :src="pageData?.default_image" />
+        <img class="w-full object-center absolute top-0 left-0 h-2/3 object-cover md:h-full" :src="pageData?.default_image" />
       </picture>
       <div class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2xl:block z-20"
         :style="{ '--left': bounding.x.value + 'px' }">
