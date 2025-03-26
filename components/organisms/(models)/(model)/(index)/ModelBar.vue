@@ -109,12 +109,6 @@ onMounted(() => {
               <a target="_blank" :href="safe(data.model.brochure)" download class="text-base text-white py-1 link-hover">{{
                 $t('common.brochure') }}</a>
             </li>
-            <li v-if="data?.model.slug">
-              <NuxtLinkLocale :to="`/models/${data.model.slug}/properties`" class="text-base text-white py-1 link-hover"
-                :class="{
-                  hover: is('properties')
-                }">{{ $t('common.properties') }}</NuxtLinkLocale>
-            </li>
             <li class="flex items-center">
               <button class="text-white" @click="toggleDestkopMenu">
                 <UIMoreIcon />
