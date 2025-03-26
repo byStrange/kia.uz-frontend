@@ -4,6 +4,7 @@ import StackAndSplitLayout from '~/components/layout/StackAndSplitLayout.vue';
 
 const { src } = useUploadcareSource()
 const { locale } = useI18n()
+const { bounding } = useContainer()
 
 const { data: pageData } = useAsyncData('seo', () => {
   return useFetchApi<SEO>('/pages/~history~kia-history', locale.value)
@@ -63,8 +64,6 @@ const extraLinksCard = [
 definePageMeta({
   lockHover: true
 })
-
-const { bounding } = useContainer()
 </script>
 <template>
   <UISafeAreaView>
