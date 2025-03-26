@@ -2,10 +2,13 @@
 const { data: pageData } = useFetch('/api/models/test-drive')
 const { safe } = useSafeAccessMedia()
 
+
 useSeoMeta({
-  title: pageData.value?.seo.title,
-  description: pageData.value?.seo.description,
-  keywords: pageData.value?.seo.keywords,
+  title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
+  description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
+  keywords: () => pageData.value?.seo.keywords || '',
 })
 
 definePageMeta({

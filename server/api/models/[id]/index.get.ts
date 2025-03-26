@@ -99,6 +99,7 @@ export interface Model extends CommonMediaModel {
   show_old_prices: boolean,
   is_electric: boolean,
   pre_title: string | null
+  video: string | null
   post_title: string | null
 }
 

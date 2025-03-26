@@ -7,24 +7,26 @@ const logoOffsetLeft = ref(0)
 const logoRef = useTemplateRef('logo')
 
 const { paddingTop } = useSafeArea()
+const { locale } = useI18n()
+
+const { data: pageData } = useAsyncData('seo', () => {
+  return useFetchApi<SEO>('/pages/~branding', locale.value)
+})
+
+useSeoMeta({
+  title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
+  description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
+  keywords: () => pageData.value?.seo.keywords || '',
+})
+
 
 const extraLinksCard = [
   {
-    title: 'Бренд',
-    href: '#',
+    title: 'common.brand',
+    href: '/branding',
     image: src('8701cf69-f335-45be-b0d7-2c939d629d0f', { preview: '1000x664' }),
-  },
-  {
-    title: 'Kia в Узбекистане',
-    href: '#',
-    image: src('907872e6-383c-4eee-8d95-4779a60485ca', { preview: '1000x664' }),
-  },
-  {
-    title: 'Технологии',
-    href: '#',
-    image: src('b3436484-91af-4e8c-9678-d36a564a1a3f', {
-      preview: '1000x664',
-    }),
   },
 ]
 
@@ -351,13 +353,13 @@ section-title="Креативное мышление, инновации и п�
         <div class="flex-center">
           <img :src="src('67ecc4c2-5688-4285-a210-b0e94e4ff141')" alt="${0}" class="w-full" />
           <button class="absolute md:hidden">
-            <UIPlayIcon2 class="text-primary/40"/>
+            <UIPlayIcon2 class="text-primary/40" />
           </button>
         </div>
         <div
           class="md:absolute md:h-[243px] md:flex md:flex-col md:justify-end md:text-white md:text-center 2xl:h-[164px] md:items-center">
           <button class="hidden md:block">
-            <UIPlayIcon2 class="text-primary/40"/>
+            <UIPlayIcon2 class="text-primary/40" />
           </button>
           <h2 class="text-xs font-semibold md:text-2xl md:mt-7.5 2xl:text-3xl">
             Inspired by nature
@@ -451,14 +453,13 @@ v-for="i in 4" :key="i"
       </div>
 
       <MoleculeSection class="bg-white">
-        <h2 class="container text-lg font-semibold text-primary md:text-2xl 2xl:text-3xl">
-          Подробнее о Kia
+        <h2 class="container text-lg font-semibold text-primary md:text-2xl 2xl:text-3xl">{{ $t('index.more_about_kia') }}
         </h2>
         <div
           class="no-scrollbar p-[--padding] mt-6 snap-x space-y-9 overflow-auto 2xl:container md:flex md:gap-x-10 md:space-y-0 2xl:snap-none"
           :style="{ '--padding': `0 ${bounding.x.value}px` }">
-          <div
-v-for="slide in extraLinksCard" :key="slide.title"
+          <NuxtLinkLocale
+v-for="slide in extraLinksCard" :key="slide.title" :to="slide.href"
             class="relative mx-auto flex h-[208px] max-w-[310px] snap-center justify-center md:mx-0 md:w-[310px] md:max-w-none md:shrink-0 2xl:h-[265px] 2xl:w-[400px] 2xl:snap-none">
             <img :src="slide.image" class="h-full" loading="lazy" />
             <div class="absolute bottom-0 z-10 w-full p-4 md:px-7.5 md:py-5">
@@ -466,7 +467,7 @@ v-for="slide in extraLinksCard" :key="slide.title"
                 {{ slide.title }}
               </p>
             </div>
-          </div>
+          </NuxtLinkLocale>
         </div>
       </MoleculeSection>
     </div>

@@ -13,6 +13,8 @@ import Lenis from 'lenis';
 const config = useRuntimeConfig()
 const isLoading = ref(true)
 
+provide('isLoading', isLoading)
+
 const title = config.public.siteName
 const description = 'Официальный сайт KIA в Узбекистане'
 const url = config.public.siteUrl

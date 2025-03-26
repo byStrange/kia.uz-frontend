@@ -2,8 +2,11 @@
 const { paddingTop } = useSafeArea()
 const { src } = useUploadcareSource()
 const { bounding } = useContainer()
+const { locale } = useI18n()
 
-const { data: pageData } = useFetch('/api/service/warranty')
+const { data: pageData } = useAsyncData('seo', () => {
+  return useFetchApi<SEO>('/pages/~service~warranty', locale.value)
+})
 
 useSeoMeta({
   title: () => pageData.value?.seo.title || '',

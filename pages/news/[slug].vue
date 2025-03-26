@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { withOptions } from 'tailwindcss/plugin';
-
 const route = useRoute()
 const router = useRouter()
 const { locale } = useI18n()

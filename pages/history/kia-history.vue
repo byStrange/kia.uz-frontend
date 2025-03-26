@@ -3,6 +3,19 @@ import StackAndSplitLayout from '~/components/layout/StackAndSplitLayout.vue';
 
 
 const { src } = useUploadcareSource()
+const { locale } = useI18n()
+
+const { data: pageData } = useAsyncData('seo', () => {
+  return useFetchApi<SEO>('/pages/~history~kia-history', locale.value)
+})
+
+useSeoMeta({
+  title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
+  description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
+  keywords: () => pageData.value?.seo.keywords || '',
+})
 
 const mainBodyRef = useTemplateRef('mainBody')
 
@@ -41,27 +54,17 @@ const stops = computed<StopPoints>(() => {
 
 const extraLinksCard = [
   {
-    title: 'Бренд',
-    href: '#',
+    title: 'common.branding',
+    href: '/branding',
     image: src('8701cf69-f335-45be-b0d7-2c939d629d0f', { preview: '1000x664' }),
-  },
-  {
-    title: 'Kia в Узбекистане',
-    href: '#',
-    image: src('907872e6-383c-4eee-8d95-4779a60485ca', { preview: '1000x664' }),
-  },
-  {
-    title: 'Технологии',
-    href: '#',
-    image: src('b3436484-91af-4e8c-9678-d36a564a1a3f', {
-      preview: '1000x664',
-    }),
   },
 ]
 
 definePageMeta({
   lockHover: true
 })
+
+const { bounding } = useContainer()
 </script>
 <template>
   <UISafeAreaView>
@@ -73,7 +76,8 @@ definePageMeta({
 
       <picture>
         <source :srcset="src('8a04f460-1c61-4f55-b1d7-25c5324ff150')" media="(min-width: 768px)" />
-        <img :src="src('8a04f460-1c61-4f55-b1d7-25c5324ff150')" alt="kia sponsoring"
+        <img
+:src="src('8a04f460-1c61-4f55-b1d7-25c5324ff150')" alt="kia sponsoring"
           class="w-full md:h-[420px] object-cover 2xl:h-[calc(100vh-var(--header-height))]">
       </picture>
 
@@ -83,7 +87,7 @@ definePageMeta({
 
       <div
         class="relative z-10 py-7.5 container space-y-4 text-primary bg-background md:absolute md:bottom-0 md:bg-transparent md:text-white md:pb-10 2xl:top-15 2xl:pt-2.5">
-        <h1 class="text-2xl md:text-4xl 2xl:text-9xl">История Kia</h1>
+        <h1 class="text-2xl md:text-4xl 2xl:text-9xl">{{ $t('common.kia_history') }}</h1>
         <p class="text-base md:text-base+ 2xl:text-lg">75 лет прогресса и инноваций</p>
       </div>
 
@@ -93,13 +97,15 @@ definePageMeta({
     <div ref="mainBody" class="py-12 md:py-15 2xl:py-1h">
       <div class="relative">
         <div class="center-line-path absolute left-1/2 top-0 w-1px h-full -translate-x-1/2 hidden 2xl:block">
-          <div v-for="stop in stops" :key="stop"
+          <div
+v-for="stop in stops" :key="stop"
             class="stop absolute w-5 h-0.5 bg-forest-green top-[--position-y] -translate-x-1/2 z-[1]"
             :style="{ '--position-y': stop }"></div>
           <div class="center-line absolute w-full h-full bg-protection z-0"></div>
         </div>
 
-        <StackAndSplitLayout :class-names="{
+        <StackAndSplitLayout
+:class-names="{
           'container': 'flex flex-col-reverse !p-0',
           'topContainer': 'row-start-2 row-end-3 2xl:mt-5h md:mt-10 mt-12 2xl:col-start-3 2xl:!col-end-11 relative z-10',
           bottomContainer: 'col-start-3 col-end-11 row-start-1 row-end-2  2xl:!mt-0 !mt-0 2xl:!col-end-11'
@@ -117,12 +123,14 @@ definePageMeta({
               <div class="relative w-full h-full">
                 <picture>
                   <source media="(min-width: 768px)" :srcset="src('809237f7-3b96-4a6f-8902-6226317e048b')" />
-                  <img :src="src('809237f7-3b96-4a6f-8902-6226317e048b', { preview: '313x400' })" alt=""
+                  <img
+:src="src('809237f7-3b96-4a6f-8902-6226317e048b', { preview: '313x400' })" alt=""
                     class="h-full w-full object-cover">
                 </picture>
 
                 <UIBackgroundLayerContainer>
-                  <UIBackgroundLayer :gradient="{
+                  <UIBackgroundLayer
+:gradient="{
                     'default': 'linear-gradient(180deg, rgba(5, 20, 31, 0) 57.64%, rgba(5, 20, 31, 0.481105) 67.74%, #05141F 93.35%), linear-gradient(180deg, rgba(5, 20, 31, 0) 50%, #05141F 100%)',
                     'md': 'linear-gradient(180deg, rgba(5, 20, 31, 0) 57.64%, rgba(5, 20, 31, 0.481105) 67.74%, #05141F 93.35%), linear-gradient(180deg, rgba(5, 20, 31, 0) 50%, #05141F 100%)',
                     '2xl': 'linear-gradient(180deg, rgba(5, 20, 31, 0) 57.64%, rgba(5, 20, 31, 0.481105) 67.74%, #05141F 93.35%)'
@@ -140,7 +148,8 @@ definePageMeta({
           </template>
         </StackAndSplitLayout>
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           rightContainerClass: '!col-span-4 container 2xl:px-0 !col-start-7'
         }">
@@ -154,7 +163,8 @@ definePageMeta({
         </UISplitLayout>
 
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           leftContainerClass: '!col-start-3',
           rightContainerClass: '!mt-0'
@@ -171,7 +181,8 @@ definePageMeta({
           </template>
         </UISplitLayout>
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           rightContainerClass: '!col-span-4 container 2xl:px-0 !col-start-7 !mt-0'
         }">
@@ -188,7 +199,8 @@ definePageMeta({
           </template>
         </UISplitLayout>
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           leftContainerClass: '!col-start-3',
           rightContainerClass: '!mt-0'
@@ -206,7 +218,8 @@ definePageMeta({
         </UISplitLayout>
 
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           rightContainerClass: '!col-span-4 container 2xl:px-0 !col-start-7 !mt-0'
         }">
@@ -225,7 +238,8 @@ definePageMeta({
           </template>
         </UISplitLayout>
 
-        <StackAndSplitLayout :class-names="{
+        <StackAndSplitLayout
+:class-names="{
           'container': 'flex flex-col-reverse !p-0',
           'topContainer': 'row-start-2 row-end-3 2xl:mt-5h md:mt-10 mt-12 2xl:col-start-3 2xl:!col-end-11 relative z-10',
           bottomContainer: 'col-start-3 col-end-11 row-start-1 row-end-2  2xl:!mt-0 !mt-0 2xl:!col-end-11'
@@ -244,12 +258,14 @@ definePageMeta({
               <div class="relative w-full h-full">
                 <picture>
                   <source media="(min-width: 768px)" :srcset="src('809237f7-3b96-4a6f-8902-6226317e048b')" />
-                  <img :src="src('809237f7-3b96-4a6f-8902-6226317e048b', { preview: '313x400' })" alt=""
+                  <img
+:src="src('809237f7-3b96-4a6f-8902-6226317e048b', { preview: '313x400' })" alt=""
                     class="h-full w-full object-cover">
                 </picture>
 
                 <UIBackgroundLayerContainer>
-                  <UIBackgroundLayer :gradient="{
+                  <UIBackgroundLayer
+:gradient="{
                     'default': 'linear-gradient(180deg, rgba(5, 20, 31, 0) 57.64%, rgba(5, 20, 31, 0.481105) 67.74%, #05141F 93.35%), linear-gradient(180deg, rgba(5, 20, 31, 0) 50%, #05141F 100%)',
                     'md': 'linear-gradient(180deg, rgba(5, 20, 31, 0) 57.64%, rgba(5, 20, 31, 0.481105) 67.74%, #05141F 93.35%), linear-gradient(180deg, rgba(5, 20, 31, 0) 50%, #05141F 100%)',
                     '2xl': 'linear-gradient(180deg, rgba(5, 20, 31, 0) 57.64%, rgba(5, 20, 31, 0.481105) 67.74%, #05141F 93.35%)'
@@ -266,7 +282,8 @@ definePageMeta({
           </template>
         </StackAndSplitLayout>
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           rightContainerClass: '!col-span-4 container 2xl:px-0 !col-start-7'
         }">
@@ -285,7 +302,8 @@ definePageMeta({
           </template>
         </UISplitLayout>
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           leftContainerClass: '!col-start-3',
           rightContainerClass: '!mt-0'
@@ -302,7 +320,8 @@ definePageMeta({
           </template>
         </UISplitLayout>
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           rightContainerClass: '!col-span-4 container 2xl:px-0 !col-start-7 !mt-0'
         }">
@@ -318,7 +337,8 @@ definePageMeta({
           </template>
         </UISplitLayout>
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           leftContainerClass: '!col-start-3',
           rightContainerClass: '!mt-0'
@@ -333,7 +353,8 @@ definePageMeta({
           </template>
         </UISplitLayout>
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           rightContainerClass: '!col-span-4 container 2xl:px-0 !col-start-7 !mt-0',
         }">
@@ -348,7 +369,8 @@ definePageMeta({
           </template>
         </UISplitLayout>
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           leftContainerClass: '!col-start-3',
           rightContainerClass: '!mt-0'
@@ -368,7 +390,8 @@ definePageMeta({
         </UISplitLayout>
 
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           rightContainerClass: '!col-span-4 container 2xl:px-0 !col-start-7 !mt-0'
         }">
@@ -383,7 +406,8 @@ definePageMeta({
           </template>
         </UISplitLayout>
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           leftContainerClass: '!col-start-3',
           rightContainerClass: '!mt-0'
@@ -399,7 +423,8 @@ definePageMeta({
           </template>
         </UISplitLayout>
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           rightContainerClass: '!col-span-4 container 2xl:px-0 !col-start-7 !mt-0'
         }">
@@ -416,7 +441,8 @@ definePageMeta({
           </template>
         </UISplitLayout>
 
-        <UISplitLayout :class-names="{
+        <UISplitLayout
+:class-names="{
           containerClass: '!p-0',
           leftContainerClass: '!col-start-3',
           rightContainerClass: '!mt-0'
@@ -443,7 +469,8 @@ definePageMeta({
       <div
         class="no-scrollbar p-[--padding] mt-6 snap-x space-y-9 overflow-auto 2xl:container md:flex md:gap-x-10 md:space-y-0 2xl:snap-none"
         :style="{ '--padding': `0 ${bounding.x.value}px` }">
-        <div v-for="slide in extraLinksCard" :key="slide.title"
+        <div
+v-for="slide in extraLinksCard" :key="slide.title"
           class="relative mx-auto flex h-[208px] max-w-[310px] snap-center justify-center md:mx-0 md:w-[310px] md:max-w-none md:shrink-0 2xl:h-[265px] 2xl:w-[400px] 2xl:snap-none">
           <img :src="slide.image" class="h-full" loading="lazy" />
           <div class="absolute bottom-0 z-10 w-full p-4 md:px-7.5 md:py-5">

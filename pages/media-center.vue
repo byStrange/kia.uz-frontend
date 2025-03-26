@@ -2,10 +2,17 @@
 const options = ref([{ label: 'model', value: 'model' }])
 const selectedOption = ref()
 
-const { src } = useUploadcareSource()
 const { safe } = useSafeAccessMedia()
 const { data } = await useFetch('/api/media-center')
 
+
+useSeoMeta({
+  title: () => data.value?.seo.title || '',
+  ogTitle: () => data.value?.seo.title || '',
+  description: () => data.value?.seo.description || '',
+  ogDescription: () => data.value?.seo.description || '',
+  keywords: () => data.value?.seo.keywords || '',
+})
 
 definePageMeta({
   lockHover: true,

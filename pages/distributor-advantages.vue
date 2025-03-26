@@ -3,6 +3,19 @@ const { paddingTop } = useSafeArea()
 
 const { bounding } = useContainer()
 const { headerService } = useHeaderService()
+const { locale } = useI18n()
+
+const { data: pageData } = useAsyncData('seo', () => {
+  return useFetchApi<SEO>('/pages/~distributor-advantages', locale.value)
+})
+
+useSeoMeta({
+  title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
+  description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
+  keywords: () => pageData.value?.seo.keywords || '',
+})
 
 const { src } = useUploadcareSource()
 
@@ -25,12 +38,14 @@ const extraNavLinks = [
       }">
 
       <UIBackgroundLayerContainer>
-        <UIBackgroundLayer :layer="1" :gradient="{
+        <UIBackgroundLayer
+:layer="1" :gradient="{
           'default': 'linear-gradient(180deg, rgba(5, 20, 31, 0) 50%, #05141F 85.12%), linear-gradient(0deg, rgba(5, 20, 31, 0) 88.93%, #05141F 110%)',
           md: 'radial-gradient(78.36% 75.48% at 67.71% 48.81%, rgba(0, 0, 0, 0) 25%, #08141E 100%), linear-gradient(0deg, rgba(8, 20, 30, 0.2), rgba(8, 20, 30, 0.2))',
           '2xl': 'linear-gradient(180deg, #05141F -8.93%, rgba(5, 20, 31, 0) 16.55%), radial-gradient(44.38% 112.58% at 72.19% 50%, rgba(0, 0, 0, 0) 25%, #08141E 100%)'
         }" />
-        <UIBackgroundLayer :layer="2" :gradient="{
+        <UIBackgroundLayer
+:layer="2" :gradient="{
           'default': 'linear-gradient(180deg, rgba(5, 20, 31, 0) 50%, #05141F 85.12%), linear-gradient(0deg, rgba(5, 20, 31, 0) 88.93%, #05141F 110%)',
           md: '',
           '2xl': ''
@@ -38,15 +53,19 @@ const extraNavLinks = [
       </UIBackgroundLayerContainer>
 
       <picture>
-        <source :srcset="src('3509e846-8c66-46bb-80f9-9095ead5bc07', { preview: '1440x492' })
+        <source
+:srcset="src('3509e846-8c66-46bb-80f9-9095ead5bc07', { preview: '1440x492' })
           " media="(min-width: 1440px)" />
-        <source :srcset="src('486ecb33-97af-4986-8977-897fd7bdd4f6', { preview: '768x420' })
+        <source
+:srcset="src('486ecb33-97af-4986-8977-897fd7bdd4f6', { preview: '768x420' })
           " media="(min-width: 768px)" />
-        <img class="w-full absolute top-0 left-0 h-full object-cover md:h-auto 2xl:h-full" :src="src('76ebd61d-62ed-4f6b-80cf-6128f254e331')
+        <img
+class="w-full absolute top-0 left-0 h-full object-cover md:h-auto 2xl:h-full" :src="src('76ebd61d-62ed-4f6b-80cf-6128f254e331')
           " />
       </picture>
 
-      <div class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2xl:block z-20"
+      <div
+class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2xl:block z-20"
         :style="{ '--left': bounding.x.value + 'px' }">
         <MoleculeBreadcrumb theme="light" />
       </div>
@@ -61,7 +80,8 @@ const extraNavLinks = [
       </div>
     </div>
 
-    <div data-label="Hero bottom navbar"
+    <div
+data-label="Hero bottom navbar"
       class="py-7.5 bg-primary flex gap-x-4 overflow-auto w-full px-[--padding-x] md:gap-x-10 justify-between" :style="{
         '--padding-x': bounding.x.value + 'px'
       }">
@@ -77,13 +97,15 @@ const extraNavLinks = [
         <template #left="{ sectionTitle, sectionTitleClass }">
           <div class="space-y-5 md:space-y-6 2xl:space-y-10">
             <div>
-              <h1 :class="[
+              <h1
+:class="[
                 sectionTitleClass,
                 'mt-2 2xl:mt-2.5',
               ]" class="!mb-0">
                 {{ sectionTitle }}
               </h1>
-              <p :class="{
+              <p
+:class="{
               }" class="text-sm text-primary mt-4 2xl:mt-7.5 split-left__description">
                 {{ $t('distributor_advantages.warranty_desc') }}
               </p>
@@ -94,7 +116,8 @@ const extraNavLinks = [
         </template>
         <template #right>
           <div class="md:container 2xl:max-w-none 2xl:p-0">
-            <img class="max-h-[620px] md:w-[656px] md:mx-auto md:h-[645px] object-cover w-full "
+            <img
+class="max-h-[620px] md:w-[656px] md:mx-auto md:h-[645px] object-cover w-full "
               :src="src('c778d3e6-84ce-4621-b347-98f835972f33', { 'quality': 'lightest' })" />
           </div>
         </template>
@@ -102,7 +125,8 @@ const extraNavLinks = [
 
       <UIStackAndSplitLayout id="local-adaptation" :title="$t('distributor_advantages.local_adaptation')">
         <template #left="{ sectionTitle, sectionTitleClass }">
-          <h1 :class="[
+          <h1
+:class="[
             sectionTitleClass,
           ]" class="!mb-0">
             {{ sectionTitle }}
@@ -121,10 +145,12 @@ const extraNavLinks = [
         </template>
       </UIStackAndSplitLayout>
 
-      <UIStackAndSplitLayout id="customer-support" :title="$t('distributor_advantages.customer_support')"
+      <UIStackAndSplitLayout
+id="customer-support" :title="$t('distributor_advantages.customer_support')"
         class="bg-background" :class-names="{ bottomContainer: '2xl:!mt-24 md:!mt-20 !mt-10' }">
         <template #left="{ sectionTitle, sectionTitleClass }">
-          <h1 :class="[
+          <h1
+:class="[
             sectionTitleClass,
           ]" class="!mb-0">
             {{ sectionTitle }}
@@ -134,11 +160,12 @@ const extraNavLinks = [
         <template #right>
           <p class="text-sm md:text-base+ text-primary">{{
             $t('distributor_advantages.customer_support_desc')
-          }}</p>
+            }}</p>
         </template>
         <template #bottom="{ containerClasses }">
           <div :class="containerClasses.container" class="md:flex md:justify-between relative text-primary">
-            <div class="absolute w-[--width] h-1px bg-protection -top-5 md:-top-10 2xl:-top-12" :style="{
+            <div
+class="absolute w-[--width] h-1px bg-protection -top-5 md:-top-10 2xl:-top-12" :style="{
               '--width': `calc(100% - ${bounding.x.value * 2 + 'px'})`
             }"></div>
             <div :class="containerClasses.left" class="space-y-1 2xl:space-y-3">
@@ -157,13 +184,15 @@ const extraNavLinks = [
         <template #left="{ sectionTitle, sectionTitleClass }">
           <div class="space-y-5 md:space-y-6 2xl:space-y-10">
             <div>
-              <h1 :class="[
+              <h1
+:class="[
                 sectionTitleClass,
                 'mt-2 2xl:mt-2.5',
               ]" class="!mb-0">
                 {{ sectionTitle }}
               </h1>
-              <p :class="{
+              <p
+:class="{
               }" class="text-sm text-primary mt-4 2xl:mt-7.5 split-left__description">
                 {{ $t("distributor_advantages.legal_clarity_desc") }}
               </p>
@@ -174,7 +203,8 @@ const extraNavLinks = [
         </template>
         <template #right>
           <div class="md:container 2xl:max-w-none 2xl:p-0">
-            <img class="max-h-[620px] md:w-[656px] md:mx-auto md:h-[645px] object-cover w-full "
+            <img
+class="max-h-[620px] md:w-[656px] md:mx-auto md:h-[645px] object-cover w-full "
               :src="src('45a1b07e-f311-454c-ab46-becd94d068e7', { 'quality': 'lightest' })" />
           </div>
         </template>
@@ -184,13 +214,15 @@ const extraNavLinks = [
         <template #left="{ sectionTitle, sectionTitleClass }">
           <div class="space-y-5 md:space-y-6 2xl:space-y-10">
             <div>
-              <h1 :class="[
+              <h1
+:class="[
                 sectionTitleClass,
                 'mt-2 2xl:mt-2.5',
               ]" class="!mb-0">
                 {{ sectionTitle }}
               </h1>
-              <p :class="{
+              <p
+:class="{
               }" class="text-sm text-primary mt-4 2xl:mt-7.5 split-left__description">
                 {{ $t('distributor_advantages.diagnostics_desc') }}
               </p>
@@ -201,7 +233,8 @@ const extraNavLinks = [
         </template>
         <template #right>
           <div class="md:container 2xl:max-w-none 2xl:p-0">
-            <img class="max-h-[620px] md:w-[656px] md:mx-auto md:h-[645px] object-cover w-full "
+            <img
+class="max-h-[620px] md:w-[656px] md:mx-auto md:h-[645px] object-cover w-full "
               :src="src('aec8fc8a-d727-416d-8adc-ba52d482fddc', { 'quality': 'lightest' })" />
           </div>
         </template>
@@ -211,13 +244,15 @@ const extraNavLinks = [
         <template #left="{ sectionTitle, sectionTitleClass }">
           <div class="space-y-5 md:space-y-6 2xl:space-y-10">
             <div>
-              <h1 :class="[
+              <h1
+:class="[
                 sectionTitleClass,
                 'mt-2 2xl:mt-2.5',
               ]" class="!mb-0">
                 {{ sectionTitle }}
               </h1>
-              <p :class="{
+              <p
+:class="{
               }" class="text-sm text-primary mt-4 2xl:mt-7.5 split-left__description">
                 {{ $t('distributor_advantages.spare_parts_desc') }}
               </p>
@@ -228,7 +263,8 @@ const extraNavLinks = [
         </template>
         <template #right>
           <div class="md:container 2xl:max-w-none 2xl:p-0">
-            <img class="max-h-[620px] md:w-[656px] md:mx-auto md:h-[645px] object-cover w-full "
+            <img
+class="max-h-[620px] md:w-[656px] md:mx-auto md:h-[645px] object-cover w-full "
               :src="src('074aa58f-e334-4ec8-805e-e31efc8af325', { 'quality': 'lightest' })" />
           </div>
         </template>

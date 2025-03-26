@@ -6,6 +6,8 @@ const { offset } = useContainer()
 const { gsap } = useGsap()
 const { downloadFile } = useDownload()
 
+const video = useTemplateRef('video')
+
 const modelData = useSharedPageData<ModelLandingPage>()
 
 const pageData = computed(() => ({
@@ -72,9 +74,10 @@ const pageAnimations = {
   },
 }
 
-
 onMounted(() => {
   pageAnimations.heroAnimations()
+
+  if (video.value) video.value.play()
 })
 </script>
 <template>
@@ -98,10 +101,17 @@ data-label="Hero top" :style="{
           <AtomButton label="Заказать звонок" color="primary" mode="full" />
         </div>
       </div>
+      <div v-if="modelData?.model.video" class="relative w-full h-full">
+        <video
+ref="video" :src="safe(modelData.model.video)" muted
+          class="h-full object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full" />
 
+      </div>
       <MoleculeResponsiveImage
-class="w-full object-cover 2xl:h-full md:h-[73%] model-id_model-hero-img bg-[image:--image] bg-cover" :default-image="pageData.images.defaultImage"
-      :desktop-image="pageData.images.desktopImage" :tablet-image="pageData.images.tabletImage"/>
+v-else
+        class="w-full object-cover 2xl:h-full md:h-[73%] model-id_model-hero-img bg-[image:--image] bg-cover"
+        :default-image="pageData.images.defaultImage" :desktop-image="pageData.images.desktopImage"
+        :tablet-image="pageData.images.tabletImage" />
       <div
 data-label="Hero bottom"
         class="absolute !left-0 bottom-[31px] z-10 flex w-full items-end justify-center md:!left-auto md:bottom-15 md:justify-start md:pb-0 2xl:bottom-16"

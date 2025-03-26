@@ -2,6 +2,7 @@
 import { useSvgAnnotator } from '~/composables/useSvgAnnotator';
 
 const { src } = useUploadcareSource()
+const { locale } = useI18n()
 const { headerService } = useHeaderService()
 const { svgRef, addConnector, getSvgPoint, connectors, generatePath, removeConnector, opts } = useSvgAnnotator({
   breakPointOffset: 60,
@@ -16,6 +17,18 @@ const { bounding } = useContainer();
 
 const connectorIds = computed(() => {
   return connectors.value.map((c) => c.id);
+})
+
+const { data: pageData } = useAsyncData('seo', () => {
+  return useFetchApi<SEO>('/pages/~spare-parts', locale.value)
+})
+
+useSeoMeta({
+  title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
+  description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
+  keywords: () => pageData.value?.seo.keywords || '',
 })
 
 const screenWidth = ref(0);

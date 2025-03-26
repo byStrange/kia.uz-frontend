@@ -2,24 +2,26 @@
 
 const { src } = useUploadcareSource()
 const { bounding } = useContainer()
+const { locale } = useI18n()
+
+const { data: pageData } = useAsyncData('seo', () => {
+  return useFetchApi<SEO>('/pages/~history~kia-history', locale.value)
+})
+
+useSeoMeta({
+  title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
+  description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
+  keywords: () => pageData.value?.seo.keywords || '',
+})
+
 
 const extraLinksCard = [
   {
-    title: 'Бренд',
-    href: '#',
+    title: 'common.brand',
+    href: '/branding',
     image: src('8701cf69-f335-45be-b0d7-2c939d629d0f', { preview: '1000x664' }),
-  },
-  {
-    title: 'Kia в Узбекистане',
-    href: '#',
-    image: src('907872e6-383c-4eee-8d95-4779a60485ca', { preview: '1000x664' }),
-  },
-  {
-    title: 'Технологии',
-    href: '#',
-    image: src('b3436484-91af-4e8c-9678-d36a564a1a3f', {
-      preview: '1000x664',
-    }),
   },
 ]
 
@@ -37,12 +39,13 @@ definePageMeta({
 
       <picture>
         <source :srcset="src('1f7d6285-aea7-4205-a2a9-01c339c4494e')" media="(min-width: 768px)" />
-        <img :src="src('2e5cd080-9205-4f4b-b2e7-c69bfb15d624')" alt="kia sponsoring"
+        <img
+:src="src('2e5cd080-9205-4f4b-b2e7-c69bfb15d624')" alt="kia sponsoring"
           class="w-full md:h-[420px] object-cover 2xl:h-[calc(100vh-var(--header-height))]">
       </picture>
 
       <div class="container absolute top-0 z-10 py-5">
-        <MoleculeBreadcrumb theme="light"/>
+        <MoleculeBreadcrumb theme="light" />
       </div>
 
       <div
@@ -55,19 +58,22 @@ definePageMeta({
 
     <div class="pt-12">
 
-      <UISplitLayout title="Australian Open" :classNames="{
+      <UISplitLayout
+title="Australian Open" :class-names="{
         'leftContainerClass': '2xl:!col-start-1',
         'rightContainerClass': '!col-start-6 !col-span-7',
         'containerClass': '!py-0 md:!pb-7.5 2xl:!pb-0'
       }">
         <template #left="{ sectionTitle }">
           <div class="2xl:pt-5 2xl:pb-16">
-            <h1 :class="[
+            <h1
+:class="[
               'text-base font-semibold md:text-2xl 2xl:text-lg',
             ]">
               {{ sectionTitle }}
             </h1>
-            <p :class="{
+            <p
+:class="{
             }" class="text-sm md:text-base+ text-primary mt-3 md:mt-5 2xl:mt-10 split-left__description">С момента
               своего первого
               участия
@@ -94,19 +100,22 @@ definePageMeta({
         </template>
       </UISplitLayout>
 
-      <UISplitLayout title="FIFA" :classNames="{
+      <UISplitLayout
+title="FIFA" :class-names="{
         'leftContainerClass': '2xl:!col-start-1',
         'rightContainerClass': '!col-start-6 !col-span-7',
         'containerClass': '!py-0 md:!py-7.5 2xl:!py-0'
       }">
         <template #left="{ sectionTitle }">
           <div class="2xl:pt-5 2xl:pb-16">
-            <h1 :class="[
+            <h1
+:class="[
               'text-base font-semibold md:text-2xl 2xl:text-lg',
             ]">
               {{ sectionTitle }}
             </h1>
-            <p :class="{
+            <p
+:class="{
             }" class="text-sm md:text-base+ text-primary mt-3 md:mt-5 2xl:mt-10 split-left__description">Являясь
               официальным автомобильным партнёром, Kia предоставляет автомобили из своей широкой модельной линейки
               на всех крупнейших мероприятиях под эгидой FIFA. Начало партнёрству было положено в 2006 году во время
@@ -127,19 +136,22 @@ definePageMeta({
         </template>
       </UISplitLayout>
 
-      <UISplitLayout title="Leagues of Legends Европейский чемпионат" :classNames="{
+      <UISplitLayout
+title="Leagues of Legends Европейский чемпионат" :class-names="{
         'leftContainerClass': '2xl:!col-start-1',
         'rightContainerClass': '!col-start-6 !col-span-7',
         'containerClass': '!py-0 md:!pt-7.5 2xl:!pt-0'
       }">
         <template #left="{ sectionTitle }">
           <div class="2xl:pt-5 2xl:pb-16">
-            <h1 :class="[
+            <h1
+:class="[
               'text-base font-semibold md:text-2xl 2xl:text-lg',
             ]">
               {{ sectionTitle }}
             </h1>
-            <p :class="{
+            <p
+:class="{
             }" class="text-sm md:text-base+ text-primary mt-3 md:mt-5 2xl:mt-10 split-left__description">Партнерство с
               LEC (League of Legends European Championship) позволило Kia выйти на самый популярный в мире
               киберспортивный рынок. Спонсорство «Лиги легенд» - это элемент новой маркетинговой стратегии компании,
@@ -159,20 +171,21 @@ definePageMeta({
 
     <div class="pb-12 md:pb-15">
       <h2 class="container text-lg font-semibold text-primary md:text-2xl 2xl:text-3xl">
-        Подробнее о Kia
+        {{ $t('index.more_about_kia') }}
       </h2>
       <div
         class="no-scrollbar p-[--padding] mt-6 snap-x space-y-9 overflow-auto 2xl:container md:flex md:gap-x-10 md:space-y-0 2xl:snap-none"
         :style="{ '--padding': `0 ${bounding.x.value}px` }">
-        <div v-for="slide in extraLinksCard" :key="slide.title"
+        <NuxtLinkLocale
+v-for="slide in extraLinksCard" :key="slide.title" :to="slide.href"
           class="relative mx-auto flex h-[208px] max-w-[310px] snap-center justify-center md:mx-0 md:w-[310px] md:max-w-none md:shrink-0 2xl:h-[265px] 2xl:w-[400px] 2xl:snap-none">
           <img :src="slide.image" class="h-full" loading="lazy" />
           <div class="absolute bottom-0 z-10 w-full p-4 md:px-7.5 md:py-5">
             <p class="text-base font-semibold text-white md:text-2xl">
-              {{ slide.title }}
+              {{ $t(slide.title) }}
             </p>
           </div>
-        </div>
+        </NuxtLinkLocale>
       </div>
     </div>
   </UISafeAreaView>

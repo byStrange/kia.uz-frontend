@@ -38,7 +38,9 @@ const resetFilter = () => {
 
 useSeoMeta({
   title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
   description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
   keywords: () => pageData.value?.seo.keywords || '',
 })
 

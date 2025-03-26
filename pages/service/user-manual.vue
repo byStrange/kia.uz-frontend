@@ -1,7 +1,11 @@
 <script setup lang="ts">
 const { safe } = useSafeAccessMedia()
 const { src } = useUploadcareSource()
-const { data: pageData } = await useFetch('/api/service/user-manual')
+const { locale } = useI18n()
+
+const { data: pageData } = useAsyncData('seo', () => {
+  return useFetchApi<SEO>('/pages/~service~user-manual', locale.value)
+})
 
 
 useSeoMeta({
