@@ -4,15 +4,13 @@ const selectedOption = ref()
 
 const { data: pageData } = await useFetch('/api/special-offers')
 
-const typeBuyOffers = computed(() => {
-  const data = pageData.value?.offers.filter((offer) => offer.type == 'buy')
-
+const filteredData = (items: SpecialOffer[]) => {
   if (selectedOption.value) {
-    return data?.filter((offer) => offer.referenced_models.find((md) => md.id == selectedOption.value))
+    return items.filter((offer) => offer.referenced_models.find(rf => rf.id == selectedOption.value))
   }
 
-  return data;
-})
+  return items;
+}
 
 useSeoMeta({
   title: () => pageData.value?.seo.title || '',
@@ -23,6 +21,9 @@ useSeoMeta({
 })
 
 onMounted(() => {
+  console.log(
+    Object.values(pageData.value?.groupedOffers || {})
+  )
   modelOptions.value = pageData.value?.models.map((model) => ({
     value: model.id,
     label: model.name
@@ -38,28 +39,31 @@ definePageMeta({
     <div class="container pt-7.5 2xl:pt-6">
       <MoleculeBreadcrumb class="hidden 2xl:block" theme="dark" />
       <h1 class="text-2xl font-semibold text-primary md:text-5xl 2xl:mt-10">
-        Специальные предложения
+        {{ $t('common.special_offers') }}
       </h1>
 
       <div class="mt-7.5">
-        <MoleculeTabsContainer ref="tabsContainer" :tabs="['Покупка', 'Сервис']"
-          header-container-class="w-fit mx-0 !px-0" content-container-class="!px-0 mx-0 !max-w-none !mt-10">
-          <template #tab-button-right="{ tab }">
-            <Transition name="slide-fade">
-              <div v-if="tab.activeTab === 0" class="w-4h 2xl:absolute top-0 right-0 hidden 2xl:flex">
-                <AtomDropdownInput v-model:available-options="modelOptions" v-model:selected-option="selectedOption"
-                  placeholder="Выберите модель" class="w-full" />
-              </div>
-            </Transition>
+        <MoleculeTabsContainer
+ref="tabsContainer" :tabs="Object.values(pageData?.groupedOffers || {})"
+          header-container-class="w-fit mx-0 !px-0" header-key="categoryName"
+          content-container-class="!px-0 mx-0 !max-w-none !mt-10">
+          <template #tab-button-right>
+            <div class="w-4h 2xl:absolute top-0 right-0 hidden 2xl:flex">
+              <AtomDropdownInput
+v-model:available-options="modelOptions" v-model:selected-option="selectedOption"
+                :placeholder="$t('common.choose_model')" class="w-full" />
+            </div>
           </template>
-          <template #1>
+          <template #tab="{ tab }">
             <div>
-              <AtomDropdownInput v-model:available-options="modelOptions" v-model:selected-option="selectedOption"
-                placeholder="Выберите модель" class="max-w-4h 2xl:!hidden" />
-
-              <TransitionGroup tag="div" name="list"
+              <AtomDropdownInput
+v-model:available-options="modelOptions" v-model:selected-option="selectedOption"
+                :placeholder="$t('common.choose_model')" class="max-w-4h 2xl:!hidden" />
+              <div
                 class="space-y-7.5 pt-10 pb-11 md:grid md:grid-cols-2 md:space-y-0 md:gap-7.5 md:place-content-center 2xl:grid-cols-4">
-                <NuxtLinkLocale v-for="item in typeBuyOffers" :key="item.title" :to="`/special-offers/${item.slug}`">
+                <NuxtLinkLocale
+v-for="item in filteredData(tab.items)" :key="item.title"
+                  :to="`/special-offers/${item.slug}`">
                   <div class="w-full max-w-[420px] mx-auto">
                     <div class="mx-auto h-full bg-background">
                       <img :src="item.desktop_image" class="h-[190px] w-full object-cover" loading="lazy" />
@@ -77,24 +81,7 @@ definePageMeta({
                     </div>
                   </div>
                 </NuxtLinkLocale>
-              </TransitionGroup>
-            </div>
-          </template>
-          <template #2>
-            <div
-              class="space-y-7.5 pt-10 pb-11 md:grid md:grid-cols-2 md:space-y-0 md:gap-7.5 md:place-content-center 2xl:grid-cols-4">
-              <NuxtLinkLocale v-for="item in pageData?.offers.filter((offer) => offer.type == 'service')"
-                :key="item.title" :to="`/special-offers/${item.slug}`">
-                <div class="w-full max-w-[420px] mx-auto">
-                  <div class="mx-auto h-full bg-background">
-                    <img :src="item.desktop_image" class="h-[190px] w-full object-cover" loading="lazy" />
-
-                    <div class="2xl:p-7.5 p-4">
-                      <p class="font-semibold">{{ item.title }}</p>
-                    </div>
-                  </div>
-                </div>
-              </NuxtLinkLocale>
+              </div>
             </div>
           </template>
         </MoleculeTabsContainer>

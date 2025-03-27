@@ -30,20 +30,25 @@ const extraLinksCard = [
 
     <div class="container pb-12 md:pb-15">
       <div class="relative mx-auto h-full max-w-[420px] bg-caption md:max-w-none">
-        <picture>
-          <source media="(min-width: 1024px)" :srcset="src('47fd9450-1106-44ba-b977-dfe1795a0f05', {
-            preview: '1000x720',
-          })
-            " />
-          <source :srcset="src('32d3bffb-f001-4406-a6c0-517ca367af7f', {
-            preview: '827x999',
-          })
-            " media="(min-width: 768px)" />
-          <img loading="lazy" :src="src('9ae43504-1cfc-4d2b-9137-b40a5473ffce', {
-            preview: '1000x597',
-          })
-            " class="img h-[187px] w-full max-w-[640px] bg-gray-200 md:absolute md:right-0 md:h-full md:w-1/2" />
-        </picture>
+        <NuxtLinkLocale to="/special-offers/important-installment-plan">
+          <picture>
+            <source
+media="(min-width: 1024px)" :srcset="src('47fd9450-1106-44ba-b977-dfe1795a0f05', {
+              preview: '1000x720',
+            })
+              " />
+            <source
+:srcset="src('32d3bffb-f001-4406-a6c0-517ca367af7f', {
+              preview: '827x999',
+            })
+              " media="(min-width: 768px)" />
+            <img
+loading="lazy" :src="src('9ae43504-1cfc-4d2b-9137-b40a5473ffce', {
+              preview: '1000x597',
+            })
+              " class="img h-[187px] w-full max-w-[640px] bg-gray-200 md:absolute md:right-0 md:h-full md:w-1/2" />
+          </picture>
+        </NuxtLinkLocale>
         <div class="px-4 py-8 md:w-1/2 md:px-6 2xl:px-12 2xl:py-14">
           <h2 class="text-lg font-semibold text-white md:text-2xl 2xl:text-5xl">
             {{ $t('index.kia_0_interest') }}
@@ -51,8 +56,9 @@ const extraLinksCard = [
           <p class="mt-2 text-base text-white 2xl:mt-4 md:leading-[24px]">
             {{ $t('index.kia_flexible_rental') }}
           </p>
-          <AtomButton color="secondary" mode="full" :label="$t('common.more')"
-            class="mt-6 md:mt-14 md:leading-[24px]" />
+          <AtomLink
+to="/special-offers/important-installment-plan" color="secondary" mode="full"
+            :label="$t('common.more')" class="mt-6 md:mt-14 md:leading-[24px]" />
         </div>
       </div>
     </div>

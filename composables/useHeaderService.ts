@@ -120,19 +120,19 @@ const headerService = ref<headerServiceType>({
   socials: [
     {
       icon: h(UIYoutubeIcon),
-      link: 'https://facebook.com/kia_uz',
+      link: 'https://www.youtube.com/channel/UCbcoHuLNcxJdleQNl1ET4ug',
     },
     {
       icon: h(UIInstagramIcon),
-      link: 'https://instagram.com/kia_uz',
+      link: 'https://www.instagram.com/kia__uzbekistan/',
     },
     {
       icon: h(UIFacebookIcon),
-      link: 'https://twitter.com/kia_uz',
+      link: 'https://www.facebook.com/KiaUzbekistan/',
     },
     {
       icon: h(UITelegramIcon),
-      link: 'https://facebook.com/kia_uz',
+      link: 'https://t.me/kiauzbekistanbot',
     },
   ],
 })

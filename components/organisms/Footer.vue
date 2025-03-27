@@ -46,18 +46,6 @@ const locale = useLocalePath()
                   {{ headerService.phoneLine1 }}
                 </p>
               </div>
-              <div class="space-y-2.5">
-                <h3 class="text-sm+ text-disabled">{{ $t('menu.kia_information_line') }}</h3>
-                <p class="font-semibold text-white">
-                  {{ headerService.phoneLine2 }}
-                </p>
-              </div>
-              <div class="space-y-2.5">
-                <h3 class="text-sm+ text-disabled">{{ $t('menu.help_line') }}</h3>
-                <p class="font-semibold text-white">
-                  {{ headerService.phoneLine3 }}
-                </p>
-              </div>
               <UIMenuFooterSocials class="mt-12 md:hidden" />
             </div>
           </div>
