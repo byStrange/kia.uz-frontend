@@ -42,7 +42,7 @@ export interface SpecialOfferCategory extends CommonModel {
 export interface SpecialOffer extends CommonMediaModel {
   seo: SEO
   title: string
-  category: SpecialOfferCategory | null
+  category: SpecialOfferCategory 
   content: HtmlText
   type: 'buy' | 'service'
   slug: string
@@ -75,7 +75,7 @@ export interface NewsCategory extends CommonModel {
 export interface News extends CommonMediaModel {
   seo: SEO,
   title: string
-  category: NewsCategory | null
+  category: NewsCategory
   content: HtmlText
   type: 'news' | 'review'
   slug: 'string'

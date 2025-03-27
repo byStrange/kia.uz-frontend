@@ -1,5 +1,8 @@
 import { useFetchApi } from '~/composables/useFetchApi'
+import type { Model } from './models/[id]/index.get'
 import { getCookie } from 'h3'
+import type { GroupedNews } from '~/utils/serverUtils'
+import { groupNewsByCategory, groupSpecialOffersByCategory } from '~/utils/serverUtils'
 
 export interface IndexPageSlider extends CommonMediaModel {
   title: string
@@ -23,8 +26,10 @@ type IndexPageSpecialOffer = SpecialOffer;
 
 export interface IndexPage {
   seo: SEO['seo'],
-  sliders: IndexPageSlider[], models: any[], news: any[]
-  specialOffers: IndexPageSpecialOffer[]
+  sliders: IndexPageSlider[],
+  models: Model[],
+  news: GroupedNews
+  specialOffers: GroupedSpecialOffer
 }
 
 
@@ -41,8 +46,8 @@ export default defineEventHandler(async (event) => {
 
   const pageData: IndexPage = {
     sliders,
-    specialOffers,
-    news,
+    specialOffers: groupSpecialOffersByCategory(specialOffers),
+    news: groupNewsByCategory(news),
     models,
     seo: seo['seo'],
   }

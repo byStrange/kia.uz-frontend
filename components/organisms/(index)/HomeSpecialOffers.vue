@@ -22,7 +22,7 @@ watch(bounding.x, () => {
 
 const specialsSwiperBreakpoints = ref({})
 
-defineProps<{ offers: SpecialOffer[] }>()
+defineProps<{ offers: GroupedSpecialOffer }>()
 </script>
 <template>
   <MoleculeSection :section-title="t('index.special_offers')">
@@ -32,9 +32,9 @@ defineProps<{ offers: SpecialOffer[] }>()
       </h1>
     </template>
 
-    <MoleculeTabsContainer :tabs="['Покупка', 'Сервис']" :is-content-full="true">
-      <template #1>
-        <ElementSlideView :data="offers.filter((offer) => offer.type == 'buy').slice(0, 8)">
+    <MoleculeTabsContainer :tabs="Object.values(offers)" header-key="categoryName" :is-content-full="true">
+      <template #tab="{ tab }">
+        <ElementSlideView :data="tab.items.slice(0, 8)">
           <template #slide="{ item }">
             <NuxtLinkLocale :to="`/special-offers/${item.slug}`">
               <div
@@ -60,30 +60,6 @@ defineProps<{ offers: SpecialOffer[] }>()
         </ElementSlideView>
       </template>
 
-      <template #2>
-        <ElementSlideView :data="offers.filter((offer) => offer.type == 'service').slice(0, 8)">
-          <template #slide="{ item }">
-            <div
-:style="{ '--padding': `0 ${bounding.x.value}px` }"
-              class="h-[408px] p-[--padding] md:w-[310px] md:px-0">
-              <div class="mx-auto h-full max-w-[310px] bg-background">
-                <img :src="item.default_image" class="h-[222px] w-full object-cover" loading="lazy" />
-
-                <div class="p-4">
-                  <div class="text-left">
-                    <h2 class="text-sm font-semibold">
-                      {{ item.title }}
-                    </h2>
-                    <p class="mt-1 text-sm text-primary">
-                      {{ item.subtitle }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </template>
-        </ElementSlideView>
-      </template>
       <template #default>
         <NuxtLink
 to="/special-offers"

@@ -1,4 +1,5 @@
 import { useFetchApi } from '~/composables/useFetchApi'
+import { emptySeo, groupNewsByCategory } from '~/utils/serverUtils'
 
 
 export default defineEventHandler(async (event) => {
@@ -9,13 +10,13 @@ export default defineEventHandler(async (event) => {
   let seo: SEO;
 
   try {
-    seo = await useFetchApi<SEO>('/pags/~dealers', locale)
+    seo = await useFetchApi<SEO>('/pags/~media-center', locale)
   }
   catch {
     seo = emptySeo
   }
 
+  const groupedNews = groupNewsByCategory(news)
 
-
-  return { news: news.filter(n => n.type == 'news'), video_news: news.filter(n => n.type == 'review'), seo: seo['seo'] }
+  return { seo: seo['seo'], groupedNews }
 })

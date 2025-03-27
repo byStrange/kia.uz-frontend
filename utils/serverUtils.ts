@@ -1,5 +1,3 @@
-import type { Model } from "~/server/api/models/[id]/index.get";
-
 // Define a generic interface for any item with a category
 export interface ItemWithCategory {
   category: {
@@ -37,6 +35,7 @@ export const emptySeo: SEO = { seo: { title: '', description: '', keywords: '', 
 
 export type GroupedModels = GroupedItems<ModelWithLessData>;
 export type GroupedSpecialOffer = GroupedItems<SpecialOffer>;
+export type GroupedNews = GroupedItems<News>;
 
 // If you need to keep the original function names for backwards compatibility:
 export function groupModelsByCategory(models: ModelWithLessData[]): GroupedModels {
@@ -45,4 +44,8 @@ export function groupModelsByCategory(models: ModelWithLessData[]): GroupedModel
 
 export function groupSpecialOffersByCategory(offers: SpecialOffer[]): GroupedSpecialOffer {
   return groupByCategory(offers);
+}
+
+export function groupNewsByCategory(news: News[]): GroupedNews {
+  return groupByCategory(news)
 }

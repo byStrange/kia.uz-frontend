@@ -25,8 +25,8 @@ const extraLinksCard = [
   <div>
     <OrganismHomeHeroSliders :slides="pageData?.sliders || []" />
     <OrganismHomeModels :models="pageData?.models || []" />
-    <OrganismHomeSpecialOffers :offers="pageData?.specialOffers || []" />
-    <OrganismHomeCourses :news="pageData?.news || []" />
+    <OrganismHomeSpecialOffers :offers="pageData?.specialOffers || {}" />
+    <OrganismHomeCourses :news="pageData?.news || {}" />
 
     <div class="container pb-12 md:pb-15">
       <div class="relative mx-auto h-full max-w-[420px] bg-caption md:max-w-none">
