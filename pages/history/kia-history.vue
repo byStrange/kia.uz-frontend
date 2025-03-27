@@ -55,7 +55,7 @@ const stops = computed<StopPoints>(() => {
 
 const extraLinksCard = [
   {
-    title: 'common.branding',
+    title: 'common.brand',
     href: '/branding',
     image: src('8701cf69-f335-45be-b0d7-2c939d629d0f', { preview: '1000x664' }),
   },
@@ -462,9 +462,7 @@ v-for="stop in stops" :key="stop"
     </div>
 
     <div class="pb-12 md:pb-15">
-      <h2 class="container text-lg font-semibold text-primary md:text-2xl 2xl:text-3xl">
-        Подробнее о Kia
-      </h2>
+      <h2 class="container text-lg font-semibold text-primary md:text-2xl 2xl:text-3xl">{{ $t('index.more_about_kia')}}</h2>
       <div
         class="no-scrollbar p-[--padding] mt-6 snap-x space-y-9 overflow-auto 2xl:container md:flex md:gap-x-10 md:space-y-0 2xl:snap-none"
         :style="{ '--padding': `0 ${bounding.x.value}px` }">
@@ -474,7 +472,7 @@ v-for="slide in extraLinksCard" :key="slide.title"
           <img :src="slide.image" class="h-full" loading="lazy" />
           <div class="absolute bottom-0 z-10 w-full p-4 md:px-7.5 md:py-5">
             <p class="text-base font-semibold text-white md:text-2xl">
-              {{ slide.title }}
+              {{ $t(slide.title)}}
             </p>
           </div>
         </div>
