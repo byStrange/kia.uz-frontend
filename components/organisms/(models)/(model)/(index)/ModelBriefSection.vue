@@ -11,6 +11,8 @@ interface DoubleTabBlockTabItem {
   value: string | number
 }
 
+const { t } = useI18n()
+
 interface DoubleTabBlockTab {
   title: string
   items: DoubleTabBlockTabItem[]
@@ -32,17 +34,17 @@ function generateEngineBlockMeta(engines: ModelEngine[], section: ModelBlock): D
           title: `${engine.name}, ${engine.desc}`,
           items: [
             {
-              label: 'Мощность двигателя',
+              label: t('models.engine_power'),
               unit: 'л. с.',
               value: engine.power || ''
             },
             {
-              label: 'Крутящий момент',
+              label: t('models.torque'),
               unit: 'Н·м',
               value: engine.torque || ''
             },
             {
-              label: 'Разгон от 0 до 100 км/ч с (минимальным значением для данного двигателя)',
+              label: t('models.acceleration_from_0_to_100km'),
               unit: 'c',
               value: engine.acceleration_time || ''
             }
@@ -59,6 +61,7 @@ defineProps<{ blocks: ModelBlock[], engines: ModelEngine[] }>()
   <template v-for="section in blocks">
     <OrganismModelUIDoubleSlides v-if="is('doubleSlide', section)" :key="section.id" :section />
     <OrganismModelUITriple v-if="is('triple', section)" :key="section.id" :section />
+    <OrganismModelUIBigTripleSlide v-if="is('tripleTab', section)" :key="section.id" :section />
     <OrganismModelUIDoubleTab v-if="is('engineBlock', section)" :key="section.id" :section="generateEngineBlockMeta(engines, section)" />
   </template>
 </template>
