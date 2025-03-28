@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { UIHeaderLink } from '#components'
 
-const { t } = useI18n();
-const { toggleMenu, headerService } = useHeaderService(t)
+const { toggleMenu, headerService } = useHeaderService()
 
 usePageScroll()
 
@@ -37,6 +36,13 @@ watch(
   },
 )
 
+const searchBarOpen = ref(false)
+
+watch(searchBarOpen, () => {
+  const headerHeight = searchBarOpen.value ? `${innerWidth < 768 ? '80px' : '94px'}` : `${innerWidth < 768 ? '60px' : '80px'}`
+  document.documentElement.style.setProperty('--header-height', headerHeight)
+})
+
 watch(
   () => headerService.value.lockHover,
   () => {
@@ -47,9 +53,7 @@ watch(
 <template>
   <Transition name="slide-fade_bottom">
     <header
-      id="header"
-      :key="headerService.isHeaderFixed + ''"
-      :data-isHover="headerService.isHover"
+id="header" :key="headerService.isHeaderFixed + ''" :data-isHover="headerService.isHover"
       class="bg-semantic-header-bg absolute top-0 z-40 w-full border-b border-b-white border-opacity-20 transition-all duration-300 backdrop-blur-sm"
       :class="{
         hover:
@@ -57,107 +61,78 @@ watch(
           headerService.isMenuOpen ||
           headerService.isHeaderFixed,
         '!fixed shadow': headerService.isHeaderFixed,
-      }"
-      @mouseenter="
-        () => {
-          if (!headerService.lockHover) {
-            headerService.isHover = true
-          } else headerService.isHover = true
-        }
-      "
-      @mouseleave="
-        () => {
+        '!shadow-none !border-transparent': searchBarOpen,
+      }" @mouseenter="() => {
+        if (!headerService.lockHover) {
+          headerService.isHover = true
+        } else headerService.isHover = true
+      }
+        " @mouseleave="() => {
           if (!headerService.lockHover) {
             headerService.isHover =
               headerService.isMenuOpen || headerService.isHeaderFixed
           } else headerService.isHover = headerService.lockHover
         }
-      "
-    >
-      <div
-        class="relative flex w-full items-center justify-between px-page-padding transition-all duration-300 2xl:container h-15 2xl:h-auto"
-      >
-        <button
-          class="!bg-transparent !p-0 !text-white 2xl:hidden"
-          @click="
-            () => {
-              toggleMenu()
-            }
-          "
-        >
-          <UIAnimatedBurgerMenuIcon
-            :hidden="!headerService.isMenuOpen"
-            :class="{ light: headerService.isHover }"
-          />
-        </button>
+          ">
+      <Transition name="blur-fade" mode="out-in">
+        <div
+v-if="!searchBarOpen"
+          class="relative flex w-full items-center justify-between px-page-padding transition-all duration-300 2xl:container h-15 2xl:h-auto">
+          <button
+class="!bg-transparent !p-0 !text-white 2xl:hidden" @click="() => {
+            toggleMenu()
+          }
+            ">
+            <UIAnimatedBurgerMenuIcon :hidden="!headerService.isMenuOpen" :class="{ light: headerService.isHover }" />
+          </button>
 
-        <div class="hidden 2xl:block">
-          <ul class="flex items-center gap-5">
-            <li
-              v-for="item in headerService.routes.slice(0, 4)"
-              :key="item.label"
-            >
-              <UIHeaderLink :item="item" />
-            </li>
-          </ul>
-        </div>
+          <div class="hidden 2xl:block">
+            <ul class="flex items-center gap-5">
+              <li v-for="item in headerService.routes.slice(0, 4)" :key="item.label">
+                <UIHeaderLink :item="item" />
+              </li>
+            </ul>
+          </div>
 
-        <div class="absolute left-1/2 -translate-x-1/2">
-          <NuxtLinkLocale to="/">
-            <!-- Light Logo -->
-            <img
-              v-if="!headerService.isHover"
-              src="@/assets/logo/main-logo.svg"
-              alt="Logo"
-              class="h-3 w-[50px] 2xl:w-[79px] 2xl:h-4.5"
-            />
+          <div class="absolute left-1/2 -translate-x-1/2">
+            <NuxtLinkLocale to="/">
+              <!-- Light Logo -->
+              <img
+v-if="!headerService.isHover" src="@/assets/logo/main-logo.svg" alt="Logo"
+                class="h-3 w-[50px] 2xl:w-[79px] 2xl:h-4.5" />
 
-            <!-- Dark Logo -->
-            <img
-              v-if="headerService.isHover"
-              src="@/assets/logo/main-logo-invert.svg"
-              alt="Logo"
-              class="h-3 w-[50px] 2xl:w-[79px] 2xl:h-4.5"
-            />
-          </NuxtLinkLocale>
-        </div>
+              <!-- Dark Logo -->
+              <img
+v-if="headerService.isHover" src="@/assets/logo/main-logo-invert.svg" alt="Logo"
+                class="h-3 w-[50px] 2xl:w-[79px] 2xl:h-4.5" />
+            </NuxtLinkLocale>
+          </div>
 
-        <div class="flex items-center gap-4 md:gap-5">
-          <ul class="hidden items-center gap-5 2xl:flex">
-            <li v-for="item in headerService.routes.slice(4)" :key="item.label">
-              <UIHeaderLink :item="item" />
-            </li>
-          </ul>
-          <button>
-            <UIPhoneIcon
-              class="transition-colors"
-              :class="{
+          <div class="flex items-center gap-4 md:gap-5">
+            <ul class="hidden items-center gap-5 2xl:flex">
+              <li v-for="item in headerService.routes.slice(4)" :key="item.label">
+                <UIHeaderLink :item="item" />
+              </li>
+            </ul>
+            <button>
+              <UIPhoneIcon
+class="transition-colors" :class="{
                 'text-primary': headerService.isHover,
                 'text-white': !headerService.isHover,
-              }"
-            />
-          </button>
-          <button class="hidden md:block">
-            <UILenseIcon
-              class="transition-colors"
-              :class="{
+              }" />
+            </button>
+            <button class="hidden md:block" @click="searchBarOpen = true">
+              <UILenseIcon
+class="transition-colors" :class="{
                 'text-white': !headerService.isHover,
                 'text-primary': headerService.isHover,
-              }"
-            />
-          </button>
-          <button v-if="false" class="hidden 2xl:block">
-            <UIUserIcon
-              class="transition-colors"
-              :class="{
-                'text-white': !headerService.isHover,
-                'text-primary': headerService.isHover,
-              }"
-            />
-          </button>
-          <UILanguageSelector />
+              }" />
+            </button>
+            <UILanguageSelector />
+          </div>
         </div>
-      </div>
+        <OrganismHeaderSearchBar v-else v-model:show="searchBarOpen" />
+      </Transition>
     </header>
   </Transition>
   <UIHeaderMenu />

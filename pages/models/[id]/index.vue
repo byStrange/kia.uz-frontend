@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useContainer } from '@/composables/useContainer'
+import ModelUIDoubleTab from '~/components/organisms/(models)/(model)/(index)/model-ui/ModelUIDoubleTab.vue';
 import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
 
 const { bounding } = useContainer()
