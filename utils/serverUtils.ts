@@ -3,6 +3,7 @@ export interface ItemWithCategory {
   category: {
     id: number | string;
     name: string;
+    order?: number
   };
 }
 
@@ -11,6 +12,7 @@ export interface GroupedItems<T extends ItemWithCategory> {
   [categoryId: string]: {
     categoryName: string;
     items: T[];
+    order?: number
   };
 }
 
@@ -22,7 +24,8 @@ export function groupByCategory<T extends ItemWithCategory>(items: T[]): Grouped
     if (!acc[categoryId]) {
       acc[categoryId] = {
         categoryName: item.category?.name,
-        items: []
+        items: [],
+        order: item.category.order
       };
     }
 

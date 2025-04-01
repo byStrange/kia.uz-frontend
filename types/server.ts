@@ -68,6 +68,7 @@ export interface ModelBlock extends CommonMediaModel {
 
 export interface NewsCategory extends CommonModel {
   name: string
+  order: number
 }
 
 

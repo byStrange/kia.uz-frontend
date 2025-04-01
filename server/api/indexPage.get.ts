@@ -32,8 +32,15 @@ export interface IndexPage {
   specialOffers: GroupedSpecialOffer
 }
 
+const cache: { pageData?: IndexPage } = {}
+
 
 export default defineEventHandler(async (event) => {
+  if (cache['pageData']) {
+    console.log('returning cached data')
+    return cache['pageData'];
+  }
+
   const locale = getCookie(event, 'i18n_redirected')
 
   const sliders = await useFetchApi<IndexPageSlider[]>('/sliders', locale)
@@ -51,6 +58,10 @@ export default defineEventHandler(async (event) => {
     models,
     seo: seo['seo'],
   }
+
+  console.log('fetched new')
+
+  cache['pageData'] = pageData
 
   return pageData
 })
