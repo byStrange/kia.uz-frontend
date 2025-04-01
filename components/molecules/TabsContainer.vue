@@ -68,7 +68,7 @@ const resolveSlotName = (tab: T, index: number) => {
   <div class="relative">
     <div :class="[{ container: !props.isHeaderFull }, headerContainerClass]">
       <div
-class="flex gap-8 border-b overflow-x-auto" :class="[{ 'justify-center': props.isHeaderCenter }, props.headerClass]" :style="{
+class="flex gap-8 border-b overflow-x-auto pb-[1px]" :class="[{ 'justify-center': props.isHeaderCenter }, props.headerClass]" :style="{
         '--padding-left': bounding.x.value + 'px',
         padding: props.isHeaderFull ? '0 var(--padding-left)' : '',
       }">
