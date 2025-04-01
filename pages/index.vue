@@ -24,6 +24,7 @@ const extraLinksCard = [
 <template>
   <div>
     <OrganismHomeHeroSliders :slides="pageData?.sliders || []" />
+    {{ new Date(pageData?.date || '').getSeconds() }}
     <OrganismHomeModels :models="pageData?.models || []" />
     <OrganismHomeSpecialOffers :offers="pageData?.specialOffers || {}" />
     <OrganismHomeCourses :news="pageData?.news || {}" />

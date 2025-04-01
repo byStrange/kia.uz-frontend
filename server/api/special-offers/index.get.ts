@@ -1,13 +1,13 @@
 import { useFetchApi } from '~/composables/useFetchApi'
 import { groupSpecialOffersByCategory, emptySeo } from '~/utils/serverUtils'
-import type { Model } from '~/composables/useStore'
-import type { GroupedSpecialOffer } from '~/utils/serverUtils'
+import type { GroupedSpecialOfferWithoutContent } from '~/utils/serverUtils'
+import type { Model } from '../models/[id]/index.get'
 
 interface SpecialOffersPage {
   seo: SEO['seo'],
   offers: SpecialOffer[],
   models: Pick<Model, 'name' | 'id'>[],
-  groupedOffers: GroupedSpecialOffer
+  groupedOffers: GroupedSpecialOfferWithoutContent
 }
 
 export default defineEventHandler(async (event) => {

@@ -22,7 +22,7 @@ watch(bounding.x, () => {
 
 const specialsSwiperBreakpoints = ref({})
 
-defineProps<{ offers: GroupedSpecialOffer }>()
+defineProps<{ offers: GroupedSpecialOfferWithoutContent }>()
 </script>
 <template>
   <MoleculeSection :section-title="t('index.special_offers')">

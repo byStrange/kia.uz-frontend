@@ -16,11 +16,6 @@ export interface ModelConfiguration {
   features: ModelConfigurationFeature[]
 }
 
-export interface Model {
-  name: string
-  configurations: ModelConfiguration[]
-}
-
 export type ModelGroup = {
   label: string
   models: {

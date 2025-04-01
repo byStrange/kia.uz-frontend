@@ -50,6 +50,10 @@ export interface SpecialOffer extends CommonMediaModel {
   referenced_models: { id: string, name: string, main_image: AbsoluteUrl }[]
 }
 
+export const specialOfferLessData = ['id', 'slug', 'title', 'default_image', 'desktop_image', 'tablet_image', 'category', 'subtitle'] as const;
+
+export type SpecialOfferWithoutContent = Pick<SpecialOffer, typeof specialOfferLessData[number]>;
+
 export interface ModelBlockSlide extends CommonMediaModel {
   title: string
 }

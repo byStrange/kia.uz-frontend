@@ -1,4 +1,5 @@
-// Define a generic interface for any item with a category
+import type { SpecialOfferWithoutContent } from "~/types/server";
+
 export interface ItemWithCategory {
   category: {
     id: number | string;
@@ -7,7 +8,6 @@ export interface ItemWithCategory {
   };
 }
 
-// Generic grouped items interface
 export interface GroupedItems<T extends ItemWithCategory> {
   [categoryId: string]: {
     categoryName: string;
@@ -16,7 +16,6 @@ export interface GroupedItems<T extends ItemWithCategory> {
   };
 }
 
-// Generic grouping function
 export function groupByCategory<T extends ItemWithCategory>(items: T[]): GroupedItems<T> {
   return items.reduce((acc: GroupedItems<T>, item) => {
     const categoryId = item.category?.id.toString();
@@ -37,15 +36,14 @@ export function groupByCategory<T extends ItemWithCategory>(items: T[]): Grouped
 export const emptySeo: SEO = { seo: { title: '', description: '', keywords: '', }, url: '', name: '' }
 
 export type GroupedModels = GroupedItems<ModelWithLessData>;
-export type GroupedSpecialOffer = GroupedItems<SpecialOffer>;
+export type GroupedSpecialOfferWithoutContent = GroupedItems<SpecialOfferWithoutContent>;
 export type GroupedNews = GroupedItems<News>;
 
-// If you need to keep the original function names for backwards compatibility:
 export function groupModelsByCategory(models: ModelWithLessData[]): GroupedModels {
   return groupByCategory(models);
 }
 
-export function groupSpecialOffersByCategory(offers: SpecialOffer[]): GroupedSpecialOffer {
+export function groupSpecialOffersByCategory(offers: SpecialOfferWithoutContent[]): GroupedSpecialOfferWithoutContent {
   return groupByCategory(offers);
 }
 

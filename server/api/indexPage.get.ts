@@ -1,7 +1,8 @@
 import { useFetchApi } from '~/composables/useFetchApi'
 import type { Model } from './models/[id]/index.get'
 import { getCookie } from 'h3'
-import type { GroupedNews } from '~/utils/serverUtils'
+import { specialOfferLessData } from '~/types/server'
+import type { GroupedNews, GroupedSpecialOfferWithoutContent } from '~/utils/serverUtils'
 import { groupNewsByCategory, groupSpecialOffersByCategory } from '~/utils/serverUtils'
 
 export interface IndexPageSlider extends CommonMediaModel {
@@ -21,25 +22,17 @@ export type IndexPageModel = {
 }
 
 
-
-type IndexPageSpecialOffer = SpecialOffer;
-
 export interface IndexPage {
   seo: SEO['seo'],
   sliders: IndexPageSlider[],
   models: Model[],
   news: GroupedNews
-  specialOffers: GroupedSpecialOffer
+  specialOffers: GroupedSpecialOfferWithoutContent,
+  date: Date
 }
-
-const cache: { pageData?: IndexPage } = {}
 
 
 export default defineEventHandler(async (event) => {
-  if (cache['pageData']) {
-    console.log('returning cached data')
-    return cache['pageData'];
-  }
 
   const locale = getCookie(event, 'i18n_redirected')
 
@@ -47,9 +40,11 @@ export default defineEventHandler(async (event) => {
 
   const seo = await useFetchApi<SEO>(`/pages/~index`, locale)
 
-  const specialOffers = await useFetchApi<IndexPageSpecialOffer[]>('/special-offers', locale)
+  const specialOffers = await useFetchApi<SpecialOfferWithoutContent[]>(`/special-offers?fields=${specialOfferLessData.join(',')}`, locale)
   const news = await useFetchApi<News[]>('/news', locale)
   const models = await useFetchApi<Model[]>('/models', locale)
+  const date = new Date()
+
 
   const pageData: IndexPage = {
     sliders,
@@ -57,11 +52,8 @@ export default defineEventHandler(async (event) => {
     news: groupNewsByCategory(news),
     models,
     seo: seo['seo'],
+    date
   }
-
-  console.log('fetched new')
-
-  cache['pageData'] = pageData
 
   return pageData
 })
