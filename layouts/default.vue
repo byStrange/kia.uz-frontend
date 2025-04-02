@@ -1,7 +1,16 @@
+<script setup lang="ts">
+</script>
 <template>
   <div>
-    <OrganismHeader />
+
+    <RenderCacheable>
+      <OrganismHeader />
+    </RenderCacheable>
+
     <NuxtPage />
-    <OrganismFooter />
+
+    <RenderCacheable>
+      <OrganismFooter />
+    </RenderCacheable>
   </div>
 </template>

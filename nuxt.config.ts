@@ -6,6 +6,9 @@ const {
 } = process.env
 
 export default defineNuxtConfig({
+  routeRules: {
+    '*': { swr: true }
+  },
   imports: {
     dirs: ['./composables', './utils', './schemas', './types'],
   },
@@ -93,6 +96,7 @@ export default defineNuxtConfig({
     '@primevue/nuxt-module',
     'nuxt-swiper',
     '@nuxtjs/i18n',
+    'nuxt-multi-cache'
   ],
 
   primevue: {
@@ -120,4 +124,9 @@ export default defineNuxtConfig({
       apiDefaultLang: NUXT_API_DEFAULT_LANG
     },
   },
+  multiCache: {
+    component: {
+      enabled: true
+    }
+  }
 })
