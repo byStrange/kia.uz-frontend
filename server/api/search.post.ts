@@ -7,6 +7,7 @@ export type SearchResultItem = {
   slug: string,
   title: string,
   similarity: number
+  preview?: string
 }
 
 export default defineEventHandler(async (event) => {
