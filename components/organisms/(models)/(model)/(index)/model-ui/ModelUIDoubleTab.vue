@@ -76,7 +76,7 @@ defineProps<{ section: DoubleTabBlock }>()
         <p :class="{
           'mt-4 2xl:mt-7.5': true,
         }" class="text-sm text-primary">
-          {{ item.description }}
+          {{ section.description }}
         </p>
         <div v-if="section.meta && section.meta.tabs"
           class="hidden 2xl:block border-t border-t-protection mt-7.5 pt-7.5">
