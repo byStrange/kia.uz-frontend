@@ -62,7 +62,7 @@ useHead({
 });
 
 onMounted(() => {
-  const lenis = new Lenis({ autoRaf: true, overscroll: true })
+  const lenis = new Lenis({ autoRaf: true, overscroll: true, prevent: (node) => !!node.querySelector('[role="presentation"]') })
 
   function handleAnchorLinks() {
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
