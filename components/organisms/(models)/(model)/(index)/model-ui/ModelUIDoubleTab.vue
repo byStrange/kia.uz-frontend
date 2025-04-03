@@ -76,11 +76,7 @@ defineProps<{ section: DoubleTabBlock }>()
         <p :class="{
           'mt-4 2xl:mt-7.5': true,
         }" class="text-sm text-primary">
-          Откройте мир инноваций вместе с Kia Carnival — бесспорным лидером в
-          своем классе. Новый дизайн добавляет семейному кроссвэну изысканность,
-          роскошный интерьер обеспечивает комфорт, отличная управляемость
-          гарантирует уверенность на любой дороге. Новый Kia Carnival наполнит
-          вашу повседневную жизнь новыми впечатлениями.
+          {{ item.description }}
         </p>
         <div v-if="section.meta && section.meta.tabs"
           class="hidden 2xl:block border-t border-t-protection mt-7.5 pt-7.5">
