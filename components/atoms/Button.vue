@@ -16,6 +16,7 @@ const button = tv({
       unstyled: '',
       sm: 'py-3 px-5',
       md: 'py-4.5 px-10',
+      xs: 'py-2.5 px-5'
     },
     mode: {
       full: 'w-full md:w-auto',
@@ -46,7 +47,7 @@ defineProps<{
 </script>
 
 <template>
-  <button :class="button({ color, size: { initial: 'sm', md: 'md' }, mode, corner })">
+  <button :class="button({ color, size: size ? size : { initial: 'sm', md: 'md' }, mode, corner })">
     <slot>{{ label }}</slot>
   </button>
 </template>
