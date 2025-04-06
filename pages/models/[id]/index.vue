@@ -101,6 +101,7 @@ class="max-w-[425px] w-[--width] md:!px-0 2xl:h-[512px] 2xl:w-4h md:h-[448px]"
                   {{ item.name }}
                 </h1>
                 <p class="mt-1 text-base font-semibold text-white">
+                  <span v-if="item.compare_price" class="line-through decoration-2 decoration-kia-live-red">{{ formatPrice(item.compare_price) }}</span>
                   {{ $t("prefixes.from", { price: formatPrice(item.price, $t('prefixes.sum')) }) }}
                 </p>
               </div>
