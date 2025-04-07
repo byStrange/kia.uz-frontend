@@ -1,9 +1,10 @@
 import { useFetchApi } from "~/composables/useFetchApi"
 import { groupModelsByCategory, emptySeo } from "~/utils/serverUtils"
+import type { Model } from "./models/[id]/index.get"
 
 export default defineEventHandler(async (event) => {
   const locale = getCookie(event, 'i18n_redirected')
-  const models = await useFetchApi<ModelWithLessData[]>('/models?fields=name,id,category,main_image,starting_price,slug,old_price,is_electric', locale)
+  const models = await useFetchApi<Model[]>('/models', locale)
 
 
   let seo: SEO;
