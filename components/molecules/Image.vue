@@ -1,41 +1,29 @@
 <template>
   <div class="relative overflow-hidden" :style="containerStyle">
+    <!-- Low-resolution background for quick loading -->
+    <div v-if="useLowResBackground && !imageLoaded" class="absolute inset-0 w-full h-full">
+      <img :src="lowResImageUrl" :alt="alt" class="w-full h-full object-cover transition-opacity" />
+    </div>
+
     <picture class="block w-full h-full">
-      <!-- AVIF format - highest priority if supported -->
+      <!-- WebP format - highest priority now -->
       <source
-        v-for="size in sizes"
-        :key="`avif-${size}`"
-        :srcset="generateSrcSet('avif', size)"
-        :media="getMediaQuery(size)"
-        type="image/avif"
-      />
-      
-      <!-- WebP format - second priority -->
+v-for="size in sizes" :key="`webp-${size}`" :srcset="generateSrcSet('webp', size)"
+        :media="getMediaQuery(size)" type="image/webp" />
+
+      <!-- AVIF format - second priority -->
       <source
-        v-for="size in sizes"
-        :key="`webp-${size}`"
-        :srcset="generateSrcSet('webp', size)"
-        :media="getMediaQuery(size)"
-        type="image/webp"
-      />
-      
+v-for="size in sizes" :key="`avif-${size}`" :srcset="generateSrcSet('avif', size)"
+        :media="getMediaQuery(size)" type="image/avif" />
+
       <!-- PNG format - fallback -->
-      <source
-        v-for="size in sizes"
-        :key="`png-${size}`"
-        :srcset="generateSrcSet('png', size)"
-      />
-      
+      <source v-for="size in sizes" :key="`png-${size}`" :srcset="generateSrcSet('png', size)" />
+
       <!-- Fallback image with all attributes passed to the component -->
       <img
-        :src="defaultImageUrl"
-        :alt="alt"
-        v-bind="$attrs"
-        @load="onImageLoaded"
-      />
+:src="defaultImageUrl" :alt="alt" v-bind="$attrs" class="transition-opacity duration-300"
+        :class="{ 'opacity-0': !imageLoaded && useLowResBackground }" @load="onImageLoaded" />
     </picture>
-    
-    <!-- Low-resolution background for quick loading -->
   </div>
 </template>
 
@@ -49,6 +37,7 @@ interface Props {
   useLowResBackground?: boolean;
   backgroundFormat?: 'avif' | 'webp' | 'png';
   sizes?: Array<string>;
+  lowResSize?: string; // Size suffix for low-res placeholder
 }
 
 // Props definition with TypeScript
@@ -56,13 +45,14 @@ const props = withDefaults(defineProps<Props>(), {
   alt: '',
   useLowResBackground: true,
   backgroundFormat: 'webp',
-  sizes: () => ['mid', 'low', ''] // Empty string represents original size
+  sizes: () => ['mid', 'low', ''], // Empty string represents original size
+  lowResSize: 'low' // New prop for the low-res image size
 })
 
 // Define emits
 const emit = defineEmits<{
-  (e: 'ready'): void;
-  (e: 'loaded'): void;
+  ready: [],
+  loaded: [],
 }>()
 
 // Image loading state
@@ -101,6 +91,11 @@ const getMediaQuery = (size: string): string => {
 // Default image URL (original size, PNG format as fallback)
 const defaultImageUrl = computed((): string => {
   return generateUrl('', 'png')
+})
+
+// Low resolution image URL for the background
+const lowResImageUrl = computed((): string => {
+  return generateUrl(props.lowResSize, props.backgroundFormat)
 })
 
 // Computed style for container, to allow for custom styles to be merged

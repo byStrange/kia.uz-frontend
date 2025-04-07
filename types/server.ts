@@ -88,4 +88,4 @@ export interface News extends CommonMediaModel {
   video_url: string
 }
 
-export type ModelWithLessData = Pick<Model, 'name' | 'id' | 'category' | 'main_image' | 'starting_price' | 'slug'>
+export type ModelWithLessData = Pick<Model, 'name' | 'id' | 'category' | 'main_image' | 'starting_price' | 'slug' | 'old_price' | 'is_electric'>

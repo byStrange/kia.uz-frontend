@@ -91,6 +91,7 @@ export interface Model extends CommonMediaModel {
   seo: SEO['seo']
   category: ModelCategory
   starting_price: number
+  old_price: number
   brochure: string | null
   price_list: string | null
   show_in_telegram: boolean,
