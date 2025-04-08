@@ -68,7 +68,7 @@ console.log(useHTMLRenderer(pageData.value?.content))
         </template>
 
         <template v-if="block.type == 'list'">
-          <div :key="block.type" class="max-w-[1060px]">
+          <div :key="block.type" class="max-w-[1060px] mx-auto">
             <ul class="space-y-2.5">
               <li v-for="item in block.items" :key="item" class="text-sm md:text-base">{{ item }}</li>
             </ul>
