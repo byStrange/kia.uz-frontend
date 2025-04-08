@@ -2,7 +2,7 @@
 import {
   ElementSlideView,
 } from '#components'
-import type { Configuration, ModelEngine } from '~/server/api/models/[id]/index.get';
+import type { ModelEngine } from '~/server/api/models/[id]/index.get';
 import type { ModelPropertiesPage } from '~/server/api/models/[id]/properties.get';
 
 
@@ -38,7 +38,7 @@ const items = ref<AccordionItem[]>([
       { label: 'Рабочий объем, л', key: 'working_volume' },
       { label: 'Рабочий объем, см3', key: 'working_volume_cube' },
       { label: 'Экологический класс', key: 'eco_class' },
-      { label: 'Коробка передач', key: 'gears' },
+      { label: 'Коробка передач', key: 'gear' },
       { label: 'Привод, л', key: 'drive' },
       { label: 'Время разгона 0-100 км/ч, с', key: 'acceleration_time' },
       { label: 'Расход топлива комбинированный, л/100 км', key: 'fuel_consumption' }
@@ -155,18 +155,10 @@ defineProps<{ configurations: ModelPropertiesPage['configurationWithEngines'] | 
                   '--translate-x':
                     (confSwiperClientX ? confSwiperClientX - 15 : 0) + 'px',
                 }">
-                  <template v-if="item.key == 'gears'">
-                    <div v-for="config in configurations || []" :key="config.name"
-                      class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px]">
-                      <div v-for="gear in config.parent_engine['gears']" :key="gear.id">{{ gear.name }}</div>
-                    </div>
-                  </template>
-                  <template v-else>
-                    <div v-for="config in configurations || []" :key="config.name"
-                      class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px]">
-                      <div>{{ config.parent_engine[item.key]! }}</div>
-                    </div>
-                  </template>
+                  <div v-for="config in configurations || []" :key="config.name"
+                    class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px]">
+                    <div>{{ config.parent_engine[item.key]! }}</div>
+                  </div>
                 </div>
               </div>
             </div>

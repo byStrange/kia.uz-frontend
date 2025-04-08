@@ -3,6 +3,7 @@ import { useContainer } from '@/composables/useContainer'
 import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
 
 const { bounding } = useContainer()
+const { downloadFile } = useDownload()
 const { gsap } = useGsap()
 const { safe } = useSafeAccessMedia()
 const { t } = useI18n()
@@ -55,31 +56,32 @@ onMounted(() => {
     <OrganismModelHero />
 
     <MoleculeSection v-if="pageData?.specialOffers.length" :section-title="t('index.special_offers')">
-      <ElementSlideView
-:data="pageData?.specialOffers || []" :space-between="16"
+      <ElementSlideView :data="pageData?.specialOffers || []" :space-between="16"
         :slides-offset-before="bounding.x.value" :slides-offset-after="bounding.x.value" swiper-slide-class="!w-fit">
         <template #slide="{ item }">
-          <div class="h-[408px] md:w-[310px] md:!px-0">
-            <div class="mx-auto h-full max-w-[310px] bg-background">
-              <div class="relative flex h-[222px] w-full items-center justify-center bg-gray-200">
-                <MoleculeImage :base-url="item.desktop_image || ''" class="h-[222px] w-full object-cover" />
-              </div>
+          <NuxtLinkLocale :to="`/special-offers/${item.slug}`">
 
-              <div class="p-7.5">
-                <p class="text-base font-semibold text-primary">
-                  {{ item.title }}
-                </p>
+            <div class="h-[408px] md:w-[310px] md:!px-0">
+              <div class="mx-auto h-full max-w-[310px] bg-background">
+                <div class="relative flex h-[222px] w-full items-center justify-center bg-gray-200">
+                  <MoleculeImage :base-url="item.desktop_image || ''" class="h-[222px] w-full object-cover" />
+                </div>
+
+                <div class="p-7.5">
+                  <p class="text-base font-semibold text-primary">
+                    {{ item.title }}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          </NuxtLinkLocale>
         </template>
       </ElementSlideView>
     </MoleculeSection>
 
     <!-- <OrganismModelThreeSixty :model-name="pageData?.model.name" :colors="pageData?.model.colors || []" /> -->
 
-    <MoleculeSection
-id="shit" :section-title="$t('common.model_variants', { model: pageData?.model.name })"
+    <MoleculeSection id="shit" :section-title="$t('common.model_variants', { model: pageData?.model.name })"
       :subtitle="$t('common.configurations')" class="bg-background model-id_variants border">
       <template #after-title="{ align }">
         <p class="text-[15px] text-primary" :class="align">
@@ -87,13 +89,11 @@ id="shit" :section-title="$t('common.model_variants', { model: pageData?.model.n
         </p>
       </template>
 
-      <ElementSlideView
-:space-between="16" :slides-offset-before="bounding.x.value"
+      <ElementSlideView :space-between="16" :slides-offset-before="bounding.x.value"
         :slides-offset-after="bounding.x.value" swiper-slide-class="!w-fit" :navigation="false"
         :data="pageData?.configurations || []" class="mt-6 2xl:mt-8" :paginator="false">
         <template #slide="{ item }">
-          <div
-class="max-w-[425px] w-[--width] md:!px-0 2xl:h-[512px] 2xl:w-4h md:h-[448px]"
+          <div class="max-w-[425px] w-[--width] md:!px-0 2xl:h-[512px] 2xl:w-4h md:h-[448px]"
             :style="{ '--width': bounding.width.value + 'px' }">
             <div class="w-full bg-white h-full flex flex-col">
               <div class="bg-primary px-6 py-4">
@@ -101,7 +101,8 @@ class="max-w-[425px] w-[--width] md:!px-0 2xl:h-[512px] 2xl:w-4h md:h-[448px]"
                   {{ item.name }}
                 </h1>
                 <p class="mt-1 text-base font-semibold text-white">
-                  <span v-if="item.compare_price" class="line-through decoration-2 decoration-kia-live-red">{{ formatPrice(item.compare_price) }}</span>
+                  <span v-if="item.compare_price" class="line-through decoration-2 decoration-kia-live-red">{{
+                    formatPrice(item.compare_price) }}</span>
                   {{ $t("prefixes.from", { price: formatPrice(item.price, $t('prefixes.sum')) }) }}
                 </p>
               </div>
@@ -114,8 +115,7 @@ class="max-w-[425px] w-[--width] md:!px-0 2xl:h-[512px] 2xl:w-4h md:h-[448px]"
                   <div class="pb-5">
                     <b class="text-sm">{{ $t('common.main_options') }}</b>
                     <div class="mt-2 space-y-2 text-sm">
-                      <p
-v-for="option in item.feature_groups.map((f) => f.features).flat().slice(0, 4)"
+                      <p v-for="option in item.feature_groups.map((f) => f.features).flat().slice(0, 4)"
                         :key="option.name" class="md:text-base text-sm">
                         {{ option.name }}
                       </p>
@@ -137,9 +137,9 @@ v-for="option in item.feature_groups.map((f) => f.features).flat().slice(0, 4)"
       </ElementSlideView>
       <div
         class="container space-y-3 mt-6 md:grid md:grid-cols-3 md:space-y-0 md:gap-5 2xl:flex 2xl:justify-center 2xl:mt-8 model-id_variants_action-buttons">
-        <AtomButton mode="full" :label="$t('common_form.submit_application')" color="primary" />
-        <AtomButton mode="full" color="secondary" :label="$t('common.download_price_list')" />
-        <AtomButton mode="full" color="secondary" :label="$t('common.contact_dealers')" />
+        <AtomLink to="/feedback" mode="full" :label="$t('common_form.submit_application')" color="primary" />
+        <AtomButton mode="full" @click="downloadFile(safe('/pdf-outputs/' + pageData?.model.price_list))" color="secondary" :label="$t('common.download_price_list')" />
+        <AtomLink to="/dealers" mode="full" color="secondary" :label="$t('common.contact_dealers')" />
       </div>
     </MoleculeSection>
 
@@ -150,8 +150,7 @@ v-for="option in item.feature_groups.map((f) => f.features).flat().slice(0, 4)"
       <template #title="{ sectionTitle, sectionTitleClass }">
         <h2 :class="[sectionTitleClass, 'mb-6']">{{ sectionTitle }}</h2>
       </template>
-      <ElementSlideView
-:data="pageData?.news || []" :space-between="16" :slides-offset-before="bounding.x.value"
+      <ElementSlideView :data="pageData?.news || []" :space-between="16" :slides-offset-before="bounding.x.value"
         :slides-offset-after="bounding.x.value" swiper-slide-class="!w-fit !h-auto"
         :style="{ '--swiper-pagination-mt': '24px' }">
         <template #slide="{ item }">
@@ -173,8 +172,7 @@ v-for="option in item.feature_groups.map((f) => f.features).flat().slice(0, 4)"
       </ElementSlideView>
     </MoleculeSection>
 
-    <MoleculeSection
-align="left" :section-title="$t('warranty.warranty_and_service')"
+    <MoleculeSection align="left" :section-title="$t('warranty.warranty_and_service')"
       :subtitle="$t('warranty.service').toLowerCase()"
       class="flex flex-col-reverse gap-10 2xl:grid-cols-12 2xl:grid 2xl:gap-grid-12-gap container rtl">
       <template #title="{ sectionTitle, sectionTitleClass, subtitle, subtitleClass }">
@@ -189,8 +187,7 @@ align="left" :section-title="$t('warranty.warranty_and_service')"
       </div>
     </MoleculeSection>
 
-    <MoleculeSection
-v-if="footerContent" :section-title="footerContent.title" :subtitle="footerContent.subtitle || ''"
+    <MoleculeSection v-if="footerContent" :section-title="footerContent.title" :subtitle="footerContent.subtitle || ''"
       class="container bg-no-repeat bg-[length:100%_294px] md:bg-[length:100%_405px] 2xl:bg-[length:100%_500px] 2xl:pt-1h"
       :style="{
         '--background-image-url': url(safe(footerContent.footer_background_image)),
@@ -198,15 +195,13 @@ v-if="footerContent" :section-title="footerContent.title" :subtitle="footerConte
       }">
       <template #title="{ sectionTitle, sectionTitleClass, subtitle, subtitleClass }">
         <div>
-          <h3
-:class="[
+          <h3 :class="[
             subtitleClass,
             'mb-2 md:mb-2.5 !text-kia-polar-white 2xl:text-sm+',
           ]">
             {{ subtitle }}
           </h3>
-          <h2
-:class="[
+          <h2 :class="[
             sectionTitleClass,
             '!mb-0 !text-kia-polar-white md:!text-5xl',
           ]">

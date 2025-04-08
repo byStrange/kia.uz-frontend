@@ -7,28 +7,24 @@
 
     <picture class="block w-full h-full">
       <!-- WebP format - highest priority now -->
-      <source
-v-for="size in sizes" :key="`webp-${size}`" :srcset="generateSrcSet('webp', size)"
+      <source v-for="size in sizes" :key="`webp-${size}`" :srcset="generateSrcSet('webp', size)"
         :media="getMediaQuery(size)" type="image/webp" />
 
       <!-- AVIF format - second priority -->
-      <source
-v-for="size in sizes" :key="`avif-${size}`" :srcset="generateSrcSet('avif', size)"
+      <source v-for="size in sizes" :key="`avif-${size}`" :srcset="generateSrcSet('avif', size)"
         :media="getMediaQuery(size)" type="image/avif" />
 
       <!-- PNG format - fallback -->
       <source v-for="size in sizes" :key="`png-${size}`" :srcset="generateSrcSet('png', size)" />
 
       <!-- Fallback image with all attributes passed to the component -->
-      <img
-:src="defaultImageUrl" :alt="alt" v-bind="$attrs" class="transition-opacity duration-300"
+      <img :src="defaultImageUrl" :alt="alt" v-bind="$attrs" class="transition-opacity duration-300"
         :class="{ 'opacity-0': !imageLoaded && useLowResBackground }" @load="onImageLoaded" />
     </picture>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
 
 // Define prop types
 interface Props {
@@ -56,7 +52,7 @@ const emit = defineEmits<{
 }>()
 
 // Image loading state
-const imageLoaded = ref(false)
+const imageLoaded = useState<boolean>('image-loaded', () => false)
 
 // Image loaded handler
 const onImageLoaded = () => {
