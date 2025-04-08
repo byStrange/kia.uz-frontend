@@ -30,7 +30,7 @@ onMounted(() => {
       </UIContainer>
       <UIContainer class="relative text-primary 2xl:max-w-1.06k 2xl:px-0">
         <div class="space-y-6 pt-12 pb-6 md:space-y-5 md:pt-15 md:pb-7.5 2xl:space-y-4 2xl:pt-10 2xl:pb-8">
-          <p class="text-center text-sm md:text-base+">{{ $d(new Date(pageData?.news.created_at || ''))}}</p>
+          <p class="text-center text-sm md:text-base+">{{ $d(new Date(pageData?.news.created_at || '')) }}</p>
           <h1 class="text-2xl text-center md:text-4xl 2xl:text-5xl">{{ pageData?.news.title }}</h1>
         </div>
 
@@ -60,6 +60,12 @@ onMounted(() => {
               <ul class="text-sm list-disc md:text-base+ pl-6">
                 <li v-for="item in content.items" :key="item">{{ item }}</li>
               </ul>
+            </div>
+          </template>
+
+          <template v-if="content.type == 'html'">
+            <div :key="content.type" class="pb-6  md:pb-7.5  2xl:pb-8 2xl:space-y-8 2xl:max-w-7h 2xl:mx-auto"
+              v-html="content.html">
             </div>
           </template>
 
