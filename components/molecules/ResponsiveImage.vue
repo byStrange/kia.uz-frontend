@@ -81,9 +81,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-
-// Define prop types
 interface Props {
   defaultImage: string;
   tabletImage?: string;
@@ -106,14 +103,12 @@ const props = withDefaults(defineProps<Props>(), {
 
 // Define emits
 const emit = defineEmits<{
-  (e: 'ready'): void;
-  (e: 'loaded'): void;
+  ready: [],
+  loaded: []
 }>()
 
-// Image loading state
 const imageLoaded = ref(false)
 
-// Image loaded handler
 const onImageLoaded = () => {
   imageLoaded.value = true
   emit('loaded')
@@ -154,6 +149,7 @@ const containerStyle = computed(() => {
 
 // Emit ready event when mounted
 onMounted(() => {
+  onImageLoaded()
   emit('ready')
 })
 </script>

@@ -37,7 +37,8 @@ console.log(useHTMLRenderer(pageData.value?.content))
 
         <source :srcset="pageData?.desktop_image" media="(min-width: 1440px)" />
         <source :srcset="pageData?.tablet_image" media="(min-width: 768px)" />
-        <img class="w-full object-center absolute top-0 left-0 h-2/3 object-cover md:h-full" :src="pageData?.default_image" />
+        <img class="w-full object-center absolute top-0 left-0 h-2/3 object-cover md:h-full"
+          :src="pageData?.default_image" />
       </picture>
       <div class="!px-0 py-5 absolute left-[--left] top-[--safe-area-padding-top] hidden 2xl:block z-20"
         :style="{ '--left': bounding.x.value + 'px' }">
@@ -53,22 +54,25 @@ console.log(useHTMLRenderer(pageData.value?.content))
             {{ pageData?.subtitle }}
           </p>
         </div>
-          <AtomLink to="/feedback" :label="$t('common.request_a_callback')" color="secondary" mode="full" class="mt-4 2xl:mt-10" />
+        <AtomLink to="/feedback" :label="$t('common.request_a_callback')" color="secondary" mode="full"
+          class="mt-4 2xl:mt-10" />
       </div>
     </div>
-    <UIContainer class="prose pt-10 2xl:pt-20 pb-10 html-rendered-content">
+    <UIContainer class="prose pt-10 2xl:pt-20 pb-10 html-rendered-content"
+      :style="{ '--container-max-width': '1060px' }">
       <template v-for="(block, index) in useHTMLRenderer(pageData?.content || '')">
-        <div v-if="block.type == 'html'" :key="index + block.type" class="!max-w-[1060px] mx-auto" v-html="block.html">
+        <div v-if="block.type == 'html'" :key="index + block.type" class="!max-w-[--container-max-width] mx-auto"
+          v-html="block.html">
         </div>
 
         <template v-if="block.type === 'text'">
-          <div :key="block.type" class="max-w-[1060px] mx-auto">
+          <div :key="block.type" class="max-w-[--container-max-width] mx-auto">
             <p class="text-sm md:text-base">{{ block.text }}</p>
           </div>
         </template>
 
         <template v-if="block.type == 'list'">
-          <div :key="block.type" class="max-w-[1060px] mx-auto">
+          <div :key="block.type" class="max-w-[--container-max-width] mx-auto">
             <ul class="space-y-2.5">
               <li v-for="item in block.items" :key="item" class="text-sm md:text-base">{{ item }}</li>
             </ul>
@@ -76,14 +80,14 @@ console.log(useHTMLRenderer(pageData.value?.content))
         </template>
 
         <template v-if="block.type == 'heading'">
-          <div :key="block.type" class="max-w-[1060px] mx-auto">
+          <div :key="block.type" class="max-w-[--container-max-width] mx-auto">
             <h1 v-if="block.level == 'h1'" class="text-lg font-semibold md:text-2xl 2xl:text-5xl" v-html="block.text">
             </h1>
             <h6 v-if="block.level == 'h6'" class="text-xs md:text-sm text-caption" v-html="block.text"></h6>
           </div>
         </template>
 
-        <div v-else-if="block.type == 'table'" :key="index" class="!max-w-[1060px] mx-auto">
+        <div v-else-if="block.type == 'table'" :key="index" class="max-w-[--container-max-width] mx-auto">
           <DataTable :value="block.options?.body" striped-rows
             :style="{ '--container-width': bounding.width.value + 'px' }">
             <Column v-for="field in block.options?.fields" :key="field.field" :field="field.field" :header="field.label"
@@ -93,7 +97,7 @@ console.log(useHTMLRenderer(pageData.value?.content))
 
 
         <div v-else-if="block.type === 'divider'" :key="block.type"
-          class="divider w-full h-[1px] bg-caption 2xl:block opacity-30 left-0 max-w-[1060px] mx-auto"></div>
+          class="divider w-full h-[1px] bg-caption 2xl:block opacity-30 left-0 max-w-[--container-max-width] mx-auto"></div>
       </template>
 
 

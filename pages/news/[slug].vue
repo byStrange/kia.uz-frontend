@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
 const router = useRouter()
+const { safe } = useSafeAccessMedia()
 const { locale } = useI18n()
 const { data: pageData } = await useFetch(`/api/news/${route.params.slug}`)
 const { updateBreadcrumbTitle } = useBreadcrumbs(route, router, locale.value)
@@ -13,11 +14,6 @@ definePageMeta({
 
 useSeoMeta({
   title: () => pageData.value?.news.title || ''
-})
-
-onMounted(() => {
-  const renderedContent = useHTMLRenderer(pageData.value?.news.content || '')
-  console.log(renderedContent)
 })
 </script>
 <template>
@@ -32,6 +28,11 @@ onMounted(() => {
         <div class="space-y-6 pt-12 pb-6 md:space-y-5 md:pt-15 md:pb-7.5 2xl:space-y-4 2xl:pt-10 2xl:pb-8">
           <p class="text-center text-sm md:text-base+">{{ $d(new Date(pageData?.news.created_at || '')) }}</p>
           <h1 class="text-2xl text-center md:text-4xl 2xl:text-5xl">{{ pageData?.news.title }}</h1>
+        </div>
+
+        <div class="-mx-page-padding-2 py-6 md:-mx-0 md:py-7.5 2xl:py-8">
+          <MoleculeResponsiveImage :desktop-image="safe(pageData?.news.desktop_image)"
+            :default-image="safe(pageData?.news.default_image)" :tablet-image="safe(pageData?.news.tablet_image)" />
         </div>
 
         <template v-for="content in useHTMLRenderer(pageData?.news.content || '')">
