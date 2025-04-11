@@ -54,7 +54,7 @@ const pageAnimations = {
 
 
 onMounted(() => {
-  pageAnimations.default()
+  // pageAnimations.default()
 })
 
 

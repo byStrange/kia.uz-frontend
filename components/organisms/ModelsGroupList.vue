@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { safe } = useSafeAccessMedia()
 
-const { modelPriceClass = 'mt-1.5 flex gap-3 text-primary', groupTitleClass = 'text-2xl font-semibold text-primary md:text-3xl', modelNameClass = 'text-lg font-semibold text-primary', pricesButtonClass = 'flex items-center mt-1 link-hover link-hover-dark' } = defineProps<{ modelsGroup: GroupedItems<ModelWithLessData>, groupTitleClass?: string, modelNameClass?: string, modelPriceClass?: string, pricesButtonClass?: string }>();
+const { modelPriceClass = 'mt-1.5 flex gap-3 text-primary', groupTitleClass = 'text-2xl font-semibold text-primary md:text-3xl', modelNameClass = 'text-lg font-semibold text-primary', pricesButtonClass = 'flex items-center mt-1 link-hover link-hover-dark' } = defineProps<{ modelsGroup: GroupedItems<ModelWithLessData>, groupTitleClass?: string, modelNameClass?: string, modelPriceClass?: string, pricesButtonClass?: string, showPriceButton?: boolean }>();
 
 defineEmits<{
   choose: [slug: string, id: uuid]
@@ -33,6 +33,7 @@ defineEmits<{
             </p>
           </div>
           <button
+            v-if="showPriceButton"
 class="flex items-center mt-1 link-hover link-hover-dark" :style="{ '--l-bottom': '-2px' }"
             :class="pricesButtonClass" @click="$emit('choose', model.slug, model.id)">
             <span class="text-base font-semibold text-primary">Цены</span>

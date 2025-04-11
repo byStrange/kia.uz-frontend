@@ -2,7 +2,7 @@
 import {
   ElementSlideView,
 } from '#components'
-import type { ModelEngine } from '~/server/api/models/[id]/index.get';
+import type { Configuration, ModelEngine } from '~/server/api/models/[id]/index.get';
 import type { ModelPropertiesPage } from '~/server/api/models/[id]/properties.get';
 
 
@@ -155,10 +155,18 @@ defineProps<{ configurations: ModelPropertiesPage['configurationWithEngines'] | 
                   '--translate-x':
                     (confSwiperClientX ? confSwiperClientX - 15 : 0) + 'px',
                 }">
-                  <div v-for="config in configurations || []" :key="config.name"
-                    class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px]">
-                    <div>{{ config.parent_engine[item.key]! }}</div>
-                  </div>
+                  <template v-if="item.key == 'gear' || item.key == 'drive'">
+                    <div v-for="config in configurations || []" :key="config.name"
+                      class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px]">
+                      <div> {{ config.parent_engine[item.key].name }}</div>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <div v-for="config in configurations || []" :key="config.name"
+                      class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px]">
+                      <div>{{ config.parent_engine[item.key]! }}</div>
+                    </div>
+                  </template>
                 </div>
               </div>
             </div>
