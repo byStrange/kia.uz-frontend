@@ -120,7 +120,7 @@ const paymentOptions = computed<PaymentOption[]>(() =>  {
       mainDescription: 'Спецена',
       additionalInfo: []
     },
-    {
+    /*{
       id: 'credit',
       title: 'Покупка с льготным кредитом',
       mainAmount: selectedConfiguration.value?.credit_payment || 0,
@@ -131,7 +131,7 @@ const paymentOptions = computed<PaymentOption[]>(() =>  {
           description: 'Первоначальный взнос от 15%'
         }
       ]
-    },
+    },*/
     {
       id: 'installment',
       title: 'Беспроцентная рассрочка',
@@ -199,7 +199,7 @@ v-if="step.step === 'model'"
           <div v-if="step.step === 'model'" class="hidden 2xl:block">
             <OrganismInStockFilter @filter-change="handleFilterChange" />
           </div>
-          <div v-else-if="step.step === 'configuration'" class="hidden 2xl:block">
+          <div v-else class="hidden 2xl:block">
             <div>
               <div class="text-2xl text-primary space-y-1">
                 <h1>{{ selectedModel.model?.name }}</h1>
