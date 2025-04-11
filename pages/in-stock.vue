@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Dialog } from 'primevue'
+import { withOptions } from 'tailwindcss/plugin';
 import type { ModelFilters } from '~/components/organisms/InStockFilter.vue';
 import type { ModelPricingAndDetailsPage } from '~/server/api/models/[id]/features.get';
 import type { Model } from '~/server/api/models/[id]/index.get';
@@ -139,8 +140,8 @@ const paymentOptions = computed<PaymentOption[]>(() =>  {
       mainDescription: 'Ежемесячный платеж',
       additionalInfo: [
         {
-          amount: selectedConfiguration.value?.installment_minimum_prepayment||0,
-          description: 'Первоначальный взнос от 40%'
+          amount: (selectedConfiguration.value?.price || 1) * ((selectedConfiguration.value?.installment_minimum_prepayment || 0) / 100)||0,
+          description: `Первоначальный взнос от ${selectedConfiguration.value?.installment_minimum_prepayment}%`
         }
       ]
     }
