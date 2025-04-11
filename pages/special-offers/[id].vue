@@ -11,13 +11,14 @@ const route = useRoute()
 
 const { locale } = useI18n()
 
-const { data: pageData } = await useFetch(`/api/special-offers/${route.params.id}`)
+const { data: pageData } = await useFetch(`/api/special-offers/${route.params.id}`, {
+  query: { lang: locale.value }
+})
 
 
 const { updateBreadcrumbTitle } = useBreadcrumbs(route, router, locale.value)
 
 updateBreadcrumbTitle(route.fullPath, pageData.value?.title || '')
-console.log(useHTMLRenderer(pageData.value?.content))
 </script>
 
 <template>

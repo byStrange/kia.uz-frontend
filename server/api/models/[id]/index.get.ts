@@ -40,33 +40,30 @@ export interface Configuration extends CommonModel {
   price: number
   compare_price: number
   feature_groups: FeatureGroup[]
-  // percent
-  minimum_prepayment: number
+  minimum_prepayment: number,
+  annual_interest_rate: number,
+  repayment_months: number,
+  installment_months: number
+  credit_payment: number | null,
+  interest_free_installment_plan: number | null;
+  installment_minimum_prepayment: number
 
-  // percent
-  minimum_bet: number
-
-  maximum_bet: number
-
-  // in days
-  minimum_repayment_period: number
-  maximum_repayment_period: number
   engine?: string
 }
+
 
 export interface ModelEngine extends CommonModel {
   name: string
   desc: string
   power: number
   configurations: Configuration[]
-  gears: ModelGear[]
-  actuations: ModelActuation[]
+  gear: ModelGear
+  drive: ModelActuation
   torque: number
   fuel_type: string
   working_volume: string
   working_volume_cube: string
   eco_class: string
-  drive: string
   acceleration_time: string
   fuel_consumption: string
   city_fuel_gkm: string
@@ -123,6 +120,7 @@ export default defineEventHandler(async (event) => {
     referencedNews = await useFetchApi<News[]>('/news/?referenced_models=' + model.id, locale),
 
     configurations = model.engines.map((engine) => engine.configurations.map((configuration) => ({ ...configuration }))).flat();
+
 
   const pageData: ModelLandingPage = {
     model, specialOffers: referencedSpecialOffers, configurations, news: referencedNews

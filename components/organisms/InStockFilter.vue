@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import ToggleSwitch from 'primevue/toggleswitch'
-import type useFilteredData from '~/composables/useFilter'
-import type { Model, ModelEngine } from '~/server/api/models/[id]/index.get'
 
 export interface ModelFilters {
   isNew: boolean | undefined
@@ -11,26 +9,28 @@ export interface ModelFilters {
   bodyType: ('sedan' | 'crossover')[]
 }
 
-const modelFilters = reactive<ModelFilters>({
-  name: 'good',
+const defaultFilters = {
   isNew: undefined,
   driveType: [],
   engineType: [],
   seats: [],
   bodyType: []
-})
+}
 
-const props = defineProps<{ filter?: ReturnType<typeof useFilteredData<ModelEngine, ModelFilters>> }>()
+const modelFilters = useState<ModelFilters>('modelFilters', () => defaultFilters)
 
 const resetFilters = () => {
-  /// 
+  modelFilters.value.isNew = undefined;
+  modelFilters.value.driveType = [];
+  modelFilters.value.engineType = [];
+  modelFilters.value.seats = [];
+  modelFilters.value.bodyType = [];
+
   emit('clearFilter')
 }
 
 const updateFilters = () => {
-  props.filter?.updateFilters(modelFilters)
-  console.log(modelFilters)
-  console.log(props.filter?.data.value)
+  emit('filterChange', modelFilters.value)
 }
 
 const emit = defineEmits<{
@@ -42,14 +42,16 @@ const emit = defineEmits<{
 
 watch(modelFilters, () => {
   updateFilters()
-  emit('filterChange', modelFilters)
-})
+}, { deep: true })
+
 </script>
 
 <template>
   <div>
     <UIContainer class="py-6 flex justify-between md:px-6 2xl:px-0 2xl:pt-0">
-      <span class="text-base text-primary font-semibold">Фильтры</span>
+      <div class="flex items-center gap-2">
+        <span class="text-base text-primary font-semibold">Фильтры</span>
+      </div>
       <button class="2xl:hidden" @click="$emit('closeCallback')">
         <UICloseIcon class="size-5" />
       </button>
@@ -128,7 +130,7 @@ watch(modelFilters, () => {
         <UIRefreshIcon />
         <span class="text-sm">Сбросить</span>
       </button>
-      <AtomButton class="w-1/2 2xl:hidden" label="Далее" color="primary" @click="$emit('applyFilters', modelFilters)" />
+      <AtomButton class="w-1/2 2xl:hidden" label="Далее" color="primary" @click="$emit('closeCallback')" />
     </div>
   </div>
 </template>

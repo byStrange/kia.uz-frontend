@@ -1,4 +1,3 @@
-
 /**
  * A generic composable for filtering data
  * @template T - The type of items in the data array
@@ -6,6 +5,7 @@
  */
 export default function useFilteredData<T extends Record<string, any>, F extends Record<string, any>>() {
   const data = ref<T[]>([]) as Ref<T[]>
+  const originalData = ref<T[]>([]) as Ref<T[]>
   const filters = ref<F>({} as F)
   const isLoading = ref<boolean>(false)
   const error = ref<Error | null>(null)
@@ -39,8 +39,10 @@ export default function useFilteredData<T extends Record<string, any>, F extends
 
         // Handle array filter values (OR logic)
         if (Array.isArray(value) && value.length > 0) {
-          // Skip empty arrays
-          if (value.length === 0) return true
+          // If item[key] is also an array, check for any intersection
+          if (Array.isArray(item[key])) {
+            return value.some(val => item[key].includes(val));
+          }
 
           // Check if the item's property matches any value in the array
           return value.includes(item[key])
@@ -91,7 +93,8 @@ export default function useFilteredData<T extends Record<string, any>, F extends
     error.value = null
 
     try {
-      data.value = await $fetch<T[]>(url, options)
+      const result = await $fetch<T[]>(url, options)
+      setData(result)
     } catch (err) {
       error.value = err instanceof Error ? err : new Error(String(err))
       console.error('Error fetching data:', err)
@@ -105,7 +108,15 @@ export default function useFilteredData<T extends Record<string, any>, F extends
    * @param newData - Data to set
    */
   const setData = (newData: T[]) => {
-    data.value = newData
+    originalData.value = [...newData]
+    data.value = [...newData]
+  }
+
+  /**
+   * Reset data to original dataset
+   */
+  const resetData = () => {
+    data.value = [...originalData.value]
   }
 
   /**
@@ -135,7 +146,6 @@ export default function useFilteredData<T extends Record<string, any>, F extends
     } as F
   }
 
-
   /**
    * Remove a specific filter
    * @param key - Filter key to remove
@@ -146,9 +156,25 @@ export default function useFilteredData<T extends Record<string, any>, F extends
     filters.value = newFilters as F
   }
 
+  /**
+   * Transform and filter data using a mapper function
+   * @param sourceData - Source data to transform
+   * @param mapperFn - Function to transform each item or extract items from complex structure
+   * @returns Flattened and transformed data array
+   */
+  const transformData = <S>(
+    sourceData: S,
+    mapperFn: (source: S) => T[]
+  ) => {
+    const transformedData = mapperFn(sourceData)
+    setData(transformedData)
+    return transformedData
+  }
+
   return {
     // State
     data,
+    originalData,
     filters,
     filteredData,
     isLoading,
@@ -157,10 +183,12 @@ export default function useFilteredData<T extends Record<string, any>, F extends
     // Methods
     fetchData,
     setData,
+    resetData,
     updateFilters,
     resetFilters,
     applyFilter,
     removeFilter,
-    createFilteredData
+    createFilteredData,
+    transformData
   }
 }

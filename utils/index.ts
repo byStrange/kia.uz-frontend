@@ -7,6 +7,21 @@ export const groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
     {} as Record<K, T[]>,
   )
 
+export function toQuery<T extends Record<string, any>>(
+  params: T,
+  keyMap: Partial<Record<keyof T, string>> = {}
+): string {
+  const query = Object.entries(params)
+    .filter(([_, value]) => value !== undefined && value !== null)
+    .map(([key, value]) => {
+      const mappedKey = keyMap[key as keyof T] || key;
+      return `${encodeURIComponent(mappedKey)}=${encodeURIComponent(String(value))}`;
+    })
+    .join('&');
+
+  return query ? `?${query}` : '';
+}
+
 export function chunkArray<T>(array: T[], size: number): T[][] {
   const result: T[][] = []
   for (let i = 0; i < array.length; i += size) {
