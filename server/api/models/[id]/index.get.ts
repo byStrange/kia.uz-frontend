@@ -35,11 +35,21 @@ export interface FeatureGroup extends CommonModel {
   is_featured: boolean
 }
 
+export interface InstallmentPlan extends CommonModel {
+  months: number
+  minimum_prepayment: number
+  prepayment_calculated: number
+  annual_interest: null | number
+  monthly_payment: null | number
+  configuration: uuid
+}
+
 export interface Configuration extends CommonModel {
   name: string
   price: number
   compare_price: number
   feature_groups: FeatureGroup[]
+  installment_options: InstallmentPlan[],
   minimum_prepayment: number,
   annual_interest_rate: number,
   repayment_months: number,
