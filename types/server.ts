@@ -42,7 +42,7 @@ export interface SpecialOfferCategory extends CommonModel {
 export interface SpecialOffer extends CommonMediaModel {
   seo: SEO
   title: string
-  category: SpecialOfferCategory 
+  category: SpecialOfferCategory
   content: HtmlText
   type: 'buy' | 'service'
   slug: string
@@ -51,8 +51,11 @@ export interface SpecialOffer extends CommonMediaModel {
 }
 
 export const specialOfferLessData = ['id', 'slug', 'title', 'default_image', 'desktop_image', 'tablet_image', 'category', 'subtitle'] as const;
+export const modelLessData = ['name', 'id', 'category', 'main_image', 'starting_price', 'slug', 'old_price', 'is_electric'] as const;
+export const newsLessData = ['id', 'slug', 'title', 'default_image', 'desktop_image', 'tablet_image', 'category', 'subtitle'] as const;
 
 export type SpecialOfferWithoutContent = Pick<SpecialOffer, typeof specialOfferLessData[number]>;
+export type NewsWithoutContent = Pick<News, typeof newsLessData[number]>;
 
 export interface ModelBlockSlide extends CommonMediaModel {
   title: string
@@ -88,4 +91,4 @@ export interface News extends CommonMediaModel {
   video_url: string
 }
 
-export type ModelWithLessData = Pick<Model, 'name' | 'id' | 'category' | 'main_image' | 'starting_price' | 'slug' | 'old_price' | 'is_electric'>
+export type ModelWithLessData = Pick<Model, typeof modelLessData[number]>

@@ -1,7 +1,6 @@
 import { useFetchApi } from '~/composables/useFetchApi'
-import type { Model } from './models/[id]/index.get'
 import { getCookie } from 'h3'
-import { specialOfferLessData } from '~/types/server'
+import { specialOfferLessData, modelLessData, newsLessData, type ModelWithLessData, type NewsWithoutContent } from '~/types/server'
 import type { GroupedNews, GroupedSpecialOfferWithoutContent } from '~/utils/serverUtils'
 import { groupNewsByCategory, groupSpecialOffersByCategory } from '~/utils/serverUtils'
 
@@ -25,7 +24,7 @@ export type IndexPageModel = {
 export interface IndexPage {
   seo: SEO['seo'],
   sliders: IndexPageSlider[],
-  models: Model[],
+  models: ModelWithLessData[],
   news: GroupedNews
   specialOffers: GroupedSpecialOfferWithoutContent,
   date: Date
@@ -34,15 +33,15 @@ export interface IndexPage {
 
 export default defineEventHandler(async (event) => {
 
-  const locale = getCookie(event, 'i18n_redirected')
+  const locale = getCookie(event, '18n_redirected')
 
   const sliders = await useFetchApi<IndexPageSlider[]>('/sliders', locale)
 
   const seo = await useFetchApi<SEO>(`/pages/~index`, locale)
 
   const specialOffers = await useFetchApi<SpecialOfferWithoutContent[]>(`/special-offers?fields=${specialOfferLessData.join(',')}`, locale)
-  const news = await useFetchApi<News[]>('/news', locale)
-  const models = await useFetchApi<Model[]>('/models', locale)
+  const news = await useFetchApi<NewsWithoutContent[]>(`/news?fields=${newsLessData.join(',')}`, locale)
+  const models = await useFetchApi<ModelWithLessData[]>(`/models?fields=${modelLessData.join(',')}`, locale)
   const date = new Date()
 
 

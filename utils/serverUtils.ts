@@ -1,5 +1,5 @@
 import type { Model } from "~/server/api/models/[id]/index.get";
-import type { SpecialOfferWithoutContent } from "~/types/server";
+import type { NewsWithoutContent, SpecialOfferWithoutContent } from "~/types/server";
 
 export interface ItemWithCategory {
   category: {
@@ -38,7 +38,7 @@ export const emptySeo: SEO = { seo: { title: '', description: '', keywords: '', 
 
 export type GroupedModels = GroupedItems<ModelWithLessData>;
 export type GroupedSpecialOfferWithoutContent = GroupedItems<SpecialOfferWithoutContent>;
-export type GroupedNews = GroupedItems<News>;
+export type GroupedNews = GroupedItems<NewsWithoutContent>;
 export type GroupedModelsFull = GroupedItems<Model>;
 
 export function groupModelsByCategory(models: ModelWithLessData[]): GroupedModels {
@@ -49,7 +49,7 @@ export function groupSpecialOffersByCategory(offers: SpecialOfferWithoutContent[
   return groupByCategory(offers);
 }
 
-export function groupNewsByCategory(news: News[]): GroupedNews {
+export function groupNewsByCategory(news: NewsWithoutContent[]): GroupedNews {
   return groupByCategory(news)
 }
 
