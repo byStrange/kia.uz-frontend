@@ -8,13 +8,21 @@ const isLastStep = computed(() => {
   return activeStep.value == props.steps.length - 1
 })
 
+const prevStep = () => {
+  if (!props.validateBack) handleStepChange(activeStep.value - 1)
+
+  if (props.validateBack && props.validateBack(props.steps[activeStep.value])) {
+    handleStepChange(activeStep.value - 1)
+  }
+}
+
 const handleStepChange = (index: number) => {
   if (index >= props.steps.length || index < 0) return;
 
   activeStep.value = index;
 
   if (stepElements.value) {
-    const element  = stepElements.value[activeStep.value];
+    const element = stepElements.value[activeStep.value];
     if (element.scrollIntoView) element.scrollIntoView()
   }
 }
@@ -27,7 +35,8 @@ interface Props {
   steps: T[],
   stepLabelKey?: keyof T
   stepKey?: keyof T,
-  validateDone?: (step: T) => boolean
+  validateDone?: (step: T, fromTemplate?: boolean) => boolean,
+  validateBack?: (step: T) => boolean
 }
 
 const props = defineProps<Props>()
@@ -44,10 +53,9 @@ class="step-header relative mx-auto max-w-[--max-width] 2xl:pb-10"
       <div class="progress divider border-t border-t-protection absolute content-[''] -z-10 w-full"></div>
       <div class="flex overflow-scroll no-scrollbar">
         <div
-          v-for="(step, index) in steps"
-ref="step" :key="(stepKey ? step[stepKey] : step) as string"
-          class="w-1/2 shrink-0 border-t-[3px] border-t-transparent transition-colors pt-4 text-base+ space-x-2 text-caption 2xl:w-2.5h 2xl:text-start"
-          :class="{ '!border-t-primary !text-primary': activeStep == index, '!border-t-forest-green': validateDone ? validateDone(step): false }">
+v-for="(step, index) in steps" ref="step" :key="(stepKey ? step[stepKey] : step) as string"
+          class="w-1/2 shrink-0 border-t-[3px] border-t-transparent transition-colors pt-4 text-base+ space-x-2 text-caption 2xl:flex-1 2xl:text-start"
+          :class="{ '!border-t-primary !text-primary': activeStep == index, '!border-t-forest-green': validateDone ? validateDone(step, true) : false }">
           <b>{{ `0${index + 1}` }}</b>
           {{ stepLabelKey ? step[stepLabelKey] : step }}
         </div>
@@ -74,11 +82,13 @@ ref="step" :key="(stepKey ? step[stepKey] : step) as string"
       <div class="flex 2xl:gap-x-6 flex-1 2xl:flex-none">
         <button
 v-if="activeStep != 0" class="w-1/2 flex items-center text-base justify-center 2xl:w-auto"
-          @click="handleStepChange(activeStep - 1)">
+          @click="prevStep">
           <UITickToLeft class="size-5" />
           <span>Назад</span>
         </button>
-        <AtomButton label="Next" class="w-1/2 2xl:w-3h" @click="validateDone(steps[activeStep]) ? handleStepChange(activeStep + 1) : ()=>{}" />
+        <AtomButton
+label="Next" class="w-1/2 2xl:w-3h"
+          @click="validateDone(steps[activeStep]) ? handleStepChange(activeStep + 1) : () => { }" />
       </div>
     </div>
   </div>
