@@ -75,7 +75,6 @@ const percentagePosition = computed(() => {
 	return ((percentage.value - props.minPercentage) / (props.maxPercentage - props.minPercentage)) * 100;
 });
 
-// Methods
 function updateAmountFromPercentage() {
 	amount.value = calculateAmount(percentage.value);
 	emitUpdates();
@@ -101,13 +100,11 @@ function emitUpdates() {
 }
 
 watch(() => props.totalAmount, () => {
-	// Recalculate amount when total changes but keep the same percentage
 	amount.value = calculateAmount(percentage.value);
 	emitUpdates();
 });
 
 watch([amount, percentage], () => {
-	console.log('amoutn changed', amount.value)
 	emitUpdates()
 })
 
@@ -122,8 +119,6 @@ input[type="range"] {
 }
 
 input[type="range"]::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
 	opacity: 0;
 }
 
