@@ -4,7 +4,8 @@ import { emptySeo } from "~/utils/serverUtils"
 import type { Dealer } from "../dealers.get"
 
 export default defineEventHandler(async (event) => {
-  const locale = getCookie(event, 'i18n_redirected')
+
+  const locale = getQuery(event).lang as string
   const models = await useFetchApi<Pick<Model, 'id' | 'name'>[]>('/models?fields=name,id')
   const dealers = await useFetchApi<Dealer[]>('/dealers')
 

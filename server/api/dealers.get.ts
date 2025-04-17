@@ -40,13 +40,14 @@ export default defineEventHandler(async (event) => {
       },
     },
   ]
-  const locale = getCookie(event, 'i18n_redirected')
+
+  const locale = getQuery(event).lang as string
   const fetchedDealers = await useFetchApi<DealerAPI[]>('/dealers', locale)
 
   let seo: SEO;
 
   try {
-    seo = await useFetchApi<SEO>('/pags/~dealers', locale)
+    seo = await useFetchApi<SEO>('/pages/~dealers', locale)
   }
   catch {
     seo = emptySeo

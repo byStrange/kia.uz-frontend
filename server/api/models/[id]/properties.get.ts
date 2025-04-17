@@ -11,7 +11,7 @@ interface ConfigurationWithEngines extends Configuration {
 }
 
 export default defineEventHandler(async (event) => {
-  const locale = getCookie(event, 'i18n_redirected');
+  const locale = getQuery(event).lang as string
   const param = getRouterParam(event, 'id');
 
   const model = await useFetchApi<Model>(`/models/${param}/`, locale);

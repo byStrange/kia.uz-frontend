@@ -16,7 +16,7 @@ type RequestTestDriveForm = z.infer<typeof testDriveSchema>
 export default defineEventHandler(async (event) => {
   const body = await readBody<RequestTestDriveForm>(event)
   const modelSlug = getRouterParam(event, 'id')
-  const locale = getCookie(event, 'i18n_redirected')
+  const locale = getQuery(event).lang as string
 
   if (!modelSlug) {
     return { statusCode: 400, error: 'Missing model slug route param' }

@@ -1,11 +1,7 @@
 <script setup lang="ts">
 const { safe } = useSafeAccessMedia()
 const { src } = useUploadcareSource()
-const { locale } = useI18n()
-
-const { data: pageData } = useAsyncData('seo', () => {
-  return useFetchApi<SEO>('/pages/~service~user-manual', locale.value)
-})
+const { data: pageData } = await useFetch('/api/service/user-manual')
 
 
 useSeoMeta({
@@ -52,9 +48,11 @@ definePageMeta({
 
       <div class="pb-12 md:grid md:grid-cols-2 rtl">
         <picture>
-          <source :srcset="src('b233ed8a-dc9a-4e68-9fb2-24cbe43f99ba')"
+          <source
+:srcset="src('b233ed8a-dc9a-4e68-9fb2-24cbe43f99ba')"
             media="(min-width: 768px) and (max-width: 1440px)" />
-          <img :src="src('062491d2-01fb-48b1-b730-43639a864d04')" alt=""
+          <img
+:src="src('062491d2-01fb-48b1-b730-43639a864d04')" alt=""
             class="object-cover md:w-full md:max-h-3h 2xl:max-h-none md:h-full 2xl:h-[388px]" />
         </picture>
         <div
@@ -67,7 +65,8 @@ definePageMeta({
               {{ $t('user_manual.service_functions_info') }}
             </p>
           </div>
-          <AtomLink :to="`/owners/car-info/warning-indicators`" mode="full" color="secondary" :label="$t('common.more')"
+          <AtomLink
+:to="`/owners/car-info/warning-indicators`" mode="full" color="secondary" :label="$t('common.more')"
             class="mt-6 !text-base+" />
         </div>
       </div>

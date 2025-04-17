@@ -15,7 +15,8 @@ interface RequestSerficeAPIForm {
 
 export default defineEventHandler(async (event) => {
   const body = await readBody<RequestServiceForm>(event)
-  const locale = getCookie(event, 'i18n_redirected')
+
+  const locale = getQuery(event).lang as string
 
   const data: RequestSerficeAPIForm = {
     vin_number: '1',

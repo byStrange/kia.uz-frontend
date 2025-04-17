@@ -2,7 +2,7 @@ import { useFetchApi } from "~/composables/useFetchApi"
 import { groupModelsByCategory, emptySeo } from "~/utils/serverUtils"
 
 export default defineEventHandler(async (event) => {
-  const locale = getCookie(event, 'i18n_redirected')
+  const locale = getQuery(event).lang as string
   const models = await useFetchApi<ModelWithLessData[]>('/models?fields=name,id,category,main_image,starting_price,slug,old_price,is_electric', locale)
 
 

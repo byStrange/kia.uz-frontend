@@ -12,7 +12,7 @@ export type SearchResultItem = {
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const locale = getCookie(event, 'i18n_redirected')
+  const locale = getQuery(event).lang as string
   const result = await useFetchApi<SearchResultItem[]>(`/search/?q=${body.term}`, locale)
   return result;
 })

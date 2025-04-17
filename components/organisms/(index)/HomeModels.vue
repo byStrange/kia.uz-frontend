@@ -1,12 +1,11 @@
 <script setup lang="tsx">
 import { Controller } from 'swiper/modules'
 import type { Swiper } from 'swiper/types'
-import type { Model } from '~/server/api/models/[id]/index.get';
 
 const { t } = useI18n()
 
 defineProps<{
-  models: Model[]
+  models: ModelWithLessData[]
 }>()
 
 const modelsThumbSwiper = ref<Swiper | null>(null)

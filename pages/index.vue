@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const { bounding } = useContainer()
 const { src } = useUploadcareSource()
-
-const { data: pageData } = useFetch('/api/indexPage')
+const { locale } = useI18n()
+const { data: pageData } = useFetch('/api/indexPage', { query: { lang: locale.value } })
 
 useSeoMeta({
   title: () => pageData.value?.seo.title || '',
@@ -33,18 +33,15 @@ const extraLinksCard = [
         <div class="relative mx-auto h-full max-w-[420px] bg-caption md:max-w-none">
           <NuxtLinkLocale to="/special-offers/important-installment-plan">
             <picture>
-              <source
-media="(min-width: 1024px)" :srcset="src('47fd9450-1106-44ba-b977-dfe1795a0f05', {
+              <source media="(min-width: 1024px)" :srcset="src('47fd9450-1106-44ba-b977-dfe1795a0f05', {
                 preview: '1000x720',
               })
                 " />
-              <source
-:srcset="src('32d3bffb-f001-4406-a6c0-517ca367af7f', {
+              <source :srcset="src('32d3bffb-f001-4406-a6c0-517ca367af7f', {
                 preview: '827x999',
               })
                 " media="(min-width: 768px)" />
-              <img
-loading="lazy" :src="src('9ae43504-1cfc-4d2b-9137-b40a5473ffce', {
+              <img loading="lazy" :src="src('9ae43504-1cfc-4d2b-9137-b40a5473ffce', {
                 preview: '1000x597',
               })
                 " class="img h-[187px] w-full max-w-[640px] bg-gray-200 md:absolute md:right-0 md:h-full md:w-1/2" />
@@ -57,8 +54,7 @@ loading="lazy" :src="src('9ae43504-1cfc-4d2b-9137-b40a5473ffce', {
             <p class="mt-2 text-base text-white 2xl:mt-4 md:leading-[24px]">
               {{ $t('index.kia_flexible_rental') }}
             </p>
-            <AtomLink
-to="/special-offers/important-installment-plan" color="secondary" mode="full"
+            <AtomLink to="/special-offers/important-installment-plan" color="secondary" mode="full"
               :label="$t('common.more')" class="mt-6 md:mt-14 md:leading-[24px]" />
           </div>
         </div>

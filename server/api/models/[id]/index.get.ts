@@ -120,7 +120,8 @@ export interface ModelLandingPage {
 
 
 export default defineEventHandler(async (event) => {
-  const locale = getCookie(event, 'i18n_redirected'),
+
+  const locale = getQuery(event).lang as string,
     param = getRouterParam(event, 'id'),
 
     model = await useFetchApi<Model>('/models/' + param, locale),

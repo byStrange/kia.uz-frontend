@@ -2,7 +2,8 @@
 import type { ModelWithLessData } from '~/types/server';
 import type { GroupedItems } from '~/utils/serverUtils';
 
-const { data: pageData } = useFetch('/api/models/')
+const { locale: language } = useI18n()
+const { data: pageData } = useFetch('/api/models/', { query: { lang: language.value }})
 
 const locale = useLocalePath()
 
@@ -55,7 +56,8 @@ definePageMeta({
         <h1 class="text-3xl font-semibold text-primary md:text-5xl">{{ $t('common.kia_all_models') }}</h1>
         <div class="flex items-center md:mt-7.5 max-w-4h gap-x-4">
           <div class="flex-grow">
-            <AtomDropdownInput v-model:selected-option="selectedOption" v-model:available-options="availableOptions"
+            <AtomDropdownInput
+v-model:selected-option="selectedOption" v-model:available-options="availableOptions"
               :placeholder="$t('common.choose_model')" class="mt-4 md:mt-0 md:max-w-sm" />
 
           </div>
@@ -69,7 +71,8 @@ definePageMeta({
             {{ $t('common.show_all_models') }}
           </AtomButton>
         </div>
-        <OrganismModelsGroupList v-else :models-group="filteredGroupedModels"
+        <OrganismModelsGroupList
+v-else :models-group="filteredGroupedModels"
           @choose="(slug) => $router.push(locale(`/models/${slug}`))" />
       </div>
     </div>

@@ -2,7 +2,10 @@
 import { DataTable, Column } from 'primevue'
 
 const { paddingTop } = useSafeArea()
-const { data: pageData } = await useFetch('/api/owners/technical-maintenance')
+const { locale } = useI18n()
+const { data: pageData } = useAsyncData('seo', () => {
+  return useFetchApi<SEO>('/pages/~owners~technical-maintenance', locale.value)
+})
 
 useSeoMeta({
   title: () => pageData.value?.seo.title || '',

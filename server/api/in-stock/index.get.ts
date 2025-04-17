@@ -1,11 +1,11 @@
 import { useFetchApi } from "~/composables/useFetchApi"
 import { groupModelsFullByCategory, emptySeo } from "~/utils/serverUtils"
 import { toQuery } from "~/utils"
-import type { Model } from "./models/[id]/index.get"
+import type { Model } from "../models/[id]/index.get"
 import type { ModelFilters } from "~/components/organisms/InStockFilter.vue"
 
 export default defineEventHandler(async (event) => {
-  const locale = getCookie(event, 'i18n_redirected')
+  const locale = getQuery(event).lang as string
   const query = getQuery<Partial<ModelFilters>>(event)
 
   const q = toQuery(query, { 'isNew': 'is_new', 'bodyType': 'body_type', 'driveType': 'actuation', 'engineType': 'engine_fuel_type' });

@@ -3,7 +3,8 @@ import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
 
 const modelData = useSharedPageData<ModelLandingPage>()
 const route = useRoute()
-const { data: pageData } = await useFetch(`/api/models/${route.params.id}/properties`)
+const { locale } = useI18n()
+const { data: pageData } = await useFetch(`/api/models/${route.params.id}/properties`, { query: { lang: locale.value } })
 const filteredConfigurations = ref(pageData.value?.configurationsWithEngines)
 const showOnlyDifferingConfigurations = ref(false);
 

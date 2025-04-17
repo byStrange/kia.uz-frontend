@@ -11,7 +11,8 @@ interface SpecialOffersPage {
 }
 
 export default defineEventHandler(async (event) => {
-  const locale = getCookie(event, 'i18n_redirected')
+
+  const locale = getQuery(event).lang as string
 
   const offers = await useFetchApi<SpecialOffer[]>('/special-offers', locale)
 

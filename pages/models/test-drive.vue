@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { data: pageData } = useFetch('/api/models/test-drive')
+const { locale } = useI18n()
+const { data: pageData } = useFetch('/api/models/test-drive', { query: { lang: locale.value }})
 const { safe } = useSafeAccessMedia()
 
 

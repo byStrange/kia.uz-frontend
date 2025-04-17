@@ -19,8 +19,9 @@ type Feature = {
 const tabsContainer = useTemplateRef('tabsContainer')
 
 const runtimeConfig = useRuntimeConfig()
+const { locale } = useI18n()
 
-const { data } = await useFetch('/api/dealers');
+const { data } = await useFetch('/api/dealers', { query: locale.value });
 
 
 const { bounding } = useContainer()
@@ -28,7 +29,6 @@ const { bounding } = useContainer()
 const handlers: Record<string, any> = {
   onFeatureClick: (dealer: Dealer) => {
     tabsContainer.value?.changeTab(0)
-    console.log(dealer.location)
     handlers.onMarkerClick({
       properties: {
         name: dealer.name,
@@ -273,7 +273,7 @@ useHead({
           <UICompassIcon />
           <span class="text-primary text-base">{{
             selectedLocation.label
-            }}</span>
+          }}</span>
         </button>
       </div>
 
@@ -303,7 +303,7 @@ useHead({
                     <UIPhoneIcon class="size-5" />
                     <span class="text-xs md:text-base+">{{
                       currentSelectedDealer.phone
-                      }}</span>
+                    }}</span>
                   </div>
                   <p class="text-caption text-xs md:text-sm">
                     {{ currentSelectedDealer.workingHours }}

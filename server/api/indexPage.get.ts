@@ -33,7 +33,7 @@ export interface IndexPage {
 
 export default defineEventHandler(async (event) => {
 
-  const locale = getCookie(event, '18n_redirected')
+  const locale = getQuery(event).lang as string
 
   const sliders = await useFetchApi<IndexPageSlider[]>('/sliders', locale)
 

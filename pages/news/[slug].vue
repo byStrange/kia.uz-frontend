@@ -3,7 +3,7 @@ const route = useRoute()
 const router = useRouter()
 const { safe } = useSafeAccessMedia()
 const { locale } = useI18n()
-const { data: pageData } = await useFetch(`/api/news/${route.params.slug}`)
+const { data: pageData } = await useFetch(`/api/news/${route.params.slug}`, { query: { lang: locale.value }})
 const { updateBreadcrumbTitle } = useBreadcrumbs(route, router, locale.value)
 
 updateBreadcrumbTitle(route.fullPath, pageData.value?.news.title || '')

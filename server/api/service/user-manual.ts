@@ -3,13 +3,14 @@ import { useFetchApi } from "~/composables/useFetchApi"
 import { emptySeo } from "~/utils/serverUtils"
 
 export default defineEventHandler(async (event) => {
-  const locale = getCookie(event, 'i18n_redirected')
+
+  const locale = getQuery(event).lang as string
 
   const models = await useFetchApi<Model[]>('/models', locale)
   let seo: SEO;
 
   try {
-    seo = await useFetchApi<SEO>('/pags/~service~user-manual', locale)
+    seo = await useFetchApi<SEO>('/pages/~service~user-manual', locale)
   }
   catch {
     seo = emptySeo
