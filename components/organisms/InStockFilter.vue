@@ -3,7 +3,7 @@ import ToggleSwitch from 'primevue/toggleswitch'
 
 export interface ModelFilters {
   isNew: boolean | undefined
-  driveType: ('fwd' | 'awd' | 'rwd')[],
+  driveType: ('fwd' | 'awd')[],
   engineType: ('bensin' | 'electric' | 'disel')[]
   seats: (7 | 8)[]
   bodyType: ('sedan' | 'crossover')[]
@@ -71,11 +71,6 @@ watch(modelFilters, () => {
           <li class="flex items-center gap-x-2">
             <PrimeCheckbox v-model="modelFilters.driveType" value="fwd" input-id="drive-fwd" />
             <label for="drive-fwd">Передний</label>
-          </li>
-
-          <li class="flex items-center gap-x-2">
-            <PrimeCheckbox v-model="modelFilters.driveType" value="rwd" input-id="drive-rwd" />
-            <label for="drive-rwd">Задний</label>
           </li>
         </ul>
       </div>

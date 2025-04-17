@@ -55,9 +55,8 @@ definePageMeta({
         <h1 class="text-3xl font-semibold text-primary md:text-5xl">{{ $t('common.kia_all_models') }}</h1>
         <div class="flex items-center md:mt-7.5 max-w-4h gap-x-4">
           <div class="flex-grow">
-            <AtomDropdownInput
-v-model:selected-option="selectedOption" v-model:available-options="availableOptions"
-              placeholder="Выберите модель" class="mt-4 md:mt-0 md:max-w-sm" />
+            <AtomDropdownInput v-model:selected-option="selectedOption" v-model:available-options="availableOptions"
+              :placeholder="$t('common.choose_model')" class="mt-4 md:mt-0 md:max-w-sm" />
 
           </div>
           <AtomButton v-if="selectedOption" @click="resetFilter">{{ $t('common.reset_filter') }}</AtomButton>
@@ -65,13 +64,12 @@ v-model:selected-option="selectedOption" v-model:available-options="availableOpt
       </div>
       <div class="pt-5 pb-10 md:pb-15 2xl:py-20">
         <div v-if="Object.keys(filteredGroupedModels).length === 0" class="text-center py-10">
-          <p class="text-xl text-primary">Модели не найдены</p>
+          <p class="text-xl text-primary">{{ $t('common.model_not_found') }}</p>
           <AtomButton @click="resetFilter">
-            Показать все модели
+            {{ $t('common.show_all_models') }}
           </AtomButton>
         </div>
-        <OrganismModelsGroupList
-v-else :models-group="filteredGroupedModels"
+        <OrganismModelsGroupList v-else :models-group="filteredGroupedModels"
           @choose="(slug) => $router.push(locale(`/models/${slug}`))" />
       </div>
     </div>
