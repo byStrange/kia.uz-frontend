@@ -1,5 +1,5 @@
 import { useFetchApi } from "~/composables/useFetchApi"
-import { groupModelsByCategory } from "~/utils/serverUtils"
+import { groupModelsByCategory, emptySeo } from "~/utils/serverUtils"
 
 export default defineEventHandler(async (event) => {
 

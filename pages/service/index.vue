@@ -22,8 +22,21 @@ const initialValues = ref({
 const touched = ref(false)
 
 const regionOptions = ref([
-  { label: 'Tashkent', value: '1' }
+  { label: 'Andijon viloyati', value: '2' },
+  { label: 'Buxoro viloyati', value: '3' },
+  { label: 'Farg‘ona viloyati', value: '4' },
+  { label: 'Jizzax viloyati', value: '5' },
+  { label: 'Xorazm viloyati', value: '6' },
+  { label: 'Namangan viloyati', value: '7' },
+  { label: 'Navoiy viloyati', value: '8' },
+  { label: 'Qashqadaryo viloyati', value: '9' },
+  { label: 'Samarqand viloyati', value: '10' },
+  { label: 'Sirdaryo viloyati', value: '11' },
+  { label: 'Surxondaryo viloyati', value: '12' },
+  { label: 'Toshkent viloyati', value: '13' },
+  { label: 'Toshkent shahri', value: '14' }
 ])
+
 
 const modelOptions = ref(pageData.value?.models.map((m) => ({ label: m.name, value: m.id })))
 

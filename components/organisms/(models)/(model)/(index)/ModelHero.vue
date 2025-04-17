@@ -98,7 +98,7 @@ data-label="Hero top" :style="{
           <AtomButton
 :label="$t('common.download_price_list')" color="secondary" mode="full"
             @click="downloadFile(pageData.priceList)" />
-          <AtomButton label="Заказать звонок" color="primary" mode="full" />
+          <AtomButton :label="$t('models.request_dealer_call')" color="primary" mode="full" />
         </div>
       </div>
       <div v-if="modelData?.model.video" class="relative w-full h-full">

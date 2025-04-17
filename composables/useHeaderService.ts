@@ -27,17 +27,13 @@ const headerItems = ref<HeaderItem[]>([
         label: 'common.test_drive',
         to: '/models/test-drive',
       },
-      {
-        label: 'common.corporate_sales',
-        to: '/special-offers/corporate:programmee-trade-in',
-      },
     ],
-    meta: {
+    /*meta: {
       sideImage:
         'https://ucarecdn.com/49025524-8444-4574-9478-89ad0f7e6b96/-/preview/999x664/',
 
       sideText: 'Выгода до 94 880 000 сум: Sorento, K8, Cerato, Seltos и Bongo',
-    },
+    },*/
   },
   {
     label: 'common.special_offers',
@@ -50,11 +46,11 @@ const headerItems = ref<HeaderItem[]>([
   {
     label: 'common.for_owners',
     to: '#',
-    meta: {
+    /*meta: {
       sideImage:
         'https://ucarecdn.com/705a1d86-c695-4b24-8fea-8a89131ec537/-/preview/999x786/',
       sideText: 'Kia family Day',
-    },
+    },*/
     children: [
       {
         label: 'common.service_appointment',
