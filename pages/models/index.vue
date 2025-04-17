@@ -16,7 +16,7 @@ const filteredGroupedModels = computed(() => {
 
   const result: GroupedItems<ModelWithLessData> = {}
 
-  for (const [id, group] of Object.entries(pageData.value.groupedModels)) {
+  for (const [id, group] of sortArrayOfObjectsByOrder(Object.entries(pageData.value.groupedModels))) {
     const filteredItems = group.items.filter(model => model.id === selectedOption.value)
 
     if (filteredItems.length > 0) {
