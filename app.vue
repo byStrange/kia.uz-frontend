@@ -56,7 +56,7 @@ useHead({
     { rel: 'icon', type: 'image/png', sizes: '96x96', href: '/favicon/favicon-96x96.png' },
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
-    { rel: 'manifest', href: '/favicon/web-app-manifest-512x512.json' },
+    { rel: 'manifest', href: '/favicon/site.webmanifest' },
     { rel: 'mask-icon', href: '/favicon/favicon.svg', color: themeColour },
   ],
 });
