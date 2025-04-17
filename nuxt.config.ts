@@ -68,7 +68,7 @@ export default defineNuxtConfig({
   ],
 
   i18n: {
-    baseUrl: process.env.SITE_URL,
+    baseUrl: BASE_URL,
     strategy: 'prefix_and_default',
     locales: [
       {
@@ -118,7 +118,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteName: SITE_NAME,
-      siteUrl: SITE_URL,
+      siteUrl: BASE_URL,
       yandexMapApiKey: process.env.YANDEX_MAP_API_KEY,
       apiBaseUrl: NUXT_API_BASE_URL,
       apiDefaultLang: NUXT_API_DEFAULT_LANG
