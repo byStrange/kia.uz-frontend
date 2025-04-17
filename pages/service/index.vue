@@ -6,7 +6,7 @@ import { zodResolver } from '@primevue/forms/resolvers/zod';
 
 const resolver = ref(zodResolver(serviceForm))
 const { locale } = useI18n()
-const { data: pageData } = useFetch('/api/service', { query: { lang: locale.value }})
+const { data: pageData } = useFetch('/api/service', { query: { lang: locale.value } })
 
 const initialValues = ref({
   model: '',
@@ -38,10 +38,9 @@ const regionOptions = ref([
 ])
 
 
-const modelOptions = ref(pageData.value?.models.map((m) => ({ label: m.name, value: m.id })))
+const modelOptions = computed(() => pageData.value?.models.map((m) => ({ label: m.name, value: m.id })))
 
-const fillialOptions = ref(
-  pageData.value?.dealers.map((d) => ({ label: d.name, value: d.id }))
+const fillialOptions = computed(() => pageData.value?.dealers.map((d) => ({ label: d.name, value: d.id }))
 )
 
 const typeOfWork = ref([
@@ -129,15 +128,13 @@ definePageMeta({
 </script>
 <template>
   <UISafeAreaView>
-    <Popover
-ref="datePickerPopover" unstyled class="px-[--padding-x] w-full md:max-w-[426px] md:px-0 2xl:max-w-[320px]"
+    <Popover ref="datePickerPopover" unstyled class="px-[--padding-x] w-full md:max-w-[426px] md:px-0 2xl:max-w-[320px]"
       :style="{
         '--padding-x': bounding.x.value + 'px'
       }">
       <MoleculeDatePicker v-model="_datePickerValue" @day-change="closeDatePickerPopover()" />
     </Popover>
-    <Dialog
-v-model:visible="isPrivacyDialogVisible" modal :pt="{
+    <Dialog v-model:visible="isPrivacyDialogVisible" modal :pt="{
       root: '!rounded-none 2xl:h-full 2xl:!max-h-[758px]',
       mask: 'px-3',
       header:
@@ -159,8 +156,7 @@ v-model:visible="isPrivacyDialogVisible" modal :pt="{
         <div class="space-y-5 text-primary">
           <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
         </div>
-        <AtomButton
-label="Понятно" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <AtomButton label="Понятно" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>
@@ -179,8 +175,7 @@ label="Понятно" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-
             <h2 class="font-bold text-base md:text-lg">Данные автомобиля</h2>
 
             <FormField class="flex w-full">
-              <AtomInput
-input-id="vin_number" label="VIN-номер" v-bind="commonAtomInputProps"
+              <AtomInput input-id="vin_number" label="VIN-номер" v-bind="commonAtomInputProps"
                 class="flex-1 -translate-y-[1px]" />
               <button class="bg-primary size-12 2xl:size-15 text-white flex justify-center items-center">
                 <UITickToRight class="size-5 text-white" />
@@ -188,8 +183,7 @@ input-id="vin_number" label="VIN-номер" v-bind="commonAtomInputProps"
             </FormField>
 
             <FormField v-slot="$field" name="model">
-              <AtomDropdownInput
-v-model:available-options="modelOptions" input-id="model" theme="light"
+              <AtomDropdownInput v-model:available-options="modelOptions" input-id="model" theme="light"
                 placeholder="Модельный ряд" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
@@ -208,8 +202,7 @@ v-model:available-options="modelOptions" input-id="model" theme="light"
             <h2 class="font-bold text-base md:text-lg">Сервисный центр</h2>
 
             <FormField v-slot="$field" name="region">
-              <AtomDropdownInput
-v-model:available-options="regionOptions" input-id="region" theme="light"
+              <AtomDropdownInput v-model:available-options="regionOptions" input-id="region" theme="light"
                 placeholder="Город" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
@@ -217,8 +210,7 @@ v-model:available-options="regionOptions" input-id="region" theme="light"
             </FormField>
 
             <FormField v-slot="$field" name="fillial">
-              <AtomDropdownInput
-v-model:available-options="fillialOptions" input-id="fillial" theme="light"
+              <AtomDropdownInput v-model:available-options="fillialOptions" input-id="fillial" theme="light"
                 placeholder="Филиал" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
@@ -227,16 +219,14 @@ v-model:available-options="fillialOptions" input-id="fillial" theme="light"
 
 
             <FormField v-slot="$field" name="work_type">
-              <AtomDropdownInput
-v-model:available-options="typeOfWork" input-id="work_type" theme="light"
+              <AtomDropdownInput v-model:available-options="typeOfWork" input-id="work_type" theme="light"
                 placeholder="Тип работы" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $field.error?.message }}
               </p>
             </FormField>
 
-            <AtomInput
-v-date-format input-id="due_date" v-bind="commonAtomInputProps" label="Date" :input-props="{
+            <AtomInput v-date-format input-id="due_date" v-bind="commonAtomInputProps" label="Date" :input-props="{
               onFocus: (event) => toggleDatePickerPopover(event),
               value: formattedDate,
               readonly: true
@@ -246,14 +236,13 @@ v-date-format input-id="due_date" v-bind="commonAtomInputProps" label="Date" :in
               <Transition name="slide-fade" mode="in-out">
                 <div v-if="formattedDate">
                   <div v-if="availableTimes.length" class="grid grid-cols-2 gap-2 md:grid-cols-3">
-                    <button
-v-for="choice in timeChoices" :key="choice"
+                    <button v-for="choice in timeChoices" :key="choice"
                       :class="[availableTimes.includes(choice) ? 'text-primary' : 'text-caption']"
                       class="option text-center py-3 text-sm md:text-base md:py-2.5 bg-background has-[:checked]:bg-primary relative has-[:checked]:text-white transition-colors">
-                      <input
-v-bind="$field.props" type="radio"
+                      <input :name="$field.props.name" :modelValue="$field.props.modelValue" type="radio"
                         class="opacity-0 left-0 top-0 w-full h-full absolute cursor-pointer" :value="choice"
-                        :disabled="!availableTimes.includes(choice)" />
+                        :disabled="!availableTimes.includes(choice)"
+                        @update:modelValue="$field.props.onUpdate($event)" />
                       <span class="">{{ choice }}</span>
                     </button>
                   </div>
@@ -312,8 +301,7 @@ v-bind="$field.props" type="radio"
 
       <!-- Feedback -->
 
-      <MoleculeSection
-v-show="successfullySent"
+      <MoleculeSection v-show="successfullySent"
         class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px] md:space-y-10 2xl:space-y-12">
         <div class="space-y-4 text-primary md:space-y-6 2xl:space-y-8">
           <h1 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">
