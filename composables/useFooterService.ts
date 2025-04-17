@@ -37,7 +37,7 @@ const footerItems = ref<FooterItem[]>([
       },
       {
         label: 'common.corporate_sales',
-        to: '/special-offers/corporate:programmee-trade-in',
+        to: '/special-offers/corporate-sales',
       },
     ],
   },
