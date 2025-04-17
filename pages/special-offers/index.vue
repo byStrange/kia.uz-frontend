@@ -43,26 +43,22 @@ definePageMeta({
       </h1>
 
       <div class="mt-7.5">
-        <MoleculeTabsContainer
-ref="tabsContainer" :tabs="Object.values(pageData?.groupedOffers || {})"
+        <MoleculeTabsContainer ref="tabsContainer" :tabs="Object.values(pageData?.groupedOffers || {})"
           header-container-class="w-fit mx-0 !px-0" header-key="categoryName"
           content-container-class="!px-0 mx-0 !max-w-none !mt-10">
           <template #tab-button-right>
             <div class="w-4h 2xl:absolute top-0 right-0 hidden 2xl:flex">
-              <AtomDropdownInput
-v-model:available-options="modelOptions" v-model:selected-option="selectedOption"
+              <AtomDropdownInput v-model:available-options="modelOptions" v-model:selected-option="selectedOption"
                 :placeholder="$t('common.choose_model')" class="w-full" />
             </div>
           </template>
           <template #tab="{ tab }">
             <div>
-              <AtomDropdownInput
-v-model:available-options="modelOptions" v-model:selected-option="selectedOption"
+              <AtomDropdownInput v-model:available-options="modelOptions" v-model:selected-option="selectedOption"
                 :placeholder="$t('common.choose_model')" class="max-w-4h 2xl:!hidden" />
               <div
                 class="space-y-7.5 pt-10 pb-11 md:grid md:grid-cols-2 md:space-y-0 md:gap-7.5 md:place-content-center 2xl:grid-cols-4">
-                <NuxtLinkLocale
-v-for="item in filteredData(tab.items)" :key="item.title"
+                <NuxtLinkLocale v-for="item in filteredData(tab.items)" :key="item.title"
                   :to="`/special-offers/${item.slug}`">
                   <div class="w-full max-w-[420px] mx-auto">
                     <div class="mx-auto h-full bg-background">

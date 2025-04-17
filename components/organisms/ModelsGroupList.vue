@@ -9,7 +9,7 @@ defineEmits<{
 </script>
 <template>
   <div class="space-y-10 md:space-y-12 2xl:space-y-15">
-    <div v-for="[id, group] in Object.entries(modelsGroup)" :key="id">
+    <div v-for="[id, group] in Object.entries(modelsGroup).sort((a, b) => a[1]?.order - b[1]?.order)" :key="id">
       <h1 class="text-2xl font-semibold text-primary md:text-3xl" :class="groupTitleClass">
         {{ group.categoryName }}
       </h1>
@@ -32,10 +32,8 @@ defineEmits<{
               {{ formatPrice(model.old_price) }}
             </p>
           </div>
-          <button
-            v-if="showPriceButton"
-class="flex items-center mt-1 link-hover link-hover-dark" :style="{ '--l-bottom': '-2px' }"
-            :class="pricesButtonClass" @click="$emit('choose', model.slug, model.id)">
+          <button v-if="showPriceButton" class="flex items-center mt-1 link-hover link-hover-dark"
+            :style="{ '--l-bottom': '-2px' }" :class="pricesButtonClass" @click="$emit('choose', model.slug, model.id)">
             <span class="text-base font-semibold text-primary">Цены</span>
             <UITickToRight />
           </button>
