@@ -65,3 +65,13 @@ export function sortArrayOfObjectsByOrder<T extends number | string | null | und
     return 0; // Fallback for other types or if types are the same but not number or string
   });
 }
+
+export function generateCode(length = 6) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+

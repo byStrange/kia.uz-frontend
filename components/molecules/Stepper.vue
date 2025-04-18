@@ -17,7 +17,7 @@ const prevStep = () => {
 }
 
 const handleStepChange = (index: number) => {
-  if (index >= props.steps.length || index < 0) return;
+  if (index >= props.steps.length || index < 0) return emit('stepChange', props.steps[activeStep.value]);
 
   activeStep.value = index;
 
@@ -25,6 +25,8 @@ const handleStepChange = (index: number) => {
     const element = stepElements.value[activeStep.value];
     if (element.scrollIntoView) element.scrollIntoView()
   }
+
+  emit('stepChange', props.steps[activeStep.value])
 }
 
 const nextStep = () => {
@@ -42,18 +44,19 @@ interface Props {
 const props = defineProps<Props>()
 
 defineExpose({ nextStep })
+const emit = defineEmits<{
+  stepChange: [T]
+}>()
 </script>
 
 <template>
   <div>
-    <div
-class="step-header relative mx-auto max-w-[--max-width] 2xl:pb-10"
+    <div class="step-header relative mx-auto max-w-[--max-width] 2xl:pb-10"
       :style="{ '--max-width': bounding.width.value + 'px' }">
 
       <div class="progress divider border-t border-t-protection absolute content-[''] -z-10 w-full"></div>
       <div class="flex overflow-scroll no-scrollbar">
-        <div
-v-for="(step, index) in steps" ref="step" :key="(stepKey ? step[stepKey] : step) as string"
+        <div v-for="(step, index) in steps" ref="step" :key="(stepKey ? step[stepKey] : step) as string"
           class="w-1/2 shrink-0 border-t-[3px] border-t-transparent transition-colors pt-4 text-base+ space-x-2 text-caption 2xl:flex-1 2xl:text-start"
           :class="{ '!border-t-primary !text-primary': activeStep == index, '!border-t-forest-green': validateDone ? validateDone(step, true) : false }">
           <b>{{ `0${index + 1}` }}</b>
@@ -80,14 +83,12 @@ v-for="(step, index) in steps" ref="step" :key="(stepKey ? step[stepKey] : step)
       <p class="text-sm text-caption max-w-6.5h hidden 2xl:block">Стоимость носит исключительно информационный характер.
         Общая сумма рассчитывается индивидуально в дилерском центре.</p>
       <div class="flex 2xl:gap-x-6 flex-1 2xl:flex-none">
-        <button
-v-if="activeStep != 0" class="w-1/2 flex items-center text-base justify-center 2xl:w-auto"
+        <button v-if="activeStep != 0" class="w-1/2 flex items-center text-base justify-center 2xl:w-auto"
           @click="prevStep">
           <UITickToLeft class="size-5" />
           <span>Назад</span>
         </button>
-        <AtomButton
-label="Next" class="w-1/2 2xl:w-3h"
+        <AtomButton :label="isLastStep ? 'Submit' : 'Next'" class="w-1/2 2xl:w-3h"
           @click="validateDone(steps[activeStep]) ? handleStepChange(activeStep + 1) : () => { }" />
       </div>
     </div>

@@ -1,15 +1,24 @@
 <script lang="ts" setup>
 import { DataTable, Dialog, Column } from 'primevue'
 import type { ModelFilters } from '~/components/organisms/InStockFilter.vue';
+import type { PurchaseRequestData } from '~/server/api/in-stock/purchase-request.post';
 import type { ModelPricingAndDetailsPage } from '~/server/api/models/[id]/features.get';
 import type { InstallmentPlan, Model } from '~/server/api/models/[id]/index.get';
+import { generateCode } from '~/utils';
 
+const localePath = useLocalePath()
+const router = useRouter()
 const query = ref<Partial<ModelFilters>>({})
+const { downloadFile } = useDownload()
+
+
+const { t } = useI18n()
 const { data: modelData, execute, pending } = await useFetch('/api/in-stock', {
   query: query
 })
 const { headerService } = useHeaderService()
 const { safe } = useSafeAccessMedia()
+const generatedRequestCode = ref<null | string>(null)
 
 const showModelFilter = ref(false)
 
@@ -71,6 +80,13 @@ const handlers = {
 
     step.collectedValue = id;
   },
+
+  stepChangeHandler(step: FormStep) {
+    if (step.step === 'result') {
+      submitPurchaseRequest()
+    }
+  }
+
 }
 
 const validators = {
@@ -88,6 +104,9 @@ const validators = {
     return true
   },
   stepperValidate(step: FormStep, fromTemplate?: boolean) {
+    if (step.step == 'result' && !fromTemplate) {
+      submitContactData()
+    }
     if (!step.collectedValue) return false;
 
     if (step.step === 'payment') {
@@ -142,7 +161,7 @@ const selectedConfiguration = computed(() => {
 
 const selectedColor = computed(() => {
   const colorId = formSteps.value.find(step => step.step === 'colorsAndEquipments')?.collectedValue
-  const color = selectedModel.value.model?.colors.find((color => color.id === colorId))
+  const color = selectedModel.value.model?.colors?.find((color => color.id === colorId))
 
   return color;
 })
@@ -220,9 +239,97 @@ watchEffect(() => {
   console.log(formSteps)
 })
 
+
+
 const submitPurchaseRequest = () => {
-  nodeModuleNameResolver
+  if (!selectedColor.value || !selectedConfiguration.value || !selectedModel.value.model.id) return;
+  const code = generateCode()
+
+
+  const data: PurchaseRequestData = {
+    code,
+    installment_plan: selectedInstallmentPlan.value?.id,
+    color: selectedColor.value.id,
+    configuration: selectedConfiguration.value.id,
+    model: selectedModel.value.model.id,
+    payment_type: ''
+  }
+  if (data.installment_plan) {
+    data.payment_type = 'installment'
+  } else {
+    data.payment_type = 'full-payment'
+  }
+
+  $fetch('/api/in-stock/purchase-request', { method: 'post', body: JSON.stringify(data) }).then(() => {
+    generatedRequestCode.value = code
+  }).catch(() => {
+    alert('there was error')
+  })
+
 }
+
+const cleanUp = () => {
+  formSteps.value.forEach((step) => {
+    step.collectedValue = ''
+  })
+
+  userData.name = '';
+  userData.phoneNumber = '';
+  userData.city = '';
+  userData.agree = false;
+  userData.errors = {}
+  generatedRequestCode.value = null
+  selectedPaymentOptionId.value = null
+}
+
+const submitContactData = () => {
+  if (!userData.agree) {
+    userData.errors.agree = t('in_stock.form_must_agree_error')
+  }
+
+  if (!userData.name) {
+    userData.errors.name = t('common.field_required')
+  }
+
+  if (!userData.phoneNumber) {
+    userData.errors.phoneNumber = t('common.field_required')
+  }
+
+  if (!userData.city) {
+    userData.errors.city = t('common.field_required')
+  }
+
+  if (Object.keys(userData.errors).length) return;
+
+  $fetch('/api/in-stock/purchase-request-contact', {
+    method: 'post',
+    body: JSON.stringify({ name: userData.name, phone_number: userData.phoneNumber, city: userData.city, purchase_request: generatedRequestCode.value })
+  }).then(() => {
+    alert('Your message sent succesfully')
+    cleanUp()
+    router.push(localePath('/'))
+
+  }).catch(() => {
+    alert('Sorry, there was an issue sending the data')
+  })
+}
+
+
+type UserData = {
+  name: string
+  phoneNumber: string
+  city: string
+  agree: boolean
+  errors: { [K in keyof Omit<UserData, 'errors'>]?: string }
+}
+
+const userData = reactive<UserData>({
+  name: '',
+  phoneNumber: '',
+  city: '',
+  agree: false,
+  errors: {}
+})
 
 definePageMeta({
   lockHover: true
@@ -230,7 +337,8 @@ definePageMeta({
 </script>
 <template>
   <UISafeAreaView>
-    <Dialog v-model:visible="showModelFilter" modal pt:root="w-full h-full !max-h-none !rounded-none md:!max-w-[480px]"
+    <Dialog
+v-model:visible="showModelFilter" modal pt:root="w-full h-full !max-h-none !rounded-none md:!max-w-[480px]"
       pt:mask="md:!justify-end">
       <template #container="{ closeCallback }">
         <div class="w-full h-full relative">
@@ -246,12 +354,15 @@ definePageMeta({
       <h1 class="text-2xl md:text-4xl 2xl:text-7xl">Авто в наличии</h1>
     </UIContainer>
 
-    <MoleculeStepper ref="stepper" :steps="formSteps" step-label-key="label" step-key="step"
-      :validate-done="validators.stepperValidate" :validate-back="validators.stepperValidateBack">
+    <MoleculeStepper
+ref="stepper" :steps="formSteps" step-label-key="label" step-key="step"
+      :validate-done="validators.stepperValidate" :validate-back="validators.stepperValidateBack"
+      @step-change="handlers.stepChangeHandler">
 
       <template #header-after="{ step }">
         <Transition name="blur-fade" mode="out-in">
-          <UIContainer v-if="step.step === 'model'"
+          <UIContainer
+v-if="step.step === 'model'"
             class="py-3 border-y border-protection mt-6 md:mt-7.5 sticky bg-white top-0 transition-all duration-300 z-10 2xl:hidden"
             :class="{ '!top-[--header-height]': headerService.isHeaderFixed }">
             <button class="flex items-center gap-x-2.5" @click="showModelFilter = true">
@@ -296,7 +407,8 @@ definePageMeta({
           <div v-if="pending">
             <div class="loader"></div>
           </div>
-          <OrganismModelsGroupList v-else :models-group="modelData?.groupedModels || {}"
+          <OrganismModelsGroupList
+v-else :models-group="modelData?.groupedModels || {}"
             group-title-class="text-lg 2xl:text-2xl" model-name-class="text-base"
             model-price-class="text-sm mt-1 flex gap-x-2 items-center" :show-price-button="false"
             @choose="handlers.firstStepHandler" />
@@ -305,12 +417,14 @@ definePageMeta({
 
       <template #step-2>
         <UIContainer class="mt-6 2xl:mt-0 2xl:pt-0 space-y-6 py-6 text-primary md:space-y-10">
-          <Dialog v-model:visible="showConfigurationDetail" modal
+          <Dialog
+v-model:visible="showConfigurationDetail" modal
             pt:root="w-full h-full !max-h-none !rounded-none md:!max-w-[480px]" pt:mask="md:!justify-end">
             <template #container="{ closeCallback }">
               <div class="px-8 space-y-6 py-15 overflow-auto relative">
                 <h1 class="text-2xl">Характеристики {{ selectedConfiguration?.name }}</h1>
-                <OrganismConfigurationFeaturesList :feature-groups="selectedConfiguration?.feature_groups || []"
+                <OrganismConfigurationFeaturesList
+:feature-groups="selectedConfiguration?.feature_groups || []"
                   :standard-features="selectedModel.modelFeatures.value?.standard_features || []" />
 
                 <button class="absolute top-6 right-8" @click="closeCallback">
@@ -321,7 +435,8 @@ definePageMeta({
           </Dialog>
           <h1 class="text-2xl">Выберите комплектацию</h1>
           <div v-if="selectedModel" class="space-y-3 md:space-y-2">
-            <OrganismConfigurationCard v-for="configuration in selectedModel.configurations" :key="configuration.id"
+            <OrganismConfigurationCard
+v-for="configuration in selectedModel.configurations" :key="configuration.id"
               :configuration :selected="configuration.id == selectedConfiguration?.id"
               @choose="handlers.secondStepHandler" @show-all-features="showConfigurationDetail = true" />
           </div>
@@ -332,14 +447,16 @@ definePageMeta({
 
         <UIContainer class="mt-6 2xl:mt-0 2xl:pt-0 space-y-6 py-6 text-primary md:space-y-10">
           <h1 class="text-2xl 2xl:text-3xl">Выберите цвет</h1>
-          <OrganismColorCard v-for="color in selectedModel.model?.colors" :key="color.id" :color
+          <OrganismColorCard
+v-for="color in selectedModel.model?.colors" :key="color.id" :color
             :selected="color.id === selectedColor?.id" @choose="handlers.thirdStepHandler" />
         </UIContainer>
       </template>
 
       <template #step-4>
         <div>
-          <Dialog v-model:visible="showDownPaymentDetailedOption" modal pt:mask="2xl:container"
+          <Dialog
+v-model:visible="showDownPaymentDetailedOption" modal pt:mask="2xl:container"
             pt:root="w-full h-full !max-h-none !rounded-none overflow-auto 2xl:!max-h-6.5h">
             <template #container="{ closeCallback }">
               <UIContainer v-if="downPaymentDetailedOption" class="pt-15 pb-12 relative text-primary overflow-auto">
@@ -368,7 +485,8 @@ definePageMeta({
                       </div>
                     </div>
 
-                    <DataTable :removable-sort="true" :striped-rows="true"
+                    <DataTable
+:removable-sort="true" :striped-rows="true"
                       :value="generateInstallmentSchedule(downPaymentDetailedOption, selectedConfiguration?.price || 0)"
                       responsive-layout="scroll" class="text-xs">
                       <Column field="no" header="№" sortable></Column>
@@ -406,7 +524,8 @@ definePageMeta({
                 <div class="space-y-6 md:space-y-5 2xl:space-y-6">
                   <h2 class="text-base md:text-lg font-semibold">Условия беспроцентной рассрочки</h2>
                   <div class="space-y-3 md:space-y-2">
-                    <OrganismInstallmentPlanCard v-for="plan in selectedConfiguration?.installment_options"
+                    <OrganismInstallmentPlanCard
+v-for="plan in selectedConfiguration?.installment_options"
                       :key="plan.id" :installment-plan="plan" :selected="selectedInstallmentPlan?.id === plan.id"
                       :is-disabled="() => {
                         if (downPaymentPercentage < plan.minimum_prepayment) {
@@ -420,7 +539,8 @@ definePageMeta({
                 </div>
 
                 <div class="flex justify-between">
-                  <OrganismPercentageSlider v-if="selectedConfiguration" class="hidden 2xl:block"
+                  <OrganismPercentageSlider
+v-if="selectedConfiguration" class="hidden 2xl:block"
                     label="Первоначальный взнос" :total-amount="selectedConfiguration.price" :min-percentage="50"
                     :max-percentage="90" :initial-percentage="90" @update:percentage="downPaymentPercentage = $event" />
                   <div v-if="selectedInstallmentPlan" class="bg-background w-full p-6 2xl:w-4.5h">
@@ -462,7 +582,8 @@ definePageMeta({
             <h1 class="text-2xl 2xl:text-3xl">Выберите способ оплаты</h1>
 
             <div class="space-y-4">
-              <div v-for="option in paymentOptions" :key="option.id" class="cursor-pointer"
+              <div
+v-for="option in paymentOptions" :key="option.id" class="cursor-pointer"
                 @click="handlers.fourthStepHandler(option.id)">
                 <OrganismPaymentOptionCard :option="option" :selected="selectedPaymentOptionId === option.id" />
               </div>
@@ -540,7 +661,7 @@ definePageMeta({
 
               <div class="bg-background p-4 space-y-10 2xl:flex 2xl:space-y-0 2xl:justify-between">
                 <div class="space-y-3 2xl:space-y-6 max-w-4.5h">
-                  <p class="text-primary font-semibold text-base md:text-lg">ID расчета: J0LDMQ</p>
+                  <p class="text-primary font-semibold text-base md:text-lg">ID расчета: {{ generatedRequestCode }}</p>
 
                   <p class="text-primary text-sm">Сохраните ссылку или код и откройте ваш расчет в любое время с любого
                     устройства. Код действует 3 месяца</p>
@@ -560,7 +681,7 @@ definePageMeta({
 
                   <!-- Download PDF Button -->
                   <div class="2xl:pl-10 flex-1 flex md:justify-center">
-                    <button class=" py-3 text-primary flex items-center justify-center gap-2 2xl:w-[125px] md:flex-col">
+                    <button class=" py-3 text-primary flex items-center justify-center gap-2 2xl:w-[125px] md:flex-col" @click="downloadFile(safe('/media/purchase/' + generatedRequestCode?.toLowerCase() + '.pdf'))">
                       <UIDocumentIcon />
                       Загрузить в PDF
                     </button>
@@ -581,18 +702,18 @@ definePageMeta({
                 <div class="space-y-10">
                   <div class="2xl:max-w-4h">
                     <div>
-                      <AtomInput label="Имя" theme="light" input-id="name" />
+                      <AtomInput v-model="userData.name" label="Имя" theme="light" input-id="name" />
                     </div>
                     <div>
-                      <AtomInput label="Телефон" theme="light" input-id="phone" />
+                      <AtomInput v-model="userData.phoneNumber" label="Телефон" theme="light" input-id="phone" />
                     </div>
                     <div>
-                      <AtomInput label="Город" theme="light" input-id="city" />
+                      <AtomInput v-model="userData.city" label="Город" theme="light" input-id="city" />
                     </div>
                   </div>
 
                   <div class="flex items-start gap-x-2">
-                    <PrimeCheckbox />
+                    <PrimeCheckbox v-model="userData.agree" binary />
                     <label for="consent" class="text-primary text-sm">Даю согласие на обработку своих персональных
                       данных
                       на
