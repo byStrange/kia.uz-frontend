@@ -3,8 +3,9 @@ import { Dialog } from 'primevue'
 const options = ref([{ label: 'model', value: 'model' }])
 const selectedOption = ref()
 
+const { locale: language } = useI18n()
 const { safe } = useSafeAccessMedia()
-const { data } = await useFetch('/api/media-center')
+const { data } = await useFetch('/api/media-center', { query: { lang: language.value }})
 const router = useRouter()
 const locale = useLocalePath()
 const showModal = ref(false)

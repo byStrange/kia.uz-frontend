@@ -134,11 +134,11 @@ type ResultStep = { step: 'result', label: string, collectedValue: null | undefi
 export type FormStep = ModelStep | ConfigurationStep | ColorsAndEquipmentsStep | PaymentStep | ResultStep
 
 const formSteps = ref<FormStep[]>([
-  { step: 'model', label: "Выбор модели", collectedValue: null, },
-  { step: 'configuration', label: "Выбор комплектации", collectedValue: null },
-  { step: 'colorsAndEquipments', label: "Цвета и аксессуары", collectedValue: null },
-  { step: 'payment', label: "Кредитные условия", collectedValue: null },
-  { step: 'result', label: "Результаты", collectedValue: null }
+  { step: 'model', label: t("in_stock.model_selection"), collectedValue: null, },
+  { step: 'configuration', label: t('in_stock.configuration_selection'), collectedValue: null },
+  { step: 'colorsAndEquipments', label: t('in_stock.colors_and_accessories'), collectedValue: null },
+  { step: 'payment', label: t('in_stock.credit_terms'), collectedValue: null },
+  { step: 'result', label: "in_stock.results", collectedValue: null }
 ])
 
 const showConfigurationDetail = ref(false)
