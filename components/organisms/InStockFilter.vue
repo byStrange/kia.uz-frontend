@@ -7,6 +7,7 @@ export interface ModelFilters {
   engineType: ('bensin' | 'electric' | 'disel')[]
   seats: (7 | 8)[]
   bodyType: ('sedan' | 'crossover')[]
+  lang: string
 }
 
 const defaultFilters = {

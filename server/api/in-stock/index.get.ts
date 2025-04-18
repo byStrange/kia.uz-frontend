@@ -6,6 +6,7 @@ import type { ModelFilters } from "~/components/organisms/InStockFilter.vue"
 
 export default defineEventHandler(async (event) => {
   const locale = getQuery(event).lang as string
+
   const query = getQuery<Partial<ModelFilters>>(event)
 
   const q = toQuery(query, { 'isNew': 'is_new', 'bodyType': 'body_type', 'driveType': 'actuation', 'engineType': 'engine_fuel_type' });

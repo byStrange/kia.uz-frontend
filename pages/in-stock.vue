@@ -6,13 +6,14 @@ import type { ModelPricingAndDetailsPage } from '~/server/api/models/[id]/featur
 import type { InstallmentPlan, Model } from '~/server/api/models/[id]/index.get';
 import { generateCode } from '~/utils';
 
+
+const { t, locale } = useI18n()
 const localePath = useLocalePath()
 const router = useRouter()
-const query = ref<Partial<ModelFilters>>({})
+const query = ref<Partial<ModelFilters>>({ lang: locale.value })
 const { downloadFile } = useDownload()
 
 
-const { t } = useI18n()
 const { data: modelData, execute, pending } = await useFetch('/api/in-stock', {
   query: query
 })
@@ -27,7 +28,7 @@ const modelFeatures = ref<ModelPricingAndDetailsPage | null>(null)
 const stepper = useTemplateRef('stepper')
 
 const handleFilterChange = (a: Partial<ModelFilters>) => {
-  query.value = a
+  query.value = {...a, lang: locale.value }
   execute()
 }
 
