@@ -54,12 +54,7 @@ export const feedbackSchema = z.object({
 })
 
 export const serviceForm = z.object({
-  model: z.string().min(1, 'Please choose a model'),
-  issue_year: z.string().min(1, 'Please provide issue year'),
   region: z.string().min(1, 'Please choose a region'),
-  fillial: z.string().min(1, 'Please choose a fillial'),
-  work_type: z.string().min(1, 'Please choose type of work that has to be done'),
-  time: z.string(),
   name: z.string().optional(),
   phone: z.string()
     .refine(

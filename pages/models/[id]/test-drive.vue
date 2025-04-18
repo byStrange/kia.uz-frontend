@@ -93,9 +93,7 @@ definePageMeta({
     </UIDesktopOnly>
 
     <h1
-      class="text-primary text-2xl font-semibold py-7.5 border-b border-protection md:text-4xl container 2xl:text-7xl 2xl:py-10">
-      Обратная связь
-    </h1>
+      class="text-primary text-2xl font-semibold py-7.5 border-b border-protection md:text-4xl container 2xl:text-7xl 2xl:py-10">{{$t('common.sign_up_for_test_drive')}}</h1>
 
     <MoleculeSection>
       <UIContainer class="2xl:grid 2xl:grid-cols-12 2xl:gap-grid-12-gap">

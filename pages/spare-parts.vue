@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { useSvgAnnotator } from '~/composables/useSvgAnnotator';
 
+const isMobile = ref(false)
+onMounted(() => {
+
+  if (/Mobi|Android|iPhone|iPad|iPod/i.test(window.navigator.userAgent)) {
+    isMobile.value = true
+  }
+})
+
 const { src } = useUploadcareSource()
 const { locale } = useI18n()
 const { headerService } = useHeaderService()
@@ -310,8 +318,8 @@ definePageMeta({
                     </div>
                   </div>
 
-                  <AtomLink :to="`tel:${headerService.phoneLine1}`" :label="$t('common.call')" mode="full"
-                    color="primary" />
+                  <AtomLink :to="isMobile ? `tel:${headerService.phoneLine1}` : '/feedback'" :label="$t('common.call')"
+                    mode="full" color="primary" />
 
                 </div>
               </div>
@@ -391,8 +399,8 @@ definePageMeta({
                 </div>
                 <p>{{ $t('spare_parts.official_service_loyalty') }}</p>
               </div>
-              <AtomLink :to="`tel:${headerService.phoneLine1}`" :label="$t('common.call')" mode="full"
-                color="primary" />
+              <AtomLink :to="isMobile ? `tel:${headerService.phoneLine1}` : '/feedback'" :label="$t('common.call')"
+                mode="full" color="primary" />
             </UIContainer>
           </div>
         </template>

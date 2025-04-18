@@ -3,6 +3,7 @@ import { UIHeaderLink } from '#components'
 
 const { toggleMenu, headerService } = useHeaderService()
 
+const isMobile = ref(false)
 usePageScroll()
 
 const openMenu = (item: HeaderItem) => {
@@ -49,11 +50,19 @@ watch(
     headerService.value.isHover = headerService.value.lockHover
   },
 )
+
+onMounted(() => {
+
+  if(/Mobi|Android|iPhone|iPad|iPod/i.test(window.navigator.userAgent)) {
+    isMobile.value = true
+  }
+
+})
+
 </script>
 <template>
   <Transition name="slide-fade_bottom">
-    <header
-id="header" :key="headerService.isHeaderFixed + ''" :data-isHover="headerService.isHover"
+    <header id="header" :key="headerService.isHeaderFixed + ''" :data-isHover="headerService.isHover"
       class="bg-semantic-header-bg absolute top-0 z-40 w-full border-b border-b-white border-opacity-20 transition-all duration-300 backdrop-blur-sm"
       :class="{
         hover:
@@ -75,11 +84,9 @@ id="header" :key="headerService.isHeaderFixed + ''" :data-isHover="headerService
         }
           ">
       <Transition name="blur-fade" mode="out-in">
-        <div
-v-if="!searchBarOpen"
+        <div v-if="!searchBarOpen"
           class="relative flex w-full items-center justify-between px-page-padding transition-all duration-300 2xl:container h-15 2xl:h-auto">
-          <button
-class="!bg-transparent !p-0 !text-white 2xl:hidden" @click="() => {
+          <button class="!bg-transparent !p-0 !text-white 2xl:hidden" @click="() => {
             toggleMenu()
           }
             ">
@@ -97,13 +104,11 @@ class="!bg-transparent !p-0 !text-white 2xl:hidden" @click="() => {
           <div class="absolute left-1/2 -translate-x-1/2">
             <NuxtLinkLocale to="/">
               <!-- Light Logo -->
-              <img
-v-if="!headerService.isHover" src="@/assets/logo/main-logo.svg" alt="Logo"
+              <img v-if="!headerService.isHover" src="@/assets/logo/main-logo.svg" alt="Logo"
                 class="h-3 w-[50px] 2xl:w-[79px] 2xl:h-4.5" />
 
               <!-- Dark Logo -->
-              <img
-v-if="headerService.isHover" src="@/assets/logo/main-logo-invert.svg" alt="Logo"
+              <img v-if="headerService.isHover" src="@/assets/logo/main-logo-invert.svg" alt="Logo"
                 class="h-3 w-[50px] 2xl:w-[79px] 2xl:h-4.5" />
             </NuxtLinkLocale>
           </div>
@@ -114,16 +119,14 @@ v-if="headerService.isHover" src="@/assets/logo/main-logo-invert.svg" alt="Logo"
                 <UIHeaderLink :item="item" />
               </li>
             </ul>
-            <button>
-              <UIPhoneIcon
-class="transition-colors" :class="{
+            <a :href="isMobile ? `tel:${headerService.phoneLine1}` : '/feedback'">
+              <UIPhoneIcon class="transition-colors" :class="{
                 'text-primary': headerService.isHover,
                 'text-white': !headerService.isHover,
               }" />
-            </button>
+            </a>
             <button class="hidden md:block" @click="searchBarOpen = true">
-              <UILenseIcon
-class="transition-colors" :class="{
+              <UILenseIcon class="transition-colors" :class="{
                 'text-white': !headerService.isHover,
                 'text-primary': headerService.isHover,
               }" />

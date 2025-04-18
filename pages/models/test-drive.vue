@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { locale } = useI18n()
-const { data: pageData } = useFetch('/api/models/test-drive', { query: { lang: locale.value }})
+const { data: pageData } = useFetch('/api/models/test-drive', { query: { lang: locale.value } })
 const { safe } = useSafeAccessMedia()
 
 
@@ -21,7 +21,7 @@ definePageMeta({
     <div class="container">
       <MoleculeBreadcrumb class="hidden mt-6 2xl:block" theme="dark" />
       <div class="pt-10 pb-5 md:pt-15 2xl:pt-9">
-        <h1 class="text-3xl font-semibold text-primary md:text-5xl">Запись на тест-драйв</h1>
+        <h1 class="text-3xl font-semibold text-primary md:text-5xl">{{ $t('common.sign_up_for_test_drive') }}</h1>
       </div>
 
       <div class="pt-5 pb-10 md:pb-15 2xl:py-20">
