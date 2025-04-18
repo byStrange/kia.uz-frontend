@@ -38,7 +38,7 @@ const changeTab = (tabIndex: number) => {
   emit('tab-change', tabIndex)
 }
 
-const activeTab = useSessionStorage('activeTab', () => props.defaultTab)
+const activeTab = useSessionStorage('activeTab' + Math.random(), () => props.defaultTab)
 const emit = defineEmits<{
   (e: 'tab-change', tabIndex: number): void
 }>()

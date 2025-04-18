@@ -4,11 +4,10 @@ const { bounding } = useContainer()
 const selectedNews = ref<null | News>(null)
 const router = useRouter()
 const locale = useLocalePath()
-
-
-
 const showModal = ref(false)
+
 const handleCardClick = (item: News) => {
+  console.log(item)
   if (item.video_url) {
     showModal.value = true;
     selectedNews.value = item
