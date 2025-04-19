@@ -10,10 +10,11 @@ onMounted(() => {
 
 <template>
   <div>
-    <MoleculeAccordion :default-open="true" :classes="{
+    <MoleculeAccordion
+:default-open="true" :classes="{
       contentContainer: 'duration-700',
       contentWrapper: 'duration-700',
-    }" :items="[{ label: 'Стандартное оборудование', content: '' }]">
+    }" :items="[{ label: $t('common.standard_featues'), content: '' }]">
 
       <template #expandicon>
         <UITickToBottom class="min-w-5" />
@@ -23,7 +24,7 @@ onMounted(() => {
         <div
           class="py-3 cursor-pointer flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl border-b-2 border-protection"
           @click="toggle">
-          <span> Стандартное оборудовани</span>
+          <span>{{ $t('common.standard_features') }}</span>
           <button @click="toggle">
             <UITickToBottom class="text-primary transition-transform" :class="{ '!rotate-180': expanded }" />
           </button>
@@ -46,10 +47,11 @@ onMounted(() => {
       </template>
     </MoleculeAccordion>
 
-    <MoleculeAccordion :default-open="true" :classes="{
+    <MoleculeAccordion
+:default-open="true" :classes="{
       contentContainer: 'duration-700',
       contentWrapper: 'duration-700',
-    }" :items="[{ label: 'Опции комплектации', content: null }]">
+    }" :items="[{ label: $t('models.configuration_options'), content: null }]">
 
       <template #expandicon>
         <UITickToBottom class="min-w-5" />
@@ -64,7 +66,8 @@ onMounted(() => {
             {{ item.label }}
           </span>
           <button @click="toggle">
-            <UITickToBottom class="text-primary transition-transform duration-700"
+            <UITickToBottom
+class="text-primary transition-transform duration-700"
               :class="{ '!rotate-180': expanded }" />
           </button>
         </div>

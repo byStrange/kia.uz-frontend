@@ -16,7 +16,6 @@ const requestTypes = ref([
 ])
 
 const isPrivacyDialogVisible = ref(false)
-const localePath = useLocalePath()
 
 const { data: privacyAndTerms } = useFetch('/api/terms')
 
@@ -78,7 +77,7 @@ const onSubmit = (event: FormSubmitEvent) => {
         <div class="space-y-5 text-primary">
           <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
         </div>
-        <AtomButton label="Понятно" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <AtomButton :label="$t('common.got_it')" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>
@@ -89,55 +88,53 @@ const onSubmit = (event: FormSubmitEvent) => {
 
     <h1
       class="text-primary text-2xl font-semibold py-7.5 border-b border-protection md:text-4xl container 2xl:text-7xl 2xl:py-10">
-      Обратная связь
+      {{ $t('common.feedback') }}
     </h1>
 
     <!-- Form -->
     <MoleculeSection v-show="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px]">
       <div class="pb-8 border-b border-protection">
-        <h4 class="text-sm md:text-base">Горячая линия</h4>
+        <h4 class="text-sm md:text-base">{{ $t('menu.kia_hotline') }}</h4>
         <span class="mt-1 text-lg font-semibold md:text-2xl">1333</span>
       </div>
 
-      <Form :resolver :initial-values="initialValues" @submit="onSubmit" class="space-y-8 mt-8">
+      <Form :resolver :initial-values="initialValues" class="space-y-8 mt-8" @submit="onSubmit">
         <div class="space-y-5">
           <p class="text-primary text-sm md:text-base">
-            Вы можете отправить ваше обращение дилеру. Оставьте ваши контакты
-            и уточните тему запроса, и мы свяжемся с вами.
+            {{ $t('feedback.contact_instruction') }}
           </p>
 
-          <FormField name="name" v-slot="$field">
-            <AtomInput input-id="name" label="Ваше имя" v-bind="commonAtomInputProps" />
+          <FormField v-slot="$field" name="name">
+            <AtomInput input-id="name" :label="$t('common_form.name')" v-bind="commonAtomInputProps" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $field.error?.message }}
             </p>
           </FormField>
 
-          <FormField name="surname" v-slot="$field">
-            <AtomInput input-id="surname" label="Фамилия" v-bind="commonAtomInputProps" />
+          <FormField v-slot="$field" name="surname">
+            <AtomInput input-id="surname" :label="$t('common_form.surname')" v-bind="commonAtomInputProps" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $field.error?.message }}
             </p>
           </FormField>
 
-          <FormField name="phone" v-slot="$field">
-            <AtomInput input-id="phone" label="Телефон" v-bind="commonAtomInputProps" />
+          <FormField v-slot="$field" name="phone">
+            <AtomInput input-id="phone" :label="$t('common_form.phone')" v-bind="commonAtomInputProps" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $field.error?.message }}
             </p>
           </FormField>
 
           <FormField v-slot="$field" name="email">
-            <AtomInput input-id="email" label="E-mail" v-bind="commonAtomInputProps"
+            <AtomInput input-id="email" :label="$t('common_form.email')" v-bind="commonAtomInputProps"
               :input-props="{ invalid: $field.invalid }" />
-
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $field.error?.message }}
             </p>
           </FormField>
 
           <FormField v-slot="$field" name="city">
-            <AtomInput input-id="city" label="Город" v-bind="commonAtomInputProps"
+            <AtomInput input-id="city" :label="$t('common_form.city')" v-bind="commonAtomInputProps"
               :input-props="{ invalid: $field.invalid }" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $field.error?.message }}
@@ -146,7 +143,7 @@ const onSubmit = (event: FormSubmitEvent) => {
         </div>
 
         <FormField v-slot="$field" name="comment">
-          <Textarea unstyled input-id="comment" placeholder="Ваш комментарий или вопрос"
+          <Textarea unstyled input-id="comment" :placeholder="$t('feedback.comment')"
             class="border focus:outline-none resize-none border-disabled hover:border-protection focus:border-primary w-full py-4.5 px-4 text-base placeholder:text-caption" />
           <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
             {{ $field.error.message }}
@@ -154,10 +151,10 @@ const onSubmit = (event: FormSubmitEvent) => {
         </FormField>
 
         <div class="space-y-4">
-          <label class="text-primary text-sm md:text-base">Тип запроса</label>
+          <label class="text-primary text-sm md:text-base">{{ $t('feedback.request_type') }}</label>
           <FormField v-slot="$field" name="requestType">
-            <AtomDropdownInput v-model:available-options="requestTypes" placeholder="Выберите тип вопроса"
-              :float-label="true" />
+            <AtomDropdownInput v-model:available-options="requestTypes"
+              :placeholder="$t('feedback.select_question_type')" :float-label="true" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $field.error?.message }}
             </p>
@@ -167,47 +164,24 @@ const onSubmit = (event: FormSubmitEvent) => {
           <FormField v-slot="$field" name="agree">
             <div class="flex gap-x-2">
               <PrimeCheckbox input-id="agree" binary />
-              <label for="agree" class="text-xs text-primary md:text-base">Даю согласие на обработку своих персональных
-                данных на
-                условиях, указанных
-                <button type="button" class="underline" @click="isPrivacyDialogVisible = true">
-                  здесь.
-                </button></label>
+              <label for="agree" class="text-xs text-primary md:text-base">
+                <i18n-t keypath="common_form.consent_personal_data_processing">
+                  <template #button>
+                    <button type="button" class="underline" @click="isPrivacyDialogVisible = true">
+                      {{ $t('common_form.consent_personal_data_processing_button_text') }}
+                    </button>
+                  </template>
+                </i18n-t>
+              </label>
             </div>
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $field.error?.message }}
             </p>
           </FormField>
-          <AtomButton type="submit" label="Отправить" color="primary" mode="full" class="mt-10 md:w-full 2xl:w-auto"  />
+          <AtomButton type="submit" :label="$t('common_form.submit')" color="primary" mode="full"
+            class="mt-10 md:w-full 2xl:w-auto" />
         </div>
       </Form>
-    </MoleculeSection>
-
-    <!-- Feedback -->
-
-    <MoleculeSection v-show="successfullySent"
-      class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px] md:space-y-10 2xl:space-y-12">
-      <div class="space-y-4 text-primary md:space-y-6 2xl:space-y-8">
-        <h1 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">
-          Ваше обращение успешно отправлено!
-        </h1>
-
-        <p class="text-sm md:text-base">
-          Спасибо за обращение! Рассмотрение займет не больше одного рабочего
-          дня, но обычно мы справляемся быстрее. Как только все будет готово,
-          сотрудник службы поддержки свяжется с вами по электронной почте.
-        </p>
-        <AtomButton mode="full" color="primary" label="На главную" @click="$router.push(localePath('/'))" />
-      </div>
-      <hr />
-      <div class="space-y-2 text-primary text-sm md:text-base">
-        <p>Информационная линия Kia</p>
-        <p>
-          По всем вопросам, связанным с покупкой автомобиля, сервисным
-          обслуживанием, действующими акциями и предложениями, Вы можете
-          обратиться по телефону: +998 71 215-70-07
-        </p>
-      </div>
     </MoleculeSection>
   </UISafeAreaView>
 </template>

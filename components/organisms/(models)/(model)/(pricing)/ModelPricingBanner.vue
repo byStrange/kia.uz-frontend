@@ -7,8 +7,7 @@ const modelData = defineModel<ModelLandingPage | null>()
 const showOnlyDifferingConfigurations = defineModel<boolean>("diffConf")
 </script>
 <template>
-  <div
-data-label="Hero top"
+  <div data-label="Hero top"
     class="container absolute hidden w-full items-start justify-end gap-6 pt-7.5 md:block 2xl:pt-5">
     <MoleculeBreadcrumb class="hidden bg-transparent text-white 2xl:block" theme="dark" />
   </div>
@@ -16,7 +15,7 @@ data-label="Hero top"
     <div class="py-6 md:py-15 2xl:py-16">
       <div>
         <h1 class="text-2xl text-center text-primary font-semibold md:text-4xl 2xl:text-5xl 2xl:text-left">
-          Комплектации и цены {{ modelData?.model.name }}
+          {{ $t('model_properties.complete_sets_and_pricing', { modelName: modelData?.model.name }) }}
         </h1>
         <div class="mt-3 md:mt-4 text-center 2xl:text-left 2xl:flex justify-between">
           <div>
@@ -32,10 +31,9 @@ data-label="Hero top"
             </UILocaleUzOnly>
           </div>
           <div class="gap-4 hidden 2xl:flex items-center">
-            <AtomButton
-label="Скачать прайс-лист" color="secondary" mode="full"
+            <AtomButton :label="$t('common.download_price_list')" color="secondary" mode="full"
               @click="downloadFile(safe(modelData?.model.price_list))" />
-            <AtomButton label="Свяжитесь с нами" color="primary" mode="full" />
+            <AtomButton :label="$t('common.reach_us')" color="primary" mode="full" />
           </div>
         </div>
       </div>
@@ -46,21 +44,24 @@ label="Скачать прайс-лист" color="secondary" mode="full"
         </picture>
       </div>
       <div class="space-y-2 md:grid md:grid-cols-2 md:gap-x-4 md:space-y-0 2xl:hidden">
-        <AtomButton label="Свяжитесь с нами" color="secondary" mode="full" />
-        <AtomButton label="Скачать прайс-лист" mode="full" @click="downloadFile(safe(modelData?.model.price_list))" />
+        <AtomButton :label="$t('common.reach_us')" color="secondary" mode="full" />
+        <AtomButton :label="$t('common.download_price_list')" mode="full"
+          @click="downloadFile(safe(modelData?.model.price_list))" />
       </div>
     </div>
     <div class="py-4 flex gap-9 md:py-5 2xl:gap-10">
       <div class="flex gap-2.5 items-center shrink-0 text-sm">
         <UIFilterIcon class="text-primary" />
-        Фильтры и опции
+        {{ $t('model_properties.filters_and_options') }}
       </div>
 
-      <div class="shrink-0 text-sm">{{ modelData?.configurations.length }} комплектаций</div>
+      <div class="shrink-0 text-sm">{{ $t('model_properties.complete_set', {
+        number: modelData?.configurations.length
+      }) }}</div>
 
       <div class="gap-2.5 items-center shrink-0 hidden md:flex text-sm">
         <PrimeCheckbox v-model="showOnlyDifferingConfigurations" binary input-id="onlyDifferingConsInput" />
-        <label for="onlyDifferingConsInput">Различающиеся характеристики </label>
+        <label for="onlyDifferingConsInput">{{$t('model_properties.differentiating_features')}}</label>
       </div>
     </div>
   </UIContainer>

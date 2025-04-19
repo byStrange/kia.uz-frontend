@@ -82,7 +82,7 @@ definePageMeta({
         <div class="space-y-5 text-primary">
           <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
         </div>
-        <AtomButton label="Понятно" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <AtomButton :label="$t('common.got_it')" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>

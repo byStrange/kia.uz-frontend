@@ -126,12 +126,13 @@ export default defineEventHandler(async (event) => {
 
     model = await useFetchApi<Model>('/models/' + param, locale),
 
-    referencedSpecialOffers = await useFetchApi<SpecialOffer[]>('/special-offers/?referenced_models=' + model.id),
+    referencedSpecialOffers = await useFetchApi<SpecialOffer[]>('/special-offers/?referenced_models=' + model.id, locale),
 
     referencedNews = await useFetchApi<News[]>('/news/?referenced_models=' + model.id, locale),
 
     configurations = model.engines.map((engine) => engine.configurations.map((configuration) => ({ ...configuration }))).flat();
 
+  console.log(locale)
 
   const pageData: ModelLandingPage = {
     model, specialOffers: referencedSpecialOffers, configurations, news: referencedNews

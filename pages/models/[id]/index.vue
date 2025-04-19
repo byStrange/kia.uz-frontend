@@ -25,16 +25,30 @@ const handleReviewCardClik = (item: News) => {
   }
 }
 
+const { locale: language } = useI18n()
+
 const pageData = useSharedPageData<ModelLandingPage>()
 
 if (!pageData.value) {
-  const data = await useFetch(`/api/models/${route.params.id}`)
+  console.log('no page data, fetching by ourselves')
+  const data = await useFetch(`/api/models/${route.params.id}`, { query: { lang: language.value } })
+  console.log('end selffetcch')
 
   pageData.value = data.data;
 }
 
+
 const footerContent = computed(() => {
   return pageData.value?.model.blocks.find((block) => block.type === 'footerContent')
+})
+
+watch(language, async () => {
+ const data = await useFetch(`/api/models/${route.params.id}`, { query: { lang: language.value } })
+  console.log('end selffetcch')
+
+  pageData.value = data.data;
+
+  console.log('shit')
 })
 
 definePageMeta({

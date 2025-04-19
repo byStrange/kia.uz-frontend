@@ -5,6 +5,7 @@ const { safe } = useSafeAccessMedia()
 const { offset } = useContainer()
 const { gsap } = useGsap()
 const { downloadFile } = useDownload()
+const locale = useLocalePath()
 
 const video = useTemplateRef('video')
 
@@ -76,7 +77,6 @@ const pageAnimations = {
 
 onMounted(() => {
   pageAnimations.heroAnimations()
-
   if (video.value) video.value.play()
 })
 </script>
@@ -98,9 +98,12 @@ data-label="Hero top" :style="{
           <AtomButton
 :label="$t('common.download_price_list')" color="secondary" mode="full"
             @click="downloadFile(pageData.priceList)" />
-          <AtomButton :label="$t('models.request_dealer_call')" color="primary" mode="full" />
+          <AtomButton
+:label="$t('models.request_dealer_call')" color="primary"
+            mode="full" @click="$router.push(locale('/feedback'))" />
         </div>
       </div>
+      {{ modelData?.model.video }}
       <div v-if="modelData?.model.video" class="relative w-full h-full">
         <video
 ref="video" :src="safe(modelData.model.video)" muted
@@ -131,7 +134,9 @@ data-label="Hero bottom"
                 }}</p>
             </div>
             <div class="mt-6 space-y-4 md:hidden">
-              <AtomButton label="Заказать звонок" color="secondary" mode="full" />
+              <AtomButton
+:label="$t('models.request_dealer_call')" color="secondary" mode="full"
+                @click="$router.push(locale('/feedback'))" />
               <AtomButton
 :label="$t('common.download_price_list')" color="primaryDark" mode="full"
                 @click="downloadFile(pageData.priceList)" />
