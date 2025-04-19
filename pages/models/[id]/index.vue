@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useContainer } from '@/composables/useContainer'
+import { Dialog } from 'primevue'
 import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
 
 const { bounding } = useContainer()
@@ -8,6 +9,21 @@ const { gsap } = useGsap()
 const { safe } = useSafeAccessMedia()
 const { t } = useI18n()
 const route = useRoute()
+const router = useRouter()
+const showReviewModal = ref(false)
+const selectedNews = ref<News | null>(null)
+const locale = useLocalePath()
+
+const handleReviewCardClik = (item: News) => {
+  console.log(item)
+  if (item.video_url) {
+    showReviewModal.value = true;
+    selectedNews.value = item
+  }
+  else {
+    router.push(locale(`/news/${item.slug}`))
+  }
+}
 
 const pageData = useSharedPageData<ModelLandingPage>()
 
@@ -53,10 +69,43 @@ onMounted(() => {
 </script>
 <template>
   <div>
+
+    <Dialog
+v-model:visible="showReviewModal" :dismissable-mask="true" modal
+      class="relative overflow-hidden border-none" pt:root:class="!border-0">
+      <template #container="{ closeCallback }">
+        <div class="absolute -right-6 -top-6">
+          <button type="button" @click="closeCallback">
+            <UIXIcon />
+          </button>
+        </div>
+        <iframe
+:src="selectedNews?.video_url" width="1000" height="600" allowfullscreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          frameborder="0" />
+      </template>
+    </Dialog>
+    <Dialog
+v-model:visible="showReviewModal" :dismissable-mask="true" modal
+      class="relative overflow-hidden border-none" pt:root:class="!border-0">
+      <template #container="{ closeCallback }">
+        <div class="absolute -right-6 -top-6">
+          <button type="button" @click="closeCallback">
+            <UIXIcon />
+          </button>
+        </div>
+        <iframe
+:src="selectedNews?.video_url" width="1000" height="600" allowfullscreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          frameborder="0" />
+      </template>
+    </Dialog>
+
     <OrganismModelHero />
 
     <MoleculeSection v-if="pageData?.specialOffers.length" :section-title="t('index.special_offers')">
-      <ElementSlideView :data="pageData?.specialOffers || []" :space-between="16"
+      <ElementSlideView
+:data="pageData?.specialOffers || []" :space-between="16"
         :slides-offset-before="bounding.x.value" :slides-offset-after="bounding.x.value" swiper-slide-class="!w-fit">
         <template #slide="{ item }">
           <NuxtLinkLocale :to="`/special-offers/${item.slug}`">
@@ -81,7 +130,8 @@ onMounted(() => {
 
     <!-- <OrganismModelThreeSixty :model-name="pageData?.model.name" :colors="pageData?.model.colors || []" /> -->
 
-    <MoleculeSection id="shit" :section-title="$t('common.model_variants', { model: pageData?.model.name })"
+    <MoleculeSection
+id="shit" :section-title="$t('common.model_variants', { model: pageData?.model.name })"
       :subtitle="$t('common.configurations')" class="bg-background model-id_variants border">
       <template #after-title="{ align }">
         <p class="text-[15px] text-primary" :class="align">
@@ -89,11 +139,13 @@ onMounted(() => {
         </p>
       </template>
 
-      <ElementSlideView :space-between="16" :slides-offset-before="bounding.x.value"
+      <ElementSlideView
+:space-between="16" :slides-offset-before="bounding.x.value"
         :slides-offset-after="bounding.x.value" swiper-slide-class="!w-fit" :navigation="false"
         :data="pageData?.configurations || []" class="mt-6 2xl:mt-8" :paginator="false">
         <template #slide="{ item }">
-          <div class="max-w-[425px] w-[--width] md:!px-0 2xl:h-[512px] 2xl:w-4h md:h-[448px]"
+          <div
+class="max-w-[425px] w-[--width] md:!px-0 2xl:h-[512px] 2xl:w-4h md:h-[448px]"
             :style="{ '--width': bounding.width.value + 'px' }">
             <div class="w-full bg-white h-full flex flex-col">
               <div class="bg-primary px-6 py-4">
@@ -115,7 +167,8 @@ onMounted(() => {
                   <div class="pb-5">
                     <b class="text-sm">{{ $t('common.main_options') }}</b>
                     <div class="mt-2 space-y-2 text-sm">
-                      <p v-for="option in item.feature_groups.map((f) => f.features).flat().slice(0, 4)"
+                      <p
+v-for="option in item.feature_groups.map((f) => f.features).flat().slice(0, 4)"
                         :key="option.name" class="md:text-base text-sm">
                         {{ option.name }}
                       </p>
@@ -138,7 +191,9 @@ onMounted(() => {
       <div
         class="container space-y-3 mt-6 md:grid md:grid-cols-3 md:space-y-0 md:gap-5 2xl:flex 2xl:justify-center 2xl:mt-8 model-id_variants_action-buttons">
         <AtomLink to="/feedback" mode="full" :label="$t('common_form.submit_application')" color="primary" />
-        <AtomButton mode="full" @click="downloadFile(safe('/pdf-outputs/' + pageData?.model.price_list))" color="secondary" :label="$t('common.download_price_list')" />
+        <AtomButton
+mode="full" color="secondary" :label="$t('common.download_price_list')"
+          @click="downloadFile(safe('/pdf-outputs/' + pageData?.model.price_list))" />
         <AtomLink to="/dealers" mode="full" color="secondary" :label="$t('common.contact_dealers')" />
       </div>
     </MoleculeSection>
@@ -150,15 +205,16 @@ onMounted(() => {
       <template #title="{ sectionTitle, sectionTitleClass }">
         <h2 :class="[sectionTitleClass, 'mb-6']">{{ sectionTitle }}</h2>
       </template>
-      <ElementSlideView :data="pageData?.news || []" :space-between="16" :slides-offset-before="bounding.x.value"
+      <ElementSlideView
+:data="pageData?.news || []" :space-between="16" :slides-offset-before="bounding.x.value"
         :slides-offset-after="bounding.x.value" swiper-slide-class="!w-fit !h-auto"
         :style="{ '--swiper-pagination-mt': '24px' }">
         <template #slide="{ item }">
-          <div class="md:w-[310px] md:!px-0 h-full">
+          <div class="md:w-[310px] md:!px-0 h-full cursor-pointer" @click="handleReviewCardClik(item)">
             <div class="mx-auto h-full max-w-[310px] bg-background">
               <div class="relative flex h-[190px] w-full items-center justify-center bg-gray-200">
                 <img loading="lazy" :src="item.default_image" class="h-full w-full object-cover" />
-                <UIPlayIcon2 class="absolute" />
+                <UIPlayIcon2 v-if="item.video_url" class="absolute" />
               </div>
 
               <div class="p-7.5">
@@ -172,7 +228,8 @@ onMounted(() => {
       </ElementSlideView>
     </MoleculeSection>
 
-    <MoleculeSection align="left" :section-title="$t('warranty.warranty_and_service')"
+    <MoleculeSection
+align="left" :section-title="$t('warranty.warranty_and_service')"
       :subtitle="$t('warranty.service').toLowerCase()"
       class="flex flex-col-reverse gap-10 2xl:grid-cols-12 2xl:grid 2xl:gap-grid-12-gap container rtl">
       <template #title="{ sectionTitle, sectionTitleClass, subtitle, subtitleClass }">
@@ -187,7 +244,8 @@ onMounted(() => {
       </div>
     </MoleculeSection>
 
-    <MoleculeSection v-if="footerContent" :section-title="footerContent.title" :subtitle="footerContent.subtitle || ''"
+    <MoleculeSection
+v-if="footerContent" :section-title="footerContent.title" :subtitle="footerContent.subtitle || ''"
       class="container bg-no-repeat bg-[length:100%_294px] md:bg-[length:100%_405px] 2xl:bg-[length:100%_500px] 2xl:pt-1h"
       :style="{
         '--background-image-url': url(safe(footerContent.footer_background_image)),
@@ -195,13 +253,15 @@ onMounted(() => {
       }">
       <template #title="{ sectionTitle, sectionTitleClass, subtitle, subtitleClass }">
         <div>
-          <h3 :class="[
+          <h3
+:class="[
             subtitleClass,
             'mb-2 md:mb-2.5 !text-kia-polar-white 2xl:text-sm+',
           ]">
             {{ subtitle }}
           </h3>
-          <h2 :class="[
+          <h2
+:class="[
             sectionTitleClass,
             '!mb-0 !text-kia-polar-white md:!text-5xl',
           ]">
