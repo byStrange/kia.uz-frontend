@@ -150,9 +150,10 @@ class="text-white text-sm md:text-base+"
         </div>
       </MoleculeSection>
 
-      <UIContainer class="bg-white" id="insipiration">
-        <MoleculeSection :section-title="$t('branding.movement_inspires_ideas')"
-          :subtitle="$t('branding.insipiration')" class="pt-0">
+      <UIContainer id="insipiration" class="bg-white">
+        <MoleculeSection
+:section-title="$t('branding.movement_inspires_ideas')" :subtitle="$t('branding.insipiration')"
+          class="pt-0">
           <template #title="{ sectionTitle, subtitle }">
             <div class="space-y-2.5">
               <p class="text-disabled uppercase text-xs+ md:text-xs-long 2xl:text-xs+">
