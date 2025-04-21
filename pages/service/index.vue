@@ -52,7 +52,6 @@ const successfullySent = ref(false)
 
 const onSubmit = (event: FormSubmitEvent) => {
   touched.value = true;
-  console.log(event.values)
   successfullySent.value = event.valid
 }
 
@@ -94,7 +93,7 @@ v-model:visible="isPrivacyDialogVisible" modal :pt="{
           <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
         </div>
         <AtomButton
-:label="$t('service.got_it')" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+:label="$t('common.got_it')" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>

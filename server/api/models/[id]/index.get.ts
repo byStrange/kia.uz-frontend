@@ -132,8 +132,6 @@ export default defineEventHandler(async (event) => {
 
     configurations = model.engines.map((engine) => engine.configurations.map((configuration) => ({ ...configuration }))).flat();
 
-  console.log(locale)
-
   const pageData: ModelLandingPage = {
     model, specialOffers: referencedSpecialOffers, configurations, news: referencedNews
   }

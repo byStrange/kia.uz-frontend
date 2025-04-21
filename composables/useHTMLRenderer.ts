@@ -62,7 +62,6 @@ export const useHTMLRenderer = (htmlString: string) => {
   elements.forEach((el) => {
     const img = el.querySelector('img')
     const list = el.querySelector('ul')
-    console.log('encountered', el.localName)
     if (el.classList.contains('section')) {
       blocks.push({
         type: 'section',

@@ -5,7 +5,7 @@ const selectedOption = ref()
 
 const { locale: language } = useI18n()
 const { safe } = useSafeAccessMedia()
-const { data } = await useFetch('/api/media-center', { query: { lang: language.value }})
+const { data } = await useFetch('/api/media-center', { query: { lang: language.value } })
 const router = useRouter()
 const locale = useLocalePath()
 const showModal = ref(false)
@@ -29,16 +29,13 @@ useSeoMeta({
   keywords: () => data.value?.seo.keywords || '',
 })
 
-console.log(data)
-
 definePageMeta({
   lockHover: true,
 })
 </script>
 <template>
   <UISafeAreaView>
-    <Dialog
-v-model:visible="showModal" :dismissable-mask="true" modal class="relative overflow-hidden border-none"
+    <Dialog v-model:visible="showModal" :dismissable-mask="true" modal class="relative overflow-hidden border-none"
       pt:root:class="!border-0">
       <template #container="{ closeCallback }">
         <div class="absolute -right-6 -top-6">
@@ -46,26 +43,23 @@ v-model:visible="showModal" :dismissable-mask="true" modal class="relative overf
             <UIXIcon />
           </button>
         </div>
-        <iframe
-:src="selectedNews?.video_url" width="1000" height="600" allowfullscreen
+        <iframe :src="selectedNews?.video_url" width="1000" height="600" allowfullscreen
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           frameborder="0" />
       </template>
     </Dialog>
     <div class="container pt-7.5 2xl:pt-6">
-      <h1 class="text-2xl font-semibold text-primary md:text-5xl 2xl:mt-10">{{ $t('common.media_center')}}</h1>
+      <h1 class="text-2xl font-semibold text-primary md:text-5xl 2xl:mt-10">{{ $t('common.media_center') }}</h1>
 
       <div class="mt-7.5">
-        <MoleculeTabsContainer
-ref="tabsContainer" :tabs="Object.values(data?.groupedNews || {})"
+        <MoleculeTabsContainer ref="tabsContainer" :tabs="Object.values(data?.groupedNews || {})"
           header-key="categoryName" header-container-class="w-fit mx-0 !px-0"
           content-container-class="!px-0 mx-0 !max-w-none !mt-10">
           <template #tab-button-right="{ tab }">
             <Transition name="slide-fade">
               <div v-if="tab.activeTab === 1" class="w-4h 2xl:absolute top-0 right-0 hidden 2xl:flex">
-                <AtomDropdownInput
-v-model:available-options="options" v-model:selected-option="selectedOption"
-                  placeholder="Выберите модель" class="w-full" />
+                <AtomDropdownInput v-model:available-options="options" v-model:selected-option="selectedOption"
+                  :placeholder="$t('common.choose_model')" class="w-full" />
               </div>
             </Transition>
           </template>

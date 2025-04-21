@@ -2,10 +2,7 @@
 import type { ModelPricingAndDetailsPage } from '~/server/api/models/[id]/features.get';
 import type { Configuration } from '~/server/api/models/[id]/index.get';
 
-const props = defineProps<{ featureGroups: Configuration['feature_groups'], standardFeatures: ModelPricingAndDetailsPage['standard_features'] }>()
-onMounted(() => {
-  console.log(props)
-})
+defineProps<{ featureGroups: Configuration['feature_groups'], standardFeatures: ModelPricingAndDetailsPage['standard_features'] }>()
 </script>
 
 <template>

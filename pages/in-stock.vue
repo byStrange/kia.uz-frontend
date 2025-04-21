@@ -236,12 +236,6 @@ const selectPaymentOption = (id: string) => {
 
 const showInstallmentDetails = ref(false)
 
-watchEffect(() => {
-  console.log(formSteps)
-})
-
-
-
 const submitPurchaseRequest = () => {
   if (!selectedColor.value || !selectedConfiguration.value || !selectedModel.value.model.id) return;
   const code = generateCode()
