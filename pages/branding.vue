@@ -57,7 +57,9 @@ definePageMeta({
 
     <div class="bg-primary">
       <UIContainer>
-        <MoleculeSection section-title="Любое творчество начинается с движения" subtitle="МАНИФЕСТ">
+        <MoleculeSection
+id="manifest" :section-title="$t('branding.all_creativity_begins_with_movement')"
+          :subtitle="$t('branding.manifest')">
           <template #title="{ sectionTitle, subtitle }">
             <div class="space-y-2.5">
               <p class="text-disabled uppercase text-xs+ md:text-xs-long 2xl:text-xs+">
@@ -69,21 +71,8 @@ definePageMeta({
             </div>
           </template>
           <div class="mt-5 text-white space-y-4 2xl:mt-10 2xl:grid 2xl:grid-cols-2 2xl:gap-x-10 2xl:space-y-0">
-            <p class="text-sm md:text-base+">
-              Как дизайнеры, создающие для потребителей, местных сообществ
-              и общества в целом устойчивые мобильные решения,
-              <mark>наша цель в Kia заключается в создании инновационных
-                продуктов</mark>, которые вдохновляют вас, когда вы находитесь в движении,
-              и в предоставлении востребованных и удобных услуг, демонстрируя
-              нашу веру в то, что самый ценный ресурс для каждого человека — это
-              его время.
-            </p>
-            <p class="text-sm md:text-base+">
-              Мы рождены в центре вдохновения, страсти и энтузиазма. Наш
-              <mark>настрой на рост и прогресс проявляется</mark> в каждом
-              сотруднике Kia по всему миру.<mark>
-                И мы стремимся реализовывать цель бренда каждый день.</mark>
-            </p>
+            <p class="text-sm md:text-base+" v-html="$t('branding.kia_design_mission_statement')"></p>
+            <p class="text-sm md:text-base+" v-html="$t('branding.kia_global_growth_mindset')"></p>
           </div>
         </MoleculeSection>
       </UIContainer>
@@ -92,7 +81,7 @@ definePageMeta({
 :src="src('4470c77e-2f0d-40c1-bef7-12ceda37662d')"
         class="w-full object-cover max-h-[951px] max-w-[1440px] mx-auto" />
 
-      <UIContainer>
+      <UIContainer id="logo">
         <div
 class="text-white space-y-12 py-12 md:py-15 2xl:py-1h md:space-y-15 2xl:space-y-16" :style="{
           '--logo-width-lg': '1153px',
@@ -106,10 +95,10 @@ class="text-white space-y-12 py-12 md:py-15 2xl:py-1h md:space-y-15 2xl:space-y-
               class="space-y-5 text-center 2xl:w-[--logo-width-lg] 2xl:mx-auto 2xl:grid 2xl:grid-cols-2 2xl:text-left 2xl:gap-x-10 2xl:space-y-0"
               :style="{ '--offset-left-2xl': logoOffsetLeft + 'px' }">
               <h1 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">
-                Источник вдохновения: значение нового логотипа
+                {{ $t('branding.inspiration_source_new_logo_meaning') }}
               </h1>
               <p class="text-sm md:text-base+ 2xl:text-xl">
-                Новый логотип как воплощение полной трансформации бренда
+                {{ $t('branding.new_logo_representation_of_brand_transformation') }}
               </p>
             </div>
           </div>
@@ -117,24 +106,13 @@ class="text-white space-y-12 py-12 md:py-15 2xl:py-1h md:space-y-15 2xl:space-y-
             <img
 :src="src('31908fdd-f12e-4eb4-9a97-04987fd5d13b')" alt="${0}"
               class="2xl:h-[720px] w-full object-cover" />
-            <button class="absolute">play</button>
+            <button class="absolute">
+              <UIPlayIcon />
+            </button>
           </div>
           <div class="2xl:grid 2xl:grid-cols-2 space-y-4 2xl:space-y-0 2xl:gap-x-10">
-            <p class="text-sm md:text-base+">
-              Эволюция человечества происходила посредством миграции. По ходу
-              истории люди мигрировали, открывали новые континенты.
-              <mark>Это желание и потребность в движении заложены в ДНК всего
-                человечества.</mark> Когда мы в движении, мы открываем новые миры, получаем новые
-              впечатления, знакомимся с новыми людьми, открываем новые
-              перспективы. <mark>Мы вдохновляемся.</mark>
-            </p>
-            <p class="text-sm md:text-base+">
-              <mark>Движение связано с концепцией постоянных изменений</mark> —
-              изменений окружающей среды, пространства, и, как следствие,
-              изменений в нас самих. Когда вы в движении, у вас есть время
-              подумать. Движение стимулирует мышление, творчество, новые идеи и
-              <mark> прогресс. </mark>
-            </p>
+            <p class="text-sm md:text-base+">{{ $t('branding.human_evolution_and_desire_for_movement') }}</p>
+            <p class="text-sm md:text-base+">{{ $t('branding.movement_and_constant_change_concept') }}</p>
           </div>
         </div>
       </UIContainer>
@@ -143,7 +121,9 @@ class="text-white space-y-12 py-12 md:py-15 2xl:py-1h md:space-y-15 2xl:space-y-
 :src="src('f997d80d-49c8-4775-8ae8-2fcea5c99917')"
         class="w-full object-cover max-h-[951px] max-w-[1440px] mx-auto" />
 
-      <MoleculeSection section-title="Единство противоположностей" subtitle="ФИЛОСОФИЯ">
+      <MoleculeSection
+id="philosophy" :section-title="$t('branding.unity_of_opposites')"
+        :subtitle="$t('branding.philosophy')">
         <template #title="{ sectionTitle, subtitle }">
           <div class="space-y-2.5 container">
             <p class="text-disabled uppercase text-xs+ md:text-xs-long 2xl:text-xs+">
@@ -156,20 +136,12 @@ class="text-white space-y-12 py-12 md:py-15 2xl:py-1h md:space-y-15 2xl:space-y-
         </template>
 
         <div class="container mt-5 space-y-4 2xl:grid 2xl:grid-cols-2 2xl:gap-x-10 2xl:mt-10 2xl:space-y-0">
-          <p class="text-white text-sm md:text-base+">
-            Представляем вам нашу новую философию дизайна —
-            <mark>единство противоположностей.</mark>  В основе идея
-            противопоставления, которую мы используем для формирования
-            уникального стиля Kia. Мы применяем концепции разрушения связей
-            и контраста, чтобы создавать ярко выраженный дизайн.
-          </p>
-          <p class="text-white text-sm md:text-base+">
-            Философия <mark>единства противоположностей</mark> позволяет нам
-            выделяться и символизирует наступление новой эры бренда. Kia
-            адаптируется к меняющемуся миру вокруг нас. Мы вдохновлены
-            изменениями, которые происходят вокруг нас, и приглашаем вас вместе
-            с нами создавать будущее.
-          </p>
+          <p
+class="text-white text-sm md:text-base+"
+            v-html="$t('branding.introducing_design_philosophy_unity_of_opposites')"></p>
+          <p
+class="text-white text-sm md:text-base+"
+            v-html="$t('branding.unity_of_opposites_symbolizes_new_brand_era')"></p>
         </div>
 
         <div class="relative container mt-10 md:mt-15 2xl:mt-16">
@@ -178,8 +150,9 @@ class="text-white space-y-12 py-12 md:py-15 2xl:py-1h md:space-y-15 2xl:space-y-
         </div>
       </MoleculeSection>
 
-      <UIContainer class="bg-white">
-        <MoleculeSection section-title="Движение вдохновляет на идеи" subtitle="ВДОХНОВЕНИЕ" class="pt-0">
+      <UIContainer class="bg-white" id="insipiration">
+        <MoleculeSection :section-title="$t('branding.movement_inspires_ideas')"
+          :subtitle="$t('branding.insipiration')" class="pt-0">
           <template #title="{ sectionTitle, subtitle }">
             <div class="space-y-2.5">
               <p class="text-disabled uppercase text-xs+ md:text-xs-long 2xl:text-xs+">
@@ -191,26 +164,29 @@ class="text-white space-y-12 py-12 md:py-15 2xl:py-1h md:space-y-15 2xl:space-y-
             </div>
           </template>
           <p class="text-sm md:text-base+ text-primary mt-5 2xl:mt-10 2xl:max-w-7.5h">
-            В Kia, сотрудничая с художниками и нейробиологами, мы создали
-            анимацию, которая разработана для того, чтобы вдохновить каждого,
-            кто смотрит на нее. В результате многочисленных исследований, мы
-            выявили, что произведения искусства раскрывают сущность движения в
-            природе за счет упрощения формы с помощью таких методов, как
-            изменение цвета в зависимости от скорости.
-          </p>
+            {{ $t('branding.kia_art_and_neuroscience_inspiration_animation') }}</p>
         </MoleculeSection>
       </UIContainer>
 
       <div class="flex overflow-auto snap-x snap-mandatory 2xl:grid 2xl:grid-cols-3">
         <div class="h-[515px] 2xl:h-[715px] relative shrink-0 w-screen snap-start md:w-half-screen 2xl:w-auto">
-          <video src="../assets/video-ocean.mp4" autoplay muted loop class="h-full object-cover w-full"></video>
+          <video src="../assets/video-air.mp4" autoplay muted loop class="h-full object-cover w-full"></video>
           <div class="absolute bottom-0 pb-7.5">
             <UIContainer class="space-y-2.5 text-white md:!px-7.5">
-              <h1 class="text-lg font-semibold md:text-2xl">
-                Движение в воздухе
-              </h1>
+              <h1 class="text-lg font-semibold md:text-2xl">{{ $t('branding.movement_in_the_air') }}</h1>
               <p class="text-base">
-                Завораживающее движение частиц создает ощущение присутствия.
+                {{ $t('branding.mesmerizing_particle_movement_creates_sense_of_presence') }}
+              </p>
+            </UIContainer>
+          </div>
+        </div>
+        <div class="h-[515px] 2xl:h-[715px] relative shrink-0 w-screen snap-start md:w-half-screen 2xl:w-auto">
+          <video src="../assets/video-land.mp4" autoplay muted loop class="h-full object-cover w-full"></video>
+          <div class="absolute bottom-0 pb-7.5">
+            <UIContainer class="space-y-2.5 text-white md:!px-7.5">
+              <h1 class="text-lg font-semibold md:text-2xl">{{ $t('branding.movement_on_earth') }}</h1>
+              <p class="text-base">
+                {{ $t("branding.particle_movement_in_nature_promotes_peace") }}
               </p>
             </UIContainer>
           </div>
@@ -219,25 +195,8 @@ class="text-white space-y-12 py-12 md:py-15 2xl:py-1h md:space-y-15 2xl:space-y-
           <video src="../assets/video-ocean.mp4" autoplay muted loop class="h-full object-cover w-full"></video>
           <div class="absolute bottom-0 pb-7.5">
             <UIContainer class="space-y-2.5 text-white md:!px-7.5">
-              <h1 class="text-lg font-semibold md:text-2xl">
-                Движение в воздухе
-              </h1>
-              <p class="text-base">
-                Завораживающее движение частиц создает ощущение присутствия.
-              </p>
-            </UIContainer>
-          </div>
-        </div>
-        <div class="h-[515px] 2xl:h-[715px] relative shrink-0 w-screen snap-start md:w-half-screen 2xl:w-auto">
-          <video src="../assets/video-ocean.mp4" autoplay muted loop class="h-full object-cover w-full"></video>
-          <div class="absolute bottom-0 pb-7.5">
-            <UIContainer class="space-y-2.5 text-white md:!px-7.5">
-              <h1 class="text-lg font-semibold md:text-2xl">
-                Движение в воздухе
-              </h1>
-              <p class="text-base">
-                Завораживающее движение частиц создает ощущение присутствия.
-              </p>
+              <h1 class="text-lg font-semibold md:text-2xl">{{ $t('branding.movement_in_the_ocean') }}</h1>
+              <p class="text-base">{{ $t('branding.wave_movement_creates_immersive_feeling') }}</p>
             </UIContainer>
           </div>
         </div>
@@ -246,13 +205,8 @@ class="text-white space-y-12 py-12 md:py-15 2xl:py-1h md:space-y-15 2xl:space-y-
       <UIContainer class="bg-white">
         <MoleculeSection class="text-primary space-y-5 2xl:space-y-10">
           <h1 class="text-lg font-semibold md:text-2xl 2xl:text-3xl 2xl:max-w-8.5h">
-            Движение вперед, постоянные усилия и совершенствование — вот наш
-            менталитет роста
-          </h1>
-          <p class="text-sm md:text-base+ max-w-[620px]">
-            Движение является важной частью нашего менталитета в Kia. Его
-            разделяют все сотрудники на всех уровнях компании.
-          </p>
+            {{ $t('branding.forward_movement_growth_mentality') }}</h1>
+          <p class="text-sm md:text-base+ max-w-[620px]">{{ $t('branding.movement_as_part_of_kiamentality') }}</p>
         </MoleculeSection>
       </UIContainer>
 
@@ -264,35 +218,22 @@ class="text-white space-y-12 py-12 md:py-15 2xl:py-1h md:space-y-15 2xl:space-y-
           class="2xl:absolute 2xl:bottom-0 2xl:max-w-[1440px] 2xl:left-1/2 2xl:-translate-x-1/2 2xl:flex 2xl:justify-end w-full">
           <UIContainer
             class="text-sm text-primary space-y-4 pt-6 pb-12 md:pt-10 md:pb-15 md:text-base+ 2xl:bg-white 2xl:max-w-[620px] 2xl:m-0">
-            <p>
-              У Kia долгая история производства автомобилей. Но если быть
-              точнее, мы начали в 1944 году с производства велосипедов.
-            </p>
-            <p>
-              С тех пор вот уже 75 лет мы приводим людей в движение.
-              Мы с гордостью предоставляем решения, которые помогают людям
-              перемещаться из одной точки в другую, объединяя людей друг
-              с другом физически и эмоционально.
-            </p>
-            <p>
-              Как вы видите, <mark light>движение всегда было в сердце нашего бренда,</mark>
-              а передвижение людей в основе нашего бизнеса, и это
-              так и останется в будущем, независимо от любых изменений в нашей
-              отрасли.
-            </p>
+            <p>{{ $t('branding.kia_long_history_of_automobile_manufacturing') }}</p>
+            <p>{{ $t('branding.75_years_of_moving_people') }}</p>
+            <p v-html="$t('branding.movement_at_the_heart_of_our_brand')"></p>
           </UIContainer>
         </div>
       </div>
 
-      <div class="text-primary bg-white 2xl:pt-1h relative">
+      <div id="values" class="text-primary bg-white 2xl:pt-1h relative">
         <img
 :src="src('f4bc8716-33dc-4792-bd59-f9246173c7e2')"
           class="w-full object-cover max-h-[951px] max-w-[1440px] mx-auto" />
         <div class="2xl:absolute 2xl:max-w-[1440px] 2xl:w-full 2xl:bottom-0 2xl:left-1/2 2xl:-translate-x-1/2">
           <UIContainer class="bg-background 2xl:max-w-[620px] 2xl:m-0 2xl:bg-transparent text-primary 2xl:text-white">
             <MoleculeSection
-section-title="Креативное мышление, инновации и прогресс — наш жизненный менталитет"
-              subtitle="ЦЕННОСТИ" class="pt-6">
+:section-title="$t('branding.creative_thinking_innovation_and_progress_our_lifestyle')"
+              :subtitle="$t('branding.values')" class="pt-6">
               <template #title="{ sectionTitle, subtitle }">
                 <div class="space-y-2.5">
                   <p class="text-disabled uppercase text-xs+ md:text-xs-long 2xl:text-xs+">
@@ -304,27 +245,20 @@ section-title="Креативное мышление, инновации и п�
                 </div>
               </template>
               <p class="mt-5 text-sm md:text-base+ 2xl:mt-10">
-                Мы верим в то, что эти ценности находят отклик в наших
-                потребителях. Людях с прогрессивным мировоззрением,
-                оптимистичных и позитивных, готовых меняться и адаптироваться к
-                будущему, которые движимы новыми идеями и во всем видят
-                возможности. <br />
+                {{ $t('branding.we_believe_these_values_resonate_with_customers') }}
                 <br />
-
-                Честно отвечать на вопрос «Для чего» — это критически важно,
-                чтобы достигать цель нашего бренда. Быть брендом, который
-                воплощает это видение и следовать ему каждый день — это то,
-                с чего мы все начинаем.
+                <br />
+                {{ $t('branding.honestly_answering_why_is_crucial_for_brand_purpose') }}
               </p>
             </MoleculeSection>
           </UIContainer>
         </div>
       </div>
 
-      <UIContainer class="bg-white">
+      <UIContainer id="target" class="bg-white">
         <MoleculeSection
-          section-title="В Kia мы верим, что движение вдохновляет на идеи. Именно поэтому мы создаем пространство, где вы можете обретать вдохновение и получать больше времени на воплощение своих идей в жизнь"
-          subtitle="ЦЕЛЬ" class="pt-6">
+:section-title="$t('branding.at_kia_we_believe_movement_inspires_ideas')"
+          :subtitle="$t('branding.target')" class="pt-6">
           <template #title="{ sectionTitle, subtitle }">
             <div class="space-y-2.5">
               <p class="text-disabled uppercase text-xs+ md:text-xs-long 2xl:text-xs+">
@@ -336,15 +270,10 @@ section-title="Креативное мышление, инновации и п�
             </div>
           </template>
           <p class="mt-5 text-sm md:text-base+ 2xl:mt-10 2xl:max-w-[620px]">
-            Это и есть цель существования нашего бренда. Мы создаем
-            пространства, где вы сможете вдохновляться, и не только благодаря
-            нашим продуктам, но и находясь в наших шоурумах, где вы получите
-            опыт взаимодействия с нашими продуктами. <br />
+            {{ $t('branding.experience_of_brand') }}
             <br />
-            Кроме того, мы существуем, чтобы предоставлять значимые и удобные
-            услуги, которые освобождают вам время на то, что вас больше всего
-            вдохновляет, например, общение с семьей и друзьями, путешествия или
-            просто отдых.
+            <br />
+            {{ $t('branding.our_mission_is_to_provide_meaningful_and_convenient_services') }}
           </p>
         </MoleculeSection>
       </UIContainer>
@@ -361,39 +290,30 @@ section-title="Креативное мышление, инновации и п�
           <button class="hidden md:block">
             <UIPlayIcon2 class="text-primary/40" />
           </button>
-          <h2 class="text-xs font-semibold md:text-2xl md:mt-7.5 2xl:text-3xl">
-            Inspired by nature
+          <h2 class="text-xs font-semibold md:text-2xl md:mt-7.5 2xl:text-3xl">{{ $t('branding.insipred_by_nature') }}
           </h2>
           <p class="text-xs md:text-base md:mt-1.5 2xl:mt-2.5 2xl:text-lg">
-            Новые ценности, цели и философия дизайна
-          </p>
+            {{ $t('branding.new_values_goals_design_philosophy') }}</p>
         </div>
       </UIContainer>
 
       <UIContainer class="bg-white">
-        <MoleculeSection
-          section-title="С новым Kia мы выходим за рамки производителя автомобилей и становимся брендом новой эпохи мобильности"
-          class="pt-6">
+        <MoleculeSection :section-title="$t('branding.beyond_car_manufacturer_to_mobility_brand')" class="pt-6">
           <template #title="{ sectionTitle, subtitle }">
             <div class="space-y-2.5">
               <p class="text-disabled uppercase text-xs+ md:text-xs-long 2xl:text-xs+">
                 {{ subtitle }}
               </p>
               <h1 class="text-lg font-semibold md:text-2xl 2xl:text-3xl 2xl:max-w-8.5h">
+
                 {{ sectionTitle }}
               </h1>
             </div>
           </template>
           <div class="mt-5 space-y-4 md:mt-7.5 2xl:mt-10 2xl:space-y-10 2xl:max-w-[620px]">
+            <p class="text-sm md:text-base+">{{ $t('branding.brand_understands_mobility_needs') }}</p>
             <p class="text-sm md:text-base+">
-              Брендом, который понимает потребности людей в решениях мобильности
-              не только с точки зрения продуктов, но и с точки зрения услуг,
-              и предлагает удобные услуги, учитывая самый ценный ресурс каждого
-              человека — время.
-            </p>
-            <p class="text-sm md:text-base+">
-              <b>И это не просто слова, это цель бренда, которую мы будем
-                реализовывать и руководствоваться ей во всем, что мы делаем.</b>
+              <b>{{ $t('branding.purpose_of_life') }}</b>
             </p>
           </div>
         </MoleculeSection>
@@ -405,7 +325,7 @@ section-title="Креативное мышление, инновации и п�
 
       <MoleculeSection class="bg-white space-y-4 md:space-y-8">
         <h1 class="text-center text-lg font-semibold md:text-4xl 2xl:text-5xl md:max-w-6.5 2xl:max-w-5.5h mx-auto">
-          Представители компании про новый бренд Kia
+          {{ $t('branding.company_representatives_on_new_kia_brand') }}
         </h1>
 
         <div
@@ -426,7 +346,7 @@ v-for="i in 4" :key="i"
 
               <div class="p-4 bg-background">
                 <h2 class="text-sm font-semibold">
-                  Часть I: Полная трансформация
+                  {{ $t('branding.part1_complete_transformation') }}
                 </h2>
               </div>
             </div>
@@ -443,9 +363,7 @@ v-for="i in 4" :key="i"
           <UIContainer class="md:text-white md:max-w-[540px] md:m-0">
             <MoleculeSection>
               <h2 class="text-lg font-semibold md:text-2xl">
-                Label Kia адаптируется к меняющемуся миру вокруг нас.
-                Мы вдохновлены изменениями, которые происходят вокруг нас, и
-                приглашаем вас присоединиться к нам для создания будущего
+                {{ $t('branding.kia_adapts_to_changing_world') }}
               </h2>
             </MoleculeSection>
           </UIContainer>
@@ -453,7 +371,8 @@ v-for="i in 4" :key="i"
       </div>
 
       <MoleculeSection class="bg-white">
-        <h2 class="container text-lg font-semibold text-primary md:text-2xl 2xl:text-3xl">{{ $t('index.more_about_kia') }}
+        <h2 class="container text-lg font-semibold text-primary md:text-2xl 2xl:text-3xl">{{ $t('index.more_about_kia')
+          }}
         </h2>
         <div
           class="no-scrollbar p-[--padding] mt-6 snap-x space-y-9 overflow-auto 2xl:container md:flex md:gap-x-10 md:space-y-0 2xl:snap-none"
@@ -464,7 +383,7 @@ v-for="slide in extraLinksCard" :key="slide.title" :to="slide.href"
             <img :src="slide.image" class="h-full" loading="lazy" />
             <div class="absolute bottom-0 z-10 w-full p-4 md:px-7.5 md:py-5">
               <p class="text-base font-semibold text-white md:text-2xl">
-                {{ slide.title }}
+                {{ $t(slide.title) }}
               </p>
             </div>
           </NuxtLinkLocale>
