@@ -187,7 +187,6 @@ async function initMap() {
     circle.innerHTML = template
 
     circle.onclick = () => {
-      console.log(coordinates)
       map.setLocation({
         center: coordinates,
         zoom: 11,
@@ -206,7 +205,6 @@ async function initMap() {
     }
   }) || [];
 
-  console.log(points)
 
   if (import.meta.client) {
     import('@yandex/ymaps3-clusterer').then(
