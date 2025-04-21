@@ -9,12 +9,15 @@ defineEmits<{
 </script>
 <template>
   <div class="space-y-10 md:space-y-12 2xl:space-y-15">
-    <div v-for="[id, group] in Object.entries(modelsGroup).sort((a, b) => a[1]?.order - b[1]?.order)" :key="id">
+    <div
+      v-for="[id, group] in Object.entries(modelsGroup).sort(([_, groupA], [__, groupB]) => (groupA?.order && groupB?.order) ? groupA.order - groupB.order : 0)"
+      :key="id">
       <h1 class="text-2xl font-semibold text-primary md:text-3xl" :class="groupTitleClass">
         {{ group.categoryName }}
       </h1>
       <div class="flex-wrap mt-4 md:mt-8 md:flex md:gap-9 2xl:mt-10">
-        <div v-for="model in group.items" :key="model.name" class="max-w-md md:min-w-[310px] md:max-w-[310px]">
+        <div v-for="model in group.items.sort((a, b) => b.order - a.order)" :key="model.id"
+          class="max-w-md md:min-w-[310px] md:max-w-[310px]">
           <button class="relative" @click="$emit('choose', model.slug, model.id)">
             <img :src="safe(model.main_image)" class="object-cover w-full" />
             <UIElectroCarIcon v-if="model.is_electric" class="absolute top-0 right-0 size-6" />

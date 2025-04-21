@@ -93,6 +93,7 @@ export interface Model extends CommonMediaModel {
   engines: ModelEngine[]
   blocks: ModelBlock[]
   main_image: string
+  order: number
   side_image: string
   user_manual: string | null
   seo: SEO['seo']
