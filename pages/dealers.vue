@@ -34,7 +34,7 @@ const handlers: Record<string, any> = {
         name: dealer.name,
       },
       geometry: {
-        coordinates: [dealer.location.lat, dealer.location.lng],
+        coordinates: [dealer.location.lng, dealer.location.lat],
       },
       type: 'Feature',
     })
@@ -187,6 +187,7 @@ async function initMap() {
     circle.innerHTML = template
 
     circle.onclick = () => {
+      console.log(coordinates)
       map.setLocation({
         center: coordinates,
         zoom: 11,
