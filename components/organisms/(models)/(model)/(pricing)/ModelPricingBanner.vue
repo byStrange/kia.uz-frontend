@@ -7,7 +7,8 @@ const modelData = defineModel<ModelLandingPage | null>()
 const showOnlyDifferingConfigurations = defineModel<boolean>("diffConf")
 </script>
 <template>
-  <div data-label="Hero top"
+  <div
+data-label="Hero top"
     class="container absolute hidden w-full items-start justify-end gap-6 pt-7.5 md:block 2xl:pt-5">
     <MoleculeBreadcrumb class="hidden bg-transparent text-white 2xl:block" theme="dark" />
   </div>
@@ -31,7 +32,8 @@ const showOnlyDifferingConfigurations = defineModel<boolean>("diffConf")
             </UILocaleUzOnly>
           </div>
           <div class="gap-4 hidden 2xl:flex items-center">
-            <AtomButton :label="$t('common.download_price_list')" color="secondary" mode="full"
+            <AtomButton
+:label="$t('common.download_price_list')" color="secondary" mode="full"
               @click="downloadFile(safe(modelData?.model.price_list))" />
             <AtomButton :label="$t('common.reach_us')" color="primary" mode="full" />
           </div>
@@ -45,7 +47,8 @@ const showOnlyDifferingConfigurations = defineModel<boolean>("diffConf")
       </div>
       <div class="space-y-2 md:grid md:grid-cols-2 md:gap-x-4 md:space-y-0 2xl:hidden">
         <AtomButton :label="$t('common.reach_us')" color="secondary" mode="full" />
-        <AtomButton :label="$t('common.download_price_list')" mode="full"
+        <AtomButton
+:label="$t('common.download_price_list')" mode="full"
           @click="downloadFile(safe(modelData?.model.price_list))" />
       </div>
     </div>
@@ -61,7 +64,7 @@ const showOnlyDifferingConfigurations = defineModel<boolean>("diffConf")
 
       <div class="gap-2.5 items-center shrink-0 hidden md:flex text-sm">
         <PrimeCheckbox v-model="showOnlyDifferingConfigurations" binary input-id="onlyDifferingConsInput" />
-        <label for="onlyDifferingConsInput">{{$t('model_properties.differentiating_features')}}</label>
+        <label for="onlyDifferingConsInput">{{ $t('model_properties.differentiating_features') }}</label>
       </div>
     </div>
   </UIContainer>

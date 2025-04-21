@@ -99,7 +99,7 @@ data-label="Hero top" :style="{
 :label="$t('common.download_price_list')" color="secondary" mode="full"
             @click="downloadFile(pageData.priceList)" />
           <AtomButton
-:label="$t('models.request_dealer_call')" color="primary"
+:label="$t('common.reach_us')" color="primary"
             mode="full" @click="$router.push(locale('/feedback'))" />
         </div>
       </div>
@@ -135,7 +135,7 @@ data-label="Hero bottom"
             </div>
             <div class="mt-6 space-y-4 md:hidden">
               <AtomButton
-:label="$t('models.request_dealer_call')" color="secondary" mode="full"
+:label="$t('common.reach_us')" color="secondary" mode="full"
                 @click="$router.push(locale('/feedback'))" />
               <AtomButton
 :label="$t('common.download_price_list')" color="primaryDark" mode="full"
