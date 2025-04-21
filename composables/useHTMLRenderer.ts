@@ -78,7 +78,8 @@ export const useHTMLRenderer = (htmlString: string) => {
     else if (el.localName == 'table') blocks.push({
       type: 'table',
       options: useTableRenderer(el.outerHTML)
-    });
+    })
+
     else if (img) {
       blocks.push({
         type: 'image',
@@ -86,18 +87,21 @@ export const useHTMLRenderer = (htmlString: string) => {
         alt: img.alt
       })
     }
+
     else if (list) {
       blocks.push({
         type: 'list',
         items: Array.from(list.querySelectorAll('li')).map((li) => li.textContent || '')
       })
     }
+
     else if (el.localName === 'ul') {
       blocks.push({
         type: 'list',
         items: Array.from(el.querySelectorAll('li')).map((li) => li.textContent || '')
       })
     }
+
     else if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(el.localName)) {
       blocks.push({
         type: 'heading',
@@ -105,25 +109,29 @@ export const useHTMLRenderer = (htmlString: string) => {
         text: el.textContent
       })
     }
+
     else if (el.localName === 'p' && el.querySelector('*:not(br)') == null) {
       blocks.push({
         type: 'text',
         text: el.textContent
       })
     }
-    else if (el.localName == 'a') {
+
+    else if (el.localName === 'a') {
       blocks.push({
         type: 'link',
         link: el.getAttribute('href'),
         text: el.textContent
       })
     }
+
     else {
       blocks.push({
         type: 'html',
         html: el.outerHTML
       })
     }
+
   })
 
   return blocks

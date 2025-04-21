@@ -46,7 +46,7 @@ updateBreadcrumbTitle(route.fullPath, pageData.value?.title || '')
         <MoleculeBreadcrumb theme="light" />
       </div>
       <div
-        class="container py-10 md:h-[360px] md:flex md:flex-col md:justify-between md:items-start 2xl:h-auto 2xl:pt-10 2xl:pb-20 relative z-20">
+        class="container py-10 md:h-[360px] md:flex md:flex-col md:justify-between md:items-start 2xl:h-auto 2xl:pt-10 2xl:pb-20 relative z-10">
         <div class="text-white space-y-4 md:max-w-5h md:space-y-3 2xl:max-w-7.25h">
           <h1 class="text-3xl md:text-4xl 2xl:text-5xl">
             {{ pageData?.title }}

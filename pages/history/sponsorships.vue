@@ -39,8 +39,7 @@ definePageMeta({
 
       <picture>
         <source :srcset="src('1f7d6285-aea7-4205-a2a9-01c339c4494e')" media="(min-width: 768px)" />
-        <img
-:src="src('2e5cd080-9205-4f4b-b2e7-c69bfb15d624')" alt="kia sponsoring"
+        <img :src="src('2e5cd080-9205-4f4b-b2e7-c69bfb15d624')" alt="kia sponsoring"
           class="w-full md:h-[420px] object-cover 2xl:h-[calc(100vh-var(--header-height))]">
       </picture>
 
@@ -50,47 +49,36 @@ definePageMeta({
 
       <div
         class="relative z-20 py-7.5 container space-y-4 text-primary bg-background md:absolute md:bottom-0 md:bg-transparent md:text-white md:pb-10 2xl:top-15 2xl:pt-2.5">
-        <h1 class="text-2xl md:text-4xl 2xl:text-9xl">Спонсорство</h1>
-        <p class="text-base md:text-base+ 2xl:text-lg">Активности Kia</p>
+        <h1 class="text-2xl md:text-4xl 2xl:text-9xl">{{ $t('common.kia_sponsorships') }}</h1>
+        <p class="text-base md:text-base+ 2xl:text-lg">{{ $t('sponsorships.kia_activity') }}</p>
       </div>
 
     </div>
 
     <div class="pt-12">
 
-      <UISplitLayout
-title="Australian Open" :class-names="{
+      <UISplitLayout title="Australian Open" :class-names="{
         'leftContainerClass': '2xl:!col-start-1',
         'rightContainerClass': '!col-start-6 !col-span-7',
         'containerClass': '!py-0 md:!pb-7.5 2xl:!pb-0'
       }">
         <template #left="{ sectionTitle }">
           <div class="2xl:pt-5 2xl:pb-16">
-            <h1
-:class="[
+            <h1 :class="[
               'text-base font-semibold md:text-2xl 2xl:text-lg',
             ]">
               {{ sectionTitle }}
             </h1>
-            <p
-:class="{
-            }" class="text-sm md:text-base+ text-primary mt-3 md:mt-5 2xl:mt-10 split-left__description">С момента
-              своего первого
-              участия
-              в поддержке этого турнира в 2002 году Kia является его бессменным главным спонсором. Australian Open
-              входит в четвёрку самых престижных соревнований в мире большого тенниса (турниры Большого шлема).
+            <p :class="{
+            }" class="text-sm md:text-base+ text-primary mt-3 md:mt-5 2xl:mt-10 split-left__description">
+              {{ $t('sponsorships.kia_australian_open_sponsorship_since_2002') }}
               <br /> <br />
 
-              В качестве партнёра Kia ежегодно поставляет более 100 новых автомобилей, чтобы обеспечить комфортную
-              мобильность лучших теннисистов мира, VIP-персон, официальных лиц и представителей средств массовой
-              информации.
-
+              {{ $t('sponsorships.kia_annually_provides_100_cars_for_australian_open') }}
               <br /> <br />
 
-              В честь 21-й годовщины партнерства была создана площадка Kia Arena — стадион вместимостью 5 000 мест. Это
-              четвертый по размеру стадион в Мельбурн-парке, предназначенный для использования в ходе Australian Open.
+              {{ $t('sponsorships.kia_arena_built_for_21st_anniversary_with_5000_seats') }}
             </p>
-
           </div>
         </template>
         <template #right>
@@ -100,32 +88,25 @@ title="Australian Open" :class-names="{
         </template>
       </UISplitLayout>
 
-      <UISplitLayout
-title="FIFA" :class-names="{
+      <UISplitLayout title="FIFA" :class-names="{
         'leftContainerClass': '2xl:!col-start-1',
         'rightContainerClass': '!col-start-6 !col-span-7',
         'containerClass': '!py-0 md:!py-7.5 2xl:!py-0'
       }">
         <template #left="{ sectionTitle }">
           <div class="2xl:pt-5 2xl:pb-16">
-            <h1
-:class="[
+            <h1 :class="[
               'text-base font-semibold md:text-2xl 2xl:text-lg',
             ]">
               {{ sectionTitle }}
             </h1>
-            <p
-:class="{
-            }" class="text-sm md:text-base+ text-primary mt-3 md:mt-5 2xl:mt-10 split-left__description">Являясь
-              официальным автомобильным партнёром, Kia предоставляет автомобили из своей широкой модельной линейки
-              на всех крупнейших мероприятиях под эгидой FIFA. Начало партнёрству было положено в 2006 году во время
-              проведения Чемпионата мира по футболу в Германии, а следующим крупным турниром станет Чемпионат мира
-              по футболу, запланированный на 2026 год.
+            <p :class="{
+            }" class="text-sm md:text-base+ text-primary mt-3 md:mt-5 2xl:mt-10 split-left__description">
+              {{ $t('sponsorships.kia_fifa_partnership_since_2006_with_next_world_cup_in_2026') }}
 
               <br /> <br />
 
-              В 2018 году Чемпионат мира по футболу впервые прошёл в России. Kia предоставила более 400 автомобилей для
-              официальных делегаций, спортсменов, гостей и журналистов.
+              {{ $t('sponsorships.kia_provided_400_vehicles_for_2018_world_cup_in_russia') }}
             </p>
           </div>
         </template>
@@ -136,26 +117,21 @@ title="FIFA" :class-names="{
         </template>
       </UISplitLayout>
 
-      <UISplitLayout
-title="Leagues of Legends Европейский чемпионат" :class-names="{
+      <UISplitLayout :title="$t('sponsorships.league_of_legends_european_championship')" :class-names="{
         'leftContainerClass': '2xl:!col-start-1',
         'rightContainerClass': '!col-start-6 !col-span-7',
         'containerClass': '!py-0 md:!pt-7.5 2xl:!pt-0'
       }">
         <template #left="{ sectionTitle }">
           <div class="2xl:pt-5 2xl:pb-16">
-            <h1
-:class="[
+            <h1 :class="[
               'text-base font-semibold md:text-2xl 2xl:text-lg',
             ]">
               {{ sectionTitle }}
             </h1>
-            <p
-:class="{
-            }" class="text-sm md:text-base+ text-primary mt-3 md:mt-5 2xl:mt-10 split-left__description">Партнерство с
-              LEC (League of Legends European Championship) позволило Kia выйти на самый популярный в мире
-              киберспортивный рынок. Спонсорство «Лиги легенд» - это элемент новой маркетинговой стратегии компании,
-              позволяющий установить более тесные связи с молодой аудиторией.</p>
+            <p :class="{
+            }" class="text-sm md:text-base+ text-primary mt-3 md:mt-5 2xl:mt-10 split-left__description">
+              {{ $t('sponsorships.kia_partnership_with_lec_for_marketing_and_youth_engagement') }}</p>
           </div>
         </template>
         <template #right>
@@ -176,8 +152,7 @@ title="Leagues of Legends Европейский чемпионат" :class-name
       <div
         class="no-scrollbar p-[--padding] mt-6 snap-x space-y-9 overflow-auto 2xl:container md:flex md:gap-x-10 md:space-y-0 2xl:snap-none"
         :style="{ '--padding': `0 ${bounding.x.value}px` }">
-        <NuxtLinkLocale
-v-for="slide in extraLinksCard" :key="slide.title" :to="slide.href"
+        <NuxtLinkLocale v-for="slide in extraLinksCard" :key="slide.title" :to="slide.href"
           class="relative mx-auto flex h-[208px] max-w-[310px] snap-center justify-center md:mx-0 md:w-[310px] md:max-w-none md:shrink-0 2xl:h-[265px] 2xl:w-[400px] 2xl:snap-none">
           <img :src="slide.image" class="h-full" loading="lazy" />
           <div class="absolute bottom-0 z-10 w-full p-4 md:px-7.5 md:py-5">
