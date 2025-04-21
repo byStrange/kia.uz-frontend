@@ -318,7 +318,7 @@ definePageMeta({
                     </div>
                   </div>
 
-                  <AtomLink :to="isMobile ? `tel:${headerService.phoneLine1}` : '/feedback'" :label="$t('common.call')"
+                  <AtomLink :to="isMobile ? `tel:${headerService.phoneLine1}` : '/feedback'" :label="$t('common.request_a_callback')"
                     mode="full" color="primary" />
 
                 </div>
@@ -399,7 +399,7 @@ definePageMeta({
                 </div>
                 <p>{{ $t('spare_parts.official_service_loyalty') }}</p>
               </div>
-              <AtomLink :to="isMobile ? `tel:${headerService.phoneLine1}` : '/feedback'" :label="$t('common.call')"
+              <AtomLink :to="isMobile ? `tel:${headerService.phoneLine1}` : '/feedback'" :label="$t('common.request_a_callback')"
                 mode="full" color="primary" />
             </UIContainer>
           </div>
