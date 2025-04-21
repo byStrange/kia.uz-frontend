@@ -67,15 +67,14 @@ const resolveSlotName = (tab: T, index: number) => {
 <template>
   <div class="relative">
     <div :class="[{ container: !props.isHeaderFull }, headerContainerClass]">
-      <div
-class="flex gap-8 border-b overflow-x-auto pb-[1px]" :class="[{ 'justify-center': props.isHeaderCenter }, props.headerClass]" :style="{
-        '--padding-left': bounding.x.value + 'px',
-        padding: props.isHeaderFull ? '0 var(--padding-left)' : '',
-      }">
+      <div class="flex gap-8 border-b overflow-x-auto pb-[1px]"
+        :class="[{ 'justify-center': props.isHeaderCenter }, props.headerClass]" :style="{
+          '--padding-left': bounding.x.value + 'px',
+          padding: props.isHeaderFull ? '0 var(--padding-left)' : '',
+        }">
         <template v-for="(tab, index) in tabs" :key="tab">
           <slot name="tab-button" :tab="{ tab: tab, isActive: index === activeTab }">
-            <button
-class="relative pb-5 font-semibold text-primary text-opacity-60 transition-colors" :class="{
+            <button class="relative pb-5 font-semibold text-primary text-opacity-60 transition-colors" :class="{
               '!text-opacity-100': index === activeTab,
             }" @click="(event) => {
               const element = event.currentTarget as HTMLElement
@@ -84,8 +83,7 @@ class="relative pb-5 font-semibold text-primary text-opacity-60 transition-color
               changeTab(index)
             }">
               {{ headerKey ? tab[headerKey] : tab }}
-              <span
-:class="{
+              <span :class="{
                 'scale-x-100': index === activeTab,
               }"
                 class="absolute -bottom-[1px] left-0 h-0.5 w-full scale-x-0 bg-primary transition-transform duration-300" />
@@ -97,9 +95,8 @@ class="relative pb-5 font-semibold text-primary text-opacity-60 transition-color
     </div>
     <div v-if="tabs" :class="[{ container: !props.isContentFull }, contentContainerClass]" class="mt-4">
       <slot name="tab" v-bind="{ activeTab, changeTab, tab: tabs[activeTab] }"></slot>
-      <div v-if="cache">
-        <div
-v-for="(tab, index) in tabs" :key="index" :class="{
+      <div v-if="cache" :class="{ 'relative overflow-hidden': cache}">
+        <div v-for="(tab, index) in tabs" :key="index" :class="{
           'transition-all duration-500': animated,
           'invisible absolute -z-10': index !== activeTab,
           'opacity-0 -translate-y-4 ': animated && index !== activeTab,
@@ -110,8 +107,7 @@ v-for="(tab, index) in tabs" :key="index" :class="{
       </div>
       <div v-else>
         <Transition name="slide-fade" mode="out-in">
-          <slot
-:key="activeTab" :name="resolveSlotName(tabs[activeTab], activeTab)"
+          <slot :key="activeTab" :name="resolveSlotName(tabs[activeTab], activeTab)"
             v-bind="{ activeTab, changeTab, tab: tabs[activeTab] }" fallback>
           </slot>
         </Transition>
