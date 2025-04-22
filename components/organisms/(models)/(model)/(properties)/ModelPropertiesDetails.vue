@@ -158,7 +158,7 @@ defineProps<{ configurations: ModelPropertiesPage['configurationWithEngines'] | 
                   <template v-if="item.key == 'gear' || item.key == 'drive'">
                     <div v-for="config in configurations || []" :key="config.name"
                       class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px]">
-                      <div> {{ config.parent_engine }}</div>
+                      <div> {{ config.parent_engine[item.key]?.name }}</div>
                     </div>
                   </template>
                   <template v-else>
