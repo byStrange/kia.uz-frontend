@@ -80,7 +80,7 @@ class="pt-5 pb-12 md:pt-10 md:pb-15 2xl:px-0 2xl:max-w-none 2xl:pl-grid-12-gap 2
 :default-open="true" :classes="{
         contentContainer: 'duration-700',
         contentWrapper: 'duration-700',
-      }" :items="[{ label: 'Стандартное оборудование', content: '' }]">
+      }" :items="[{ label:$t('common.standard_features'), content: '' }]">
 
         <template #expandicon>
           <UITickToBottom class="min-w-5" />
@@ -90,7 +90,7 @@ class="pt-5 pb-12 md:pt-10 md:pb-15 2xl:px-0 2xl:max-w-none 2xl:pl-grid-12-gap 2
           <div
             class="py-3 cursor-pointer flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl border-b-2 border-protection"
             @click="toggle">
-            <span> Стандартное оборудовани </span>
+            <span>{{$t('common.standard_features')}}</span>
             <button @click="toggle">
               <UITickToBottom class="text-primary transition-transform" :class="{ '!rotate-180': expanded }" />
             </button>

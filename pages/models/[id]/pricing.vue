@@ -4,7 +4,8 @@ import type { ModelPricingAndDetailsPage } from '~/server/api/models/[id]/featur
 
 const modelData = useSharedPageData<ModelLandingPage>()
 const route = useRoute()
-const { data: pageData } = await useFetch(`/api/models/${route.params.id}/features`)
+const { locale } = useI18n()
+const { data: pageData } = await useFetch(`/api/models/${route.params.id}/features`, { query: { lang: locale.value }})
 const filteredConfigurations = ref(pageData.value?.filtered_configurations)
 const showOnlyDifferingConfigurations = ref(false);
 

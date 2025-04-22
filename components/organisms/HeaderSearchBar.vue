@@ -70,9 +70,9 @@ onMounted(() => {
       </button>
       <AtomInput
 ref="searchInput" v-model="searchTerm"
-        :input-props="{ class: 'md:pt-6 md:pb-3', onBlur: () => showResultMenu = false, onFocus: () => showResultMenu = true }" label="search"
+        :input-props="{ class: 'md:pt-6 md:pb-3', onBlur: () => showResultMenu = false, onFocus: () => showResultMenu = true }" :label="$t('common.search')"
         theme="light" size="large" input-id="searhInput" class="flex-1 max-w-[616px]" border="full" />
-      <AtomButton label="Search" color="primary" type="submit" class="!text-white" />
+      <AtomButton :label="$t('common.search')" color="primary" type="submit" class="!text-white" />
       <button class="flex items-center justify-center size-12 md:size-15" @click="handleSearchClose">
         <UICloseIcon class="size-5 text-primary" />
       </button>

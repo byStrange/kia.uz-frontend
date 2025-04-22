@@ -88,7 +88,7 @@ watch([selectedEngines, selectedConfigurations, selectedFeatures], () => {
 class="col-span-3 bg-background border-r border-r-protection pl-[--padding-x] pb-15"
     :style="{ '--padding-x': bounding.x.value + 'px' }">
     <div class="py-5">
-      <h3 class="text-base font-semibold">Двигатель</h3>
+      <h3 class="text-base font-semibold">{{$t("spare_parts.engine")}}</h3>
       <ul class="space-y-2.5 mt-4">
         <li v-for="engine in modelData?.model.engines" :key="engine.id" class="flex gap-2">
           <PrimeCheckbox
@@ -99,7 +99,7 @@ v-model="selectedEngines" :input-id="'engineInput' + engine.id"
       </ul>
     </div>
     <div class="py-5">
-      <h3 class="text-base font-semibold">Комплектация</h3>
+      <h3 class="text-base font-semibold">{{$t('common.configuration')}}</h3>
       <ul class="space-y-2.5 mt-4">
         <li v-for="configuration in modelData?.configurations" :key="configuration.id" class="flex gap-2">
           <PrimeCheckbox
@@ -110,7 +110,7 @@ v-model="selectedConfigurations" :input-id="'configurationInput' + configuration
       </ul>
     </div>
     <div class="pt-15 pr-5">
-      <h2 class="text-lg font-semibold">Опции</h2>
+      <h2 class="text-lg font-semibold">{{$t('common.options')}}</h2>
       <div class="mt-5 border-t border-t-protection">
         <PrimeAccordion unstyled class="divide-y divide-protection" value="0">
           <template #collapseicon>

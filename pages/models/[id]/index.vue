@@ -38,11 +38,6 @@ const footerContent = computed(() => {
   return pageData.value?.model.blocks.find((block) => block.type === 'footerContent')
 })
 
-watch(language, async () => {
-  const data = await useFetch(`/api/models/${route.params.id}`, { query: { lang: language.value } })
-  pageData.value = data.data;
-})
-
 definePageMeta({
   layout: 'model-layout',
   lockHover: true,
