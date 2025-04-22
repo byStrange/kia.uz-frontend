@@ -1,10 +1,10 @@
 import { useFetchApi } from "~/composables/useFetchApi"
 import { groupModelsByCategory, emptySeo } from "~/utils/serverUtils"
+import { modelLessData } from '~/types/server'
 
 export default defineEventHandler(async (event) => {
   const locale = getQuery(event).lang as string
-  const models = await useFetchApi<ModelWithLessData[]>('/models?fields=name,id,category,main_image,starting_price,slug,old_price,is_electric', locale)
-
+  const models = await useFetchApi<ModelWithLessData[]>(`/models?fields=${modelLessData.join(',')}`, locale)
 
   let seo: SEO;
 

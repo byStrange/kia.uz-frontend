@@ -16,7 +16,7 @@ defineEmits<{
         {{ group.categoryName }}
       </h1>
       <div class="flex-wrap mt-4 md:mt-8 md:flex md:gap-9 2xl:mt-10">
-        <div v-for="model in group.items.sort((a, b) => b.order - a.order)" :key="model.id"
+        <div v-for="model in group.items.sort((a, b) => a.order - b.order)" :key="model.id"
           class="max-w-md md:min-w-[310px] md:max-w-[310px]">
           <button class="relative" @click="$emit('choose', model.slug, model.id)">
             <img :src="safe(model.main_image)" class="object-cover w-full" />

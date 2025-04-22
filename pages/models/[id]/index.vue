@@ -72,6 +72,14 @@ onMounted(() => {
     pageAnimations.default()
   })
 })
+
+useSeoMeta({
+  title: () => pageData.value?.model.seo.title || '',
+  ogTitle: () => pageData.value?.model.seo.title || '',
+  description: () => pageData.value?.model.seo.description || '',
+  ogDescription: () => pageData.value?.model.seo.description || '',
+  keywords: () => pageData.value?.model.seo.keywords || '',
+})
 </script>
 <template>
   <div>
