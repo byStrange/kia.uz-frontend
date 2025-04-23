@@ -30,9 +30,8 @@ defineEmits<{
               {{ $t('prefixes.from', { price: formatPrice(model.starting_price) }) }}
               <UIInfoIcon class="text-disabled" />
             </p>
-            <p v-if="model.old_price" class="text-caption text-sm mt-0.5">
-              Выгода до
-              {{ formatPrice(model.old_price) }}
+            <p v-if="model.most_benefit" class="text-caption text-sm mt-0.5">
+              {{ $t('models.benefit_up_to', { price: formatPrice(model.most_benefit)}) }}
             </p>
           </div>
           <button v-if="showPriceButton" class="flex items-center mt-1 link-hover link-hover-dark"

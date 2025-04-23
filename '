@@ -54,12 +54,15 @@ defineProps<{ standardFeatures: ModelPricingAndDetailsPage['standard_features'],
                 {{ configuration.engine }}
               </p>
             </div>
-            <h2 class="md:mt-4 mt-3 text-base font-semibold text-primary">
-              <p v-if="configuration.compare_price && configuration.compare_price != configuration.price"
-                class="line-through decoration-2 decoration-kia-live-red">{{ formatPrice(configuration.compare_price) }}</p>
-              <p>{{ formatPrice(configuration.price, $t('prefixes.sum')) }}</p>
+            <h2 class="space-x-1 md:mt-4 mt-3 text-base font-semibold text-primary">
+              <span>{{ formatPrice(configuration.price, $t('prefixes.sum')) }}</span>
             </h2>
-
+            <p class="mt-1 text-base font-semibold text-primary">
+              <span v-if="configuration.compare_price && configuration.compare_price != configuration.price"
+                class="line-through decoration-2 decoration-kia-live-red">{{
+                  formatPrice(configuration.compare_price) }}</span>
+              {{ $t("prefixes.from", { price: formatPrice(configuration.price, $t('prefixes.sum')) }) }}
+            </p>
             <AtomButton v-if="showConfigurationSelectButton" label="Выбрать" color="secondary" size="xs"
               class="w-full hidden md:flex md:mt-4 2xl:mt-5" @click="$emit('chooseConfiguration', configuration.id)" />
           </div>

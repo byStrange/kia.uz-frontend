@@ -92,6 +92,7 @@ export interface Model extends CommonMediaModel {
   colors: ModelColor[]
   engines: ModelEngine[]
   blocks: ModelBlock[]
+  most_benefit: number
   main_image: string
   order: number
   side_image: string
