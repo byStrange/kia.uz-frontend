@@ -6,7 +6,7 @@ export const feedbackSchema = z.object({
     .optional()
     .refine(
       (val) => !val || val.length > 1,
-      'Пожалуйста, введите действительные данные',
+      'common_form.enter_valid_data',
     ),
 
   surname: z
@@ -14,7 +14,7 @@ export const feedbackSchema = z.object({
     .optional()
     .refine(
       (val) => !val || val.length > 1,
-      'Пожалуйста, введите действительные данные',
+      'common_form.enter_valid_data',
     ),
 
   phone: z
@@ -22,7 +22,7 @@ export const feedbackSchema = z.object({
     .optional()
     .refine(
       (value) => !value || value.startsWith('+'),
-      'Пожалуйста, напишите его в международном формате (например, с префиксом +998)',
+      'common_form.enter_international_phone_number',
     )
     .refine(
       (value) =>
@@ -30,36 +30,36 @@ export const feedbackSchema = z.object({
         value
           .replaceAll(' ', '')
           .match(/^[+]998([3785]{2}|(20)|(9[013-57-9]))\d{7}$/),
-      'Необходимо ввести правильный номер телефона',
+      'common_form.enter_valid_phone_number',
     ),
   email: z
     .string()
-    .min(1, 'Поле обязательно для заполнения')
-    .email({ message: 'Необходимо ввести правильный e-mail' }),
+    .min(1, 'common_form.this_field_is_required')
+    .email({ message: 'common_form.enter_valid_email' }),
 
   city: z
     .string()
-    .min(1, 'Поле обязательно для заполнения'),
+    .min(1, 'common_form.this_field_is_required'),
 
   comment: z
     .string()
-    .min(1, 'Поле обязательно для заполнения')
-    .min(25, 'Требуется минимум 25 символов'),
+    .min(1, 'common_form.this_field_is_required')
+    .min(25, 'common_form.minimum_chars_requirement'),
 
-  requestType: z.string().min(1, 'Поле обязательно для заполнения'),
+  requestType: z.string().min(1, 'common_form.this_field_is_required'),
 
   agree: z.literal(true, {
-    errorMap: () => ({ message: 'Необходимо подтвердить согласие' }),
+    errorMap: () => ({ message: 'common_form.must_agree_to_consent_privacy' }),
   }),
 })
 
 export const serviceForm = z.object({
-  region: z.string().min(1, 'Please choose a region'),
+  region: z.string().min(1, 'common_form.choose_region'),
   name: z.string().optional(),
   phone: z.string()
     .refine(
       (value) => value.startsWith('+'),
-      'Пожалуйста, напишите его в международном формате (например, с префиксом +998)',
+      'common_form.enter_international_phone_number',
     )
     .refine(
       (value) =>
@@ -67,7 +67,7 @@ export const serviceForm = z.object({
         value
           .replaceAll(' ', '')
           .match(/^[+]998([3785]{2}|(20)|(9[013-57-9]))\d{7}$/),
-      'Необходимо ввести правильный номер телефона',
+      'common_form.enter_valid_phone_number',
     ),
 
 })
@@ -79,15 +79,15 @@ export const testDriveSchema = z.object({
     .optional()
     .refine(
       (val) => !val || val.length > 1,
-      'Пожалуйста, введите действительные данные',
+      'common_form.enter_valid_data',
     ),
 
   phone: z
     .string()
-    .refine(value => value, 'Поле обязательно для заполнения')
+    .refine(value => value, 'common_form.this_field_is_required')
     .refine(
       (value) => !value || value.startsWith('+'),
-      'Пожалуйста, напишите его в международном формате (например, с префиксом +998)',
+      'common_form.enter_international_phone_number',
     )
     .refine(
       (value) =>
@@ -95,19 +95,19 @@ export const testDriveSchema = z.object({
         value
           .replaceAll(' ', '')
           .match(/^[+]998([3785]{2}|(20)|(9[013-57-9]))\d{7}$/),
-      'Необходимо ввести правильный номер телефона',
+      'common_form.enter_valid_phone_number',
     ),
 
   region: z
     .string()
-    .min(1, 'Поле обязательно для заполнения'),
+    .min(1, 'common_form.this_field_is_required'),
 
   comment: z
     .string()
-    .min(1, 'Поле обязательно для заполнения')
-    .min(25, 'Требуется минимум 25 символов'),
+    .min(1, 'common_form.this_field_is_required')
+    .min(25, 'common_form.minimum_chars_requirement'),
 
   agree: z.literal(true, {
-    errorMap: () => ({ message: 'Необходимо подтвердить согласие' }),
+    errorMap: () => ({ message: 'common_form.must_agree_to_consent_privacy' }),
   }),
 })

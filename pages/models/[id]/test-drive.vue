@@ -21,8 +21,6 @@ const commonAtomInputProps: Omit<
   size: 'large',
 }
 
-const { data: privacyAndTerms } = useFetch('/api/terms')
-
 const isPrivacyDialogVisible = ref(false)
 const showSuccessModal = ref(false)
 
@@ -70,10 +68,9 @@ definePageMeta({
       <template #closeicon>
         <UICloseIcon class="text-primary md:size-7.5" />
       </template>
-      <p>{{$t('common_form.test_drive_form_sent_successfully')}}</p>
+      <p>{{ $t('common_form.test_drive_form_sent_successfully') }}</p>
     </Dialog>
-    <Dialog
-v-model:visible="isPrivacyDialogVisible" modal :pt="{
+    <Dialog v-model:visible="isPrivacyDialogVisible" modal :pt="{
       root: '!rounded-none 2xl:h-full 2xl:!max-h-[758px]',
       mask: 'px-3',
       header:
@@ -95,8 +92,7 @@ v-model:visible="isPrivacyDialogVisible" modal :pt="{
         <div class="space-y-5 text-primary">
           <p class="text-base">{{ $t('common.personal_data_consent_text') }}</p>
         </div>
-        <AtomButton
-:label="$t('common.got_it')" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <AtomButton :label="$t('common.got_it')" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>
@@ -107,7 +103,8 @@ v-model:visible="isPrivacyDialogVisible" modal :pt="{
     </UIDesktopOnly>
 
     <h1
-      class="text-primary text-2xl font-semibold py-7.5 border-b border-protection md:text-4xl container 2xl:text-7xl 2xl:py-10">{{$t('common.sign_up_for_test_drive')}}</h1>
+      class="text-primary text-2xl font-semibold py-7.5 border-b border-protection md:text-4xl container 2xl:text-7xl 2xl:py-10">
+      {{ $t('common.sign_up_for_test_drive') }}</h1>
 
     <MoleculeSection>
       <UIContainer class="2xl:grid 2xl:grid-cols-12 2xl:gap-grid-12-gap">
@@ -133,30 +130,30 @@ v-model:visible="isPrivacyDialogVisible" modal :pt="{
             <Form :key="showSuccessModal" :initial-values :resolver @submit="onSubmit">
               <div class="space-y-7.5">
                 <FormField v-slot="$field" name="name">
-                  <AtomInput
-:input-id="$field.props?.name" :label="$t('common_form.name')"
+                  <AtomInput :input-id="$field.props?.name" :label="$t('common_form.name')"
                     v-bind="commonAtomInputProps" />
+                  <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                    {{ $t($field.error?.message) }}
+                  </p>
                 </FormField>
                 <FormField v-slot="$field" name="region">
-                  <AtomDropdownInput
-v-model:available-options="regionOptions" input-id="region" theme="light"
+                  <AtomDropdownInput v-model:available-options="regionOptions" input-id="region" theme="light"
                     :placeholder="$t('common_form.city')" :float-label="true" />
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-                    {{ $field?.error?.message }}
+                    {{ $t($field.error?.message) }}
                   </p>
                 </FormField>
                 <FormField v-slot="$field" name="phone">
                   <AtomInput v-bind="commonAtomInputProps" input-id="phone" :label="$t('common_form.phone')" />
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-                    {{ $field.error?.message }}
+                    {{ $t($field.error?.message) }}
                   </p>
                 </FormField>
                 <FormField v-slot="$field" name="comment">
-                  <Textarea
-unstyled input-id="comment" :placeholder="$t('common_form.your_comment_or_question')"
+                  <Textarea unstyled input-id="comment" :placeholder="$t('common_form.your_comment_or_question')"
                     class="border focus:outline-none resize-none border-disabled hover:border-protection focus:border-primary w-full py-4.5 px-4 text-sm md:text-base+ placeholder:text-caption" />
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-                    {{ $field.error.message }}
+                    {{ $t($field.error?.message) }}
                   </p>
                 </FormField>
                 <FormField v-slot="$field" name="agree">
@@ -173,7 +170,7 @@ unstyled input-id="comment" :placeholder="$t('common_form.your_comment_or_questi
                     </label>
                   </div>
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-                    {{ $field.error?.message }}
+                    {{ $t($field.error?.message) }}
                   </p>
                 </FormField>
                 <AtomButton :label="$t('common_form.submit_application')" type="submit" color="primary" mode="full" />

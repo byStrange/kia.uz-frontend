@@ -77,7 +77,7 @@ const onSubmit = (event: FormSubmitEvent) => {
         <div class="space-y-5 text-primary">
           <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
         </div>
-        <AtomButton :label="$t('common.got_it')" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <AtomButton :label="$t('common.got_it')" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>
@@ -107,21 +107,21 @@ const onSubmit = (event: FormSubmitEvent) => {
           <FormField v-slot="$field" name="name">
             <AtomInput input-id="name" :label="$t('common_form.name')" v-bind="commonAtomInputProps" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-              {{ $field.error?.message }}
+              {{ $t($field.error?.message) }}
             </p>
           </FormField>
 
           <FormField v-slot="$field" name="surname">
             <AtomInput input-id="surname" :label="$t('common_form.surname')" v-bind="commonAtomInputProps" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-              {{ $field.error?.message }}
+              {{ $t($field.error?.message) }}
             </p>
           </FormField>
 
           <FormField v-slot="$field" name="phone">
             <AtomInput input-id="phone" :label="$t('common_form.phone')" v-bind="commonAtomInputProps" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-              {{ $field.error?.message }}
+              {{ $t($field.error?.message) }}
             </p>
           </FormField>
 
@@ -129,7 +129,7 @@ const onSubmit = (event: FormSubmitEvent) => {
             <AtomInput input-id="email" :label="$t('common_form.email')" v-bind="commonAtomInputProps"
               :input-props="{ invalid: $field.invalid }" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-              {{ $field.error?.message }}
+              {{ $t($field.error?.message) }}
             </p>
           </FormField>
 
@@ -137,7 +137,7 @@ const onSubmit = (event: FormSubmitEvent) => {
             <AtomInput input-id="city" :label="$t('common_form.city')" v-bind="commonAtomInputProps"
               :input-props="{ invalid: $field.invalid }" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-              {{ $field.error?.message }}
+              {{ $t($field.error?.message) }}
             </p>
           </FormField>
         </div>
@@ -146,7 +146,7 @@ const onSubmit = (event: FormSubmitEvent) => {
           <Textarea unstyled input-id="comment" :placeholder="$t('feedback.comment')"
             class="border focus:outline-none resize-none border-disabled hover:border-protection focus:border-primary w-full py-4.5 px-4 text-base placeholder:text-caption" />
           <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-            {{ $field.error.message }}
+            {{ $t($field.error.message) }}
           </p>
         </FormField>
 
@@ -156,7 +156,7 @@ const onSubmit = (event: FormSubmitEvent) => {
             <AtomDropdownInput v-model:available-options="requestTypes"
               :placeholder="$t('feedback.select_question_type')" :float-label="true" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-              {{ $field.error?.message }}
+              {{ $t($field.error?.message) }}
             </p>
           </FormField>
         </div>
@@ -175,7 +175,7 @@ const onSubmit = (event: FormSubmitEvent) => {
               </label>
             </div>
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-              {{ $field.error?.message }}
+              {{ $t($field.error?.message) }}
             </p>
           </FormField>
           <AtomButton type="submit" :label="$t('common_form.submit')" color="primary" mode="full"

@@ -129,7 +129,7 @@ input-id="vin_number" :label="$t('service.vin_number')" v-bind="commonAtomInputP
 v-model:available-options="regionOptions" input-id="region" theme="light"
                 :placeholder="$t('common_form.city')" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-                {{ $field.error?.message }}
+                {{ $t($field.error?.message) }}
               </p>
             </FormField>
           </div>
@@ -144,7 +144,7 @@ v-model:available-options="regionOptions" input-id="region" theme="light"
             <FormField v-slot="$field" name="phone">
               <AtomInput input-id="phone" v-bind="commonAtomInputProps" :label="$t('common_form.phone')" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-                {{ $field.error?.message }}
+                {{ $t($field.error?.message) }}
               </p>
             </FormField>
           </div>
