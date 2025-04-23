@@ -70,9 +70,10 @@ definePageMeta({
       <template #closeicon>
         <UICloseIcon class="text-primary md:size-7.5" />
       </template>
-      <p>Thanks! Your request successfully sent. We will be in touch with you as soon as possible</p>
+      <p>{{$t('common_form.test_drive_form_sent_successfully')}}</p>
     </Dialog>
-    <Dialog v-model:visible="isPrivacyDialogVisible" modal :pt="{
+    <Dialog
+v-model:visible="isPrivacyDialogVisible" modal :pt="{
       root: '!rounded-none 2xl:h-full 2xl:!max-h-[758px]',
       mask: 'px-3',
       header:
@@ -87,14 +88,15 @@ definePageMeta({
       </template>
       <template #header>
         <h1 class="text-2xl text-primary font-semibold">
-          {{ privacyAndTerms?.terms.title }}
+          {{ $t('common.personal_data_consent_modal_title') }}
         </h1>
       </template>
       <div class="relative">
         <div class="space-y-5 text-primary">
-          <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
+          <p class="text-base">{{ $t('common.personal_data_consent_text') }}</p>
         </div>
-        <AtomButton :label="$t('common.got_it')" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <AtomButton
+:label="$t('common.got_it')" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>
@@ -131,11 +133,13 @@ definePageMeta({
             <Form :key="showSuccessModal" :initial-values :resolver @submit="onSubmit">
               <div class="space-y-7.5">
                 <FormField v-slot="$field" name="name">
-                  <AtomInput :input-id="$field.props?.name" :label="$t('common_form.name')"
+                  <AtomInput
+:input-id="$field.props?.name" :label="$t('common_form.name')"
                     v-bind="commonAtomInputProps" />
                 </FormField>
                 <FormField v-slot="$field" name="region">
-                  <AtomDropdownInput v-model:available-options="regionOptions" input-id="region" theme="light"
+                  <AtomDropdownInput
+v-model:available-options="regionOptions" input-id="region" theme="light"
                     :placeholder="$t('common_form.city')" :float-label="true" />
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                     {{ $field?.error?.message }}
@@ -148,7 +152,8 @@ definePageMeta({
                   </p>
                 </FormField>
                 <FormField v-slot="$field" name="comment">
-                  <Textarea unstyled input-id="comment" :placeholder="$t('common_form.your_comment_or_question')"
+                  <Textarea
+unstyled input-id="comment" :placeholder="$t('common_form.your_comment_or_question')"
                     class="border focus:outline-none resize-none border-disabled hover:border-protection focus:border-primary w-full py-4.5 px-4 text-sm md:text-base+ placeholder:text-caption" />
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                     {{ $field.error.message }}
