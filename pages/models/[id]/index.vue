@@ -29,10 +29,9 @@ const { locale: language } = useI18n()
 const pageData = useSharedPageData<ModelLandingPage>()
 
 if (!pageData.value) {
-  const data = await useFetch(`/api/models/${route.params.id}`, { query: { lang: language.value } })
-  pageData.value = data.data;
+  const { data } = await useFetch(`/api/models/${route.params.id}`, { query: { lang: language.value } })
+  pageData.value = data.value as ModelLandingPage;
 }
-
 
 const footerContent = computed(() => {
   return pageData.value?.model.blocks.find((block) => block.type === 'footerContent')
@@ -49,12 +48,12 @@ function url(s: string): string {
 
 const pageAnimations = {
   default() {
-    gsap.from('.model-id_variants_action-buttons button', {
+    gsap.from('.model-id_variants_action-buttons > *', {
       opacity: 0,
       xPercent: -30,
       stagger: 0.02,
       scrollTrigger: {
-        trigger: '#shit',
+        trigger: '#configurations',
         start: 'center center',
       }
     })
@@ -134,7 +133,7 @@ useSeoMeta({
 
     <!-- <OrganismModelThreeSixty :model-name="pageData?.model.name" :colors="pageData?.model.colors || []" /> -->
 
-    <MoleculeSection id="shit" :section-title="$t('common.model_variants', { model: pageData?.model.name })"
+    <MoleculeSection id="configurations" :section-title="$t('common.model_variants', { model: pageData?.model.name })"
       :subtitle="$t('common.configurations')" class="bg-background model-id_variants border">
       <template #after-title="{ align }">
         <p class="text-[15px] text-primary" :class="align">
@@ -155,8 +154,9 @@ useSeoMeta({
                   {{ item.name }}
                 </h1>
                 <p class="mt-1 text-base font-semibold text-white">
-                  <span v-if="item.compare_price && item.compare_price != item.price" class="line-through decoration-2 decoration-kia-live-red">{{
-                    formatPrice(item.compare_price) }}</span>
+                  <span v-if="item.compare_price && item.compare_price != item.price"
+                    class="line-through decoration-2 decoration-kia-live-red">{{
+                      formatPrice(item.compare_price) }}</span>
                   {{ $t("prefixes.from", { price: formatPrice(item.price, $t('prefixes.sum')) }) }}
                 </p>
               </div>
@@ -212,7 +212,8 @@ useSeoMeta({
           <div class="md:w-[310px] md:!px-0 h-full cursor-pointer" @click="handleReviewCardClik(item)">
             <div class="mx-auto h-full max-w-[310px] bg-background">
               <div class="relative flex h-[190px] w-full items-center justify-center bg-gray-200">
-                <img loading="lazy" :src="item.default_image" class="h-full w-full object-cover" />
+                <MoleculeImage :base-url="item.desktop_image ? item.desktop_image : item.default_image"
+                  class="h-full w-full object-cover" />
                 <UIPlayIcon2 v-if="item.video_url" class="absolute" />
               </div>
 
