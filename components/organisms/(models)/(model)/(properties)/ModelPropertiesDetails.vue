@@ -30,58 +30,58 @@ interface AccordionItem {
 
 const items = ref<AccordionItem[]>([
   {
-    label: 'Двигатель и трансмиссия', content: [
-      { label: 'Двигатель', key: 'name' },
-      { label: 'Мощность, л.с.', key: 'power' },
-      { label: 'Крутящий момент, Н·м', key: 'torque' },
-      { label: 'Тип топлива', key: 'fuel_type' },
-      { label: 'Рабочий объем, л', key: 'working_volume' },
-      { label: 'Рабочий объем, см3', key: 'working_volume_cube' },
-      { label: 'Экологический класс', key: 'eco_class' },
-      { label: 'Коробка передач', key: 'gear' },
-      { label: 'Привод, л', key: 'drive' },
-      { label: 'Время разгона 0-100 км/ч, с', key: 'acceleration_time' },
-      { label: 'Расход топлива комбинированный, л/100 км', key: 'fuel_consumption' }
+    label: 'model_properties.engine_and_transmission', content: [
+      { label: 'spare_parts.engine', key: 'name' },
+      { label: 'model_properties.engine_power_hp', key: 'power' },
+      { label: 'model_properties.torque_nm', key: 'torque' },
+      { label: 'model_properties.fuel_type', key: 'fuel_type' },
+      { label: 'model_properties.working_volume', key: 'working_volume' },
+      { label: 'model_properties.working_volume_cube', key: 'working_volume_cube' },
+      { label: 'model_properties.eco_class', key: 'eco_class' },
+      { label: 'model_properties.gear', key: 'gear' },
+      { label: 'model_properties.drive', key: 'drive' },
+      { label: 'model_properties.acceleration_time', key: 'acceleration_time' },
+      { label: 'model_properties.fuel_consumption', key: 'fuel_consumption' }
     ]
   },
   {
-    label: 'Выбросы CO2',
+    label: 'model_properties.co2_emissions',
     content: [
       {
-        label: 'Город, г/км',
+        label: 'model_properties.city_fuel_gkm',
         key: 'city_fuel_gkm'
       },
       {
-        label: 'Трасса, г/км',
+        label: 'model_properties.highway_fuel_gkm',
         key: 'highway_fuel_gkm'
       },
       {
-        label: 'В комбинированном цикле, г/км',
+        label: 'model_properties.combined_cycling_gkm',
         key: 'combined_cycling_gkm'
       }
     ]
   },
   {
-    label: 'Размеры',
+    label: 'sizes',
     content: [
       {
-        label: 'Тип кузова',
+        label: 'model_properties.body_type',
         key: 'body_type'
       },
       {
-        label: 'Габариты (длина/ширина/высота), мм',
+        label: 'model_properties.dimensions',
         key: 'dimensions'
       },
       {
-        label: 'Колесная база, мм',
+        label: 'model_properties.wheelbase',
         key: 'wheelbase'
       },
       {
-        label: 'Дорожный просвет, мм',
+        label: 'model_properties.ground_clearance',
         key: 'ground_clearance'
       },
       {
-        label: 'Объём багажника (VDA), л',
+        label: 'model_properties.trunk_volume',
         key: 'trunk_volume'
       }
     ]
@@ -93,7 +93,8 @@ defineProps<{ configurations: ModelPropertiesPage['configurationWithEngines'] | 
 <template>
   <div class="col-span-9">
     <div class="bg-background flex w-full relative 2xl:bg-white">
-      <ElementSlideView ref="confSwiper" class="w-full" :paginator="false" :data="configurations || []"
+      <ElementSlideView
+ref="confSwiper" class="w-full" :paginator="false" :data="configurations || []"
         navigation-mode="oneside-left" navigation-type="sm" :breakpoints-enabled="false" :breakpoints="{
           768: { slidesOffsetBefore: 37, slidesOffsetAfter: 37 },
           1440: { slidesOFfsetBefore: 20, slidesOffsetAfter: 20 },
@@ -122,11 +123,13 @@ defineProps<{ configurations: ModelPropertiesPage['configurationWithEngines'] | 
       </ElementSlideView>
     </div>
 
-    <UIContainer class="pt-5 pb-12 md:pt-10 md:pb-15 2xl:px-0 2xl:max-w-none 2xl:pl-grid-12-gap 2xl:pr-[--padding-x]"
+    <UIContainer
+class="pt-5 pb-12 md:pt-10 md:pb-15 2xl:px-0 2xl:max-w-none 2xl:pl-grid-12-gap 2xl:pr-[--padding-x]"
       :style="{
         '--padding-x': bounding.x.value + 'px',
       }">
-      <MoleculeAccordion :default-open="true" :classes="{
+      <MoleculeAccordion
+:default-open="true" :classes="{
         contentContainer: 'duration-700',
         contentWrapper: 'duration-700',
       }" :items="items">
@@ -139,7 +142,7 @@ defineProps<{ configurations: ModelPropertiesPage['configurationWithEngines'] | 
           <div
             class="py-3 cursor-pointer flex justify-between w-full items-center text-base font-semibold text-primary text-left md:py-4 md:text-lg 2xl:text-2xl border-b-2 border-protection"
             @click="toggle">
-            <span>{{ item.label }}</span>
+            <span>{{ $t(item.label) }}</span>
             <button @click="toggle">
               <UITickToBottom class="text-primary transition-transform" :class="{ '!rotate-180': expanded }" />
             </button>
@@ -149,20 +152,23 @@ defineProps<{ configurations: ModelPropertiesPage['configurationWithEngines'] | 
         <template #content="{ content }">
           <div class="divide-y divide-protection text-primary">
             <div v-for="item in content" :key="item.label" class="py-4">
-              <p class="text-sm md:text-base 2xl:text-xl font-semibold">{{ item.label }}</p>
+              <p class="text-sm md:text-base 2xl:text-xl font-semibold">{{ $t(item.label) }}</p>
               <div class="mt-3.5 overflow-hidden">
-                <div class="flex translate-x-[--translate-x] transition-transform" :style="{
+                <div
+class="flex translate-x-[--translate-x] transition-transform" :style="{
                   '--translate-x':
                     (confSwiperClientX ? confSwiperClientX - 15 : 0) + 'px',
                 }">
                   <template v-if="item.key == 'gear' || item.key == 'drive'">
-                    <div v-for="config in configurations || []" :key="config.name"
+                    <div
+v-for="config in configurations || []" :key="config.name"
                       class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px]">
                       <div> {{ config.parent_engine[item.key]?.name }}</div>
                     </div>
                   </template>
                   <template v-else>
-                    <div v-for="config in configurations || []" :key="config.name"
+                    <div
+v-for="config in configurations || []" :key="config.name"
                       class="w-[172px] md:w-[232px] shrink-0 2xl:w-[220px]">
                       <div>{{ config.parent_engine[item.key]! }}</div>
                     </div>
