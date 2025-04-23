@@ -41,6 +41,7 @@ export interface SpecialOfferCategory extends CommonModel {
 
 export interface SpecialOffer extends CommonMediaModel {
   seo: SEO['seo']
+  is_pinned: boolean
   title: string
   category: SpecialOfferCategory
   content: HtmlText

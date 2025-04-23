@@ -161,6 +161,18 @@ const closeExtendedMenu = () => {
   isLocked.value = false
 }
 
+const insertSpecialOffer = (offer: SpecialOffer) => {
+  for (let i = 0; i < headerItems.value.length; i++) {
+    const item = headerItems.value[i]
+    if (item.to === '#') {
+      console.log('adding')
+      item.meta = { sideImage: offer.desktop_image || '', sideText: offer.title }
+
+      console.log('added', item.meta)
+    }
+  }
+}
+
 /**
  * Locks the header
  *
@@ -187,5 +199,6 @@ export const useHeaderService = () => {
     headerService,
     toggleMenu,
     closeExtendedMenu,
+    insertSpecialOffer
   }
 }
