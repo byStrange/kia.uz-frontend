@@ -57,7 +57,7 @@ definePageMeta({
               <div
                 class="space-y-7.5 pt-10 pb-11 md:grid md:grid-cols-2 md:space-y-0 md:gap-7.5 md:place-content-center 2xl:grid-cols-4">
                 <NuxtLinkLocale v-for="item in filteredData(tab.items)" :key="item.title"
-                  :to="`/special-offers/${item.slug}`">
+                  :to="`/special-offers/${item.slug}`" class="inline-block">
                   <div class="w-full max-w-[420px] mx-auto">
                     <div class="mx-auto h-full bg-background">
                       <img :src="item.desktop_image" class="h-[190px] w-full object-cover" loading="lazy" />

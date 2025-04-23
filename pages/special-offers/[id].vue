@@ -17,13 +17,17 @@ const { data: pageData } = await useFetch(`/api/special-offers/${route.params.id
 
 
 useSeoMeta({
-  title: () => pageData.value?.seo.seo.title || '',
-  ogTitle: () => pageData.value?.seo.seo.title || '',
-  description: () => pageData.value?.seo.seo.description || '',
-  ogDescription: () => pageData.value?.seo.seo.description || '',
-  keywords: () => pageData.value?.seo.seo.keywords || '',
+  title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
+  description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
+  keywords: () => pageData.value?.seo.keywords || '',
 })
 
+
+onMounted(() => {
+  console.log(pageData.value?.seo)
+})
 const { updateBreadcrumbTitle } = useBreadcrumbs(route, router, locale.value)
 
 updateBreadcrumbTitle(route.fullPath, pageData.value?.title || '')

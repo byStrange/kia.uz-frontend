@@ -41,7 +41,7 @@
     :to="item.to"
     :class="footerMenuItemCommonClasses + ' md:hidden'"
   >
-    {{ item.label }}
+    {{ $t(item.label) }}
   </NuxtLinkLocale>
 </template>
 

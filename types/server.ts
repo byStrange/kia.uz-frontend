@@ -40,7 +40,7 @@ export interface SpecialOfferCategory extends CommonModel {
 }
 
 export interface SpecialOffer extends CommonMediaModel {
-  seo: SEO
+  seo: SEO['seo']
   title: string
   category: SpecialOfferCategory
   content: HtmlText
