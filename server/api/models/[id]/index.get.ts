@@ -123,9 +123,11 @@ export interface ModelLandingPage {
 export default defineEventHandler(async (event) => {
 
   const locale = getQuery(event).lang as string,
-    param = getRouterParam(event, 'id'),
+    param = getRouterParam(event, 'id');
 
-    model = await useFetchApi<Model>('/models/' + param, locale),
+  if (!param) return {}
+
+  const model = await useFetchApi<Model>('/models/' + param, locale),
 
     referencedSpecialOffers = await useFetchApi<SpecialOffer[]>('/special-offers/?referenced_models=' + model.id, locale),
 
