@@ -11,7 +11,7 @@ export type HeaderItem = {
   label: string
   to: RouteLocationRaw
   children?: HeaderItem[]
-  meta?: { sideImage: string; sideText: string }
+  meta?: { sideImage: string; sideText: string, link: string }
 }
 
 const headerItems = ref<HeaderItem[]>([
@@ -165,10 +165,7 @@ const insertSpecialOffer = (offer: SpecialOffer) => {
   for (let i = 0; i < headerItems.value.length; i++) {
     const item = headerItems.value[i]
     if (item.to === '#') {
-      console.log('adding')
-      item.meta = { sideImage: offer.desktop_image || '', sideText: offer.title }
-
-      console.log('added', item.meta)
+      item.meta = { sideImage: offer.desktop_image || '', sideText: offer.title, link: `/special-offers/${offer.slug}` }
     }
   }
 }

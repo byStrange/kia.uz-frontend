@@ -25,17 +25,19 @@ const { headerService } = useHeaderService()
         </div>
 
         <div class="2xl:flex 2xl:w-1/2 2xl:gap-10">
-          <div v-if="headerService.extendedMenu.meta" :style="{
-            backgroundImage: `url(${headerService.extendedMenu.meta.sideImage})`,
-          }" class="relative flex h-[228px] w-full items-end bg-cover p-7.5 md:w-[290px]">
-            <div class="absolute bottom-0 left-0 z-0 h-[159px] w-full" :style="{
-              background:
-                'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.75) 100%)',
-            }" />
-            <p class="relative z-10 text-white">
-              {{ headerService.extendedMenu.meta.sideText }}
-            </p>
-          </div>
+          <NuxtLinkLocale v-if="headerService.extendedMenu.meta" :to="headerService.extendedMenu.meta.link">
+            <div :style="{
+              backgroundImage: `url(${headerService.extendedMenu.meta.sideImage})`,
+            }" class="relative flex h-[228px] w-full items-end bg-cover p-7.5 md:w-[290px]">
+              <div class="absolute bottom-0 left-0 z-0 h-[159px] w-full" :style="{
+                background:
+                  'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.75) 100%)',
+              }" />
+              <p class="relative z-10 text-white">
+                {{ headerService.extendedMenu.meta.sideText }}
+              </p>
+            </div>
+          </NuxtLinkLocale>
           <slot name="menuFooter" root-class="hidden 2xl:block !border-none !py-0" />
         </div>
       </div>
