@@ -269,7 +269,7 @@ definePageMeta({
     </div>
 
     <div class="pb-15 relative">
-      <MoleculeTabsContainer :tabs="[$t('spare_parts.original_parts'), $t('spare_parts.parts_pl2')]"
+      <MoleculeTabsContainer :tabs="[$t('spare_parts.original_parts')]"
         :is-header-center="false" header-container-class="w-fit mx-0" :is-content-full="true"
         header-class="overflow-x-auto no-scrollbar text-nowrap !mt-7.5 2xl:!px-0 2xl:ml-[--padding-left]"
         class="pt-5 relative z-10" :is-header-full="true">
