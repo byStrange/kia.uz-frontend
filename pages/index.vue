@@ -73,7 +73,7 @@ const extraLinksCard = [
           <NuxtLinkLocale v-for="slide in extraLinksCard" :key="slide.title" :to="slide.href">
             <div
               class="relative mx-auto flex h-[208px] max-w-[310px] snap-center justify-center md:mx-0 md:w-[310px] md:max-w-none md:shrink-0 2xl:h-[265px] 2xl:w-[400px] 2xl:snap-none">
-              <img loading="lazy" :src="slide.image" class="h-full" loading="lazy" />
+              <img :src="slide.image" class="h-full" loading="lazy" />
               <div class="absolute bottom-0 z-10 w-full p-4 md:px-7.5 md:py-5">
                 <p class="text-base font-semibold text-white md:text-2xl">
                   {{ $t(`common.${slide.title}`) }}
