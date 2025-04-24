@@ -51,7 +51,7 @@ defineProps<{ news: GroupedNews }>()
                 class="h-[408px] p-[--padding] md:w-[310px] md:px-0">
                 <div class="mx-auto h-full max-w-[310px] bg-background">
                   <div class="relative flex h-[222px] w-full items-center justify-center bg-gray-200">
-                    <MoleculeImage :base-url="item.desktop_image ? item.desktop_image : item.default_image"
+                    <MoleculeImage loading="lazy" :base-url="item.desktop_image ? item.desktop_image : item.default_image"
                       class="h-full w-full object-cover" />
                     <UIPlayIcon2 v-if="item.video_url" class="absolute" />
                   </div>

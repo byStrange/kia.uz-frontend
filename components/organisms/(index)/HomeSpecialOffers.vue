@@ -41,7 +41,7 @@ defineProps<{ offers: GroupedSpecialOfferWithoutContent }>()
 :style="{ '--padding': `0 ${bounding.x.value}px` }"
                 class="h-[408px] p-[--padding] md:w-[310px] md:px-0">
                 <div class="mx-auto h-full max-w-[310px] bg-background">
-                  <MoleculeImage :base-url="item.desktop_image || ''" class="h-[222px] w-full object-cover" />
+                  <MoleculeImage loading="lazy" :base-url="item.desktop_image || ''" class="h-[222px] w-full object-cover" />
 
                   <div class="p-4">
                     <div class="text-left">
