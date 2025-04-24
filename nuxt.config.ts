@@ -101,7 +101,8 @@ export default defineNuxtConfig({
     '@primevue/nuxt-module',
     'nuxt-swiper',
     '@nuxtjs/i18n',
-    'nuxt-multi-cache'
+    'nuxt-multi-cache',
+    '@zadigetvoltaire/nuxt-gtm'
   ],
   booster: {
 
@@ -121,7 +122,11 @@ export default defineNuxtConfig({
       }
     },
   },
-
+  gtm: {
+    id: 'GTM-MQQRHWBT',
+    enabled: process.env.NODE_ENV === 'production',
+    defer: true
+  },
   primevue: {
     autoImport: false,
     components: {

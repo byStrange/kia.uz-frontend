@@ -1,5 +1,5 @@
 {
-  "name": "nuxt3-template",
+  "name": "kia.uz-frontend",
   "private": true,
   "scripts": {
     "dev": "nuxi dev",
@@ -27,6 +27,7 @@
     "@nuxt/devtools": "^1.6.0",
     "@primevue/nuxt-module": "^4.2.1",
     "@tailwindcss/typography": "^0.5.16",
+    "@zadigetvoltaire/nuxt-gtm": "^0.0.13",
     "configure-env": "^1.0.0",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
