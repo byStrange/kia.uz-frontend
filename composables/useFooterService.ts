@@ -25,10 +25,6 @@ const footerItems = ref<FooterItem[]>([
     to: '/dealers',
   },
   {
-    label: 'common.for_owners',
-    to: '#',
-  },
-  {
     label: 'common.select_and_purchase',
     children: [
       {

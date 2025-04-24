@@ -36,7 +36,7 @@ defineProps<{ offers: GroupedSpecialOfferWithoutContent }>()
       <template #tab="{ tab }">
         <ElementSlideView :data="tab.items.slice(0, 8)">
           <template #slide="{ item }">
-            <NuxtLinkLocale :to="`/special-offers/${item.slug}`">
+            <NuxtLinkLocale :aria-label="item.title" :to="`/special-offers/${item.slug}`">
               <div
 :style="{ '--padding': `0 ${bounding.x.value}px` }"
                 class="h-[408px] p-[--padding] md:w-[310px] md:px-0">

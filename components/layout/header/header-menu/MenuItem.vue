@@ -7,7 +7,7 @@ const commonClasses =
 </script>
 
 <template>
-  <button v-if="item.children?.length" :class="commonClasses" @click="() => (headerService.extendedMenu = item)">
+  <button :aria-label="item.label" v-if="item.children?.length" :class="commonClasses" @click="() => (headerService.extendedMenu = item)">
     <div class="container flex items-center justify-between">
       {{ $t(item.label) }}
       <UITickToRight />

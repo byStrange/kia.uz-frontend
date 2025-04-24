@@ -87,6 +87,7 @@ const headerItems = ref<HeaderItem[]>([
 export type Social = {
   icon: any
   link: string
+  name?: string
 }
 
 type headerServiceType = {
@@ -117,18 +118,22 @@ const headerService = ref<headerServiceType>({
     {
       icon: h(UIYoutubeIcon),
       link: 'https://www.youtube.com/channel/UCbcoHuLNcxJdleQNl1ET4ug',
+      name: 'Youtube'
     },
     {
       icon: h(UIInstagramIcon),
       link: 'https://www.instagram.com/kia__uzbekistan/',
+      name: 'Instagram'
     },
     {
       icon: h(UIFacebookIcon),
       link: 'https://www.facebook.com/KiaUzbekistan/',
+      name: 'Facebook'
     },
     {
       icon: h(UITelegramIcon),
       link: 'https://t.me/kiauzbekistanbot',
+      name: 'Telegram'
     },
   ],
 })

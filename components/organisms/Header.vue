@@ -86,7 +86,7 @@ onMounted(() => {
       <Transition name="blur-fade" mode="out-in">
         <div v-if="!searchBarOpen"
           class="relative flex w-full items-center justify-between px-page-padding transition-all duration-300 2xl:container h-15 2xl:h-auto">
-          <button class="!bg-transparent !p-0 !text-white 2xl:hidden" @click="() => {
+          <button aria-label="Toggle Menu" class="!bg-transparent !p-0 !text-white 2xl:hidden" @click="() => {
             toggleMenu()
           }
             ">
@@ -119,13 +119,13 @@ onMounted(() => {
                 <UIHeaderLink :item="item" />
               </li>
             </ul>
-            <a :href="isMobile ? `tel:${headerService.phoneLine1}` : '/feedback'">
+            <a aria-label="Call" :href="isMobile ? `tel:${headerService.phoneLine1}` : '/feedback'">
               <UIPhoneIcon class="transition-colors" :class="{
                 'text-primary': headerService.isHover,
                 'text-white': !headerService.isHover,
               }" />
             </a>
-            <button class="hidden md:block" @click="searchBarOpen = true">
+            <button aria-label="Search" class="hidden md:block" @click="searchBarOpen = true">
               <UILenseIcon class="transition-colors" :class="{
                 'text-white': !headerService.isHover,
                 'text-primary': headerService.isHover,
