@@ -32,7 +32,7 @@ const maintenanceData = reactive([
     intervals: [null, 'П', null, 'П', null, 'П', null, null],
   },
   {
-    component: 'technical_maintenance.spare_plugs',
+    component: 'technical_maintenance.spark_plugs',
     intervals: [null, 'П', null, 3, null, 'П', null, null],
   },
 ])
