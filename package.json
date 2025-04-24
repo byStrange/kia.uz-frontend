@@ -58,6 +58,7 @@
     "lodash.mapvalues": "^4.6.0",
     "lodash.remove": "^4.7.0",
     "nuxt": "^3.14.159",
+    "nuxt-booster": "^3.2.8",
     "nuxt-multi-cache": "^3.4.0",
     "nuxt-svgo": "4.0.9",
     "nuxt-swiper": "^1.2.2",

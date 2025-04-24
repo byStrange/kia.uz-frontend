@@ -9,9 +9,11 @@ export default defineNuxtConfig({
   routeRules: {
     '*': { swr: true }
   },
+
   imports: {
     dirs: ['./composables', './utils', './schemas', './types'],
   },
+
   experimental: {
     defaults: {
       nuxtLink: {
@@ -21,12 +23,14 @@ export default defineNuxtConfig({
       },
     },
   },
+
   app: {
     layoutTransition: { name: 'layout', mode: 'out-in' },
     pageTransition: { name: 'page', mode: 'out-in' },
   },
 
   compatibilityDate: '2024-07-16',
+
   css: [
     '~/assets/css/fonts.css',
     '~/assets/css/transitions.css',
@@ -87,6 +91,7 @@ export default defineNuxtConfig({
   },
 
   modules: [
+    'nuxt-booster',
     '@nuxt/devtools',
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
@@ -98,6 +103,24 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     'nuxt-multi-cache'
   ],
+  booster: {
+
+    detection: {
+      performance: true,
+      browserSupport: true
+    },
+
+    performanceMetrics: {
+      device: {
+        hardwareConcurrency: { min: 2, max: 48 },
+        deviceMemory: { min: 2 }
+      },
+      timing: {
+        fcp: 800,
+        dcl: 1200
+      }
+    },
+  },
 
   primevue: {
     autoImport: false,
@@ -124,8 +147,15 @@ export default defineNuxtConfig({
       apiDefaultLang: NUXT_API_DEFAULT_LANG
     },
   },
+
   multiCache: {
     component: {
+      enabled: true
+    }
+  },
+
+  devtools: {
+    timeline: {
       enabled: true
     }
   }

@@ -2,6 +2,7 @@
 import { useCssVar } from '@vueuse/core'
 import { Pagination } from 'swiper/modules'
 import type { Swiper } from 'swiper/types'
+import { initCustomFormatter } from 'vue';
 
 const { bounding } = useContainer()
 
@@ -112,7 +113,7 @@ gsap.fromTo(slideView.value.querySelectorAll('.swiper-slide > div'), {
 
     */
 
-      })
+  })
 })
 
 defineExpose({
@@ -120,38 +121,35 @@ defineExpose({
 })
 </script>
 <template>
-  <div class="molecule-slideview" ref="slideView">
-    <ClientOnly>
-      <Swiper :key="bounding.x.value" :style="{
-        '--swiper-pagination-bullet-horizontal-gap': 0, //  to disable default swiper bullet gap
-        '--swiper-pagination-gap': paginationGap,
-      }" :breakpoints="breakpointsEnabled ? swiperBreakpoints : breakpoints" :slides-per-view="slidesPerView"
-        :modules="[Pagination]" :pagination="true" :slides-offset-before="slidesOffsetBefore"
-        :slides-offset-after="slidesOffsetAfter" :space-between="spaceBetween" class="light-pagination" v-bind="$attrs"
-        @swiper="swiper = $event">
-        <template #container-start>
-          <template v-if="navigationMode == 'normal'">
+  <div ref="slideView" class="molecule-slideview">
+    <Swiper :init="false"  :key="bounding.x.value" :style="{
+      '--swiper-pagination-bullet-horizontal-gap': 0, //  to disable default swiper bullet gap
+      '--swiper-pagination-gap': paginationGap,
+    }" :breakpoints="breakpointsEnabled ? swiperBreakpoints : breakpoints" :slides-per-view="slidesPerView"
+      :modules="[Pagination]" :pagination="true" :slides-offset-before="slidesOffsetBefore"
+      :slides-offset-after="slidesOffsetAfter" :space-between="spaceBetween" class="light-pagination" v-bind="$attrs"
+      @swiper="swiper = $event">
+      <template #container-start>
+        <template v-if="navigationMode == 'normal'">
+          <MoleculeButtonCarousel v-if="navigation" position="left" :hide="swiperActiveIndex === 0"
+            :mode="navigationMode" :size="navigationType" @click="swiper?.slidePrev()" />
+
+          <MoleculeButtonCarousel v-if="navigation" position="right" :hide="swiperActiveIndex === swiperLength - 1"
+            :size="navigationType" :mode="navigationMode" @click="swiper?.slideNext()" />
+        </template>
+        <template v-else-if="navigationMode == 'oneside-left'">
+          <div class="absolute right-15 z-40 h-full flex flex-col justify-center items-center gap-2">
+            <MoleculeButtonCarousel v-if="navigation" position="right" :hide="swiperActiveIndex === swiperLength - 2"
+              :size="navigationType" :mode="navigationMode" @click="swiper?.slideNext()" />
             <MoleculeButtonCarousel v-if="navigation" position="left" :hide="swiperActiveIndex === 0"
               :mode="navigationMode" :size="navigationType" @click="swiper?.slidePrev()" />
-
-            <MoleculeButtonCarousel v-if="navigation" position="right" :hide="swiperActiveIndex === swiperLength - 1"
-              :size="navigationType" :mode="navigationMode" @click="swiper?.slideNext()" />
-          </template>
-          <template v-else-if="navigationMode == 'oneside-left'">
-            <div class="absolute right-15 z-40 h-full flex flex-col justify-center items-center gap-2">
-              <MoleculeButtonCarousel v-if="navigation" position="right" :hide="swiperActiveIndex === swiperLength - 2"
-                :size="navigationType" :mode="navigationMode" @click="swiper?.slideNext()" />
-              <MoleculeButtonCarousel v-if="navigation" position="left" :hide="swiperActiveIndex === 0"
-                :mode="navigationMode" :size="navigationType" @click="swiper?.slidePrev()" />
-            </div>
-          </template>
-          <slot name="navigation" />
+          </div>
         </template>
-        <SwiperSlide v-for="(item, index) in data" :key="Math.random() * index" class="md:!w-fit"
-          :class="swiperSlideClass">
-          <slot name="slide" :item :bounding />
-        </SwiperSlide>
-      </Swiper>
-    </ClientOnly>
+        <slot name="navigation" />
+      </template>
+      <SwiperSlide v-for="(item, index) in data" :key="index" class="md:!w-fit" :class="swiperSlideClass">
+        <slot name="slide" :item :bounding />
+      </SwiperSlide>
+    </Swiper>
   </div>
 </template>

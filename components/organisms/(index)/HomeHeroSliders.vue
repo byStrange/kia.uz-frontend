@@ -32,17 +32,18 @@ const slidesLength = computed(() => {
   if (swiper.value) return swiper.value.slides.length
   return 0
 })
+
 </script>
 
+
 <template>
-  <div class="relative w-full bg-no-repeat">
+  <div class="relative w-full bg-no-repeat h-screen">
     <div data-label="Hero shadow top" aria-hidden="true" class="absolute top-0 z-10 h-[140px] w-full" :style="{
       background:
         'linear-gradient(180deg, rgba(5, 20, 31, 0.5) 24.47%, rgba(5, 20, 31, 0) 100%)',
     }" />
 
-    <ClientOnly>
-      <Swiper ref="heroSwiper" :slides-per-view="1" class="dark-pagination h-screen" :modules="[Pagination]"
+      <Swiper :init="false" ref="heroSwiper" :slides-per-view="1" class="dark-pagination h-screen" :modules="[Pagination]"
         :free-mode="true" :pagination="{ clickable: true }" @swiper="onSwiper">
         <template #container-start>
           <MoleculeButtonCarousel position="left" :hide="currentIndex === 0" @click="prev" />
@@ -56,10 +57,7 @@ const slidesLength = computed(() => {
             <MoleculeResponsiveImage class="h-[75%] w-full object-cover md:h-[80%] 2xl:h-full" :default-image="safe(slide.default_image)" :desktop-image="safe(slide.desktop_image)" :tablet-image="safe(slide.tablet_image)" />
             
             <div
-              class="absolute container 2xl:px-0 left-0 bottom-[88px] z-40 flex w-full max-w-[540px] items-end justify-center md:bottom-[100px] md:justify-start md:pb-0 2xl:left-[--left]"
-              :style="{
-                '--left': offset.offsetLeft.value + 'px',
-              }">
+              class="absolute container left-0 bottom-[88px] z-40 flex w-full max-w-[540px] items-end justify-center md:bottom-[100px] md:justify-start md:pb-0">
               <div class="flex w-full">
                 <div class="w-full md:px-0">
                   <div class="space-y-1 text-white md:space-y-2">
@@ -76,6 +74,5 @@ const slidesLength = computed(() => {
           </div>
         </SwiperSlide>
       </Swiper>
-    </ClientOnly>
   </div>
 </template>

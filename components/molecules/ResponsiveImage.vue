@@ -26,12 +26,6 @@
         type="image/avif"
         :srcset="getImageUrl(desktopImage, 'avif')"
       />
-      <!-- PNG format - fallback -->
-      <source
-        v-if="desktopImage"
-        media="(min-width: 1024px)"
-        :srcset="getImageUrl(desktopImage, 'png')"
-      />
       
       <!-- Tablet Image -->
       <!-- WebP format - highest priority now -->
@@ -49,11 +43,6 @@
         :srcset="getImageUrl(tabletImage, 'avif')"
       />
       <!-- PNG format - fallback -->
-      <source
-        v-if="tabletImage"
-        media="(min-width: 640px) and (max-width: 1023px)"
-        :srcset="getImageUrl(tabletImage, 'png')"
-      />
       
       <!-- Mobile/Default Image -->
       <!-- WebP format - highest priority now -->
@@ -69,7 +58,7 @@
       
       <!-- Fallback image with all attributes passed to the component -->
       <img
-        :src="getImageUrl(defaultImage, 'png')"
+        :src="getImageUrl(defaultImage, 'avif')"
         :alt="alt"
         v-bind="$attrs"
         @load="onImageLoaded"

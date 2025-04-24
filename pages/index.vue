@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 const { bounding } = useContainer()
 const { src } = useUploadcareSource()
 const { locale } = useI18n()

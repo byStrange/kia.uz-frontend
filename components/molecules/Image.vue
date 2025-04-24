@@ -14,9 +14,6 @@
       <source v-for="size in sizes" :key="`avif-${size}`" :srcset="generateSrcSet('avif', size)"
         :media="getMediaQuery(size)" type="image/avif" />
 
-      <!-- PNG format - fallback -->
-      <source v-for="size in sizes" :key="`png-${size}`" :srcset="generateSrcSet('png', size)" />
-
       <!-- Fallback image with all attributes passed to the component -->
       <img :src="defaultImageUrl" :alt="alt" v-bind="$attrs" class="transition-opacity duration-300"
         :class="{ 'opacity-0': !imageLoaded && useLowResBackground }" @load="onImageLoaded" />
@@ -86,7 +83,7 @@ const getMediaQuery = (size: string): string => {
 
 // Default image URL (original size, PNG format as fallback)
 const defaultImageUrl = computed((): string => {
-  return generateUrl('', 'png')
+  return generateUrl('', 'avif')
 })
 
 // Low resolution image URL for the background
