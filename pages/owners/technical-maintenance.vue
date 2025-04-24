@@ -20,19 +20,19 @@ const { src } = useUploadcareSource()
 const months = ['6', '12', '18', '24', '30', '36', '42', '48'] // Month intervals
 const maintenanceData = reactive([
   {
-    component: 'Моторное масло и масляный фильтр',
+    component: 'technical_maintenance.engine_oil_and_oil_filter',
     intervals: [3, 3, 3, 3, 3, 3, 3, 3],
   },
   {
-    component: 'Охлаждающая жидкость (двигатель)',
+    component: 'technical_maintenance.engine_coolant',
     intervals: [null, null, null, null, null, null, null, null],
   },
   {
-    component: 'Вакуумные шланги и шланги вентиляции картера',
+    component: 'technical_maintenance.vacuum_hoses_and_crankcase_ventilation_hoses',
     intervals: [null, 'П', null, 'П', null, 'П', null, null],
   },
   {
-    component: 'Свечи зажигания',
+    component: 'technical_maintenance.spare_plugs',
     intervals: [null, 'П', null, 3, null, 'П', null, null],
   },
 ])
@@ -145,10 +145,13 @@ const getIntervalBody = (index: number) => (rowData: any) =>
 
         <div class="mt-2.5 2xl:mt-7.5">
           <p class="text-sm md:text-base+">
-            Регламентное ТО на автомобили с двигателей 3,5
-          </p>
+            {{ $t('technical_maintenance.scheduled_maintenance_for_vehicles_with_3_5_engine') }}</p>
           <DataTable :value="maintenanceData" :striped-rows="true" :responsive-layout="'scroll'">
-            <Column field="component" header="Component" class="min-w-3h !px-3" />
+            <Column field="component" header="Component" class="min-w-3h !px-3">
+              <template #body="slotProps">
+                {{ $t(slotProps.data.component) }}
+              </template>
+            </Column>
             <Column v-for="(month, index) in months" :key="index" :header="month" :field="getIntervalBody(index)" />
           </DataTable>
         </div>
@@ -156,10 +159,14 @@ const getIntervalBody = (index: number) => (rowData: any) =>
 
       <div>
         <p class="text-sm md:text-base+">
-          Регламентное ТО на автомобили с двигателей 3,5
+          {{ $t('technical_maintenance.scheduled_maintenance_for_vehicles_with_3_5_engine') }}
         </p>
         <DataTable :value="maintenanceData" :striped-rows="true" :responsive-layout="'scroll'">
-          <Column field="component" header="Component" class="min-w-3h !px-3" />
+          <Column field="component" header="Component" class="min-w-3h !px-3">
+            <template #body="slotProps">
+              {{ $t(slotProps.data.component) }}
+            </template>
+          </Column>
           <Column v-for="(month, index) in months" :key="index" :header="month" :field="getIntervalBody(index)" />
         </DataTable>
       </div>
