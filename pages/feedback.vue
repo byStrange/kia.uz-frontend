@@ -4,16 +4,16 @@ import { Dialog, Textarea } from 'primevue'
 import { Form, FormField, type FormSubmitEvent } from '@primevue/forms'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
 
-const requestTypes = ref([
-  { label: 'Наличие и процесс поставки автомобиля Kia', value: '1' },
-  {
-    label: 'Наличие и стоимость запасных частей и аксессуаров Kia',
-    value: '2',
-  },
-  { label: 'Сервисное обслуживание (ТО, гарантия, эксплуатация)', value: '3' },
-  { label: 'Условия кредитования и страхования', value: '4' },
-  { label: 'Прохождение тест-драйва', value: '5' },
-])
+const { headerService } = useHeaderService()
+const { data: pageData } = useFetch('/api/feedback')
+onMounted(() => {
+  console.log(pageData)
+})
+
+const feedbackTypes = computed(() => {
+  const feedbackTypes = pageData.value?.map(fType => ({ label: fType.name, value: fType.id }))
+  return feedbackTypes
+})
 
 const isPrivacyDialogVisible = ref(false)
 
@@ -41,7 +41,7 @@ const initialValues = ref({
   email: '',
   city: '',
   comment: '',
-  requestType: '',
+  feedbackType: '',
   agree: false,
 })
 
@@ -50,7 +50,10 @@ const resolver = ref(zodResolver(feedbackSchema))
 const successfullySent = ref(false)
 
 const onSubmit = (event: FormSubmitEvent) => {
-  successfullySent.value = event.valid
+  console.log(event.values)
+  if (event.valid) $fetch('/api/feedback', { method: 'post', body: event.values }).then(() => {
+    successfullySent.value = true
+  })
 }
 </script>
 <template>
@@ -92,7 +95,7 @@ const onSubmit = (event: FormSubmitEvent) => {
     </h1>
 
     <!-- Form -->
-    <MoleculeSection v-show="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px]">
+    <MoleculeSection v-if="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px]">
       <div class="pb-8 border-b border-protection">
         <h4 class="text-sm md:text-base">{{ $t('menu.kia_hotline') }}</h4>
         <span class="mt-1 text-lg font-semibold md:text-2xl">1333</span>
@@ -152,8 +155,8 @@ const onSubmit = (event: FormSubmitEvent) => {
 
         <div class="space-y-4">
           <label class="text-primary text-sm md:text-base">{{ $t('feedback.request_type') }}</label>
-          <FormField v-slot="$field" name="requestType">
-            <AtomDropdownInput v-model:available-options="requestTypes"
+          <FormField v-slot="$field" name="feedbackType">
+            <AtomDropdownInput v-model:available-options="feedbackTypes"
               :placeholder="$t('feedback.select_question_type')" :float-label="true" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $t($field.error?.message) }}
@@ -182,6 +185,36 @@ const onSubmit = (event: FormSubmitEvent) => {
             class="mt-10 md:w-full 2xl:w-auto" />
         </div>
       </Form>
+    </MoleculeSection>
+    <MoleculeSection v-else
+      class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px] md:space-y-10 2xl:space-y-12">
+      <div class="space-y-4 text-primary md:space-y-6 2xl:space-y-8">
+        <h1 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">
+          {{ $t('service.success_title') }}
+        </h1>
+
+        <p class="text-sm md:text-base">
+          {{ $t('service.success_message') }}
+        </p>
+        <AtomButton mode="full" color="secondary" :label="$t('common.go_home')" />
+      </div>
+      <hr />
+      <div class="space-y-2 text-primary text-sm md:text-base">
+        <p>{{ $t('menu.kia_hotline') }}</p>
+        <p>
+          <i18n-t keypath="service.kia_contact_info">
+            <template #phoneLine1>
+              <a :href="`tel:${headerService.phoneLine1}`">{{ headerService.phoneLine1 }}</a>
+            </template>
+            <template #phoneLine2>
+              <a :href="`tel:${headerService.phoneLine2}`">{{ headerService.phoneLine2 }}</a>
+            </template>
+            <template #phoneLine3>
+              <a :href="`tel:${headerService.phoneLine2}`">{{ headerService.phoneLine3 }}</a>
+            </template>
+          </i18n-t>
+        </p>
+      </div>
     </MoleculeSection>
   </UISafeAreaView>
 </template>

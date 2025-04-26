@@ -1,16 +1,13 @@
 import type { z } from "zod";
+import { useFetchApi } from "~/composables/useFetchApi";
 
 type RequestServiceForm = z.infer<typeof serviceForm>
 
 interface RequestSerficeAPIForm {
   vin_number: string
-  issue_year: number
   city: string
   name: string
-  model: uuid
-  dealer: uuid
-  job_type?: uuid
-  date?: uuid
+  phone_number: string
 }
 
 export default defineEventHandler(async (event) => {
@@ -20,11 +17,11 @@ export default defineEventHandler(async (event) => {
 
   const data: RequestSerficeAPIForm = {
     vin_number: '1',
-    issue_year: parseInt(body.issue_year),
     city: body.region,
     name: body.name || '',
-    model: body.model || '',
-    job_type: body.work_type,
-    date: body.time
+    phone_number: body.phone
   }
+
+  const response = useFetchApi('/service-request/', locale, { method: 'post', body: JSON.stringify(data) })
+  return response
 }) 

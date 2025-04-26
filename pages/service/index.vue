@@ -10,6 +10,7 @@ const { locale } = useI18n()
 const { data: pageData } = useFetch('/api/service', { query: { lang: locale.value } })
 
 const initialValues = ref({
+
   region: '',
   name: '',
   phone: '',
@@ -18,19 +19,19 @@ const initialValues = ref({
 const touched = ref(false)
 
 const regionOptions = ref([
-  { label: 'Andijon viloyati', value: '2' },
-  { label: 'Buxoro viloyati', value: '3' },
-  { label: 'Farg‘ona viloyati', value: '4' },
-  { label: 'Jizzax viloyati', value: '5' },
-  { label: 'Xorazm viloyati', value: '6' },
-  { label: 'Namangan viloyati', value: '7' },
-  { label: 'Navoiy viloyati', value: '8' },
-  { label: 'Qashqadaryo viloyati', value: '9' },
-  { label: 'Samarqand viloyati', value: '10' },
-  { label: 'Sirdaryo viloyati', value: '11' },
-  { label: 'Surxondaryo viloyati', value: '12' },
-  { label: 'Toshkent viloyati', value: '13' },
-  { label: 'Toshkent shahri', value: '14' }
+  { label: 'Andijon viloyati', value: 'Andijon' },
+  { label: 'Buxoro viloyati', value: 'Buxoro' },
+  { label: 'Farg‘ona viloyati', value: 'Farg\'ona' },
+  { label: 'Jizzax viloyati', value: 'Jizzax' },
+  { label: 'Xorazm viloyati', value: 'Xorazm' },
+  { label: 'Namangan viloyati', value: 'Namangan' },
+  { label: 'Navoiy viloyati', value: 'Navoiy' },
+  { label: 'Qashqadaryo viloyati', value: 'Qashqadaryo' },
+  { label: 'Samarqand viloyati', value: 'Samarqand' },
+  { label: 'Sirdaryo viloyati', value: 'Sirdaryo' },
+  { label: 'Surxondaryo viloyati', value: 'Surxandaryo' },
+  { label: 'Toshkent viloyati', value: 'Toshkent viloyati' },
+  { label: 'Toshkent shahri', value: 'Toshkent Shahri' }
 ])
 
 const isPrivacyDialogVisible = ref(false)
@@ -52,7 +53,10 @@ const successfullySent = ref(false)
 
 const onSubmit = (event: FormSubmitEvent) => {
   touched.value = true;
-  successfullySent.value = event.valid
+  if (event.valid) $fetch('/api/service', { method: 'post', body: event.values }).then(() => {
+    successfullySent.value = true;
+    event.reset()
+  })
 }
 
 useSeoMeta({
@@ -69,8 +73,7 @@ definePageMeta({
 </script>
 <template>
   <UISafeAreaView>
-    <Dialog
-v-model:visible="isPrivacyDialogVisible" modal :pt="{
+    <Dialog v-model:visible="isPrivacyDialogVisible" modal :pt="{
       root: '!rounded-none 2xl:h-full 2xl:!max-h-[758px]',
       mask: 'px-3',
       header:
@@ -92,8 +95,7 @@ v-model:visible="isPrivacyDialogVisible" modal :pt="{
         <div class="space-y-5 text-primary">
           <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
         </div>
-        <AtomButton
-:label="$t('common.got_it')" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <AtomButton :label="$t('common.got_it')" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>
@@ -112,8 +114,7 @@ v-model:visible="isPrivacyDialogVisible" modal :pt="{
             <h2 class="font-bold text-base md:text-lg">{{ $t('service.vehicle_data') }}</h2>
 
             <FormField class="flex w-full">
-              <AtomInput
-input-id="vin_number" :label="$t('service.vin_number')" v-bind="commonAtomInputProps"
+              <AtomInput input-id="vin_number" :label="$t('service.vin_number')" v-bind="commonAtomInputProps"
                 class="flex-1 -translate-y-[1px]" />
               <button class="bg-primary size-12 2xl:size-15 text-white flex justify-center items-center">
                 <UITickToRight class="size-5 text-white" />
@@ -125,8 +126,7 @@ input-id="vin_number" :label="$t('service.vin_number')" v-bind="commonAtomInputP
             <h2 class="font-bold text-base md:text-lg">{{ $t('service.service_center') }}</h2>
 
             <FormField v-slot="$field" name="region">
-              <AtomDropdownInput
-v-model:available-options="regionOptions" input-id="region" theme="light"
+              <AtomDropdownInput v-model:available-options="regionOptions" input-id="region" theme="light"
                 :placeholder="$t('common_form.city')" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $t($field.error?.message) }}
@@ -176,16 +176,13 @@ v-model:available-options="regionOptions" input-id="region" theme="light"
             </div>
           </div>
 
-          <AtomButton
-type="submit" :label="$t('common_form.submit_application')" color="primary" mode="full"
+          <AtomButton type="submit" :label="$t('common_form.submit_application')" color="primary" mode="full"
             class="md:w-full 2xl:w-auto" />
         </Form>
       </MoleculeSection>
 
-      <!-- Feedback -->
 
-      <MoleculeSection
-v-show="successfullySent"
+      <MoleculeSection v-show="successfullySent"
         class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px] md:space-y-10 2xl:space-y-12">
         <div class="space-y-4 text-primary md:space-y-6 2xl:space-y-8">
           <h1 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">
@@ -195,7 +192,7 @@ v-show="successfullySent"
           <p class="text-sm md:text-base">
             {{ $t('service.success_message') }}
           </p>
-          <AtomButton mode="full" color="secondary" :label="$t('service.go_home')" />
+          <AtomButton mode="full" color="secondary" :label="$t('common.go_home')" />
         </div>
         <hr />
         <div class="space-y-2 text-primary text-sm md:text-base">
@@ -212,7 +209,6 @@ v-show="successfullySent"
                 <a :href="`tel:${headerService.phoneLine2}`">{{ headerService.phoneLine3 }}</a>
               </template>
             </i18n-t>
-            {{ $t('service.kia_contact_info') }}
           </p>
         </div>
       </MoleculeSection>
