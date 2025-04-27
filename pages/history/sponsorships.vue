@@ -5,7 +5,7 @@ const { bounding } = useContainer()
 const { locale } = useI18n()
 
 const { data: pageData } = useAsyncData('seo', () => {
-  return useFetchApi<SEO>('/pages/~history~kia-history', locale.value)
+  return useFetchApi<SEO>('/pages/~history~sponsorships', locale.value)
 })
 
 useSeoMeta({
