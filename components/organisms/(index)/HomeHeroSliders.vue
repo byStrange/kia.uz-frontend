@@ -5,7 +5,6 @@ import type { IndexPageSlider } from '~/server/api/indexPage.get'
 
 defineProps<{ slides: IndexPageSlider[] }>()
 
-const { offset } = useContainer()
 const { safe } = useSafeAccessMedia()
 
 const localePath = useLocalePath()
@@ -38,41 +37,48 @@ const slidesLength = computed(() => {
 
 <template>
   <div class="relative w-full bg-no-repeat h-screen">
-    <div data-label="Hero shadow top" aria-hidden="true" class="absolute top-0 z-10 h-[140px] w-full" :style="{
+    <div
+data-label="Hero shadow top" aria-hidden="true" class="absolute top-0 z-10 h-[140px] w-full" :style="{
       background:
         'linear-gradient(180deg, rgba(5, 20, 31, 0.5) 24.47%, rgba(5, 20, 31, 0) 100%)',
     }" />
 
-      <Swiper :init="false" ref="heroSwiper" :slides-per-view="1" class="dark-pagination h-screen" :modules="[Pagination]"
-        :free-mode="true" :pagination="{ clickable: true }" @swiper="onSwiper">
-        <template #container-start>
-          <MoleculeButtonCarousel position="left" :hide="currentIndex === 0" @click="prev" />
+    <Swiper
+ref="heroSwiper" :loop="true" :init="false" :slides-per-view="1" class="dark-pagination h-screen" :modules="[Pagination]"
+      :free-mode="true" :pagination="{ clickable: true }" @swiper="onSwiper">
+      <template #container-start>
+        <MoleculeButtonCarousel position="left" :hide="false" @click="prev" />
 
-          <MoleculeButtonCarousel position="right" :hide="currentIndex === slidesLength - 1" @click="next" />
-        </template>
-        <SwiperSlide v-for="slide in slides" :key="slide.id">
-          <div class="h-full">
-            <div data-label="Hero shadow bottom" aria-hidden="true"
-              class="hero-slider-shade absolute bottom-0 z-20 h-[356px] w-full" />
-            <MoleculeResponsiveImage class="h-[75%] w-full object-cover md:h-[80%] 2xl:h-full" :default-image="safe(slide.default_image)" :desktop-image="safe(slide.desktop_image)" :tablet-image="safe(slide.tablet_image)" />
-            
-            <div
-              class="absolute container left-0 bottom-[88px] z-40 flex w-full max-w-[540px] items-end justify-center md:bottom-[100px] md:justify-start md:pb-0">
-              <div class="flex w-full">
-                <div class="w-full md:px-0">
-                  <div class="space-y-1 text-white md:space-y-2">
-                    <p class="text-sm text-white md:text-lg">{{ slide.pre_title }}</p>
-                    <h1 class="text-2xl font-semibold md:text-4xl">{{ slide.title }}</h1>
-                    <p class="text-sm md:text-lg">{{ slide.post_title }}</p>
+        <MoleculeButtonCarousel position="right" :hide="false" @click="next" />
+      </template>
+      <SwiperSlide v-for="slide in slides" :key="slide.id">
+        <div class="h-full">
+          <div
+data-label="Hero shadow bottom" aria-hidden="true"
+            class="hero-slider-shade absolute bottom-0 z-20 h-[356px] w-full" />
+          <MoleculeResponsiveImage
+class="h-[75%] w-full object-cover md:h-[80%] 2xl:h-full"
+            :default-image="safe(slide.default_image)" :desktop-image="safe(slide.desktop_image)"
+            :tablet-image="safe(slide.tablet_image)" />
 
-                  </div>
-                  <AtomButton :label="$t('common.more')" color="secondary" mode="full" class="mt-6 text-base"
-                    @click="$router.push(localePath(slide.target_url))" />
+          <div
+            class="absolute container left-0 bottom-[88px] z-40 flex w-full max-w-[540px] items-end justify-center md:bottom-[100px] md:justify-start md:pb-0">
+            <div class="flex w-full">
+              <div class="w-full md:px-0">
+                <div class="space-y-1 text-white md:space-y-2">
+                  <p class="text-sm text-white md:text-lg">{{ slide.pre_title }}</p>
+                  <h1 class="text-2xl font-semibold md:text-4xl">{{ slide.title }}</h1>
+                  <p class="text-sm md:text-lg">{{ slide.post_title }}</p>
+
                 </div>
+                <AtomButton
+:label="$t('common.more')" color="secondary" mode="full" class="mt-6 text-base"
+                  @click="$router.push(localePath(slide.target_url))" />
               </div>
             </div>
           </div>
-        </SwiperSlide>
-      </Swiper>
+        </div>
+      </SwiperSlide>
+    </Swiper>
   </div>
 </template>
