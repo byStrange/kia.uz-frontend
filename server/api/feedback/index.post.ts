@@ -5,12 +5,9 @@ type FeedbackForm = z.infer<typeof feedbackSchema>
 
 interface FeedbackAPIForm {
   first_name: string
-  last_name: string
   phone_number: string
-  email: string
   city: string
-  comment: string
-  type: uuid
+  comment?: string
 }
 
 export default defineEventHandler(async (event) => {
@@ -20,12 +17,9 @@ export default defineEventHandler(async (event) => {
 
   const data: FeedbackAPIForm = {
     first_name: body.name || '',
-    last_name: body.surname || '',
     phone_number: body.phone || '',
-    email: body.email,
     city: body.city,
-    comment: body.comment,
-    type: body.feedbackType
+    comment: body.comment || '',
   }
 
   const response = useFetchApi('/feedback/', locale, { method: 'post', body: JSON.stringify(data) })

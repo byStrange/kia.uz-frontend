@@ -9,14 +9,6 @@ export const feedbackSchema = z.object({
       'common_form.enter_valid_data',
     ),
 
-  surname: z
-    .string()
-    .optional()
-    .refine(
-      (val) => !val || val.length > 1,
-      'common_form.enter_valid_data',
-    ),
-
   phone: z
     .string()
     .optional()
@@ -32,10 +24,6 @@ export const feedbackSchema = z.object({
           .match(/^[+]998([3785]{2}|(20)|(9[013-57-9]))\d{7}$/),
       'common_form.enter_valid_phone_number',
     ),
-  email: z
-    .string()
-    .min(1, 'common_form.this_field_is_required')
-    .email({ message: 'common_form.enter_valid_email' }),
 
   city: z
     .string()
@@ -43,10 +31,7 @@ export const feedbackSchema = z.object({
 
   comment: z
     .string()
-    .min(1, 'common_form.this_field_is_required')
-    .min(25, 'common_form.minimum_chars_requirement'),
-
-  feedbackType: z.string().min(1, 'common_form.this_field_is_required'),
+    .optional(),
 
   agree: z.literal(true, {
     errorMap: () => ({ message: 'common_form.must_agree_to_consent_privacy' }),

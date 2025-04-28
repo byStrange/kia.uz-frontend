@@ -33,19 +33,19 @@ const initialValues = ref({
 })
 
 const regionOptions = ref([
-  { label: 'Andijon viloyati', value: '2' },
-  { label: 'Buxoro viloyati', value: '3' },
-  { label: 'Farg‘ona viloyati', value: '4' },
-  { label: 'Jizzax viloyati', value: '5' },
-  { label: 'Xorazm viloyati', value: '6' },
-  { label: 'Namangan viloyati', value: '7' },
-  { label: 'Navoiy viloyati', value: '8' },
-  { label: 'Qashqadaryo viloyati', value: '9' },
-  { label: 'Samarqand viloyati', value: '10' },
-  { label: 'Sirdaryo viloyati', value: '11' },
-  { label: 'Surxondaryo viloyati', value: '12' },
-  { label: 'Toshkent viloyati', value: '13' },
-  { label: 'Toshkent shahri', value: '14' }
+  { label: 'Andijon viloyati', value: 'Andijon' },
+  { label: 'Buxoro viloyati', value: 'Buxoro' },
+  { label: 'Farg‘ona viloyati', value: 'Farg\'ona' },
+  { label: 'Jizzax viloyati', value: 'Jizzax' },
+  { label: 'Xorazm viloyati', value: 'Xorazm' },
+  { label: 'Namangan viloyati', value: 'Namangan' },
+  { label: 'Navoiy viloyati', value: 'Navoiy' },
+  { label: 'Qashqadaryo viloyati', value: 'Qashqadaryo' },
+  { label: 'Samarqand viloyati', value: 'Samarqand' },
+  { label: 'Sirdaryo viloyati', value: 'Sirdaryo' },
+  { label: 'Surxondaryo viloyati', value: 'Surxandaryo' },
+  { label: 'Toshkent viloyati', value: 'Toshkent viloyati' },
+  { label: 'Toshkent shahri', value: 'Toshkent Shahri' }
 ])
 
 const onSubmit = ({ values }: FormSubmitEvent) => {

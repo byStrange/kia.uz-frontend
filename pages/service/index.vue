@@ -10,7 +10,6 @@ const { locale } = useI18n()
 const { data: pageData } = useFetch('/api/service', { query: { lang: locale.value } })
 
 const initialValues = ref({
-
   region: '',
   name: '',
   phone: '',
@@ -109,18 +108,6 @@ definePageMeta({
       <!-- Form -->
       <MoleculeSection v-show="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px]">
         <Form :initial-values :resolver class="space-y-12.5 2xl:space-y-16" @submit="onSubmit">
-
-          <div class="space-y-5">
-            <h2 class="font-bold text-base md:text-lg">{{ $t('service.vehicle_data') }}</h2>
-
-            <FormField class="flex w-full">
-              <AtomInput input-id="vin_number" :label="$t('service.vin_number')" v-bind="commonAtomInputProps"
-                class="flex-1 -translate-y-[1px]" />
-              <button class="bg-primary size-12 2xl:size-15 text-white flex justify-center items-center">
-                <UITickToRight class="size-5 text-white" />
-              </button>
-            </FormField>
-          </div>
 
           <div class="space-y-5">
             <h2 class="font-bold text-base md:text-lg">{{ $t('service.service_center') }}</h2>

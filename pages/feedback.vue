@@ -5,15 +5,6 @@ import { Form, FormField, type FormSubmitEvent } from '@primevue/forms'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
 
 const { headerService } = useHeaderService()
-const { data: pageData } = useFetch('/api/feedback')
-onMounted(() => {
-  console.log(pageData)
-})
-
-const feedbackTypes = computed(() => {
-  const feedbackTypes = pageData.value?.map(fType => ({ label: fType.name, value: fType.id }))
-  return feedbackTypes
-})
 
 const isPrivacyDialogVisible = ref(false)
 
@@ -36,12 +27,9 @@ definePageMeta({
 
 const initialValues = ref({
   name: '',
-  surname: '',
   phone: '',
-  email: '',
   city: '',
   comment: '',
-  feedbackType: '',
   agree: false,
 })
 
@@ -114,23 +102,8 @@ const onSubmit = (event: FormSubmitEvent) => {
             </p>
           </FormField>
 
-          <FormField v-slot="$field" name="surname">
-            <AtomInput input-id="surname" :label="$t('common_form.surname')" v-bind="commonAtomInputProps" />
-            <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-              {{ $t($field.error?.message) }}
-            </p>
-          </FormField>
-
           <FormField v-slot="$field" name="phone">
             <AtomInput input-id="phone" :label="$t('common_form.phone')" v-bind="commonAtomInputProps" />
-            <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-              {{ $t($field.error?.message) }}
-            </p>
-          </FormField>
-
-          <FormField v-slot="$field" name="email">
-            <AtomInput input-id="email" :label="$t('common_form.email')" v-bind="commonAtomInputProps"
-              :input-props="{ invalid: $field.invalid }" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $t($field.error?.message) }}
             </p>
@@ -153,16 +126,6 @@ const onSubmit = (event: FormSubmitEvent) => {
           </p>
         </FormField>
 
-        <div class="space-y-4">
-          <label class="text-primary text-sm md:text-base">{{ $t('feedback.request_type') }}</label>
-          <FormField v-slot="$field" name="feedbackType">
-            <AtomDropdownInput v-model:available-options="feedbackTypes"
-              :placeholder="$t('feedback.select_question_type')" :float-label="true" />
-            <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-              {{ $t($field.error?.message) }}
-            </p>
-          </FormField>
-        </div>
         <div>
           <FormField v-slot="$field" name="agree">
             <div class="flex gap-x-2">
