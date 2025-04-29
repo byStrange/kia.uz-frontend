@@ -8,6 +8,8 @@ const { headerService } = useHeaderService()
 
 const isPrivacyDialogVisible = ref(false)
 
+const { locale } = useI18n()
+
 const { data: privacyAndTerms } = useFetch('/api/terms')
 
 const commonAtomInputProps: Omit<
@@ -32,6 +34,24 @@ const initialValues = ref({
   comment: '',
   agree: false,
 })
+
+const { data: pageData } = useAsyncData('seo', () => {
+  return useFetchApi<SEO>('/pages/~feedback', locale.value)
+})
+
+onMounted(() => {
+  console.log(pageData)
+})
+
+useSeoMeta({
+  title: () => pageData.value?.seo.title || '',
+  ogTitle: () => pageData.value?.seo.title || '',
+  description: () => pageData.value?.seo.description || '',
+  ogDescription: () => pageData.value?.seo.description || '',
+  keywords: () => pageData.value?.seo.keywords || '',
+})
+
+
 
 const resolver = ref(zodResolver(feedbackSchema))
 
