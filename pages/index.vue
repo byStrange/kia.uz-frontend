@@ -34,18 +34,9 @@ const extraLinksCard = [
         <div class="relative mx-auto h-full max-w-[420px] bg-caption md:max-w-none">
           <NuxtLinkLocale to="/special-offers/important-installment-plan">
             <picture>
-              <source media="(min-width: 1024px)" :srcset="src('47fd9450-1106-44ba-b977-dfe1795a0f05', {
-                preview: '1000x720',
-              })
-                " />
-              <source :srcset="src('32d3bffb-f001-4406-a6c0-517ca367af7f', {
-                preview: '827x999',
-              })
-                " media="(min-width: 768px)" />
-              <img loading="lazy" :src="src('9ae43504-1cfc-4d2b-9137-b40a5473ffce', {
-                preview: '1000x597',
-              })
-                " class="img h-[187px] w-full max-w-[640px] bg-gray-200 md:absolute md:right-0 md:h-full md:w-1/2 object-cover" />
+              <source media="(min-width: 1024px)" srcset="~/assets/images/section5-desktop_image.jpg" />
+              <source srcset="~/assets/images/section5-tablet_image.jpg" media="(min-width: 768px)" />
+              <img loading="lazy" src="~/assets/images/section5-default_image.jpg" class="img h-[187px] w-full max-w-[640px] bg-gray-200 md:absolute md:right-0 md:h-full md:w-1/2 object-cover" />
             </picture>
           </NuxtLinkLocale>
           <div class="px-4 py-8 md:w-1/2 md:px-6 2xl:px-12 2xl:py-14">
