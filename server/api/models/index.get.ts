@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   }
 
 
-  const groupedModels = groupModelsByCategory(models)
+  const groupedModels = groupModelsByCategory(models.filter(m => m))
 
   return { groupedModels, models, seo: seo['seo'] }
 })
