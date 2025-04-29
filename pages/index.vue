@@ -45,7 +45,7 @@ const extraLinksCard = [
               <img loading="lazy" :src="src('9ae43504-1cfc-4d2b-9137-b40a5473ffce', {
                 preview: '1000x597',
               })
-                " class="img h-[187px] w-full max-w-[640px] bg-gray-200 md:absolute md:right-0 md:h-full md:w-1/2" />
+                " class="img h-[187px] w-full max-w-[640px] bg-gray-200 md:absolute md:right-0 md:h-full md:w-1/2 object-cover" />
             </picture>
           </NuxtLinkLocale>
           <div class="px-4 py-8 md:w-1/2 md:px-6 2xl:px-12 2xl:py-14">
