@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
     sliders,
     specialOffers: groupSpecialOffersByCategory(specialOffers),
     news: groupNewsByCategory(news),
-    models,
+    models: models.filter((m)=>m),
     seo: seo['seo'],
     date
   }
