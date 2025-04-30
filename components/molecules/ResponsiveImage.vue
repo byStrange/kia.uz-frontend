@@ -112,7 +112,7 @@ const onImageLoaded = () => {
 const getImageUrl = (baseUrl: string, format: string): string => {
   if (!baseUrl) return ''
   
-  const baseWithoutExt = baseUrl.replace(/\.(avif|webp|png|jpg)$/, '')
+  const baseWithoutExt = baseUrl.replace(/\.(avif|webp|png|jpg|jpeg)$/, '')
   return `${baseWithoutExt}.${format}`
 }
 
@@ -127,7 +127,7 @@ const getLowResImageUrl = (): string => {
   // For simplicity, we'll use defaultImage for the low-res background
   // Could be enhanced to use media queries to determine which image to use
   const baseUrl = props.desktopImage
-  const baseWithoutExt = baseUrl.replace(/\.(avif|webp|png|jpg)$/, '')
+  const baseWithoutExt = baseUrl.replace(/\.(avif|webp|png|jpg|jpeg)$/, '')
   return `${baseWithoutExt}_${props.lowResSize}.${props.backgroundFormat}`
 }
 
