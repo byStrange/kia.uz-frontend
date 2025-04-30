@@ -4,7 +4,12 @@ import { Menu } from 'primevue'
 
 const route = useRoute()
 const { downloadFile } = useDownload()
-const data = useSharedPageData<ModelLandingPage>()
+const data = computed(() => {
+  if (route.params.id) {
+    return useSharedPageData<ModelLandingPage>(route.params.id.toString()).value
+  }
+  return null
+})
 const { safe } = useSafeAccessMedia()
 const locale = useLocalePath()
 const router = useRouter()
@@ -106,8 +111,9 @@ onMounted(() => {
                 }">{{ $t('common.properties') }}</NuxtLinkLocale>
             </li>
             <li v-if="data?.model.brochure">
-              <a target="_blank" :href="safe(data.model.brochure)" download class="text-base text-white py-1 link-hover">{{
-                $t('common.brochure') }}</a>
+              <a target="_blank" :href="safe(data.model.brochure)" download
+                class="text-base text-white py-1 link-hover">{{
+                  $t('common.brochure') }}</a>
             </li>
             <li class="flex items-center">
               <button class="text-white" @click="toggleDestkopMenu">

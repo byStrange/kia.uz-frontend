@@ -125,7 +125,7 @@ onMounted(() => {
                 'text-white': !headerService.isHover,
               }" />
             </a>
-            <button aria-label="Search" class="hidden md:block" @click="searchBarOpen = true">
+            <button aria-label="Search" @click="searchBarOpen = true">
               <UILenseIcon class="transition-colors" :class="{
                 'text-white': !headerService.isHover,
                 'text-primary': headerService.isHover,

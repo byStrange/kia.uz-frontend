@@ -8,8 +8,9 @@ const { downloadFile } = useDownload()
 const locale = useLocalePath()
 
 const video = useTemplateRef('video')
+const route = useRoute()
 
-const modelData = useSharedPageData<ModelLandingPage>()
+const modelData = useSharedPageData<ModelLandingPage>(route.params.id.toString())
 
 const pageData = computed(() => ({
   priceList: safe('/pdf-outputs/' + modelData.value?.model.price_list),

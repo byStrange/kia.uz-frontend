@@ -4,13 +4,19 @@ interface ModelCategory extends CommonModel {
   name: string
 }
 
+export interface ThreeSixtyImage extends CommonModel {
+  source_file: string;
+  prefix: string
+  configuration: uuid| null
+}
+
 export interface ModelColor extends CommonModel {
   name: string
   code: string
   color_type: 'interior' | 'exterior',
   add_to_cost: number
   metallic: boolean
-  three_sixty_url: AbsoluteUrl
+  three_sixty: ThreeSixtyImage
   image?: AbsoluteUrl
 }
 

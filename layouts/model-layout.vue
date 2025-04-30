@@ -1,20 +1,23 @@
 <script setup lang="ts">
 import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
 
-const sharedPageData = useSharedPageData<ModelLandingPage | undefined>()
 const route = useRoute()
 
 const { locale } = useI18n()
 
-if (route.params.id) {
-  const { data: pageData } = await useFetch(`/api/models/${route.params.id}`, { query: { lang: locale.value } })
+async function fetchData() {
+  if (route.params.id) {
+    const sharedPageData = useSharedPageData<ModelLandingPage | undefined>(route.params.id.toString())
+    const { data: pageData } = await useFetch(`/api/models/${route.params.id}`, { query: { lang: locale.value } })
 
-  sharedPageData.value = pageData.value as ModelLandingPage;
+    sharedPageData.value = pageData.value as ModelLandingPage;
+  }
 }
 
+await fetchData()
+
 watch(locale, async () => {
-  const { data: pageData } = await useFetch(`/api/models/${route.params.id}`, { query: { lang: locale.value } })
-  sharedPageData.value = pageData.value as ModelLandingPage
+  await fetchData()
 })
 </script>
 

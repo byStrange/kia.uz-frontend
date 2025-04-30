@@ -1,1 +1,1 @@
-export const useSharedPageData = <T>() => useState<T | null>('pageData', () => null)
+export const useSharedPageData = <T>(modelId: uuid) => useState<T | null>(modelId, () => null)

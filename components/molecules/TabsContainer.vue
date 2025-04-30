@@ -15,6 +15,8 @@ const props = withDefaults(
     animated?: boolean
     // New prop to define dynamic slot mapping
     slotKey?: keyof T
+    // Add a unique identifier prop for this instance
+    instanceId?: string
   }>(),
   {
     animated: true,
@@ -28,6 +30,7 @@ const props = withDefaults(
     isHeaderCenter: true,
     isHeaderFull: false,
     slotKey: undefined,
+    instanceId: 'default', // Default identifier if none provided
   },
 )
 
@@ -38,7 +41,40 @@ const changeTab = (tabIndex: number) => {
   emit('tab-change', tabIndex)
 }
 
-const activeTab = useSessionStorage('activeTab' + Math.random(), () => props.defaultTab)
+// Use instanceId to create a unique storage key for each instance
+// Create a unique storage key for this component instance
+const storageKey = computed(() => `activeTab-${props.instanceId}`)
+
+// Handle SSR safely - use ref initially, then sync with storage on client-side
+const activeTab = ref(props.defaultTab)
+
+// Only access browser storage on client-side after hydration
+onMounted(() => {
+  if (process.client || typeof window !== 'undefined') {
+    // Try to get the stored value from sessionStorage
+    try {
+      const storedValue = sessionStorage.getItem(storageKey.value)
+      if (storedValue !== null) {
+        const parsedValue = JSON.parse(storedValue)
+        if (parsedValue !== undefined && parsedValue < props.tabs.length) {
+          activeTab.value = parsedValue
+        }
+      }
+    } catch (e) {
+      console.error('Failed to read from sessionStorage:', e)
+    }
+
+    // Watch for changes to save to sessionStorage
+    watch(activeTab, (newValue) => {
+      try {
+        sessionStorage.setItem(storageKey.value, JSON.stringify(newValue))
+      } catch (e) {
+        console.error('Failed to write to sessionStorage:', e)
+      }
+    })
+  }
+})
+
 const emit = defineEmits<{
   (e: 'tab-change', tabIndex: number): void
 }>()
@@ -72,7 +108,7 @@ const resolveSlotName = (tab: T, index: number) => {
           '--padding-left': bounding.x.value + 'px',
           padding: props.isHeaderFull ? '0 var(--padding-left)' : '',
         }">
-        <template v-for="(tab, index) in tabs" :key="tab">
+        <template v-for="(tab, index) in tabs" :key="headerKey ? tab[headerKey] : tab">
           <slot name="tab-button" :tab="{ tab: tab, isActive: index === activeTab }">
             <button class="relative pb-5 font-semibold text-primary text-opacity-60 transition-colors" :class="{
               '!text-opacity-100': index === activeTab,
@@ -90,12 +126,12 @@ const resolveSlotName = (tab: T, index: number) => {
             </button>
           </slot>
         </template>
-        <slot name="tab-button-right" :tab="{ tab: tabs[activeTab], activeTab }" />
+        <slot name="tab-button-right" :tab="{ tab: getActiveTab, activeTab }" />
       </div>
     </div>
     <div v-if="tabs" :class="[{ container: !props.isContentFull }, contentContainerClass]" class="mt-4">
-      <slot name="tab" v-bind="{ activeTab, changeTab, tab: tabs[activeTab] }"></slot>
-      <div v-if="cache" :class="{ 'relative overflow-hidden': cache}">
+      <slot name="tab" v-bind="{ activeTab, changeTab, tab: getActiveTab }"></slot>
+      <div v-if="cache" :class="{ 'relative overflow-hidden': cache }">
         <div v-for="(tab, index) in tabs" :key="index" :class="{
           'transition-all duration-500': animated,
           'invisible absolute -z-10': index !== activeTab,
@@ -107,8 +143,8 @@ const resolveSlotName = (tab: T, index: number) => {
       </div>
       <div v-else>
         <Transition name="slide-fade" mode="out-in">
-          <slot :key="activeTab" :name="resolveSlotName(tabs[activeTab], activeTab)"
-            v-bind="{ activeTab, changeTab, tab: tabs[activeTab] }" fallback>
+          <slot :key="activeTab" :name="resolveSlotName(getActiveTab, activeTab)"
+            v-bind="{ activeTab, changeTab, tab: getActiveTab }" fallback>
           </slot>
         </Transition>
       </div>

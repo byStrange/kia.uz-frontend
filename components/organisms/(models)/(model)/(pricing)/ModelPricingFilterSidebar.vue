@@ -3,7 +3,8 @@ import type { ModelLandingPage } from '~/server/api/models/[id]/index.get';
 import type { ModelPricingAndDetailsPage } from '~/server/api/models/[id]/features.get';
 
 const { bounding } = useContainer()
-const modelData = useSharedPageData<ModelLandingPage>()
+const route = useRoute()
+const modelData = useSharedPageData<ModelLandingPage>(route.params.id.toString())
 
 const props = defineProps<{
   pageData: ModelPricingAndDetailsPage | null,
