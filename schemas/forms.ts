@@ -88,9 +88,7 @@ export const testDriveSchema = z.object({
     .min(1, 'common_form.this_field_is_required'),
 
   comment: z
-    .string()
-    .min(1, 'common_form.this_field_is_required')
-    .min(25, 'common_form.minimum_chars_requirement'),
+    .string().optional(),
 
   agree: z.literal(true, {
     errorMap: () => ({ message: 'common_form.must_agree_to_consent_privacy' }),

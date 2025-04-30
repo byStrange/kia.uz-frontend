@@ -25,8 +25,8 @@ export default defineEventHandler(async (event) => {
   const data: TestDriveAPIForm = {
     city: body.region,
     phone_number: body.phone,
-    name: body.name || '',
-    comment: body.comment,
+    name: body.name || '-',
+    comment: body?.comment || '-',
     model: modelSlug
   }
 
