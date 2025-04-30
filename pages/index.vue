@@ -25,7 +25,7 @@ const extraLinksCard = [
 <template>
   <div>
     <OrganismHomeHeroSliders :slides="pageData?.sliders || []" />
-    <OrganismHomeModels :models="pageData?.models || []" />
+    <OrganismHomeModels :models="pageData?.models.sort((a, b) => a?.home_order - b?.home_order) || []" />
     <OrganismHomeSpecialOffers :offers="pageData?.specialOffers || {}" />
     <OrganismHomeCourses :news="pageData?.news || {}" />
 

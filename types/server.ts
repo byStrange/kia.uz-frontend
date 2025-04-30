@@ -52,7 +52,7 @@ export interface SpecialOffer extends CommonMediaModel {
 }
 
 export const specialOfferLessData = ['id', 'slug', 'title', 'default_image', 'desktop_image', 'tablet_image', 'category', 'subtitle'] as const;
-export const modelLessData = ['name', 'id', 'category', 'main_image', 'starting_price', 'slug', 'old_price', 'is_electric', 'order', 'most_benefit'] as const;
+export const modelLessData = ['name', 'id', 'category', 'main_image', 'starting_price', 'slug', 'old_price', 'is_electric', 'order', 'most_benefit', 'home_order'] as const;
 export const newsLessData = ['id', 'slug', 'title', 'default_image', 'desktop_image', 'tablet_image', 'category', 'subtitle', 'video_url'] as const;
 
 export type SpecialOfferWithoutContent = Pick<SpecialOffer, typeof specialOfferLessData[number]>;

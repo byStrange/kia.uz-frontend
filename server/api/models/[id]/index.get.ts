@@ -95,6 +95,7 @@ export interface ModelEngine extends CommonModel {
 export interface Model extends CommonMediaModel {
   name: string
   slug: string
+  home_order: number
   colors: ModelColor[]
   engines: ModelEngine[]
   blocks: ModelBlock[]
