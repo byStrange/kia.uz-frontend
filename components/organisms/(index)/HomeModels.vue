@@ -4,13 +4,22 @@ import type { Swiper } from 'swiper/types'
 
 const { t } = useI18n()
 
-defineProps<{
+const props = defineProps<{
   models: ModelWithLessData[]
 }>()
 
 const modelsThumbSwiper = ref<Swiper | null>(null)
 const modelsSwiper = ref<Swiper | null>(null)
 const { safe } = useSafeAccessMedia()
+
+const focusedModel = props.models.find((m) => m.name.toLowerCase() == 'sonet')
+
+const focusedModelIndex = computed(() => {
+  if (focusedModel) {
+    return props.models.indexOf(focusedModel)
+  }
+  return 5
+})
 
 const slidesLength = computed(() =>
   modelsThumbSwiper.value ? modelsThumbSwiper.value.slides.length : 0,
@@ -34,6 +43,8 @@ onMounted(() => {
       const index = swiper.clickedIndex
       swiper.slideTo(index)
     })
+
+    modelsThumbSwiper.value?.slideTo(focusedModelIndex.value)
   })
 
 })
@@ -76,39 +87,39 @@ onMounted(() => {
         </SwiperSlide>
       </Swiper>
       <div class="mt-4 md:mt-8">
-          <Swiper :init="false" :modules="[Controller]" :controller="{ control: modelsThumbSwiper }" :slides-per-view="1"
-            :centered-slides="true" :space-between="16" :slides-offset-after="parseInt(pagePadding + '')"
-            @swiper="modelsSwiper = $event">
-            <template #container-start>
-              <MoleculeButtonCarousel position="left" :hide="activeModelIndex === 0" mode="free" @click="slidePrev" />
-              >
-              <MoleculeButtonCarousel position="right" :hide="activeModelIndex === slidesLength - 1" mode="free"
-                @click="slideNext" />
-            </template>
-            <SwiperSlide v-for="model in models" :key="model.name" class="container 2xl:px-0">
-              <div data-label="card">
-                <div data-label="image wrapper">
-                  <MoleculeImage :base-url="safe(model.main_image)"
-                    class="w-full md:mx-auto md:max-w-[500px] 2xl:max-w-[742px]" />
-                </div>
-                <div class="text-center">
-                  <h2 class="text-lg text-primary md:text-2xl md:font-semibold 2xl:text-3xl">
-                    {{ model.name }}
-                  </h2>
-                  <div class="mt-2">
-                    <p class="flex justify-center gap-x-1 text-sm text-primary md:text-base">
-                      {{ formatPrice(model.starting_price, $t('prefixes.sum')) }}
-                      <UIInfoIcon class="text-disabled" />
-                    </p>
-                  </div>
-                </div>
-                <NuxtLinkLocale :to="`/models/${model.slug}/`" :prefetch="false" no-client>
-                  <AtomButton :label="$t('index.more_about_model')" color="primary" mode="full"
-                    class="mx-auto mt-4 md:mt-8" />
-                </NuxtLinkLocale>
+        <Swiper :init="false" :modules="[Controller]" :controller="{ control: modelsThumbSwiper }" :slides-per-view="1"
+          :centered-slides="true" :space-between="16" :slides-offset-after="parseInt(pagePadding + '')"
+          @swiper="modelsSwiper = $event">
+          <template #container-start>
+            <MoleculeButtonCarousel position="left" :hide="activeModelIndex === 0" mode="free" @click="slidePrev" />
+            >
+            <MoleculeButtonCarousel position="right" :hide="activeModelIndex === slidesLength - 1" mode="free"
+              @click="slideNext" />
+          </template>
+          <SwiperSlide v-for="model in models" :key="model.name" class="container 2xl:px-0">
+            <div data-label="card">
+              <div data-label="image wrapper">
+                <MoleculeImage :base-url="safe(model.main_image)"
+                  class="w-full md:mx-auto md:max-w-[500px] 2xl:max-w-[742px]" />
               </div>
-            </SwiperSlide>
-          </Swiper>
+              <div class="text-center">
+                <h2 class="text-lg text-primary md:text-2xl md:font-semibold 2xl:text-3xl">
+                  {{ model.name }}
+                </h2>
+                <div class="mt-2">
+                  <p class="flex justify-center gap-x-1 text-sm text-primary md:text-base">
+                    {{ formatPrice(model.starting_price, $t('prefixes.sum')) }}
+                    <UIInfoIcon class="text-disabled" />
+                  </p>
+                </div>
+              </div>
+              <NuxtLinkLocale :to="`/models/${model.slug}/`" :prefetch="false" no-client>
+                <AtomButton :label="$t('index.more_about_model')" color="primary" mode="full"
+                  class="mx-auto mt-4 md:mt-8" />
+              </NuxtLinkLocale>
+            </div>
+          </SwiperSlide>
+        </Swiper>
       </div>
     </div>
   </MoleculeSection>
