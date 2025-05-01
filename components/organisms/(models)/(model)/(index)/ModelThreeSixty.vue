@@ -1,40 +1,40 @@
 <script setup lang="ts">
 import type { ModelColor } from '~/server/api/models/[id]/index.get';
+import { JavascriptViewer } from "@3dweb/360javascriptviewer";
 
-
+const props = defineProps<{ modelName?: string, colors: ModelColor[] }>()
 const modelType = ref('exterior')
 const threeSixtyViewRef = ref(null)
 const selectedColor = ref<ModelColor | null>(null)
 const { safe } = useSafeAccessMedia()
 
-const threeSixty =  ref(null)
+const threeSixty = ref<{ initialImageUrl: string, viewer: JavascriptViewer | null, error?: string } | null>(null)
 
 watch(selectedColor, () => {
-  if (selectedColor.value && selectedColor.value.three_sixty && threeSixtyViewRef.value) {
+  if (selectedColor.value && selectedColor.value.three_sixty && selectedColor.value.three_sixty.source_file) {
+    const ts = selectedColor.value.three_sixty
+    const path = safe(`/media/360image-set/${ts.source_file}/${ts.prefix}01.${ts.image_file_type || 'png'}`)
 
-    console.log(selectedColor.value.three_sixty.source_file.split('.')[0])
-    const url = 'https://adminkia.ting.uz'+(selectedColor.value.three_sixty.source_file.split('.')[0])+'/'
-    console.log(url + selectedColor.value.three_sixty.prefix + '01' + '.png')
-    console.log(url)
-    const model = use360View(threeSixtyViewRef, {
-      images: url,
-      extension: 'png',
-      prefix: selectedColor.value.three_sixty.prefix,
-      totalImages: 71, sensitivity: 10, inertia: 0.2
-    })
-    console.log('calling preload images')
-    model.preloadImages()
-    console.log(model)
+    const viewer = new JavascriptViewer({
+      mainHolderId: 'threesixty-image-holder',
+      mainImageId: 'threesixty-image',
+      imageUrlFormat: `${ts.prefix}xx.${ts.image_file_type || 'png'}`,
+      totalFrames: 71,
+      reverse: true,
+      speed: 70,
+      defaultProgressBar: true
+    });
 
-    return model
+    return threeSixty.value = { initialImageUrl: path, viewer }
   }
 
-  return null
+  return threeSixty.value = { initialImageUrl: '', viewer: null, error: 'no image found for this color' }
 })
 
 const { gsap } = useGsap()
 
 onMounted(() => {
+  selectedColor.value = props.colors[0]
   nextTick(() => {
     gsap.from('.three-sixty_title', {
       duration: 1,
@@ -92,7 +92,6 @@ onMounted(() => {
   })
 })
 
-defineProps<{ modelName?: string, colors: ModelColor[] }>()
 </script>
 <template>
   <div data-label="360 view" class="container py-10 md:py-15 2xl:py-20 organism-three-sixty relative">
@@ -109,9 +108,12 @@ defineProps<{ modelName?: string, colors: ModelColor[] }>()
         height="880px" frameborder="0"></iframe>
     </div>
 
-    <div v-show="modelType == 'exterior'" ref="threeSixtyViewRef">
-      <img :draggable="false" :src="threeSixty?.currentSrc.value"
-        class="w-full my-4 2xl:mt-8 md:mt-6 2xl:mb-0 2xl:w-auto 2xl:mx-auto three-sixty_image" />
+    <div v-show="modelType == 'exterior'" id="threesixty-image-holder" ref="threeSixtyViewRef"
+      :key="threeSixty?.initialImageUrl" class="flex justify-center min-h-6h">
+      <img id="threesixty-image" :src="threeSixty?.initialImageUrl"
+        class="w-full my-4 2xl:mt-8 md:mt-6 2xl:mb-0 2xl:w-auto 2xl:mx-auto three-sixty_image"
+        @click="threeSixty?.viewer?.start()" />
+      <p v-if="threeSixty?.error">{{ threeSixty.error }}</p>
     </div>
 
     <div v-show="modelType === 'interior'" class="h-[500px]">
@@ -124,7 +126,6 @@ defineProps<{ modelName?: string, colors: ModelColor[] }>()
           class="flex flex-col items-center gap-2.5 2xl:absolute 2xl:-top-10 2xl:left-1/2 2xl:-translate-x-1/2 2xl:max-w-6h mx-auto 2xl:px-20 three-sixty_bottom-row_center">
           <UIIcon360 />
           <p class="text-xs+ text-disabled md:text-center">
-            {{ threeSixty }}
             Изображение может не соответствовать выбранной комплектации. <br />
             Цвет автомобиля может отличаться от представленного на данном сайте.
           </p>
@@ -142,7 +143,7 @@ defineProps<{ modelName?: string, colors: ModelColor[] }>()
               }" />
               <label for="exterior" :class="{ 'text-white': modelType === 'interior' }">Экстерьер</label>
             </div>
-            <div class="flex items-center gap-2.5">
+            <!--<div class="flex items-center gap-2.5">
               <PrimeRadioButton v-model="modelType" value="interior" input-id="interior" name="type" :pt="{
                 icon: 'hidden',
                 box: (state) => {
@@ -150,7 +151,7 @@ defineProps<{ modelName?: string, colors: ModelColor[] }>()
                 },
               }" />
               <label for="interior" :class="{ 'text-white': modelType === 'interior' }">Интерьер</label>
-            </div>
+</div> -->
           </div>
           <Transition name="blur-fade">
             <div v-if="modelType === 'exterior'" class="mt-4">

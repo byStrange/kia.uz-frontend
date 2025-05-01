@@ -5,9 +5,10 @@ interface ModelCategory extends CommonModel {
 }
 
 export interface ThreeSixtyImage extends CommonModel {
-  source_file: string;
+  source_file: uuid;
   prefix: string
   configuration: uuid| null
+  image_file_type: string | null
 }
 
 export interface ModelColor extends CommonModel {

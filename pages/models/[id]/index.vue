@@ -136,7 +136,7 @@ v-model:visible="showReviewModal" :dismissable-mask="true" modal
       </ElementSlideView>
     </MoleculeSection>
 
-    <!--<OrganismModelThreeSixty :model-name="pageData?.model.name" :colors="pageData?.model.colors || []" /> -->
+    <OrganismModelThreeSixty :model-name="pageData?.model.name" :colors="pageData?.model.colors || []" />
 
     <MoleculeSection
 id="configurations" :section-title="$t('common.model_variants', { model: pageData?.model.name })"
