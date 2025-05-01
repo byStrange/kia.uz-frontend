@@ -46,8 +46,12 @@ onMounted(() => {
 })
 
 const changeSlides = useDebounceFn(() => {
-  mainSwiper.value?.slideToLoop(activeModelIndex.value)
-  thumbsSwiper.value?.slideToLoop(activeModelIndex.value)
+  if (mainSwiper.value?.realIndex != activeModelIndex.value) {
+    mainSwiper.value?.slideToLoop(activeModelIndex.value)
+  }
+  if (thumbsSwiper.value?.realIndex != activeModelIndex.value) {
+    thumbsSwiper.value?.slideToLoop(activeModelIndex.value)
+  }
 }, 300)
 
 watch(activeModelIndex, () => {
