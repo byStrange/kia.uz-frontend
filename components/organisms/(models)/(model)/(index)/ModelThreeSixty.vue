@@ -109,8 +109,8 @@ onMounted(() => {
     </div>
 
     <div v-show="modelType == 'exterior'" id="threesixty-image-holder" ref="threeSixtyViewRef"
-      :key="threeSixty?.initialImageUrl" class="flex justify-center min-h-6h">
-      <img id="threesixty-image" :src="threeSixty?.initialImageUrl"
+      :key="threeSixty?.initialImageUrl" class="flex justify-center 2xl:min-h-6h md:min-h-3.5h min-h-1.5h">
+      <img v-if="threeSixty?.initialImageUrl" id="threesixty-image" :src="threeSixty?.initialImageUrl"
         class="w-full my-4 2xl:mt-8 md:mt-6 2xl:mb-0 2xl:w-auto 2xl:mx-auto three-sixty_image"
         @click="threeSixty?.viewer?.start()" />
       <p v-if="threeSixty?.error">{{ threeSixty.error }}</p>
