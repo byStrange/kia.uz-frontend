@@ -69,7 +69,7 @@ watch(activeModelIndex, () => {
 
         <div class="overflow-hidden px-12">
           <Swiper :modules="[Thumbs]" :slides-per-view="'auto'" :space-between="8" :watch-slides-progress="true"
-            :centered-slides="false" :loop="true" :initial-slide="focusedModelIndex" @swiper="thumbsSwiper = $event"
+            :centered-slides="true" :loop="true" :initial-slide="focusedModelIndex" @swiper="thumbsSwiper = $event"
             @slide-change="(swiper) => activeModelIndex = swiper.realIndex">
             <SwiperSlide v-for="model in models" :key="model.name" class="!w-fit">
               <div :class="[
