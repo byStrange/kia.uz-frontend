@@ -16,4 +16,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
     // close extended menu on route change
     closeExtendedMenu()
   }
+
+  if (to.path === '/news') {
+    return navigateTo('/media-center', { replace: true });
+  }
 })
