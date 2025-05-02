@@ -1,7 +1,7 @@
 const {
   SITE_NAME,
   BASE_URL,
-  NUXT_API_BASE_URL = 'https://adminkia.ting.uz',
+  NUXT_API_BASE_URL = 'https://cdn.kia.uz',
   NUXT_API_DEFAULT_LANG = 'uz'
 } = process.env
 

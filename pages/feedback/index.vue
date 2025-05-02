@@ -10,8 +10,6 @@ const isPrivacyDialogVisible = ref(false)
 
 const { locale } = useI18n()
 
-const { data: privacyAndTerms } = useFetch('/api/terms')
-
 const commonAtomInputProps: Omit<
   InstanceType<typeof AtomInput>['$props'],
   'inputId' | 'label'
@@ -22,6 +20,22 @@ const commonAtomInputProps: Omit<
   theme: 'light',
   size: 'large',
 }
+
+const regionOptions = ref([
+  { label: 'Andijon viloyati', value: 'Andijon' },
+  { label: 'Buxoro viloyati', value: 'Buxoro' },
+  { label: 'Farg‘ona viloyati', value: 'Farg\'ona' },
+  { label: 'Jizzax viloyati', value: 'Jizzax' },
+  { label: 'Xorazm viloyati', value: 'Xorazm' },
+  { label: 'Namangan viloyati', value: 'Namangan' },
+  { label: 'Navoiy viloyati', value: 'Navoiy' },
+  { label: 'Qashqadaryo viloyati', value: 'Qashqadaryo' },
+  { label: 'Samarqand viloyati', value: 'Samarqand' },
+  { label: 'Sirdaryo viloyati', value: 'Sirdaryo' },
+  { label: 'Surxondaryo viloyati', value: 'Surxandaryo' },
+  { label: 'Toshkent viloyati', value: 'Toshkent viloyati' },
+  { label: 'Toshkent shahri', value: 'Toshkent Shahri' }
+])
 
 definePageMeta({
   lockHover: true,
@@ -81,12 +95,12 @@ const onSubmit = (event: FormSubmitEvent) => {
       </template>
       <template #header>
         <h1 class="text-2xl text-primary font-semibold">
-          {{ privacyAndTerms?.terms.title }}
+          {{ $t('common.personal_data_consent_modal_title') }}
         </h1>
       </template>
       <div class="relative">
         <div class="space-y-5 text-primary">
-          <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
+          <p class="text-base">{{ $t('common.personal_data_consent_text') }}</p>
         </div>
         <AtomButton :label="$t('common.got_it')" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
@@ -130,42 +144,42 @@ const onSubmit = (event: FormSubmitEvent) => {
           </FormField>
 
           <FormField v-slot="$field" name="city">
-            <AtomInput input-id="city" :label="$t('common_form.city')" v-bind="commonAtomInputProps"
-              :input-props="{ invalid: $field.invalid }" />
+            <AtomDropdownInput v-model:available-options="regionOptions" input-id="city" theme="light"
+              :placeholder="$t('common_form.city')" :float-label="true" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $t($field.error?.message) }}
             </p>
           </FormField>
-        </div>
 
-        <FormField v-slot="$field" name="comment">
-          <Textarea unstyled input-id="comment" :placeholder="$t('feedback.comment')"
-            class="border focus:outline-none resize-none border-disabled hover:border-protection focus:border-primary w-full py-4.5 px-4 text-base placeholder:text-caption" />
-          <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-            {{ $t($field.error.message) }}
-          </p>
-        </FormField>
-
-        <div>
-          <FormField v-slot="$field" name="agree">
-            <div class="flex gap-x-2">
-              <PrimeCheckbox input-id="agree" binary />
-              <label for="agree" class="text-xs text-primary md:text-base">
-                <i18n-t keypath="common_form.consent_personal_data_processing">
-                  <template #button>
-                    <button type="button" class="underline" @click="isPrivacyDialogVisible = true">
-                      {{ $t('common_form.consent_personal_data_processing_button_text') }}
-                    </button>
-                  </template>
-                </i18n-t>
-              </label>
-            </div>
+          <FormField v-slot="$field" name="comment">
+            <Textarea unstyled input-id="comment" :placeholder="$t('feedback.comment')"
+              class="border focus:outline-none resize-none border-disabled hover:border-protection focus:border-primary w-full py-4.5 px-4 text-base placeholder:text-caption" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
-              {{ $t($field.error?.message) }}
+              {{ $t($field.error.message) }}
             </p>
           </FormField>
-          <AtomButton type="submit" :label="$t('common_form.submit')" color="primary" mode="full"
-            class="mt-10 md:w-full 2xl:w-auto" />
+
+          <div>
+            <FormField v-slot="$field" name="agree">
+              <div class="flex gap-x-2">
+                <PrimeCheckbox input-id="agree" binary />
+                <label for="agree" class="text-xs text-primary md:text-base">
+                  <i18n-t keypath="common_form.consent_personal_data_processing">
+                    <template #button>
+                      <button type="button" class="underline" @click="isPrivacyDialogVisible = true">
+                        {{ $t('common_form.consent_personal_data_processing_button_text') }}
+                      </button>
+                    </template>
+                  </i18n-t>
+                </label>
+              </div>
+              <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
+                {{ $t($field.error?.message) }}
+              </p>
+            </FormField>
+            <AtomButton type="submit" :label="$t('common_form.submit')" color="primary" mode="full"
+              class="mt-10 md:w-full 2xl:w-auto" />
+          </div>
         </div>
       </Form>
     </MoleculeSection>
