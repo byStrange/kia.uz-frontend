@@ -62,7 +62,7 @@
   .swiper-pagination {
     gap: var(--swiper-pagination-gap, 12px);
 
-    @apply flex !bottom-10 justify-center md: !bottom-12;
+    @apply flex !bottom-10 justify-center md:!bottom-12;
   }
 
   .nuxt-loading-indicator {
@@ -82,7 +82,7 @@
     @apply bg-background;
   }
 
-  #threesixty-image-holder>div.jsv-show {
-    @apply !hidden !opacity-0;
+  #threesixty-image-holder > div.jsv-show {
+    @apply !hidden opacity-0;
   }
 }
