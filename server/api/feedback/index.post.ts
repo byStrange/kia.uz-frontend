@@ -1,5 +1,4 @@
 import type { z } from "zod";
-import { useFetchApi } from "~/composables/useFetchApi";
 
 type FeedbackForm = z.infer<typeof feedbackSchema>
 
@@ -13,7 +12,6 @@ interface FeedbackAPIForm {
 export default defineEventHandler(async (event) => {
   const body = await readBody<FeedbackForm>(event)
 
-  const locale = getQuery(event).lang as string
   const isExcursion = getQuery(event)?.excursion as boolean
 
   const data: FeedbackAPIForm = {
@@ -24,6 +22,6 @@ export default defineEventHandler(async (event) => {
     is_excursion: isExcursion
   }
 
-  const response = useFetchApi('/feedback/', locale, { method: 'post', body: JSON.stringify(data) })
+  const response = await $fetch('http://83.69.136.36:5409/api/feedback/', { method: 'post', body: JSON.stringify(data) })
   return response
 }) 

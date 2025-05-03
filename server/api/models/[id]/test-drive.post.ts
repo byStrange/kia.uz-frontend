@@ -1,6 +1,5 @@
 import type { z } from "zod"
 import type { testDriveSchema } from "~/schemas/forms"
-import { useFetchApi } from "~/composables/useFetchApi"
 
 interface TestDriveAPIForm {
   city: string
@@ -16,7 +15,6 @@ type RequestTestDriveForm = z.infer<typeof testDriveSchema>
 export default defineEventHandler(async (event) => {
   const body = await readBody<RequestTestDriveForm>(event)
   const modelSlug = getRouterParam(event, 'id')
-  const locale = getQuery(event).lang as string
 
   if (!modelSlug) {
     return { statusCode: 400, error: 'Missing model slug route param' }
@@ -30,7 +28,7 @@ export default defineEventHandler(async (event) => {
     model: modelSlug
   }
 
-  const response = await useFetchApi('/test-drive/', locale, {
+  const response = await $fetch('http://83.69.136.36:5409/api/test-drive/', {
     method: 'post',
     body: JSON.stringify(data)
   })
