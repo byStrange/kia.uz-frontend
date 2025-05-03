@@ -159,9 +159,9 @@ onMounted(() => {
                 <span class="text-disabled">Цвет:</span>
                 <b class="text-primary">{{ selectedColor.name }}</b>
               </div>
-              <div class="mt-4 flex gap-2.5">
+              <div class="mt-4 flex gap-2.5 overflow-auto">
                 <div v-for="color in colors" :key="color.id"
-                  class="color flex size-[35px] items-center justify-center rounded-full border border-disabled relative"
+                  class="color shrink-0 flex size-[35px] items-center justify-center rounded-full border border-disabled relative"
                   :style="{ backgroundColor: color.code ? color.code : '' }" @click="selectedColor = color">
                   <img v-if="!color.code" :src="safe(color.image)" class="w-full h-full" />
                   <UICheckIcon v-if="color.id === selectedColor?.id" class="text-white absolute" />
