@@ -59,29 +59,6 @@ useHead({
     { rel: 'manifest', href: '/favicon/site.webmanifest' },
     { rel: 'mask-icon', href: '/favicon/favicon.svg', color: themeColour },
   ],
-  script: [
-    {
-      innerHTML: `
-window.addEventListener('error', function(e) {
-            if (e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK') {
-              let src = e.target.src || e.target.href;
-              if (src && src.includes('/_nuxt/') && src.includes('.')) {
-                let newSrc = src.replace('kia.uz', 'kia.ting.uz');
-                if (e.target.tagName === 'SCRIPT') {
-                  let newScript = document.createElement('script');
-                  newScript.src = newSrc;
-                  document.head.appendChild(newScript);
-                } else if (e.target.tagName === 'LINK') {
-                  let newLink = document.createElement('link');
-                  newLink.rel = 'stylesheet';
-                  newLink.href = newSrc;
-                  document.head.appendChild(newLink);
-                }
-              }
-            }
-          }, true);
-`}
-  ]
 });
 
 onMounted(() => {
