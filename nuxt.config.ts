@@ -14,6 +14,21 @@ export default defineNuxtConfig({
     dirs: ['./composables', './utils', './schemas', './types'],
   },
 
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          entryFileNames: 'assets/[name][hash].js',
+          chunkFileNames: 'assets/[name][hash].js',
+          assetFileNames: ({ name }) => {
+            if (name?.endsWith('.css')) return 'assets/[name][hash].css'
+            return 'assets/[name][hash][extname]'
+          }
+        }
+      }
+    }
+  },
+
   experimental: {
     defaults: {
       nuxtLink: {
