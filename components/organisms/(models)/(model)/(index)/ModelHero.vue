@@ -113,7 +113,7 @@ ref="video" :src="safe(modelData.model.video)" muted
       </div>
       <MoleculeResponsiveImage
 v-else
-        class="w-full object-cover 2xl:h-full md:h-[73%] model-id_model-hero-img bg-[image:--image] bg-cover"
+        class="w-full -top-12 2xl:top-0 object-cover 2xl:h-full md:h-[73%] model-id_model-hero-img bg-[image:--image] bg-cover"
         :default-image="pageData.images.defaultImage" :desktop-image="pageData.images.desktopImage"
         :tablet-image="pageData.images.tabletImage" />
       <div

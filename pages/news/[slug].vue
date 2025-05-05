@@ -38,7 +38,7 @@ useSeoMeta({
         <template v-for="content in useHTMLRenderer(pageData?.news.content || '')">
           <template v-if="content.type === 'image'">
             <div :key="content.type" class="-mx-page-padding-2 py-6 md:-mx-0 md:py-7.5 2xl:py-8">
-              <img :src="content.src" alt="${0}" class="relative w-full ">
+              <img :src="content.src" alt="" class="relative w-full ">
             </div>
           </template>
 
