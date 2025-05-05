@@ -7,13 +7,14 @@ const {
 
 export default defineNuxtConfig({
   routeRules: {
-    '*': { swr: true }
+    '/api/**': {
+      swr: true
+    }
   },
 
   imports: {
     dirs: ['./composables', './utils', './schemas', './types'],
   },
-
   experimental: {
     defaults: {
       nuxtLink: {
