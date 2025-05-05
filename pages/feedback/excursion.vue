@@ -33,7 +33,7 @@ const initialValues = ref({
 })
 
 const { data: pageData } = useAsyncData('seo', () => {
-  return useFetchApi<SEO>('/pages/~feedback', locale.value)
+  return useFetchApi<SEO>('/pages/~feedback~excursion', locale.value)
 })
 
 onMounted(() => {
@@ -55,7 +55,7 @@ const resolver = ref(zodResolver(excursionFeedbackSchema))
 const successfullySent = ref(false)
 
 const onSubmit = (event: FormSubmitEvent) => {
- if (event.valid) $fetch('/api/feedback?excursion=true', { method: 'post', body: event.values }).then(() => {
+  if (event.valid) $fetch('/api/feedback', { method: 'post', body: event.values }).then(() => {
     successfullySent.value = true
   })
 }

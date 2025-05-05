@@ -72,7 +72,6 @@ const resolver = ref(zodResolver(feedbackSchema))
 const successfullySent = ref(false)
 
 const onSubmit = (event: FormSubmitEvent) => {
-  console.log(event.values)
   if (event.valid) $fetch('/api/feedback', { method: 'post', body: event.values }).then(() => {
     successfullySent.value = true
   })

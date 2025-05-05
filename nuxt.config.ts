@@ -7,9 +7,21 @@ const {
 
 export default defineNuxtConfig({
   routeRules: {
+    '/api/feedback': {
+      swr: false
+    },
+    '/api/feedbcak/excursion' :{
+    swr: false,
+    },
+    '/api/service': {
+      swr: false
+    },
+    '/api/models/test-drive/**': {
+      swr: false
+    },
     '/api/**': {
-      swr: true
-    }
+      swr: false
+    },
   },
 
   imports: {
