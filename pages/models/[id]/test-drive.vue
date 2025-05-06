@@ -9,6 +9,7 @@ const { safe } = useSafeAccessMedia()
 const route = useRoute()
 const { data: pageData } = useFetch(`/api/models/${route.params.id}/test-drive`)
 const resolver = ref(zodResolver(testDriveSchema))
+const isLoading = ref(false)
 
 const commonAtomInputProps: Omit<
   InstanceType<typeof AtomInput>['$props'],
@@ -48,12 +49,16 @@ const regionOptions = ref([
   { label: 'Toshkent shahri', value: 'Toshkent Shahri' }
 ])
 
-const onSubmit = ({ values }: FormSubmitEvent) => {
+const onSubmit = ({ values, valid }: FormSubmitEvent) => {
+  if (!valid) return;
+
+  isLoading.value = true;
   $fetch(`/api/models/${route.params.id}/test-drive`, {
     method: 'post',
     body: JSON.stringify(values)
   }).then(() => {
     showSuccessModal.value = true;
+    isLoading.value = false;
   })
 }
 
@@ -70,7 +75,8 @@ definePageMeta({
       </template>
       <p>{{ $t('common_form.test_drive_form_sent_successfully') }}</p>
     </Dialog>
-    <Dialog v-model:visible="isPrivacyDialogVisible" modal :pt="{
+    <Dialog
+v-model:visible="isPrivacyDialogVisible" modal :pt="{
       root: '!rounded-none 2xl:h-full 2xl:!max-h-[758px]',
       mask: 'px-3',
       header:
@@ -92,7 +98,8 @@ definePageMeta({
         <div class="space-y-5 text-primary">
           <p class="text-base">{{ $t('common.personal_data_consent_text') }}</p>
         </div>
-        <AtomButton :label="$t('common.got_it')" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <AtomButton
+:label="$t('common.got_it')" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>
@@ -122,22 +129,29 @@ definePageMeta({
           </div>
         </div>
         <div class="col-span-7 2xl:grid 2xl:grid-cols-8">
-          <div class="space-y-7.5 2xl:col-start-2 2xl:col-end-8">
-            <div class="space-y-1">
+          <div class="space-y-7.5 2xl:col-start-2 2xl:col-end-8 relative">
+            <div v-if="isLoading" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+              <div class="loader"></div>
+            </div>
+            <div class="space-y-1 !mt-0">
               <h2 class="font-semibold text-sm md:text-base">{{ $t('common_form.your_contacts') }}</h2>
               <p class="text-disabled text-sm md:text-base pb-1">{{ $t('common_form.fields_required_notice') }}</p>
             </div>
-            <Form :key="showSuccessModal" :initial-values :resolver @submit="onSubmit">
+            <Form
+:key="showSuccessModal" :initial-values :resolver class="transition-all"
+              :class="{ 'blur-sm': isLoading }" @submit="onSubmit">
               <div class="space-y-7.5">
                 <FormField v-slot="$field" name="name">
-                  <AtomInput :input-id="$field.props?.name" :label="$t('common_form.name')"
+                  <AtomInput
+:input-id="$field.props?.name" :label="$t('common_form.name')"
                     v-bind="commonAtomInputProps" />
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                     {{ $t($field.error?.message) }}
                   </p>
                 </FormField>
                 <FormField v-slot="$field" name="region">
-                  <AtomDropdownInput v-model:available-options="regionOptions" input-id="region" theme="light"
+                  <AtomDropdownInput
+v-model:available-options="regionOptions" input-id="region" theme="light"
                     :placeholder="$t('common_form.city')" :float-label="true" />
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                     {{ $t($field.error?.message) }}
@@ -150,7 +164,8 @@ definePageMeta({
                   </p>
                 </FormField>
                 <FormField v-slot="$field" name="comment">
-                  <Textarea unstyled input-id="comment" :placeholder="$t('common_form.your_comment_or_question')"
+                  <Textarea
+unstyled input-id="comment" :placeholder="$t('common_form.your_comment_or_question')"
                     class="border focus:outline-none resize-none border-disabled hover:border-protection focus:border-primary w-full py-4.5 px-4 text-sm md:text-base+ placeholder:text-caption" />
                   <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                     {{ $t($field.error?.message) }}

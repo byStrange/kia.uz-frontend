@@ -8,6 +8,7 @@ const resolver = ref(zodResolver(serviceForm))
 const { headerService } = useHeaderService()
 const { locale } = useI18n()
 const { data: pageData } = useFetch('/api/service', { query: { lang: locale.value } })
+const isLoading = ref(false)
 
 const initialValues = ref({
   region: '',
@@ -52,10 +53,14 @@ const successfullySent = ref(false)
 
 const onSubmit = (event: FormSubmitEvent) => {
   touched.value = true;
-  if (event.valid) $fetch('/api/service', { method: 'post', body: event.values }).then(() => {
-    successfullySent.value = true;
-    event.reset()
-  })
+  if (event.valid) {
+    isLoading.value = true;
+    $fetch('/api/service', { method: 'post', body: event.values }).then(() => {
+      isLoading.value = false;
+      successfullySent.value = true;
+      event.reset()
+    })
+  }
 }
 
 useSeoMeta({
@@ -72,7 +77,8 @@ definePageMeta({
 </script>
 <template>
   <UISafeAreaView>
-    <Dialog v-model:visible="isPrivacyDialogVisible" modal :pt="{
+    <Dialog
+v-model:visible="isPrivacyDialogVisible" modal :pt="{
       root: '!rounded-none 2xl:h-full 2xl:!max-h-[758px]',
       mask: 'px-3',
       header:
@@ -94,7 +100,8 @@ definePageMeta({
         <div class="space-y-5 text-primary">
           <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
         </div>
-        <AtomButton :label="$t('common.got_it')" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <AtomButton
+:label="$t('common.got_it')" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>
@@ -106,14 +113,20 @@ definePageMeta({
         class="text-primary text-2xl font-semibold py-7.5 border-b border-protection md:text-4xl container 2xl:text-7xl 2xl:py-10">
         {{ $t('common.service_appointment') }}</h1>
       <!-- Form -->
-      <MoleculeSection v-show="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px]">
-        <Form :initial-values :resolver class="space-y-12.5 2xl:space-y-16" @submit="onSubmit">
+      <MoleculeSection v-show="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px] relative">
+        <div v-if="isLoading" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+          <div class="loader"></div>
+        </div>
+        <Form
+:initial-values :resolver class="space-y-12.5 2xl:space-y-16" :class="{ 'blur-sm': isLoading }"
+          @submit="onSubmit">
 
           <div class="space-y-5">
             <h2 class="font-bold text-base md:text-lg">{{ $t('service.service_center') }}</h2>
 
             <FormField v-slot="$field" name="region">
-              <AtomDropdownInput v-model:available-options="regionOptions" input-id="region" theme="light"
+              <AtomDropdownInput
+v-model:available-options="regionOptions" input-id="region" theme="light"
                 :placeholder="$t('common_form.city')" :float-label="true" />
               <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
                 {{ $t($field.error?.message) }}
@@ -163,13 +176,15 @@ definePageMeta({
             </div>
           </div>
 
-          <AtomButton type="submit" :label="$t('common_form.submit_application')" color="primary" mode="full"
+          <AtomButton
+type="submit" :label="$t('common_form.submit_application')" color="primary" mode="full"
             class="md:w-full 2xl:w-auto" />
         </Form>
       </MoleculeSection>
 
 
-      <MoleculeSection v-show="successfullySent"
+      <MoleculeSection
+v-show="successfullySent"
         class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px] md:space-y-10 2xl:space-y-12">
         <div class="space-y-4 text-primary md:space-y-6 2xl:space-y-8">
           <h1 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">

@@ -9,6 +9,7 @@ const { headerService } = useHeaderService()
 const isPrivacyDialogVisible = ref(false)
 
 const { locale } = useI18n()
+const isLoading = ref(false)
 
 const commonAtomInputProps: Omit<
   InstanceType<typeof AtomInput>['$props'],
@@ -72,14 +73,19 @@ const resolver = ref(zodResolver(feedbackSchema))
 const successfullySent = ref(false)
 
 const onSubmit = (event: FormSubmitEvent) => {
-  if (event.valid) $fetch('/api/feedback', { method: 'post', body: event.values }).then(() => {
-    successfullySent.value = true
-  })
+  if (event.valid) {
+    isLoading.value = true;
+    $fetch('/api/feedback', { method: 'post', body: event.values }).then(() => {
+      successfullySent.value = true
+      isLoading.value = false;
+    })
+  }
 }
 </script>
 <template>
   <UISafeAreaView>
-    <Dialog v-model:visible="isPrivacyDialogVisible" modal :pt="{
+    <Dialog
+v-model:visible="isPrivacyDialogVisible" modal :pt="{
       root: '!rounded-none 2xl:h-full 2xl:!max-h-[758px]',
       mask: 'px-3',
       header:
@@ -101,7 +107,8 @@ const onSubmit = (event: FormSubmitEvent) => {
         <div class="space-y-5 text-primary">
           <p class="text-base">{{ $t('common.personal_data_consent_text') }}</p>
         </div>
-        <AtomButton :label="$t('common.got_it')" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
+        <AtomButton
+:label="$t('common.got_it')" color="primary" mode="full" class="mx-auto mt-8 2xl:mt-10"
           @click="isPrivacyDialogVisible = false" />
       </div>
     </Dialog>
@@ -116,13 +123,19 @@ const onSubmit = (event: FormSubmitEvent) => {
     </h1>
 
     <!-- Form -->
-    <MoleculeSection v-if="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px]">
+
+    <MoleculeSection v-if="!successfullySent" class="container md:max-w-[426px] md:px-0 2xl:max-w-[618px] relative">
+      <div v-if="isLoading" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+        <div class="loader"></div>
+      </div>
       <div class="pb-8 border-b border-protection">
         <h4 class="text-sm md:text-base">{{ $t('menu.kia_hotline') }}</h4>
         <span class="mt-1 text-lg font-semibold md:text-2xl">1333</span>
       </div>
 
-      <Form :resolver :initial-values="initialValues" class="space-y-8 mt-8" @submit="onSubmit">
+      <Form
+:resolver :initial-values="initialValues" class="space-y-8 mt-8 transition-all" :class="{ 'blur-sm': isLoading }"
+        @submit="onSubmit">
         <div class="space-y-5">
           <p class="text-primary text-sm md:text-base">
             {{ $t('feedback.contact_instruction') }}
@@ -143,7 +156,8 @@ const onSubmit = (event: FormSubmitEvent) => {
           </FormField>
 
           <FormField v-slot="$field" name="city">
-            <AtomDropdownInput v-model:available-options="regionOptions" input-id="city" theme="light"
+            <AtomDropdownInput
+v-model:available-options="regionOptions" input-id="city" theme="light"
               :placeholder="$t('common_form.city')" :float-label="true" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $t($field.error?.message) }}
@@ -151,7 +165,8 @@ const onSubmit = (event: FormSubmitEvent) => {
           </FormField>
 
           <FormField v-slot="$field" name="comment">
-            <Textarea unstyled input-id="comment" :placeholder="$t('feedback.comment')"
+            <Textarea
+unstyled input-id="comment" :placeholder="$t('feedback.comment')"
               class="border focus:outline-none resize-none border-disabled hover:border-protection focus:border-primary w-full py-4.5 px-4 text-base placeholder:text-caption" />
             <p v-if="$field.invalid" class="mt-1 text-kia-live-red text-xs">
               {{ $t($field.error.message) }}
@@ -176,13 +191,15 @@ const onSubmit = (event: FormSubmitEvent) => {
                 {{ $t($field.error?.message) }}
               </p>
             </FormField>
-            <AtomButton type="submit" :label="$t('common_form.submit')" color="primary" mode="full"
+            <AtomButton
+type="submit" :label="$t('common_form.submit')" color="primary" mode="full"
               class="mt-10 md:w-full 2xl:w-auto" />
           </div>
         </div>
       </Form>
     </MoleculeSection>
-    <MoleculeSection v-else
+    <MoleculeSection
+v-else
       class="space-y-8 container md:max-w-[426px] md:px-0 2xl:max-w-[618px] md:space-y-10 2xl:space-y-12">
       <div class="space-y-4 text-primary md:space-y-6 2xl:space-y-8">
         <h1 class="text-lg font-semibold md:text-2xl 2xl:text-3xl">
