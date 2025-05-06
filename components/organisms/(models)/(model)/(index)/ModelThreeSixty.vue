@@ -10,6 +10,10 @@ const { safe } = useSafeAccessMedia()
 
 const threeSixty = ref<{ initialImageUrl: string, viewer: JavascriptViewer | null, error?: string } | null>(null)
 
+const hasAtLeastOneThreeSixty = computed(() => {
+  return props.colors.some((color) => color.three_sixty)
+})
+
 watch(selectedColor, () => {
   if (selectedColor.value && selectedColor.value.three_sixty && selectedColor.value.three_sixty.source_file) {
     const ts = selectedColor.value.three_sixty
@@ -94,10 +98,11 @@ onMounted(() => {
 
 </script>
 <template>
-  <div data-label="360 view" class="container py-10 md:py-15 2xl:py-20 organism-three-sixty relative">
+  <div v-if="hasAtLeastOneThreeSixty" data-label="360 view"
+    class="container py-10 md:py-15 2xl:py-20 organism-three-sixty relative">
     <div class="relative z-10">
       <p class="text-sm text-primary font-semibold three-sixty_tagline"
-        :class="{ 'text-white': modelType === 'interior' }">Просмотр 360°</p>
+        :class="{ 'text-white': modelType === 'interior' }">{{ $t('models.threesixty_view') }}</p>
       <h2 class="mt-2.5 text-4xl font-semibold text-primary 2xl:text-5xl three-sixty_title"
         :class="{ 'text-white': modelType === 'interior' }">{{ modelName }}</h2>
     </div>
@@ -111,7 +116,7 @@ onMounted(() => {
     <div v-show="modelType == 'exterior'" id="threesixty-image-holder" ref="threeSixtyViewRef"
       :key="threeSixty?.initialImageUrl" class="flex justify-center 2xl:min-h-6h md:min-h-3.5h min-h-1.5h">
       <img v-if="threeSixty?.initialImageUrl" id="threesixty-image" :src="threeSixty?.initialImageUrl"
-        class="w-full my-4 2xl:mt-8 md:mt-6 2xl:mb-0 2xl:w-auto 2xl:mx-auto three-sixty_image"
+        class="w-full my-4 2xl:mt-8 md:mt-6 2xl:mb-0 2xl:w-auto 2xl:mx-auto three-sixty_image max-h-6h"
         @click="threeSixty?.viewer?.start()" />
       <p v-if="threeSixty?.error">{{ threeSixty.error }}</p>
     </div>
@@ -125,9 +130,7 @@ onMounted(() => {
         <div v-if="modelType == 'exterior'"
           class="flex flex-col items-center gap-2.5 2xl:absolute 2xl:-top-10 2xl:left-1/2 2xl:-translate-x-1/2 2xl:max-w-6h mx-auto 2xl:px-20 three-sixty_bottom-row_center">
           <UIIcon360 />
-          <p class="text-xs+ text-disabled md:text-center">
-            Изображение может не соответствовать выбранной комплектации. <br />
-            Цвет автомобиля может отличаться от представленного на данном сайте.
+          <p class="text-xs+ text-disabled md:text-center" v-html="$t('models.threesixty_image_may_not_be_accurate')">
           </p>
         </div>
       </Transition>
@@ -141,7 +144,8 @@ onMounted(() => {
                   return state.context.checked ? '!border-[6px] ' : '0'
                 },
               }" />
-              <label for="exterior" :class="{ 'text-white': modelType === 'interior' }">Экстерьер</label>
+              <label for="exterior" :class="{ 'text-white': modelType === 'interior' }">{{ $t('models.exterior')
+                }}</label>
             </div>
             <!--<div class="flex items-center gap-2.5">
               <PrimeRadioButton v-model="modelType" value="interior" input-id="interior" name="type" :pt="{
@@ -156,23 +160,25 @@ onMounted(() => {
           <Transition name="blur-fade">
             <div v-if="modelType === 'exterior'" class="mt-4">
               <div v-if="selectedColor" class="flex gap-1.5 text-base">
-                <span class="text-disabled">Цвет:</span>
+                <span class="text-disabled">{{ $t('models.color') }}:</span>
                 <b class="text-primary">{{ selectedColor.name }}</b>
               </div>
               <div class="mt-4 flex gap-2.5 overflow-auto">
-                <div v-for="color in colors" :key="color.id"
-                  class="color shrink-0 flex size-[35px] items-center justify-center rounded-full border border-disabled relative"
-                  :style="{ backgroundColor: color.code ? color.code : '' }" @click="selectedColor = color">
-                  <img v-if="!color.code" :src="safe(color.image)" class="w-full h-full" />
-                  <UICheckIcon v-if="color.id === selectedColor?.id" class="text-white absolute" />
-                </div>
+                <template v-for="color in colors" :key="color.id">
+                  <div v-if="color.three_sixty"
+                    class="color shrink-0 flex size-[35px] items-center justify-center rounded-full border border-disabled relative"
+                    :style="{ backgroundColor: color.code ? color.code : '' }" @click="selectedColor = color">
+                    <img v-if="!color.code" :src="safe(color.image)" class="w-full h-full" />
+                    <UICheckIcon v-if="color.id === selectedColor?.id" class="text-white absolute" />
+                  </div>
+                </template>
               </div>
             </div>
           </Transition>
         </div>
 
         <div class="mt-7.5 md:mt-0">
-          <AtomButton label="Конфигуратор" color="primary" mode="full" />
+          <AtomButton :label="$t('common.configurator')" color="primary" mode="full" />
         </div>
       </div>
     </div>

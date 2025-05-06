@@ -28,7 +28,7 @@ const modelFeatures = ref<ModelPricingAndDetailsPage | null>(null)
 const stepper = useTemplateRef('stepper')
 
 const handleFilterChange = (a: Partial<ModelFilters>) => {
-  query.value = {...a, lang: locale.value }
+  query.value = { ...a, lang: locale.value }
   execute()
 }
 
@@ -134,7 +134,7 @@ type ResultStep = { step: 'result', label: string, collectedValue: null | undefi
 
 export type FormStep = ModelStep | ConfigurationStep | ColorsAndEquipmentsStep | PaymentStep | ResultStep
 
-const formSteps = ref<FormStep[]>([
+const formSteps = useState<FormStep[]>('in-stock_form-state', () => [
   { step: 'model', label: t("in_stock.model_selection"), collectedValue: null, },
   { step: 'configuration', label: t('in_stock.configuration_selection'), collectedValue: null },
   { step: 'colorsAndEquipments', label: t('in_stock.colors_and_accessories'), collectedValue: null },
@@ -525,8 +525,9 @@ definePageMeta({
 
                 <div class="flex justify-between">
                   <OrganismPercentageSlider v-if="selectedConfiguration" class="hidden 2xl:block"
-                    :label="$t('in_stock.down_payment')" :total-amount="selectedConfiguration.price" :min-percentage="50"
-                    :max-percentage="90" :initial-percentage="90" @update:percentage="downPaymentPercentage = $event" />
+                    :label="$t('in_stock.down_payment')" :total-amount="selectedConfiguration.price"
+                    :min-percentage="50" :max-percentage="90" :initial-percentage="90"
+                    @update:percentage="downPaymentPercentage = $event" />
                   <div v-if="selectedInstallmentPlan" class="bg-background w-full p-6 2xl:w-4.5h">
                     <div class="space-y-3 md:space-y-2 flex-1">
                       <div class="md:flex md:justify-between space-y-1 items-center">
@@ -607,7 +608,8 @@ definePageMeta({
                     </div>
                     <div class="md:flex md:justify-between space-y-1 items-center">
                       <h5 class="text-sm md:text-base 2xl:text-sm">{{ $t(`in_stock.initial_payment_from_percent`, {
-                        price: selectedConfiguration?.minimum_prepayment })}}</h5>
+                        price: selectedConfiguration?.minimum_prepayment
+                      }) }}</h5>
                       <p class="text-sm font-semibold 2xl:text-sm">
                         {{ formatPrice(selectedInstallmentPlan.prepayment_calculated) }}</p>
                     </div>
@@ -622,13 +624,13 @@ definePageMeta({
                       <p class="font-semibold 2xl:text-sm">{{ selectedInstallmentPlan.months }}</p>
                     </div>
                     <div class="md:flex md:justify-between space-y-1 items-center text-sm md:text-base">
-                      <h5 class="2xl:text-sm">{{$t('in_stock.interest_rate')}}</h5>
+                      <h5 class="2xl:text-sm">{{ $t('in_stock.interest_rate') }}</h5>
                       <p class="font-semibold 2xl:text-sm">0%</p>
                     </div>
                   </div>
                   <div
                     class="md:flex md:justify-between space-y-1 pt-3 md:pt-6 2xl:pt-0 2xl:pl-6 2xl:border-l 2xl:border-t-0 border-t border-t-protection items-center 2xl:block">
-                    <h5 class="text-sm md:text-base 2xl:text-sm">{{$t('in_stock.monthly_installment')}}</h5>
+                    <h5 class="text-sm md:text-base 2xl:text-sm">{{ $t('in_stock.monthly_installment') }}</h5>
                     <p class="text-base font-semibold md:text-lg 2xl:text-sm">{{
                       formatPrice(selectedInstallmentPlan.monthly_payment) }}
                     </p>
@@ -643,7 +645,10 @@ definePageMeta({
 
               <div class="bg-background p-4 space-y-10 2xl:flex 2xl:space-y-0 2xl:justify-between">
                 <div class="space-y-3 2xl:space-y-6 max-w-4.5h">
-                  <p class="text-primary font-semibold text-base md:text-lg">{{ $t('in_stock.calculation_id', { code: generatedRequestCode }) }}</p>
+                  <p class="text-primary font-semibold text-base md:text-lg">{{ $t('in_stock.calculation_id', {
+                    code:
+                      generatedRequestCode
+                  }) }}</p>
 
                   <p class="text-primary text-sm">{{ $t('in_stock.save_calculation_info') }}</p>
                 </div>
@@ -653,7 +658,7 @@ definePageMeta({
                   <!-- Share Link Button -->
                   <div
                     class="flex-1 flex 2xl:pr-10 border-b md:border-b-0 md:border-r border-[#d9d9d9]-200 justify-start md:justify-center">
-                      <button class="py-3 text-primary flex items-center justify-center gap-2 2xl:w-[125px] md:flex-col">
+                    <button class="py-3 text-primary flex items-center justify-center gap-2 2xl:w-[125px] md:flex-col">
                       <UIShareIcon />
                       {{ $t('in_stock.share_link') }}
                     </button>
@@ -686,7 +691,8 @@ definePageMeta({
                       <AtomInput v-model="userData.name" :label="$t('common.name')" theme="light" input-id="name" />
                     </div>
                     <div>
-                      <AtomInput v-model="userData.phoneNumber" :label="$t('common.phone_number')" theme="light" input-id="phone" />
+                      <AtomInput v-model="userData.phoneNumber" :label="$t('common.phone_number')" theme="light"
+                        input-id="phone" />
                     </div>
                     <div>
                       <AtomInput v-model="userData.city" :label="$t('common.city')" theme="light" input-id="city" />
