@@ -10,8 +10,8 @@ export default defineNuxtConfig({
     '/api/feedback': {
       swr: false
     },
-    '/api/feedbcak/excursion' :{
-    swr: false,
+    '/api/feedbcak/excursion': {
+      swr: false,
     },
     '/api/service': {
       swr: false
@@ -19,8 +19,11 @@ export default defineNuxtConfig({
     '/api/models/test-drive/**': {
       swr: false
     },
-    '/api/**': {
+    '/api/translations': {
       swr: false
+    },
+    '/api/**': {
+      swr: 10000
     },
   },
 
