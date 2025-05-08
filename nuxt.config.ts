@@ -117,7 +117,6 @@ export default defineNuxtConfig({
     '@primevue/nuxt-module',
     'nuxt-swiper',
     '@nuxtjs/i18n',
-    'nuxt-multi-cache',
     '@zadigetvoltaire/nuxt-gtm'
   ],
   booster: {
@@ -167,12 +166,6 @@ export default defineNuxtConfig({
       apiBaseUrl: NUXT_API_BASE_URL,
       apiDefaultLang: NUXT_API_DEFAULT_LANG
     },
-  },
-
-  multiCache: {
-    component: {
-      enabled: true
-    }
   },
 
   devtools: {

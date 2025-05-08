@@ -80,9 +80,6 @@ importers:
       nuxt-booster:
         specifier: ^3.2.8
         version: 3.2.8(browserslist@4.24.2)(encoding@0.1.13)(ioredis@5.4.1)(magicast@0.3.5)(webpack-sources@3.2.3)
-      nuxt-multi-cache:
-        specifier: ^3.4.0
-        version: 3.4.0(magicast@0.3.5)(rollup@4.26.0)(webpack-sources@3.2.3)
       nuxt-svgo:
         specifier: 4.0.9
         version: 4.0.9(magicast@0.3.5)(rollup@4.26.0)(vue@3.5.12(typescript@5.6.3))(webpack-sources@3.2.3)
@@ -1476,9 +1473,6 @@ packages:
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
-
-  '@tusbar/cache-control@1.0.2':
-    resolution: {integrity: sha512-PXfjYTYBVvMPYCLDWj+xIOA9ITFbbhWCHzLcqUCJ5TPGm4JO4cxpGb7x3K8Q1K1ADgNgfBxLsDcTMVRydtZB9A==}
 
   '@types/conventional-commits-parser@5.0.0':
     resolution: {integrity: sha512-loB369iXNmAZglwWATL+WRe+CRMmmBPtpolYzIebFaX4YA3x+BEfLqhUAV9WanycKI3TG1IMr5bMJDajDKLlUQ==}
@@ -3987,9 +3981,6 @@ packages:
 
   nuxt-link-checker@3.1.3:
     resolution: {integrity: sha512-RenDVvR+DwUYjXsmfIH8rRyALpGfjbktAtaSPVL/0jt+3yV7SD3Fsz3DUFsSEFGuifVZjcxBP9ieLk4ppV+DIQ==}
-
-  nuxt-multi-cache@3.4.0:
-    resolution: {integrity: sha512-XjWS6uW/ztquxahQ1v6XV5xanfbUsBw7cTa7NVXEFJb5uhdUlg7XErfNL2TY+tH0rdgwlXM1LME+RrZuK5MW7g==}
 
   nuxt-og-image@3.0.8:
     resolution: {integrity: sha512-eoxSqBylFQ8F77dzmietaUKR3w80JAG0dZtWjVA+eelIqfHSPA2fQ9pXhcICYPeh+kyH2n//P+TRkz1MSGl4Ug==}
@@ -7376,8 +7367,6 @@ snapshots:
 
   '@trysound/sax@0.2.0': {}
 
-  '@tusbar/cache-control@1.0.2': {}
-
   '@types/conventional-commits-parser@5.0.0':
     dependencies:
       '@types/node': 22.9.0
@@ -10315,16 +10304,6 @@ snapshots:
       - supports-color
       - vite
       - vue
-      - webpack-sources
-
-  nuxt-multi-cache@3.4.0(magicast@0.3.5)(rollup@4.26.0)(webpack-sources@3.2.3):
-    dependencies:
-      '@nuxt/kit': 3.14.159(magicast@0.3.5)(rollup@4.26.0)(webpack-sources@3.2.3)
-      '@tusbar/cache-control': 1.0.2
-    transitivePeerDependencies:
-      - magicast
-      - rollup
-      - supports-color
       - webpack-sources
 
   nuxt-og-image@3.0.8(magicast@0.3.5)(rollup@4.26.0)(vite@5.4.11(@types/node@22.9.0)(terser@5.36.0))(vue@3.5.12(typescript@5.6.3))(webpack-sources@3.2.3):

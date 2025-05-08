@@ -17,14 +17,10 @@ if (pageData.value?.length) {
 <template>
   <div>
 
-    <RenderCacheable>
-      <OrganismHeader />
-    </RenderCacheable>
+    <OrganismHeader />
 
     <NuxtPage />
 
-    <RenderCacheable>
-      <OrganismFooter />
-    </RenderCacheable>
+    <OrganismFooter />
   </div>
 </template>
