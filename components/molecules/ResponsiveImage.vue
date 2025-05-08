@@ -1,70 +1,43 @@
-
 <template>
   <div class="relative w-full h-full overflow-hidden" :style="containerStyle">
     <!-- Low-resolution background for quick loading -->
     <div v-if="useLowResBackground && !imageLoaded" class="absolute inset-0 w-full h-full">
-      <img 
-        :src="getLowResImageUrl()" 
-        :alt="alt" 
-        class="w-full h-full object-cover"
-      />
+      <img :src="getLowResImageUrl()" :alt="alt" class="w-full h-full object-cover" />
     </div>
-    
+
     <picture class="block w-full h-full">
       <!-- Desktop Image -->
       <!-- WebP format - highest priority now -->
       <source
-        v-if="desktopImage"
-        media="(min-width: 1024px)"
-        type="image/webp"
-        :srcset="getImageUrl(desktopImage, 'webp')"
-      />
+v-if="desktopImage" media="(min-width: 1024px)" type="image/webp"
+        :srcset="getImageUrl(desktopImage, 'webp')" />
       <!-- AVIF format - second priority -->
       <source
-        v-if="desktopImage"
-        media="(min-width: 1024px)"
-        type="image/avif"
-        :srcset="getImageUrl(desktopImage, 'avif')"
-      />
-      
+v-if="desktopImage" media="(min-width: 1024px)" type="image/avif"
+        :srcset="getImageUrl(desktopImage, 'avif')" />
+
       <!-- Tablet Image -->
       <!-- WebP format - highest priority now -->
       <source
-        v-if="tabletImage"
-        media="(min-width: 640px) and (max-width: 1023px)"
-        type="image/webp"
-        :srcset="getImageUrl(tabletImage, 'webp')"
-      />
+v-if="tabletImage" media="(min-width: 640px) and (max-width: 1023px)" type="image/webp"
+        :srcset="getImageUrl(tabletImage, 'webp')" />
       <!-- AVIF format - second priority -->
       <source
-        v-if="tabletImage"
-        media="(min-width: 640px) and (max-width: 1023px)"
-        type="image/avif"
-        :srcset="getImageUrl(tabletImage, 'avif')"
-      />
+v-if="tabletImage" media="(min-width: 640px) and (max-width: 1023px)" type="image/avif"
+        :srcset="getImageUrl(tabletImage, 'avif')" />
       <!-- PNG format - fallback -->
-      
+
       <!-- Mobile/Default Image -->
       <!-- WebP format - highest priority now -->
-      <source
-        type="image/webp"
-        :srcset="getImageUrl(defaultImage, 'webp')"
-      />
+      <source type="image/webp" :srcset="getImageUrl(defaultImage, 'webp')" />
       <!-- AVIF format - second priority -->
-      <source
-        type="image/avif"
-        :srcset="getImageUrl(defaultImage, 'avif')"
-      />
-      
+      <source type="image/avif" :srcset="getImageUrl(defaultImage, 'avif')" />
+
       <!-- Fallback image with all attributes passed to the component -->
       <img
-        :src="getImageUrl(defaultImage, 'avif')"
-        :alt="alt"
-        v-bind="$attrs"
-        @load="onImageLoaded"
-        class="block w-full h-auto relative z-10 transition-opacity duration-300"
-        :class="{'opacity-0': !imageLoaded && useLowResBackground}"
-      />
+:src="getImageUrl(defaultImage, 'avif')" :alt="alt" v-bind="$attrs" class="block w-full h-auto relative z-10 transition-opacity duration-300"
+        :class="{ 'opacity-0': !imageLoaded && useLowResBackground }"
+        @load="onImageLoaded" />
     </picture>
   </div>
 </template>
@@ -87,7 +60,7 @@ const props = withDefaults(defineProps<Props>(), {
   alt: '',
   useLowResBackground: true,
   backgroundFormat: 'webp',
-  lowResSize: 'low' // New prop for the low-res image size
+  lowResSize: 'mid' // New prop for the low-res image size
 })
 
 // Define emits
@@ -111,7 +84,7 @@ const onImageLoaded = () => {
  */
 const getImageUrl = (baseUrl: string, format: string): string => {
   if (!baseUrl) return ''
-  
+
   const baseWithoutExt = baseUrl.replace(/\.(avif|webp|png|jpg|jpeg)$/, '')
   return `${baseWithoutExt}.${format}`
 }
