@@ -1,8 +1,7 @@
 <template>
-  <!--<div v-if="isLoading" class="w-screen h-screen fixed flex-center z-50 bg-white bg-opacity-70 backdrop-blur-xl">
+  <div v-if="isLoading" class="w-screen h-screen fixed flex-center z-50 bg-white bg-opacity-70 backdrop-blur-xl">
     <div class="loader" />
   </div>
--->
   <NuxtLoadingIndicator color="#05141f" />
   <NuxtLayout>
     <NuxtPage />
