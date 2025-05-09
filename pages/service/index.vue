@@ -36,8 +36,6 @@ const regionOptions = ref([
 
 const isPrivacyDialogVisible = ref(false)
 
-const { data: privacyAndTerms } = useFetch('/api/terms')
-
 const commonAtomInputProps: Omit<
   InstanceType<typeof AtomInput>['$props'],
   'inputId' | 'label'
@@ -93,12 +91,13 @@ v-model:visible="isPrivacyDialogVisible" modal :pt="{
       </template>
       <template #header>
         <h1 class="text-2xl text-primary font-semibold">
-          {{ privacyAndTerms?.terms.title }}
+          {{ $t('common.personal_data_consent_modal_title') }}
+          }
         </h1>
       </template>
       <div class="relative">
         <div class="space-y-5 text-primary">
-          <p class="text-base">{{ privacyAndTerms?.terms.description }}</p>
+          <p class="text-base">{{ $t('common.personal_data_consent_text') }}</p>
         </div>
         <AtomButton
 :label="$t('common.got_it')" color="secondary" mode="full" class="mx-auto mt-8 2xl:mt-10"

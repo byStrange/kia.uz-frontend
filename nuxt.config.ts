@@ -7,24 +7,21 @@ const {
 
 export default defineNuxtConfig({
   routeRules: {
-    '/api/feedback': {
-      swr: false
+
+    '/api/indexPage': {
+      swr: true
     },
-    '/api/feedbcak/excursion': {
-      swr: false,
-    },
-    '/api/service': {
-      swr: false
-    },
-    '/api/models/test-drive/**': {
-      swr: false
-    },
-    '/api/translations': {
-      swr: false
-    },
-    '/api/**': {
-      swr: 10000
-    },
+    '/api/media-center': { swr: true },
+    '/api/dealers': { swr: true },
+    '/api/special-offers/**': { swr: true },
+    '/api/user-manual': { swr: true },
+    '/api/news/**': { swr: true },
+    '/api/models': { swr: true },
+    '/api/models/test-drive/': { swr: true },
+    '/api/models/:id/': { swr: true },
+    '/api/models/:id/properties': { swr: true },
+    '/api/models/:id/features': { swr: true },
+    '/api/in-stock': { swr: true }
   },
 
   imports: {
