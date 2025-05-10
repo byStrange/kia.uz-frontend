@@ -56,7 +56,7 @@ const props = withDefaults(defineProps<Props>(), {
   alt: '',
   useLowResBackground: true,
   backgroundFormat: 'webp',
-  lowResSize: '' // New prop for the low-res image size
+  lowResSize: 'mid' // New prop for the low-res image size
 })
 
 // Define emits
