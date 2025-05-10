@@ -66,7 +66,7 @@ onUnmounted(() => {
       >
         <ul>
           <li
-            v-for="ln in $i18n.locales"
+            v-for="ln in $i18n.locales.value"
             :key="ln"
             class="cursor-pointer px-6 py-4 text-base hover:bg-gray-100"
             @click="selectLocale(ln.code)"
