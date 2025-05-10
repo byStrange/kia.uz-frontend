@@ -21,6 +21,7 @@ const makeRoute = (item: SearchResultItem): string => {
 }
 
 const handleResultItemClick = (item: SearchResultItem) => {
+  searchBarOpen.value = false;
   router.push(localePath(makeRoute(item)))
   showResultMenu.value = false;
 }
