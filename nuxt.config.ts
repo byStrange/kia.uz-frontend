@@ -18,9 +18,6 @@ export default defineNuxtConfig({
     '/api/news/**': { swr: 10000 },
     '/api/models': { swr: 10000 },
     '/api/models/test-drive/': { swr: 10000 },
-    '/api/models/:id/': { swr: 10000 },
-    '/api/models/:id/properties': { swr: 10000},
-    '/api/models/:id/features': { swr: 10000 },
     '/api/in-stock': { swr: 10000 }
   },
 
