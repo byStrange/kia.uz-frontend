@@ -9,19 +9,19 @@ export default defineNuxtConfig({
   routeRules: {
 
     '/api/indexPage': {
-      swr: true
+      swr: 10000
     },
-    '/api/media-center': { swr: true },
-    '/api/dealers': { swr: true },
-    '/api/special-offers/**': { swr: true },
-    '/api/user-manual': { swr: true },
-    '/api/news/**': { swr: true },
-    '/api/models': { swr: true },
-    '/api/models/test-drive/': { swr: true },
-    '/api/models/:id/': { swr: true },
-    '/api/models/:id/properties': { swr: true },
-    '/api/models/:id/features': { swr: true },
-    '/api/in-stock': { swr: true }
+    '/api/media-center': { swr: 10000 },
+    '/api/dealers': { swr: 10000 },
+    '/api/special-offers/**': { swr: 10000 },
+    '/api/user-manual': { swr: 10000 },
+    '/api/news/**': { swr: 10000 },
+    '/api/models': { swr: 10000 },
+    '/api/models/test-drive/': { swr: 10000 },
+    '/api/models/:id/': { swr: 10000 },
+    '/api/models/:id/properties': { swr: 10000},
+    '/api/models/:id/features': { swr: 10000 },
+    '/api/in-stock': { swr: 10000 }
   },
 
   imports: {
