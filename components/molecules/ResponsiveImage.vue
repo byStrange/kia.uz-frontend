@@ -8,22 +8,19 @@
     <picture class="block w-full h-full">
       <!-- Desktop Image -->
       <!-- WebP format - highest priority now -->
-      <source
-v-if="desktopImage" media="(min-width: 1024px)" type="image/webp"
-        :srcset="getImageUrl(desktopImage, 'webp')" />
       <!-- AVIF format - second priority -->
-      <source
-v-if="desktopImage" media="(min-width: 1024px)" type="image/avif"
+      <source v-if="desktopImage" media="(min-width: 1024px)" type="image/avif"
         :srcset="getImageUrl(desktopImage, 'avif')" />
+
+      <source v-if="desktopImage" media="(min-width: 1024px)" type="image/webp"
+        :srcset="getImageUrl(desktopImage, 'webp')" />
 
       <!-- Tablet Image -->
       <!-- WebP format - highest priority now -->
-      <source
-v-if="tabletImage" media="(min-width: 640px) and (max-width: 1023px)" type="image/webp"
+      <source v-if="tabletImage" media="(min-width: 640px) and (max-width: 1023px)" type="image/webp"
         :srcset="getImageUrl(tabletImage, 'webp')" />
       <!-- AVIF format - second priority -->
-      <source
-v-if="tabletImage" media="(min-width: 640px) and (max-width: 1023px)" type="image/avif"
+      <source v-if="tabletImage" media="(min-width: 640px) and (max-width: 1023px)" type="image/avif"
         :srcset="getImageUrl(tabletImage, 'avif')" />
       <!-- PNG format - fallback -->
 
@@ -34,10 +31,9 @@ v-if="tabletImage" media="(min-width: 640px) and (max-width: 1023px)" type="imag
       <source type="image/avif" :srcset="getImageUrl(defaultImage, 'avif')" />
 
       <!-- Fallback image with all attributes passed to the component -->
-      <img
-:src="getImageUrl(defaultImage, 'avif')" :alt="alt" v-bind="$attrs" class="block w-full h-auto relative z-10 transition-opacity duration-300"
-        :class="{ 'opacity-0': !imageLoaded && useLowResBackground }"
-        @load="onImageLoaded" />
+      <img :src="getImageUrl(defaultImage, 'avif')" :alt="alt" v-bind="$attrs"
+        class="block w-full h-auto relative z-10 transition-opacity duration-300"
+        :class="{ 'opacity-0': !imageLoaded && useLowResBackground }" @load="onImageLoaded" />
     </picture>
   </div>
 </template>
