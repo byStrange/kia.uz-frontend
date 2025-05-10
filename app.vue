@@ -7,6 +7,7 @@
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+
 </template>
 
 <script lang="ts" setup>
@@ -60,11 +61,15 @@ useHead({
     { rel: 'manifest', href: '/favicon/site.webmanifest' },
     { rel: 'mask-icon', href: '/favicon/favicon.svg', color: themeColour },
   ],
+  script: [
+    { src: 'https://cdn.jsdelivr.net/npm/eruda' }
+  ]
 });
 
 onMounted(() => {
   const lenis = new Lenis({ autoRaf: true, overscroll: true, prevent: (node) => !!node.querySelector('[role="presentation"]') })
 
+  eruda.init();
   function handleAnchorLinks() {
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener('click', (event) => {
